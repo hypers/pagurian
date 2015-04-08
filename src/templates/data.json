@@ -1,0 +1,95 @@
+{
+    "user": {
+        "name": "系统管理员"
+    },
+    "page": {
+        "color": "配色 Color",
+        "button": "按钮 Button",
+        "form": "表单 Form",
+        "modal": "模态窗口 Modal",
+        "alert": "警告框 Alert",
+        "tooltip": "提示框 Tooltip",
+        "popover": "弹出框 Popover",
+        "datatables": "DataTables",
+        "echarts": "Echarts",
+        "catalogue": "目录设计",
+        "js": "JS规范",
+        "css": "CSS规范"
+    },
+    "menu": [{
+        "name": "standard",
+        "title": "UI",
+        "icon": "fa fa-briefcase",
+        "items": [{
+            "name": "color",
+            "title": "配色 Color",
+            "url": "standard-color.html",
+            "active": 0
+        }, {
+            "name": "buttons",
+            "title": "按钮 Button",
+            "url": "standard-buttons.html",
+            "active": 0
+        }, {
+            "name": "form",
+            "title": "表单 Form",
+            "url": "standard-form.html",
+            "active": 0
+        }, {
+            "name": "modals",
+            "title": "模态窗口 Modal",
+            "url": "standard-modals.html",
+            "active": 0
+        }, {
+            "name": "alerts",
+            "title": "警告框 Alert",
+            "url": "standard-alert.html",
+            "active": 0
+        }, {
+            "name": "Tooltip",
+            "title": "提示框 Tooltip",
+            "url": "standard-tooltip.html",
+            "active": 0
+        }, {
+            "name": "Popover",
+            "title": "弹出框 Popover",
+            "url": "standard-popover.html",
+            "active": 0
+        }]
+    }, {
+        "name": "plugin",
+        "title": "插件",
+        "icon": "fa fa-puzzle-piece",
+        "items": [{
+            "name": "dataTables",
+            "title": "DataTables",
+            "url": "plugin-datatable.html",
+            "active": 0
+        }, {
+            "name": "echarts",
+            "title": "Echarts",
+            "url": "plugin-echarts.html",
+            "active": 0
+        }]
+    }, {
+        "name": "styleguide",
+        "title": "前端规范",
+        "icon": "fa fa-bookmark",
+        "items": [{
+            "name": "catalogue",
+            "title": "目录设计",
+            "url": "styleguide-catalogue.html",
+            "active": 0
+        }, {
+            "name": "Javascript",
+            "title": "JS规范",
+            "url": "styleguide-js.html",
+            "active": 0
+        }, {
+            "name": "css",
+            "title": "CSS规范",
+            "url": "styleguide-css.html",
+            "active": 0
+        }]
+    }]
+}

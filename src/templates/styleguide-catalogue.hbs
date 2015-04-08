@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{data.page.catalogue}}</title>
+    {{>fixtures/head}}
+</head>
+
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    
+   {{>fixtures/sidebar}}
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        
+        <div class="page-content">
+            {{>fixtures/theme-panel}}
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="page-title">
+                    {{data.page.catalogue}}
+                    </h3>
+                </div>
+            </div>
+
+    
+    <div class="row">
+    <!--markdown-->
+    <div class="markdown">
+       
+        <hr>
+<pre>
+Pagurian/
+├── dist/
+│   ├── lib/
+│   ├── plugins/
+│   ├── resources/
+│   └── templates/
+├── docs/
+│   ├── api-datatable.md
+│   └── tree.md
+├── node_modules/ [.]
+├── src/
+│   ├── conf/
+│   ├── lib/
+│   ├── modules/
+│   ├── plugins/
+│   ├── resources/
+│   └── templates
+├── test/
+├── Gruntfile.js
+├── package.json
+└── pagurian.js
+</pre>
+    </div>
+    <!--end markdown--> 
+</div>
+        </div>
+
+
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+    pagurian.call("modules/styleguide/app", function(app) {
+        app.page.javascript();
+    });
+</script>
+
+</body>
+</html>

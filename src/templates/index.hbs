@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+
+<title>Pagurian 管理系统的一个前端解决方案</title>
+{{>fixtures/head}}
+
+<style type="text/css">
+html{
+  
+}
+body {
+    background: -moz-radial-gradient(center top, circle, #e6e6e6, #d6dae3, #bcc2cd);
+    background: -webkit-radial-gradient(center top, circle, #e6e6e6, #d6dae3, #bcc2cd);
+    padding: 0;
+    margin: 0;
+}
+
+.home-header {
+    padding: 20px;
+    margin-top: 80px;
+}
+
+.home-content {
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.home-links {
+    padding: 100px 20px;
+    text-align: right;
+}  
+
+.home-content h1,
+.home-content p {
+    color: #777;
+}
+
+.home-content h1 {
+    font-size: 42px;
+    line-height: 50px;
+    margin-bottom: 15px;    
+    font-weight: 300;
+}
+
+.home-content p {
+    font-size: 13px;
+}
+
+.home-content input {
+    background: #fff !important;
+}
+
+.home-footer {
+   text-align: left !important;
+   font-size: 12px;
+   color: #fefefe;
+   padding: 20px 20px 20px 20px;
+}
+
+
+</style>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 home-header">
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 home-content">
+			<h1>Pagurian </h1>
+			<p>管理系统的一个前端解决方案， 让前端设计，开发，测试以及发布更简单 。</p>
+            <p>版本: 1.0.0</p>
+			<br>
+			
+			
+		</div>
+		<div class="col-md-6 home-links">
+            <a class="btn green btn-lg" href="standard-color.html">开始使用</a>
+            <a class="btn btn-default btn-lg" href="standard-color.html">实例</a>
+            <a class="btn btn-default btn-lg" href="https://github.com/gurutechhypers/pagurian" target="_blank">   源码下载
+            </a>
+
+            <a class="btn btn-default btn-lg" href="http://www.hypers.com/contact/" target="_blank">加入我们</a>
+        </div>
+    </div>
+	<!--/end row-->
+	
+    <div class="row">
+		<div class="col-md-12 home-footer"></div>
+	</div>
+</div>
+
+<script src="../../pagurian.js" ></script>
+<script type="text/javascript">
+
+    pagurian.call("modules/index/app", function(app) {
+        app.page.index();
+    });
+
+</script>
+</body>
+</html>

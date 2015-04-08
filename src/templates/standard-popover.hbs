@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{data.page.popover}}</title>
+	{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	
+	{{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		
+		<div class="page-content">
+			
+			{{>fixtures/theme-panel}}
+		
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.popover}}
+					</h3>
+				</div>
+			</div>
+
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				
+				<div class="col-md-12">
+					
+
+					<div class="portlet box default">
+						<div class="portlet-title">
+							<div class="caption">
+								Buttons & Links
+							</div>
+						</div>
+						<div class="portlet-body">
+							
+							<p>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="top" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in top">Top</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="left" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in left">Left</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="right" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in right">Right</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="bottom" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in bottom">Bottom</button>
+
+							<p>
+								 <a href="javascript:;" class="popovers" data-content="Popover body goes here! Popover body goes here!" data-original-title="Default Popover">click link</a>
+							</p>
+							<p>
+								 Tight pants next level keffiyeh <a href="javascript:;" class="popovers" data-content="Popover body goes here! Popover body goes here!" data-original-title="Default Popover">trigger me on click</a> haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel <a href="javascript:;" class="popovers" data-trigger="hover" data-content="Popover body goes here! Popover body goes here!" data-original-title="Another Popover">trigger me on hover</a> terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel williamsburg marfa.
+							</p>
+
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+<div class="row">
+    <!--markdown-->
+    <div class="markdown">
+    <h3>HTML</h3>
+<pre class="prettyprint"><code class="language-html hljs "><span class="hljs-comment">&lt;!--Button--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-default popovers"</span> <span class="hljs-attribute">data-trigger</span>=<span class="hljs-value">"hover"</span> <span class="hljs-attribute">data-placement</span>=<span class="hljs-value">"top"</span> <span class="hljs-attribute">data-content</span>=<span class="hljs-value">"Popover body goes here! Popover body goes here!"</span> <span class="hljs-attribute">data-original-title</span>=<span class="hljs-value">"Popover in top"</span>&gt;</span>Top<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-default popovers"</span> <span class="hljs-attribute">data-trigger</span>=<span class="hljs-value">"hover"</span> <span class="hljs-attribute">data-placement</span>=<span class="hljs-value">"left"</span> <span class="hljs-attribute">data-content</span>=<span class="hljs-value">"Popover body goes here! Popover body goes here!"</span> <span class="hljs-attribute">data-original-title</span>=<span class="hljs-value">"Popover in left"</span>&gt;</span>Left<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-default popovers"</span> <span class="hljs-attribute">data-trigger</span>=<span class="hljs-value">"hover"</span> <span class="hljs-attribute">data-placement</span>=<span class="hljs-value">"right"</span> <span class="hljs-attribute">data-content</span>=<span class="hljs-value">"Popover body goes here! Popover body goes here!"</span> <span class="hljs-attribute">data-original-title</span>=<span class="hljs-value">"Popover in right"</span>&gt;</span>Right<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"btn btn-default popovers"</span> <span class="hljs-attribute">data-trigger</span>=<span class="hljs-value">"hover"</span> <span class="hljs-attribute">data-placement</span>=<span class="hljs-value">"bottom"</span> <span class="hljs-attribute">data-content</span>=<span class="hljs-value">"Popover body goes here! Popover body goes here!"</span> <span class="hljs-attribute">data-original-title</span>=<span class="hljs-value">"Popover in bottom"</span>&gt;</span>Bottom<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!--A--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"javascript:;"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"popovers"</span> <span class="hljs-attribute">data-content</span>=<span class="hljs-value">"Popover body goes here! Popover body goes here!"</span> <span class="hljs-attribute">data-original-title</span>=<span class="hljs-value">"Default Popover"</span>&gt;</span>click link<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span>                     </code></pre>	
+</div>
+ <!--end markdown-->
+</div>
+
+			<!-- END PAGE CONTENT-->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+
+	pagurian.call("modules/standard/app", function(app) {
+		app.page.message();
+	});
+</script>
+
+</body>
+</html>
