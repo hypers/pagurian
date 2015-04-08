@@ -1,6 +1,6 @@
 #Pagurian
 
-Pagurian 是基于Seajs构建的一个前端框架。
+Pagurian 是基于Seajs构建的一个前端解决方案， 致力于让前端设计，开发，测试以及发布更简单。
 
 ## 功能简介
 
