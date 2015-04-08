@@ -595,12 +595,19 @@
 
 
 
+/*** IE 8 Fixes ***/
+
+
+
 .ie8 {
 	.page-sidebar {
+		width: 225px !important;
 		position: absolute;
 	}
 	.page-sidebar-wrapper {
 		width: 225px !important;
+		float: left !important;
+	    margin-left: auto !important;
 	}
 	.ml0 {
 		margin-left: 0 !important
@@ -615,6 +622,16 @@
 		line-height: 24px;
 	}
 	.page-content {
+		margin-left: 25px !important;
+	    margin-top: 0px !important;
+	    min-height: 760px !important;
+	    padding: 25px 20px 20px 20px !important;
+	}
+	.page-sidebar-fixed .page-content {
+    	min-height: 600px; 
+	}
+	.page-content.no-min-height {
+	    min-height: auto;
 	}
 	.mt-100 {
 		margin-bottom: 100px;
@@ -622,4 +639,16 @@
 	.breadcrumb {
 		margin-left: 225px;
 	}
+	.header{
+		.logo{
+		    width: 205px !important; 
+		 }
+	}
 }
+
+
+
+
+
+
+/*** IE 8 Fixes ***/

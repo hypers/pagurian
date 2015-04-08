@@ -5,7 +5,7 @@ Pagurian 是基于Seajs构建的一个前端解决方案， 致力于让前端�
 ## 功能简介
 
 
-[Pagurian]( http://www.guoxiaoming.com/pagurian) 适用于Web管理级的项目
+[Pagurian]( http://www.pagurian.com) 适用于Web管理级的项目
 
 - 基于Sea.js遵循CMD规范，友好的模块定义,使业务开发更简单；
 - 集成了Datatable,Echarts等插件，调用方便，提升开发效率；
@@ -56,7 +56,7 @@ npm install -g grunt-cli
 Clone 项目文件:
 
 ```
-git clone https://github.com/gurutechhypers/pagurian.git
+git clone https://github.com/hypers/pagurian.git
 ```
 
 然后进入目录安装依赖：

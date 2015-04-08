@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
+{{>fixtures/doctype}}
 <head>
 
-<title>Pagurian 管理系统的一个前端解决方案</title>
+<title>Pagurian 基于Seajs构建的一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。</title>
 {{>fixtures/head}}
 
 <style type="text/css">
@@ -17,8 +11,12 @@ html{
 body {
     background: -moz-radial-gradient(center top, circle, #e6e6e6, #d6dae3, #bcc2cd);
     background: -webkit-radial-gradient(center top, circle, #e6e6e6, #d6dae3, #bcc2cd);
+
     padding: 0;
     margin: 0;
+}
+.ie8 body{
+     background: #d6dae3;
 }
 
 .home-header {
@@ -63,6 +61,24 @@ body {
    padding: 20px 20px 20px 20px;
 }
 
+pre{
+    opacity: 0.5;
+    background: none;
+    border: none;
+    padding: 0;
+}
+code{
+   box-shadow:unset;
+   border: none;
+}
+.getting-started{
+    background:#fff;
+    opacity: 0.7;
+    padding: 20px;
+}
+.getting-started blockquote{
+    background: #fafafa;
+}
 
 </style>
 </head>
@@ -76,23 +92,71 @@ body {
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6 home-content">
+		<div class="col-md-7 home-content">
 			<h1>Pagurian </h1>
-			<p>管理系统的一个前端解决方案， 让前端设计，开发，测试以及发布更简单 。</p>
+			<p>基于Seajs构建的一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。</p>
             <p>版本: 1.0.0</p>
 			<br>
 			
 			
 		</div>
-		<div class="col-md-6 home-links">
-            <a class="btn green btn-lg" href="standard-color.html">开始使用</a>
-            <a class="btn btn-default btn-lg" href="standard-color.html">实例</a>
-            <a class="btn btn-default btn-lg" href="https://github.com/gurutechhypers/pagurian" target="_blank">   源码下载
+		<div class="col-md-5 home-links">
+            <a class="btn btn-default btn-lg green" href="https://github.com/gurutechhypers/pagurian" target="_blank">   源码下载
             </a>
-
+            <a class="btn btn-default btn-lg" href="standard-color.html">实例</a>
             <a class="btn btn-default btn-lg" href="http://www.hypers.com/contact/" target="_blank">加入我们</a>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="getting-started">
+                <p>首先安装NodeJs</p>
+                <p>下载地址：<a href="https://nodejs.org/download/">https://nodejs.org/download/</a></p>
+                <hr class="hr" />
+
+                <p>然后安装 Grunt</p>
+
+                <blockquote>
+                  <p>npm install -g grunt-cli</p>
+                </blockquote>
+
+                <p>克隆</p>
+                <blockquote>
+                  <p>git clone <a href="https://github.com/gurutechhypers/pagurian.git">https://github.com/gurutechhypers/pagurian.git</a></p>
+                </blockquote>
+
+                <p>然后进入目录安装 node_modules 依赖</p>
+                <blockquote>
+                  <p>npm install</p>
+                </blockquote>
+
+                <p>接下来，执行 grunt</p>
+                <blockquote>
+                  <p>grunt </p>
+                </blockquote>
+            </div>
+            <!-- <pre><code>
+              
+                首先安装NodeJs
+                下载地址：`https://nodejs.org/download/`
+            
+                然后安装 Grunt
+                `npm install -g grunt-cli`
+            
+                克隆
+                `git clone https://github.com/hypers/pagurian.git`
+            
+                然后进入目录安装 node_modules 依赖
+                `npm install`
+            
+                接下来，执行 grunt
+                `grunt `
+            </code>
+            </pre> -->
+        </div>
+    </div>
+
 	<!--/end row-->
 	
     <div class="row">
@@ -108,5 +172,8 @@ body {
     });
 
 </script>
+<!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </body>
 </html>

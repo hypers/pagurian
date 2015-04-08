@@ -535,34 +535,7 @@ Page container
   margin-top: 42px;  
 }
 
-/*** IE 8 Fixes ***/
-/***
-Page sidebar
-***/
 
-.ie8 .page-sidebar {
-  /* width: 225px !important;
-  float: left !important;
-  position: relative !important;
-  margin-left: -100% !important; */
-}
-
-/***
-Page content
-***/
-.ie8 .page-content-wrapper {
-    float: left !important;
-    width: 100% !important;
-    margin-left: auto !important;
-  }
-
-.ie8 .page-content { 
-    margin-left: 225px !important;
-    margin-top: 0px !important;
-    min-height: 760px !important;
-    padding: 25px 20px 20px 20px !important;
- }
-/*** IE 8 Fixes ***/
 
 /***
 Page sidebar
@@ -873,21 +846,6 @@ Page content
   margin-top: 0px;   
   padding: 0px;
   background-color: #fff; 
-}
-
-.ie8 .page-content { 
-    padding: 20px;
-    margin-left: 225px; 
-    margin-top: 0px;
-    min-height: 760px;
-}
-
-.ie8 .page-sidebar-fixed .page-content {
-    min-height: 600px; 
-}
-
-.ie8 .page-content.no-min-height {
-    min-height: auto;
 }
 
 .page-full-width .page-content {

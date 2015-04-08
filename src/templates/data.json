@@ -13,7 +13,7 @@
         "datatables": "DataTables",
         "echarts": "Echarts",
         "catalogue": "目录设计",
-        "js": "JS规范",
+        "js": "Javascript规范",
         "css": "CSS规范"
     },
     "menu": [{
@@ -82,7 +82,7 @@
             "active": 0
         }, {
             "name": "Javascript",
-            "title": "JS规范",
+            "title": "Javascript规范",
             "url": "styleguide-js.html",
             "active": 0
         }, {
