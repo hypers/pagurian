@@ -1,0 +1,98 @@
+{{>fixtures/doctype}}
+<head>
+<title>{{data.page.login}}</title>
+{{>fixtures/head}}
+<link id="style_themes" href="../resources/css/page-login.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div class="header navbar navbar-inverse navbar-fixed-top">
+
+    <div class="header-inner">
+    
+        <!-- BEGIN LOGO -->
+        <a class="navbar-brand logo" href="index.html">
+            <i class="icon icon-logo-analytics"></i>
+        </a>
+        
+
+    </div>
+ 
+</div>
+<div class="clearfix"></div>
+
+<!-- BEGIN LOGIN -->
+<div class="login action-before">
+    <div class="content">
+        <!-- BEGIN LOGIN FORM -->
+        <form  id="form_login" method="post"
+            action="">
+          
+            <div class="form-group has-error">
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    <div class="input-cut"></div>
+                    <input class="form-control placeholder-no-fix {required:true}"
+                        maxlength="255" type="text"  autocomplete="off" placeholder="用户名"
+                        name="j_username" tabindex="1" />
+                </div>
+                <span class="help-block" for="j_username"></span>
+            </div>
+            <div class="form-group has-error">
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    <div class="input-cut"></div>
+                    <input
+                        class="form-control placeholder-no-fix {required:true,rangelength:[6,30]}"
+                        maxlength="30" type="password" autocomplete="off"
+                        placeholder="密码" name="j_password" tabindex="2" />
+                </div>
+                <span for="j_password" class="help-block"></span>
+            </div>
+            <div class="form-group has-error">
+                <div class="input-icon">
+                    <i class="icon icon-profile"></i>
+                    <div class="input-cut"></div>
+                    <input
+                        class="form-control placeholder-no-fix captcha {required:true}"
+                        type="text" maxlength="4" autocomplete="off" placeholder="验证码"
+                        id="txt_captcha" tabindex="3" />
+                    <div class="captcha-wrap">
+                        <a href="javascript:;" id="captcha" title="点击刷新验证码"> <img
+                            id="img_captcha" src="../resources/img/loading.gif" />
+                        </a>
+                    </div>
+                </div>
+                <span for="txt_captcha" class="help-block"></span>
+            </div>
+            <div class="form-actions">
+                <label class="checkbox"> <input type="checkbox"
+                    name="_spring_security_remember_me" value="1" tabindex="4" /> 记住密码
+                </label>
+                <a class="a-forgot" href="/forgot/sendmail">忘记密码？</a>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn btn-primary btn-block"
+                    tabindex="5">登 录</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END LOGIN -->
+
+<div class="footer-mini">
+    <span>Email : <a href="mailto:analytics-support@hypers.com">analytics-support@hypers.com</a></span>
+    <div class="contact">
+        宏路信息技术（上海）有限公司 版权所有 
+    </div>
+</div>
+
+</body>
+<!-- END BODY -->
+<script src="../../pagurian.js" ></script>
+<script>
+    pagurian.call("modules/page/app", function(app) {
+        app.page.login();
+    });
+</script>
+</html>

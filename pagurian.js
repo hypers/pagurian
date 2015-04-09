@@ -9,7 +9,6 @@
 
 	var schema = ("https:" == document.location.protocol) ? "https://" : "http://";
 	var domain = window.location.hostname || "/";
-
 	/**
 	 * Pagurian 对象
 	 * @type {Object}
@@ -20,13 +19,14 @@
 		ui: {},
 		path: {
 			api: schema + domain + "/",
-			app: schema + domain + "/" + (this.debug ? "src" : "src") + "/",
+			app: schema + domain + "/" + (this.debug ? "src" : "src") + "/"
 		},
 		call: function() {
 			return (this.queue = this.queue || []).push(arguments);
 		}
 	}
 
+	
 
 	/**
 	 * Seajs config

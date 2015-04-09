@@ -51,7 +51,8 @@ module.exports = function(grunt) {
                     "src/resources/css/themes-blue.css": ["src/resources/css/source/themes/blue.less"],
                     "src/resources/css/themes-purple.css": ["src/resources/css/source/themes/purple.less"],
                     "src/resources/css/themes-orange.css": ["src/resources/css/source/themes/orange.less"],
-                    "src/resources/css/themes-red.css": ["src/resources/css/source/themes/red.less"]
+                    "src/resources/css/themes-red.css": ["src/resources/css/source/themes/red.less"],
+                    "src/resources/css/page-login.css": ["src/resources/css/source/page/login.less"]
                 }
             }
         },
@@ -81,7 +82,8 @@ module.exports = function(grunt) {
                     'src/resources/css/themes-blue.css': ['src/resources/css/themes-blue.css'],
                     'src/resources/css/themes-purple.css': ['src/resources/css/themes-purple.css'],
                     'src/resources/css/themes-orange.css': ['src/resources/css/themes-orange.css'],
-                    'src/resources/css/themes-red.css': ['src/resources/css/themes-red.css']
+                    'src/resources/css/themes-red.css': ['src/resources/css/themes-red.css'],
+                    'src/resources/css/page-login.css': ['src/resources/css/page-login.css']
                 }
             }
         },
@@ -178,10 +180,10 @@ module.exports = function(grunt) {
     var task_default = [];
 
     task_default.push("clean:dist");
-    //task_default.push("transport:all");
+    task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    //task_default.push("uglify:all");
+    task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 
@@ -204,6 +206,7 @@ module.exports = function(grunt) {
     grunt.registerTask('css', ['less:build', 'cssmin:build']);
     grunt.registerTask('seajs', ['uglify:seajs']);
     grunt.registerTask('tpl', ['template']);
+    grunt.registerTask('cp', ['copy:all']);
     grunt.registerTask('default', task_default);
 
 

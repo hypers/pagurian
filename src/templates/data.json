@@ -14,7 +14,8 @@
         "echarts": "Echarts",
         "catalogue": "目录设计",
         "js": "Javascript规范",
-        "css": "CSS规范"
+        "css": "CSS规范",
+        "login":"Pagurian 单页-登录"
     },
     "menu": [{
         "name": "standard",
