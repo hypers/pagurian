@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-    require('./js/echarts-plain');
+    require('./js/echarts-plain-map');
 
     var echart = {
 

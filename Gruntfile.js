@@ -166,8 +166,8 @@ module.exports = function(grunt) {
                 options: {},
                 files: [{
                     expand: true,
-                    cwd: 'src/templates',
-                    src: '*.hbs',
+                    cwd: 'src/templates/',
+                    src: ['*.hbs'],
                     dest: 'dist/templates',
                     ext: '.html'
                 }]
@@ -203,9 +203,9 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('check', ['jshint']);
-    grunt.registerTask('css', ['less:build', 'cssmin:build']);
+    grunt.registerTask('css', ['less:build', 'cssmin:build','copy:all']);
     grunt.registerTask('seajs', ['uglify:seajs']);
-    grunt.registerTask('tpl', ['template']);
+    grunt.registerTask('tpl', ['template',"copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
     grunt.registerTask('default', task_default);
 

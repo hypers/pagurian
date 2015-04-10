@@ -1,7 +1,7 @@
 {
-  "family": "hyper",
+  "family": "hypers",
   "version": "0.0.1",
-  "name": "ui",
+  "name": "pagurian",
   "spm": {},
   "devDependencies": {
     "grunt": "~0.4.5",

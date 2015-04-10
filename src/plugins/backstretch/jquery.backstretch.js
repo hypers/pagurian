@@ -1,9 +1,8 @@
 /*! Backstretch - v2.0.3 - 2012-11-30
  * http://srobbin.com/jquery-plugins/backstretch/
  * Copyright (c) 2012 Scott Robbin; Licensed MIT */
-define(function(require, exports, module) {
+define("plugins/backstretch/jquery.backstretch",[],function(require, exports, module) {
 
-  ;
   (function($, window, undefined) {
     'use strict';
 

@@ -230,6 +230,16 @@ define(function(require, exports, module) {
 
     }
 
+    /**
+     * 处理 Tabs
+     */
+    var doTabs=function(){
+        
+        $('body').on('click', '.nav-tabs li', function(e) {
+            $(this).parent('.nav-tabs').find("li").removeClass("active");
+            $(this).addClass("active");
+        });
+    }
 
 
     /**
@@ -346,6 +356,7 @@ define(function(require, exports, module) {
             doDropdowns();
             doTooltips();
             doPopovers();
+            doTabs();
             doTheme();
             doHLJS();
         },
