@@ -73,6 +73,16 @@
             "active": 0
         }]
     }, {
+        "name": "page",
+        "title": "单页",
+        "icon": "fa fa-pagelines",
+        "items": [{
+            "name": "login",
+            "title": "登录",
+            "url": "page-login.html",
+            "active": 0
+        }]
+    }, {
         "name": "styleguide",
         "title": "前端规范",
         "icon": "fa fa-bookmark",
