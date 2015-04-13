@@ -74,10 +74,14 @@
                 <div class="markdown">
                     <h3>Javascript</h3>
                     <pre><code class="javascript">                
-var chart = require('../../plugins/echarts/module');
+require('../../plugins/echarts/module');
 
-var myChart = chart.init("my_chart");
-var option = myChart.pie({
+var chart = $p.ui.echarts("my_chart", {
+    type: "pie"
+});
+
+chart.load({
+    name: '访问来源',
     data: [{
         value: 735,
         name: '百度'
@@ -101,7 +105,6 @@ var option = myChart.pie({
         name: '网易有道'
     }],
 });
-myChart.load(option);
 
                 </code></pre>
                 </div>

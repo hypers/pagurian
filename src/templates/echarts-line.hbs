@@ -74,10 +74,17 @@
                 <div class="markdown">
                     <h3>Javascript</h3>
                     <pre><code class="javascript">                
-var chart = require('../../plugins/echarts/module');
+require('../../plugins/echarts/module');
 
-var myChart = chart.init("my_chart");
-var option = oChart1.line({
+var chart = $p.ui.echarts("my_chart", {
+    type: "line",
+    title: {
+        text: '来源分析',
+        subtext: '最近一周数据'
+    }
+});
+
+chart.load({
     column: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
     data: [{
         name: "搜索引擎",
@@ -93,7 +100,7 @@ var option = oChart1.line({
         value: [320, 332, 301, 334, 390, 330, 320]
     }]
 });
-myChart.load(option);
+
 
                 </code></pre>
                 </div>

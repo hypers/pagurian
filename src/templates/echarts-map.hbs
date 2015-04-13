@@ -74,10 +74,16 @@
                 <div class="markdown">
                     <h3>Javascript</h3>
                     <pre><code class="javascript">                
-var chart = require('../../plugins/echarts/module');
+require('../../plugins/echarts/module');
 
-var myChart = chart.init("my_chart");
-var option = myChart.map({
+var chart = $p.ui.echarts("my_chart", {
+    type: "map",
+    title: {
+        text: "浏览量（PV）地域分布图"
+    }
+});
+chart.load({
+    name:"pv",
     data: [{
         value: 735,
         name: '上海'
@@ -99,12 +105,8 @@ var option = myChart.map({
     }, {
         value: 114,
         name: '香港'
-    }],
-    config: {
-        name: "浏览量（PV）地域分布图"
-    }
+    }]
 });
-myChart.load(option);
 
                 </code></pre>
                 </div>

@@ -74,10 +74,13 @@
                 <div class="markdown">
                     <h3>Javascript</h3>
                     <pre><code class="javascript">                
-var chart = require('../../plugins/echarts/module');
+require('../../plugins/echarts/module');
 
-var myChart = chart.init("my_chart");
-var option = myChart.bar({
+var chart = $p.ui.echarts("my_chart", {
+    type: "bar"
+});
+chart.load({
+    name:"PV",
     data: [{
         value: 735,
         name: '百度'
@@ -101,7 +104,6 @@ var option = myChart.bar({
         name: '网易有道'
     }]
 });
-myChart.load(option);
 
                 </code></pre>
                 </div>
