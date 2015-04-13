@@ -2,7 +2,15 @@
 <head>
 
 <title>Pagurian 基于Seajs构建的一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。</title>
-{{>fixtures/head}}
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<link rel="shortcut icon" href="favicon.ico" />
+<link href="../resources/css/public.css" rel="stylesheet" type="text/css"/>
+<link id="style_themes" href="../resources/css/themes-default.css" rel="stylesheet" type="text/css"/>
 
 <style type="text/css">
 html{
@@ -79,6 +87,98 @@ code{
 .getting-started blockquote{
     background: #fafafa;
 }
+
+
+.fork-me-wrapper {
+  width: 170px;
+  height: 170px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.fork-me {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #1d943b;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIxOCIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDE4IDMyIj4KPGc+CjwvZz4KCTxwYXRoIGQ9Ik01LjE0MyAyNi4yODZxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNNS4xNDMgNS43MTRxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNMTYuNTcxIDhxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNMTguMjg2IDhxMCAwLjkyOS0wLjQ2NCAxLjcyM3QtMS4yNSAxLjI0MXEtMC4wMzYgNS4xMjUtNC4wMzYgNy4zOTMtMS4yMTQgMC42NzktMy42MjUgMS40NDYtMi4yODYgMC43MTQtMy4wMjcgMS4yNjh0LTAuNzQxIDEuNzg2djAuNDY0cTAuNzg2IDAuNDQ2IDEuMjUgMS4yNDF0MC40NjQgMS43MjNxMCAxLjQyOS0xIDIuNDI5dC0yLjQyOSAxLTIuNDI5LTEtMS0yLjQyOXEwLTAuOTI5IDAuNDY0LTEuNzIzdDEuMjUtMS4yNDF2LTE0LjY0M3EtMC43ODYtMC40NDYtMS4yNS0xLjI0MXQtMC40NjQtMS43MjNxMC0xLjQyOSAxLTIuNDI5dDIuNDI5LTEgMi40MjkgMSAxIDIuNDI5cTAgMC45MjktMC40NjQgMS43MjN0LTEuMjUgMS4yNDF2OC44NzVxMC45NjQtMC40NjQgMi43NS0xLjAxOCAwLjk4Mi0wLjMwNCAxLjU2Mi0wLjUyN3QxLjI1OS0wLjU1NCAxLjA1NC0wLjcwNSAwLjcyMy0wLjkxMSAwLjUtMS4yNDEgMC4xNTItMS42MzRxLTAuNzg2LTAuNDQ2LTEuMjUtMS4yNDF0LTAuNDY0LTEuNzIzcTAtMS40MjkgMS0yLjQyOXQyLjQyOS0xIDIuNDI5IDEgMSAyLjQyOXoiIGZpbGw9IiNmZmZmZmYiIC8+Cjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-position: center center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+@media only screen and (min-width: 40.063em) {
+  .fork-me {
+    width: auto;
+    height: auto;
+    top: 40px;
+    right: -55px;
+    padding: 2px 0;
+    box-shadow: 0 0 10px 0 #888;
+    background-color: #1d943b;
+    background-image: none !important;
+    transform: rotate(45deg);
+  }
+}
+
+.fork-me-link, .fork-me-link:link, .fork-me-link:visited, .fork-me-link:hover, .fork-me-link:focus, .fork-me-link:active {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  border: none;
+}
+@media only screen and (min-width: 40.063em) {
+  .fork-me-link, .fork-me-link:link, .fork-me-link:visited, .fork-me-link:hover, .fork-me-link:focus, .fork-me-link:active {
+    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #fff;
+    padding: 10px 50px;
+    border: 1px solid #fff;
+    text-shadow: 0 0 5px #444;
+  }
+}
+.fork-me-link:focus {
+  text-decoration: underline;
+}
+
+.fork-me-text {
+  display: none;
+}
+@media only screen and (min-width: 40.063em) {
+  .fork-me-text {
+    display: inline;
+  }
+}
+
+.fork-me-dark {
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIxOCIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDE4IDMyIj4KPGc+CjwvZz4KCTxwYXRoIGQ9Ik01LjE0MyAyNi4yODZxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNNS4xNDMgNS43MTRxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNMTYuNTcxIDhxMC0wLjcxNC0wLjUtMS4yMTR0LTEuMjE0LTAuNS0xLjIxNCAwLjUtMC41IDEuMjE0IDAuNSAxLjIxNCAxLjIxNCAwLjUgMS4yMTQtMC41IDAuNS0xLjIxNHpNMTguMjg2IDhxMCAwLjkyOS0wLjQ2NCAxLjcyM3QtMS4yNSAxLjI0MXEtMC4wMzYgNS4xMjUtNC4wMzYgNy4zOTMtMS4yMTQgMC42NzktMy42MjUgMS40NDYtMi4yODYgMC43MTQtMy4wMjcgMS4yNjh0LTAuNzQxIDEuNzg2djAuNDY0cTAuNzg2IDAuNDQ2IDEuMjUgMS4yNDF0MC40NjQgMS43MjNxMCAxLjQyOS0xIDIuNDI5dC0yLjQyOSAxLTIuNDI5LTEtMS0yLjQyOXEwLTAuOTI5IDAuNDY0LTEuNzIzdDEuMjUtMS4yNDF2LTE0LjY0M3EtMC43ODYtMC40NDYtMS4yNS0xLjI0MXQtMC40NjQtMS43MjNxMC0xLjQyOSAxLTIuNDI5dDIuNDI5LTEgMi40MjkgMSAxIDIuNDI5cTAgMC45MjktMC40NjQgMS43MjN0LTEuMjUgMS4yNDF2OC44NzVxMC45NjQtMC40NjQgMi43NS0xLjAxOCAwLjk4Mi0wLjMwNCAxLjU2Mi0wLjUyN3QxLjI1OS0wLjU1NCAxLjA1NC0wLjcwNSAwLjcyMy0wLjkxMSAwLjUtMS4yNDEgMC4xNTItMS42MzRxLTAuNzg2LTAuNDQ2LTEuMjUtMS4yNDF0LTAuNDY0LTEuNzIzcTAtMS40MjkgMS0yLjQyOXQyLjQyOS0xIDIuNDI5IDEgMSAyLjQyOXoiIGZpbGw9IiMwMDAwMDAiIC8+Cjwvc3ZnPgo=");
+}
+
+.fork-me-left {
+  left: 0;
+  right: auto;
+}
+.fork-me-left .fork-me {
+  left: 5px;
+  right: auto;
+}
+@media only screen and (min-width: 40.063em) {
+  .fork-me-left .fork-me {
+    left: -55px;
+    right: auto;
+    transform: rotate(-45deg);
+  }
+}
+
+.fork-me-fixed {
+  position: fixed;
+}
+
 
 </style>
 </head>
@@ -162,6 +262,15 @@ code{
 		<div class="col-md-12 home-footer"></div>
 	</div>
 </div>
+
+<div class="fork-me-wrapper">
+  <div class="fork-me">
+    <a class="fork-me-link" href="https://github.com/hypers/pagurian" target="_blank">
+      <span class="fork-me-text">Fork Me On GitHub</span>
+    </a>
+  </div>
+</div>
+
 
 <script src="../../pagurian.js" ></script>
 <script type="text/javascript">
