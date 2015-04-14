@@ -3,57 +3,48 @@ define(function(require, exports, module) {
     var app = require('../../lib/app');
     var model = require('./model');
 
-
-
-    var dataTable = require('../../plugins/datatables/module');
-    var chart = require('../../plugins/echarts/module');
+    require('../../plugins/echarts/module');
+    require('../../plugins/datatables/module');
 
 
     //  var kk_data = require('../../../test_data/kk.js');
     var kk_data = [];
     app.page.dataTable = function() {
 
-        var oTable = dataTable.init({
-            "id": "#datatable_keywords",
+        $p.ui.dataTable("#my_table", {
             "dataSource": model.getDataList,
-            "isCreateOrder": true,
+            "sClass": "table-fixed",
             "aaSorting": [
-                [3, "desc"]
+                [2, "desc"]
             ],
             "fnParams": function() {
                 return {};
             },
             "aoColumns": [{
-                "mData": null,
-                "bSortable": false,
-                "sClass": "t-a-c",
-                mRender: function(data, type, full) {
-                    return "";
-                }
-            }, {
                 "bSortable": false,
                 "mData": "keywords",
+                "sTitle": "关键字",
                 mRender: function(data, type, full) {
                     return '<span title="' + full.keywords + '">' + full.keywords + '</span>';
                 }
             }, {
                 "bSortable": false,
+                "sTitle": "搜索引擎",
                 "mData": "searchEngine"
             }, {
                 "sClass": "t-a-r",
+                "sTitle": "浏览量(PV)",
                 "mData": "pageViews"
             }, {
                 "sClass": "t-a-r",
+                "sTitle": "独立访问者(UV)",
                 "mData": "uniqueVisitors"
             }, {
                 "sClass": "t-a-r",
+                "sTitle": "访问次数(VV)",
                 "mData": "visitViews"
-            }],
-            callback: function() {
-
-            }
+            }]
         });
-
     };
 
     app.page.echarts_line = function() {
@@ -225,7 +216,7 @@ define(function(require, exports, module) {
             }
         });
         chart.load({
-            name:"pv",
+            name: "pv",
             data: [{
                 value: 735,
                 name: '上海'

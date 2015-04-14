@@ -31,20 +31,7 @@
             
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table-custom table table-striped table-hover table-bordered table-fixed" id="datatable_keywords">
-                        <thead>
-                            <tr>
-                                <th class="t-a-c" width="80"></th>
-                                <th>关键字</th>
-                                <th>搜索引擎</th>
-                                <th  class="t-a-r">浏览量(PV)</th>
-                                <th  class="t-a-r">独立访问者(UV)</th>
-                                <th  class="t-a-r">访问次数(VV)</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
+                    <table id="my_table"></table>
                 </div>
                 
             </div>
@@ -53,198 +40,67 @@
             <div class="row">
                 <div class="col-md-12">
                     
-                    <hr>
+                    
                     <div id="wmd-preview-section-89" class="markdown">
 
 
                     
     
                     <h3>HTML代码</h3>
-<pre class="prettyprint">
-<code class="language-html hljs ">
-<span class="hljs-tag">&lt;<span class="hljs-title">table</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"table-custom table table-striped table-hover table-bordered table-fixed"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"datatable_keywords"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">thead</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-title">tr</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"t-a-c"</span> <span class="hljs-attribute">width</span>=<span class="hljs-value">"40"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>关键字<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span>&gt;</span>搜索引擎<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span>  <span class="hljs-attribute">class</span>=<span class="hljs-value">"t-a-r"</span>&gt;</span>浏览量(PV)<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span>  <span class="hljs-attribute">class</span>=<span class="hljs-value">"t-a-r"</span>&gt;</span>独立访问者(UV)<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-title">th</span>  <span class="hljs-attribute">class</span>=<span class="hljs-value">"t-a-r"</span>&gt;</span>访问次数(VV)<span class="hljs-tag">&lt;/<span class="hljs-title">th</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-title">tr</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-title">thead</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">tbody</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">tbody</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">table</span>&gt;</span>
-</code></pre>
+                        <pre><code class="html">
+&lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;
+                        </code></pre>
                         <h3>Javascript代码</h3>
-                        <pre>
-<code class="language-js hljs "><span class="hljs-keyword">var</span> dataTable = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../plugins/datatables/module'</span>);
+                        <pre><code class="javascript">
+require('../../plugins/datatables/module');
 
-<span class="hljs-keyword">var</span> oTable = dataTable.init({
-    <span class="hljs-string">"id"</span>: <span class="hljs-string">"#datatable_keywords"</span>,
-     <span class="hljs-string">"dataSource"</span>: model.getDataList,
-     <span class="hljs-string">"isCreateOrder"</span>: <span class="hljs-literal">true</span>,
-     <span class="hljs-string">"aaSorting"</span>: [
-         [<span class="hljs-number">3</span>, <span class="hljs-string">"desc"</span>]
-     ],
-     <span class="hljs-string">"fnParams"</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-         <span class="hljs-keyword">return</span> {};
-     },
-     <span class="hljs-string">"aoColumns"</span>: [{
-         <span class="hljs-string">"mData"</span>: <span class="hljs-literal">null</span>,
-         <span class="hljs-string">"bSortable"</span>: <span class="hljs-literal">false</span>,
-         <span class="hljs-string">"sClass"</span>: <span class="hljs-string">"t-a-c"</span>,
-         mRender: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, type, full)</span> {</span>
-             <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
-         }
-     }, {
-         <span class="hljs-string">"bSortable"</span>: <span class="hljs-literal">false</span>,
-         <span class="hljs-string">"mData"</span>: <span class="hljs-string">"keywords"</span>,
-         mRender: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, type, full)</span> {</span>
-             <span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;span title="'</span> + full.keywords + <span class="hljs-string">'"&gt;'</span> + full.keywords + <span class="hljs-string">'&lt;/span&gt;'</span>;
-         }
-     }, {
-         <span class="hljs-string">"bSortable"</span>: <span class="hljs-literal">false</span>,
-         <span class="hljs-string">"mData"</span>: <span class="hljs-string">"searchEngine"</span>
-     }, {
-         <span class="hljs-string">"sClass"</span>: <span class="hljs-string">"t-a-r"</span>,
-         <span class="hljs-string">"mData"</span>: <span class="hljs-string">"pageViews"</span>
-     }, {
-         <span class="hljs-string">"sClass"</span>: <span class="hljs-string">"t-a-r"</span>,
-         <span class="hljs-string">"mData"</span>: <span class="hljs-string">"uniqueVisitors"</span>
-     }, {
-         <span class="hljs-string">"sClass"</span>: <span class="hljs-string">"t-a-r"</span>,
-         <span class="hljs-string">"mData"</span>: <span class="hljs-string">"visitViews"</span>
-     }],
-     callback: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+$p.ui.dataTable("#my_table", {
+    "dataSource": model.getDataList,
+    "sClass": "table-fixed",
+    "aaSorting": [
+        [2, "desc"]
+    ],
+    "fnParams": function() {
+        return {};
+    },
+    "aoColumns": [{
+        "bSortable": false,
+        "mData": "keywords",
+        "sTitle": "关键字",
+        mRender: function(data, type, full) {
+            return &#39;&lt;span title=&quot;&#39; + full.keywords + &#39;&quot;&gt;&#39; + full.keywords + &#39;&lt;/span&gt;&#39;
+        }
+    }, {
+        "bSortable": false,
+        "sTitle": "搜索引擎",
+        "mData": "searchEngine"
+    }, {
+        "sClass": "t-a-r",
+        "sTitle": "浏览量(PV)",
+        "mData": "pageViews"
+    }, {
+        "sClass": "t-a-r",
+        "sTitle": "独立访问者(UV)",
+        "mData": "uniqueVisitors"
+    }, {
+        "sClass": "t-a-r",
+        "sTitle": "访问次数(VV)",
+        "mData": "visitViews"
+    }]
+});
 
-     }
- });</code>
-</pre>
+                    </code></pre>
 
-<h3>JSON 数据</h3>
-<pre class="prettyprint"><code class="language-json hljs ">{
-    "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"20000"</span></span>,
-    "<span class="hljs-attribute">result</span>": <span class="hljs-value">[{
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">249001</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">50922</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">124415</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"Yahoo"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">239879</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">60124</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">136630</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"微软必应"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">234207</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">55181</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">145254</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"Google"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">211188</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">63164</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">120360</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"360搜索"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">210682</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">63573</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">138105</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"网易有道"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">209856</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">68639</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">142310</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"古剑奇谭"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"搜狗"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">205573</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">57675</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">109748</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"天天向上"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"Yahoo"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">203668</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">57337</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">109509</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"天天向上"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"360搜索"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">193761</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">49379</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">133172</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"天天向上"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"网易有道"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}, {
-        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">pageViews</span>": <span class="hljs-value"><span class="hljs-number">192340</span></span>,
-        "<span class="hljs-attribute">uniqueVisitors</span>": <span class="hljs-value"><span class="hljs-number">44801</span></span>,
-        "<span class="hljs-attribute">visitViews</span>": <span class="hljs-value"><span class="hljs-number">92159</span></span>,
-        "<span class="hljs-attribute">keywords</span>": <span class="hljs-value"><span class="hljs-string">"天天向上"</span></span>,
-        "<span class="hljs-attribute">searchEngine</span>": <span class="hljs-value"><span class="hljs-string">"Google"</span></span>,
-        "<span class="hljs-attribute">searchEngineProportion</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">viewsOf</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">channel</span>": <span class="hljs-value"><span class="hljs-literal">null</span></span>,
-        "<span class="hljs-attribute">reportDate</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-    </span>}]</span>,
-    "<span class="hljs-attribute">page</span>": <span class="hljs-value">{
-        "<span class="hljs-attribute">current</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
-        "<span class="hljs-attribute">pagesize</span>": <span class="hljs-value"><span class="hljs-number">10</span></span>,
-        "<span class="hljs-attribute">total</span>": <span class="hljs-value"><span class="hljs-number">121</span>
-    </span>}
-</span>}
-</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/keywords.json" target="_blank">keywords.json</a>
                         
+                    <h3>更多实例</h3>
+                    <a href="http://www.datatables.net/examples/index" target="_blank">http://www.datatables.net/examples/index</a>
                     </div>
+
+                    
+                    </div>
+                    
                 </div>
             </div>
 

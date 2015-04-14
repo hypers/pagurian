@@ -34,7 +34,7 @@
 	pagurian.call("config", {
 		base: pagurian.path.app,
 		alias: {
-			"jquery": "lib/vendor/jquery.1.9.1.min"
+			"jquery": "lib/vendor/jquery.1.9.1.min",
 		},
 		map: [
 			[/^(.*\/dist\/modules\/.*\.(?:js))(?:.*)$/i, '$1?v=' + pagurian.version]
