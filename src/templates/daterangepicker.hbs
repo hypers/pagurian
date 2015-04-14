@@ -1,0 +1,122 @@
+{{>fixtures/doctype}}
+<head>
+	<title> {{data.page.daterangepicker}}</title>
+	{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+   
+
+   {{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		
+		<div class="page-content">
+			
+			{{>fixtures/theme-panel}}
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.daterangepicker}}
+					</h3>
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-md-12">
+					
+					<!-- BEGIN PORTLET-->
+					<div class="portlet box default">
+						<div class="portlet-title">
+							<div class="caption">
+								默认
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<form class="form-horizontal ">
+	  							<div class="form-body">
+		                            <div class="form-group ">
+		  
+		                                <div class="col-md-4">
+		                                    <div id="my_picker" class="input-group daterangepicker-custom">
+		                                        <input type="text" class="form-control  form-control-lg">
+		                                        <span class="input-group-btn">
+		                                            <button type="button" class="btn default btn-default date-range-toggle">
+		                                                <i class="fa fa-calendar"></i>
+		                                            </button>
+		                                        </span>
+		                                    </div>
+		                                </div>
+		                            </div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+					<!-- END PORTLET-->
+
+				</div>
+			</div>
+		
+			
+			<div class="row">
+				<div class="col-md-12">
+					
+					
+					<div class="markdown">
+
+
+					
+	
+					<h3>HTML代码</h3>
+						<pre><code class="html">
+&lt;div id=&quot;my_daterangepicker&quot; class=&quot;input-group daterangepicker-custom&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control  form-control-lg&quot;&gt;
+    &lt;span class=&quot;input-group-btn&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn default btn-default date-range-toggle&quot;&gt;
+            &lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;
+        &lt;/button&gt;
+    &lt;/span&gt;
+&lt;/div&gt;
+						</code></pre>
+						<h3>Javascript代码</h3>
+						<pre><code class="javascript">
+$p.ui.dateRangePicker("#my_picker", {
+    textForamt: "YYYY年MM月DD日"
+}, function(begin, end) {
+    $p.ui.alert("开始时间：" + begin + " , 结束时间：" + end);
+});
+					</code></pre>
+
+					
+
+					
+					</div>
+					
+				</div>
+			</div>
+
+			
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+	pagurian.call("modules/daterangepicker/app", function(app) {
+		app.page.index();
+	});
+</script>
+
+
+</body>
+</html>

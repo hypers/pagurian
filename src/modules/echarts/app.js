@@ -1,51 +1,7 @@
 define(function(require, exports, module) {
 
     var app = require('../../lib/app');
-    var model = require('./model');
-
     require('../../plugins/echarts/module');
-    require('../../plugins/datatables/module');
-
-
-    //  var kk_data = require('../../../test_data/kk.js');
-    var kk_data = [];
-    app.page.dataTable = function() {
-
-        $p.ui.dataTable("#my_table", {
-            "dataSource": model.getDataList,
-            "sClass": "table-fixed",
-            "aaSorting": [
-                [2, "desc"]
-            ],
-            "fnParams": function() {
-                return {};
-            },
-            "aoColumns": [{
-                "bSortable": false,
-                "mData": "keywords",
-                "sTitle": "关键字",
-                mRender: function(data, type, full) {
-                    return '<span title="' + full.keywords + '">' + full.keywords + '</span>';
-                }
-            }, {
-                "bSortable": false,
-                "sTitle": "搜索引擎",
-                "mData": "searchEngine"
-            }, {
-                "sClass": "t-a-r",
-                "sTitle": "浏览量(PV)",
-                "mData": "pageViews"
-            }, {
-                "sClass": "t-a-r",
-                "sTitle": "独立访问者(UV)",
-                "mData": "uniqueVisitors"
-            }, {
-                "sClass": "t-a-r",
-                "sTitle": "访问次数(VV)",
-                "mData": "visitViews"
-            }]
-        });
-    };
 
     app.page.echarts_line = function() {
 
@@ -73,7 +29,6 @@ define(function(require, exports, module) {
                 data: [320, 332, 301, 334, 390, 330, 320]
             }]
         });
-
 
     }
 

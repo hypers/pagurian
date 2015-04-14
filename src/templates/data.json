@@ -11,11 +11,12 @@
         "tooltip": "提示框 Tooltip",
         "popover": "弹出框 Popover",
         "datatables": "DataTables",
+        "daterangepicker":"DateRange Pickers",
         "echarts": "Echarts",
         "catalogue": "目录设计",
         "js": "Javascript规范",
         "css": "CSS规范",
-        "login":"Pagurian 单页-登录"
+        "login": "Pagurian 单页-登录"
     },
     "menu": [{
         "name": "standard",
@@ -71,6 +72,10 @@
             "title": "Echarts",
             "url": "echarts-line.html",
             "active": 0
+        }, {
+            "name": "daterangepicker",
+            "title":"DateRange Pickers",
+            "url":"daterangepicker.html"
         }]
     }, {
         "name": "page",

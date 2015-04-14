@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                 files: {
                     'src/resources/css/public.css': [
                         'src/plugins/bootstrap/css/bootstrap.css',
-                        'src/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css',
+                        'src/plugins/daterangepicker/bs3.css',
                         'src/plugins/uniform/css/uniform.default.css',
                         'src/plugins/font-awesome/css/font-awesome.min.css',
                         'src/plugins/datatables/bs.css',

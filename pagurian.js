@@ -19,7 +19,7 @@
 		ui: {},
 		path: {
 			api: schema + domain + "/",
-			app: schema + domain + "/" + (this.debug ? "src" : "dist") + "/"
+			app: schema + domain + "/" + (this.debug ? "src" : "src") + "/"
 		},
 		call: function() {
 			return (this.queue = this.queue || []).push(arguments);
