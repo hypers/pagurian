@@ -77,7 +77,7 @@ define(function(require, exports, module) {
                 $(document).delegate(seletor, 'click', function() {
 
                     var params = $(this).data("params");
-                    modal.params = eval("(" + params + ")");
+                    modal.params = eval("(" + params + ")") || {};
 
                     if (typeof options.initForm === "function") {
                         options.initForm(modal, form, modal.params);

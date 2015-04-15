@@ -11,8 +11,9 @@
         "tooltip": "提示框 Tooltip",
         "popover": "弹出框 Popover",
         "datatables": "DataTables",
-        "daterangepicker":"DateRange Pickers",
+        "datepicker": "Date Pickers",
         "echarts": "Echarts",
+        "ckeditor":"CKEditor",
         "catalogue": "目录设计",
         "js": "Javascript规范",
         "css": "CSS规范",
@@ -73,9 +74,9 @@
             "url": "echarts-line.html",
             "active": 0
         }, {
-            "name": "daterangepicker",
-            "title":"DateRange Pickers",
-            "url":"daterangepicker.html"
+            "name": "datepicker",
+            "title": "Date Pickers",
+            "url": "datepicker.html"
         }]
     }, {
         "name": "page",

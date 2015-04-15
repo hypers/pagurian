@@ -32,7 +32,7 @@ define(function(require, exports, module) {
 
 
     var ajax = {
-
+        bundle: false,
         options: {
             data: []
         },
@@ -79,24 +79,14 @@ define(function(require, exports, module) {
         },
         send: function(type, url, params, callback) {
 
-            var data = [];
+            this.init(params);
 
-            if (type === "get") {
-                this.init(params);
-                data = this.options.data;
-            } else if (type == "post" || type == "put" || type == "patch") {
-                data = $.toJSON({
-                    data: arrayToObject(params)
-                });
-            }
-
-            $.ajax({
+            var options = {
                 url: pagurian.path.api + url + ".json",
                 type: type || "get",
                 dataType: "json",
                 data: data,
                 timeout: 20000,
-                contentType: 'application/json',
                 success: function(data, textStatus, jqXHR) {
                     if ("function" == typeof callback) {
                         callback(data, textStatus, jqXHR);
@@ -124,8 +114,21 @@ define(function(require, exports, module) {
                         });
                     }
                 }
+            };
 
-            });
+            var data = this.options.data;
+            if (this.bundle) {
+                options.contentType = "application/json";
+                if (type == "post" || type == "put" || type == "patch") {
+                    data = $.toJSON({
+                        data: arrayToObject(params)
+                    });
+                }
+            }
+
+            options.data = data;
+
+            $.ajax(options);
 
             return this;
 

@@ -29,33 +29,22 @@
 
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					
-					<!-- BEGIN PORTLET-->
-					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								默认
-							</div>
-						</div>
-						<div class="portlet-body">
-							<a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
-							<a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
-						    
+					
+
+                    <!-- BEGIN PORTLET-->
+                    <div class="portlet box default">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                默认
+                            </div>
                         </div>
-					</div>
-					<!-- END PORTLET-->
-
-				</div>
-			</div>
-
-			
-            <div class="row">
-                <div class="col-md-12">
-                            <!--markdown-->
-                            <div class="markdown">
-                                <h3>Javascript</h3>
-                                <pre><code class="javascript">//删除
+                        <div class="portlet-body">
+                            <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
+                            
+                            <div class="markdown inner">
+                                <pre><code class="javascript">
 $p.ui.modal("#btn_remove", {
     title: "提示",
     body: "你确定要删除吗？",
@@ -64,8 +53,26 @@ $p.ui.modal("#btn_remove", {
         modal.hide();
     }
 });
+                                </code></pre>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- END PORTLET-->
 
-//添加
+
+
+                    <!-- BEGIN PORTLET-->
+                    <div class="portlet box default">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                表单
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
+                            <div class="markdown inner">
+                                <pre><code class="javascript">
 $p.ui.modal("#btn_add", {
     title: "添加用户",
     body: $("#tpl_user").html(),
@@ -79,10 +86,66 @@ $p.ui.modal("#btn_add", {
 }); 
                                 </code></pre>
                             </div>
-                            <!--end markdown-->
+                            
                         </div>
+                    </div>
+                    <!-- END PORTLET-->
 
-            </div>
+
+                    
+
+				</div>
+                <div class="col-md-6">
+                    
+                     
+
+                    <!-- BEGIN PORTLET-->
+                    <div class="portlet box default">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                表单填充
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
+                            
+                            <div class="markdown inner">
+                                <pre><code class="javascript">
+$p.ui.modal("#btn_update", {
+    title: "编辑用户",
+    body: $("#tpl_user").html(),
+    initForm: function(modal, form, params) {
+
+        //获取用户信息
+        model.getUser(params.id,params,function(resp) {
+            $p.ui.form(form).bind(resp);
+        });
+
+    },
+    validate: function(modal, data, params) {
+        return true;
+    },
+    submit: function(modal, data, params, callback) {
+        //更新用户信息
+        model.update(params.id, data, function(resp) {
+            $p.ui.alert(resp.message);
+            modal.hide();
+        });
+    }
+});
+                                </code></pre>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- END PORTLET-->
+
+                </div>
+
+			</div>
+            
+			
+        
 
 			<!-- END PAGE CONTENT-->
 		</div>

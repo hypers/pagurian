@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-	<title> {{data.page.daterangepicker}}</title>
+	<title> {{data.page.datepicker}}</title>
 	{{>fixtures/head}}
 </head>
 <body>
@@ -23,24 +23,33 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.daterangepicker}}
+					{{data.page.datepicker}}
 					</h3>
 				</div>
 			</div>
-
+			
+			 <div class="tabs-wrap">
+               <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="datepicker.html" >Date Pickers</a>
+                    </li>
+                    <li  class="active" >
+                        <a href="daterangepicker.html" >DateRange Pickers</a>
+                    </li>
+                   
+                </ul>
+            </div>
+            
 			
 			<div class="row">
 				<div class="col-md-12">
 					
 					<!-- BEGIN PORTLET-->
 					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								默认
-							</div>
-						</div>
 						<div class="portlet-body form">
 							<form class="form-horizontal ">
+
+								
 	  							<div class="form-body">
 		                            <div class="form-group ">
 		  
@@ -112,8 +121,8 @@ $p.ui.dateRangePicker("#my_picker", {
 
 {{>fixtures/footer}}
 <script type="text/javascript">
-	pagurian.call("modules/daterangepicker/app", function(app) {
-		app.page.index();
+	pagurian.call("modules/datepicker/app", function(app) {
+		app.page.daterange();
 	});
 </script>
 

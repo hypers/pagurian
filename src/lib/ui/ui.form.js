@@ -52,7 +52,6 @@ define(function(require, exports, module) {
         this.bind = function(data) {
 
             var elements = this.element.find("input,textarea,select");
-
             elements.each(function() {
                 var o = $(this);
                 for (var key in data) {

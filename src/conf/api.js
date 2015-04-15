@@ -1,4 +1,5 @@
 define({
     keywords: "test/api/keywords",
-    user_profile: "test/api/user"
+    user: "test/api/user",
+    succeed: "test/api/succeed"
 });

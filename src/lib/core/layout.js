@@ -112,6 +112,10 @@ define(function(require, exports, module) {
                 content.css("min-height", available_height + 'px');
             }
         } else {
+
+            if ($('.footer').hasClass("fixed")) {
+                $('.footer').removeClass("fixed");
+            }
             if (body.hasClass('page-sidebar-fixed')) {
                 height = _calculateFixedSidebarViewportHeight();
             } else {
@@ -233,12 +237,19 @@ define(function(require, exports, module) {
     /**
      * 处理 Tabs
      */
-    var doTabs=function(){
-        
-        $('body').on('click', '.nav-tabs li', function(e) {
-            $(this).parent('.nav-tabs').find("li").removeClass("active");
-            $(this).addClass("active");
+    var doTabs = function() {
+
+        $('body').on('shown.bs.tab', '.nav.nav-tabs', function() {
+            doSidebarAndContentHeight();
         });
+        if (location.hash) {
+            var tabid = location.hash.substr(1);
+            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function() {
+                var tabid = $(this).attr("id");
+                $('a[href="#' + tabid + '"]').click();
+            });
+            $('a[href="#' + tabid + '"]').click();
+        }
     }
 
 
@@ -349,7 +360,7 @@ define(function(require, exports, module) {
             doResponsiveOnInit();
 
             doFixInputPlaceholderForIE();
-            
+
             doSelect2();
             doPortletTools();
             doAlerts();

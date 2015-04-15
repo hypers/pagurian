@@ -1,0 +1,116 @@
+{{>fixtures/doctype}}
+<head>
+	<title> {{data.page.datepicker}}</title>
+	{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+   
+
+   {{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		
+		<div class="page-content">
+			
+			{{>fixtures/theme-panel}}
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.datepicker}}
+					</h3>
+				</div>
+			</div>
+
+			 <div class="tabs-wrap">
+			   <ul  class="nav nav-tabs">
+					<li class="active">
+						<a href="datepicker.html" >Date Pickers</a>
+					</li>
+					<li >
+						<a href="daterangepicker.html" >DateRange Pickers</a>
+					</li>
+				   
+				</ul>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12">
+					
+					<!-- BEGIN PORTLET-->
+					<div class="portlet box default">
+						<div class="portlet-body form">
+							<form class="form-horizontal ">
+
+								<div class="form-body">
+									<div class="form-group ">
+									  	<div class="col-md-3">
+											<input type="text" class="form-control" id="my_picker" >
+										</div>
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</div>
+					<!-- END PORTLET-->
+
+				</div>
+			</div>
+		
+			
+			<div class="row">
+				<div class="col-md-12">
+					
+					
+					<div class="markdown">
+
+
+					
+	
+					<h3>HTML代码</h3>
+						<pre><code class="html">
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;my_picker&quot; &gt;
+						</code></pre>
+						<h3>Javascript代码</h3>
+						<pre><code class="javascript">
+$p.ui.datePicker('#my_picker', {
+    format: "yyyy年mm月dd日"
+}, function(date) {
+    $p.ui.alert(date);
+});
+					</code></pre>
+
+					
+						<h3>更多实例</h3>
+						<a href="http://bootstrap-datepicker.readthedocs.org/en/latest/index.html" target="_blank">http://bootstrap-datepicker.readthedocs.org/en/latest/index.html</a>
+					</div>
+
+
+					
+				</div>
+			</div>
+
+			
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+	pagurian.call("modules/datepicker/app", function(app) {
+		app.page.date();
+	});
+</script>
+
+
+</body>
+</html>

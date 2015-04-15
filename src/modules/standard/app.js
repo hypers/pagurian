@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
     var app = require('../../lib/app');
+    var model = require('./model');
 
 
     require('../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker');
@@ -275,6 +276,29 @@ define(function(require, exports, module) {
             submit: function(modal, data, params, callback) {
                 $p.ui.alert("你点击了确定");
                 modal.hide();
+            }
+        });
+
+        $p.ui.modal("#btn_update", {
+            title: "编辑用户",
+            body: $("#tpl_user").html(),
+            initForm: function(modal, form, params) {
+
+                //获取用户信息
+                model.getUser(params.id, params, function(resp) {
+                    $p.ui.form(form).bind(resp);
+                });
+
+            },
+            validate: function(modal, data, params) {
+                return true;
+            },
+            submit: function(modal, data, params, callback) {
+                //更新用户信息
+                model.update(params.id, data, function(resp) {
+                    $p.ui.alert(resp.message);
+                    modal.hide();
+                });
             }
         });
 
