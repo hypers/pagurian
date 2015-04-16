@@ -13,7 +13,8 @@ define(function(require, exports, module) {
             $p.ui.alert("开始时间：" + begin + " , 结束时间：" + end);
         });
 
-    }
+    };
+    
     app.page.date = function() {
 
         $p.ui.datePicker('#my_picker', {
@@ -21,7 +22,7 @@ define(function(require, exports, module) {
         }, function(date) {
             $p.ui.alert(date);
         });
-    }
+    };
 
 
     module.exports = app;

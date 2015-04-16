@@ -15,7 +15,7 @@ define(function(require, exports, module) {
             params.id = id;
             service.get(api.user, params, callback);
             return this;
-        }
+        };
 
         //更新用户信息
         this.update = function(id, params, callback) {
@@ -23,7 +23,7 @@ define(function(require, exports, module) {
             params.id = id;
             service.post(api.succeed, params, callback);
             return this;
-        }
+        };
 
 
     }

@@ -53,7 +53,7 @@ define(function(require, exports, module) {
                 V = V < 0 ? 0 : V;
 
                 var rgb = {};
-                if (S == 0) {
+                if (S === 0) {
                     rgb.R = rgb.G = rgb.B = Math.round(255 * V);
                 } else {
 
@@ -101,7 +101,7 @@ define(function(require, exports, module) {
 
                 return rgb;
             }
-        }
+        };
 
 
         function createColorPanel(rbg_color) {
@@ -127,7 +127,7 @@ define(function(require, exports, module) {
 
 
             for (var i = 0, len = k_s.length, _s, _v; i < len; i++) {
-                if (i == 5) {
+                if (i === 5) {
                     colors.push({
                         R: bc_rgb.R,
                         G: bc_rgb.G,
@@ -148,10 +148,10 @@ define(function(require, exports, module) {
 
             $("#panel_color_wrap").append("<ul id='cl_" + panel_index + "' class='panel_color'></ul>");
 
-            var i = 0;
+            i = 0;
             var k = setInterval(function() {
 
-                if (i == colors.length) {
+                if (i === colors.length) {
                     clearInterval(k);
                     return;
                 }
@@ -215,7 +215,7 @@ define(function(require, exports, module) {
                 format: 'hex'
             });
             $('.colorpicker-rgba').colorpicker();
-        }
+        };
 
 
         handleColorPicker();

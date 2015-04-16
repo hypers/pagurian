@@ -15,8 +15,7 @@ define(function(require, exports, module) {
     app.page.css = function() {
 
 
-    }
-
+    };
 
     module.exports = app;
 

@@ -30,7 +30,7 @@ define(function(require, exports, module) {
             }]
         });
 
-    }
+    };
 
     app.page.echarts_stack = function() {
 
@@ -92,7 +92,7 @@ define(function(require, exports, module) {
             }]
         });
 
-    }
+    };
 
     app.page.echarts_pie = function() {
 
@@ -127,7 +127,7 @@ define(function(require, exports, module) {
             }],
         });
 
-    }
+    };
 
     app.page.echarts_bar = function() {
 
@@ -160,7 +160,7 @@ define(function(require, exports, module) {
             }]
         });
 
-    }
+    };
 
     app.page.echarts_map = function() {
 
@@ -195,7 +195,7 @@ define(function(require, exports, module) {
                 name: '香港'
             }]
         });
-    }
+    };
 
 
     module.exports = app;

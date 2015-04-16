@@ -12,9 +12,9 @@ define(function(require, exports, module) {
         //获取数据列表
         this.getDataList = function(params, callback) {
             service.get(api.keywords, params, callback);
-        }
+        };
 
-        
+
     }
 
     module.exports = new Model();

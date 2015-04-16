@@ -336,7 +336,7 @@ define(function(require, exports, module) {
         }
 
         $('pre code').each(function() {
-            var lines = $(this).text().split('\n').length - 1;
+            var lines = $(this).text().split('\n').length;
             var $numbering = $('<ul/>').addClass('pre-numbering');
             $(this)
                 .addClass('has-numbering')

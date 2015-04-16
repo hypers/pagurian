@@ -3,11 +3,6 @@ define(function(require, exports, module) {
     var g = window;
 
     function URL() {
-        this.forward = function(info, type) {
-
-
-            return this;
-        }
         this.getParameter = function(paramName) {
             var searchString = window.location.search.substring(1),
                 i, val, params = searchString.split("&");
