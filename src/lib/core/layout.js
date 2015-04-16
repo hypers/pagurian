@@ -334,6 +334,19 @@ define(function(require, exports, module) {
         if (!window.hljs) {
             return;
         }
+
+        $('pre code').each(function() {
+            var lines = $(this).text().split('\n').length - 1;
+            var $numbering = $('<ul/>').addClass('pre-numbering');
+            $(this)
+                .addClass('has-numbering')
+                .parent()
+                .append($numbering);
+            for (i = 1; i <= lines; i++) {
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });

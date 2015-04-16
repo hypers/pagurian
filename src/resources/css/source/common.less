@@ -232,10 +232,22 @@ a{
 		border-color:@B300;
 		border-width: 0 0 0 5px;
 		padding: 0;
+		position: relative;
+	    margin-bottom: 24px;
+	    border-radius: 3px;
+	    border: 1px solid #eee;
+	    background: #FFF;
+	    overflow: hidden;
+
 		code{
 			border: none;
 			box-shadow:none;
 			padding: 10px;
+			background: #fff;
+			display: block;
+		  	overflow-y: auto;
+		  	line-height: 1.5;
+		  	font-size: 14px;
 			.hljs-comment{
 				color:#999;
 			}
@@ -258,7 +270,33 @@ a{
 			.hljs-literal{
 				color:#080;
 			}
+			&.has-numbering {
+		    	margin-left: 41px;
+		    	white-space: pre;
+			}
 		}
 	}
+
+	
+	
+
+	.pre-numbering {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 40px;
+	    list-style: none;
+	    padding: 10px 6px 500px 0;
+	    border-right: 1px solid #eee;
+	    border-radius: 3px 0 0 3px;
+	    background-color: #EEE;
+	    text-align: right;
+	    color: #AAA;
+	    li{
+	    	line-height: 1.5;
+	    	font-size: 14px;
+	    }
+	}
+
 }
 .row:after{ clear: inherit;}
