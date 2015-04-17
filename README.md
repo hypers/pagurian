@@ -1,5 +1,8 @@
 #Pagurian
 
+[ ![Build Status] [travis-image] ] [travis]
+[ ![License] [license-image] ] [license]
+
 Pagurian 是基于Seajs构建的一个前端解决方案， 致力于让前端设计，开发，测试以及发布更简单。
 
 ## 功能简介
@@ -82,3 +85,10 @@ License](https://github.com/wycats/handlebars.js/blob/master/LICENSE))
 * [Bootstrap](https://github.com/twbs/bootstrap) ([MIT License](https://github.com/twbs/bootstrap/blob/master/LICENSE))
 * [bootstrap-datepicker.js](http://www.eyecon.ro/bootstrap-datepicker/) ([Apache License 2.0](http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js))
 * [Datatabls](http://www.datatables.net/)([MIT License](http://www.datatables.net/license/mit))
+
+
+[travis-image]:https://img.shields.io/travis/joyent/node/v0.6.svg
+[travis]:http://www.pagurian.com
+
+[license-image]:http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license]:http://mit-license.org/
