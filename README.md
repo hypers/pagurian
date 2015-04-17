@@ -3,7 +3,7 @@
 [ ![Build Status] [travis-image] ] [travis]
 [ ![License] [license-image] ] [license]
 
-Pagurian 是基于Seajs构建的一个前端解决方案， 致力于让前端设计，开发，测试以及发布更简单。
+一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。
 
 ## 功能简介
 
