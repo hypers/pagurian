@@ -1,7 +1,7 @@
 #Pagurian
 
 [ ![Build Status] [travis-image] ] [travis]
-[ ![tag-1.2.0] [tag-1.2.0-image] ] [tag]
+[ ![tag-1.2.0] [tag-1.2.0-image] ] [tag-1.2.0]
 [ ![License] [license-image] ] [license]
 
 一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。
