@@ -1,6 +1,7 @@
 #Pagurian
 
 [ ![Build Status] [travis-image] ] [travis]
+[ ![tag-1.2.0] [tag-1.2.0-image] ] [tag]
 [ ![License] [license-image] ] [license]
 
 一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。
@@ -92,3 +93,6 @@ License](https://github.com/wycats/handlebars.js/blob/master/LICENSE))
 
 [license-image]:http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license]:http://mit-license.org/
+
+[tag-1.2.0-image]:https://img.shields.io/badge/tag-v1.2.0-orange.svg
+[tag-1.2.0]:https://github.com/hypers/pagurian/tree/v1.2.0
