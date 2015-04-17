@@ -24,7 +24,7 @@ chart.load({
 */
 define(function(require, exports, module) {
 
-    require('./js/echarts-plain-map');
+    require('./js/2.0.0/echarts-plain-map');
 
     var g = window;
 

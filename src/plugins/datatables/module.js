@@ -1,7 +1,7 @@
  define(function(require, exports, module) {
 
  	var g = window;
- 	require('./jquery.dataTables.min');
+ 	require('./1.9.4/jquery.dataTables.min');
 
  	/* Set the defaults for DataTables initialisation */
  	$.extend(true, $.fn.dataTable.defaults, {

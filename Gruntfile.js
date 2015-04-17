@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                         'src/plugins/datepicker/datepicker.css',
                         'src/plugins/uniform/css/uniform.default.css',
                         'src/plugins/font-awesome/css/font-awesome.min.css',
-                        'src/plugins/datatables/bs.css',
+                        'src/plugins/datatables/1.9.4/bs.css',
                         'src/resources/css/style-tpl.css',
                         'src/resources/css/style.css',
                         'src/resources/css/style-responsive.css',

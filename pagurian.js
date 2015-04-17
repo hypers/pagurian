@@ -14,7 +14,7 @@
 	 * @type {Object}
 	 */
 	var pagurian = {
-		version: "1.1.150416",
+		version: "1.1.150417",
 		util: {},
 		ui: {},
 		path: {
