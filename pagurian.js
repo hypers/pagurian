@@ -14,7 +14,7 @@
 	 * @type {Object}
 	 */
 	var pagurian = {
-		version: "1.2.0",
+		version: "1.2.0420",
 		util: {},
 		ui: {},
 		path: {
@@ -25,8 +25,6 @@
 			return (this.queue = this.queue || []).push(arguments);
 		}
 	}
-
-	
 
 	/**
 	 * Seajs config

@@ -275,8 +275,8 @@ define(function(require, exports, module) {
             initForm: function(modal, form, params) {
 
                 //获取用户信息
-                model.getUser(params.id, params, function(resp) {
-                    $p.ui.form(form).bind(resp);
+                model.getUser(params.id, params, function(data) {
+                    $p.ui.form(form).val(data);
                 });
 
             },

@@ -180,7 +180,7 @@ module.exports = function(grunt) {
 
     var task_default = [];
 
-    //task_default.push("clean:dist");
+    task_default.push("clean:dist");
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
