@@ -8,17 +8,19 @@ define(function(require, exports, module) {
     app.page.daterange = function() {
 
         $p.ui.dateRangePicker("#my_picker", {
-            textForamt: "YYYY年MM月DD日"
-        }, function(begin, end) {
-            $p.ui.alert("开始时间：" + begin + " , 结束时间：" + end);
+            textForamt: "YYYY年MM月DD日",
+            defaultDate: [moment().subtract('days', 6), moment()], //默认最近一周
+        }, function(start, end) {
+            $p.ui.alert("开始时间：" + start + " , 结束时间：" + end);
         });
 
     };
-    
+
     app.page.date = function() {
 
         $p.ui.datePicker('#my_picker', {
-            format: "yyyy年mm月dd日"
+            textFormat: "YYYY年MM月DD日",
+            defaultDate: moment(),
         }, function(date) {
             $p.ui.alert(date);
         });

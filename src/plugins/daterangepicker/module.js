@@ -6,8 +6,14 @@ define(function(require, exports, module) {
 
     function DateRangePicker(selector, options, callback) {
 
-        var momentStartDate = $.cookie("param.begin") ? moment($.cookie("param.begin")) : moment().subtract('days', 6);
-        var momentEndDate = $.cookie("param.end") ? moment($.cookie("param.end")) : moment();
+        var defaultStartDate, defaultEndDate;
+        if (options && options.defaultDate && $.isArray(options.defaultDate)) {
+            defaultStartDate = options.defaultDate[0];
+            defaultEndDate = options.defaultDate[1];
+        }
+
+        var momentStartDate = defaultStartDate ? moment(defaultStartDate) : moment().subtract('days', 6);
+        var momentEndDate = defaultEndDate ? moment(defaultEndDate) : moment();
 
         this.options = {
             opens: 'right',
@@ -54,8 +60,10 @@ define(function(require, exports, module) {
                 if ("function" === typeof callback) callback(start.format(_options.format), end.format(_options.format));
             });
 
-            //默认现在当前一周
-            $(selector).find('input').val(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
+
+            if (_options.defaultDate) {
+                $(selector).find('input').val(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
+            }
             $(selector).find('input').prop("readonly", true);
 
             return this;

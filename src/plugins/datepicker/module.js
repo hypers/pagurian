@@ -16,25 +16,39 @@ define(function(require, exports, module) {
     };
 
     function DatePicker(selector, options, callback) {
-        
+
+        var defaultDate;
+
+        if (options && options.defaultDate) {
+            defaultDate = moment(options.defaultDate);
+        }
+
         this.options = {
             format: 'yyyy-mm-dd',
+            textFormat: "YYYY-MM-DD",
             language: 'zh-CN',
             autoclose: true
         };
         this.init = function() {
 
+            var o = this;
             if (!jQuery().datepicker) {
                 return;
             }
 
 
             var opt = $.extend(true, this.options, options);
+            this.options.format = this.options.textFormat.toLocaleLowerCase();
+
             var picker = $(selector).datepicker(this.options);
+
+            if (defaultDate) {
+                $(selector).val(defaultDate.format(this.options.textFormat));
+            }
 
             picker.on("changeDate", function(e) {
                 if (typeof callback === "function") {
-                    callback(moment(e.date).format("YYYY-MM-DD"));
+                    callback(moment(e.date).format(o.options.textFormat));
                 }
             });
 

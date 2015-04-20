@@ -81,7 +81,8 @@
 						<h3>Javascript代码</h3>
 						<pre><code class="javascript">
 $p.ui.datePicker('#my_picker', {
-    format: "yyyy年mm月dd日"
+    textFormat: "YYYY年MM月DD日",
+    defaultDate: moment(),
 }, function(date) {
     $p.ui.alert(date);
 });
