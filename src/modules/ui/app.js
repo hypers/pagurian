@@ -301,11 +301,11 @@ define(function(require, exports, module) {
 
     app.page.popover = function() {
 
-    }
+    };
 
     app.page.tooltip = function() {
 
-    }
+    };
 
 
     module.exports = app;

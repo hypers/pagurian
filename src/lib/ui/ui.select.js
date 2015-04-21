@@ -3,8 +3,8 @@ define(function(require, exports, module) {
     var g = window;
 
     function Select() {
-        this.init = function(seletor, options) {
 
+        this.init = function(seletor, options) {
             var dataList = options.data;
             var elements = $(seletor);
             elements.empty();
@@ -22,9 +22,10 @@ define(function(require, exports, module) {
     }
 
     g[PagurianAlias].ui.select = function(seletor, options) {
+
         var obj = new Select();
         obj.init(seletor, options);
-
         return obj;
+
     }
 });

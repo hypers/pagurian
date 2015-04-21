@@ -54,7 +54,7 @@ define(function(require, exports, module) {
             submit: function(form, data) {
                 model.add(data, function(resp) {
                     $p.ui.alert(resp.message);
-                })
+                });
             }
         });
 
@@ -70,7 +70,7 @@ define(function(require, exports, module) {
             radio: 2,
             checkbox: 2
         });
-    }
+    };
 
     module.exports = app;
 
