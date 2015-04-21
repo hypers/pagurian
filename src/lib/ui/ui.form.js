@@ -96,8 +96,10 @@ define(function(require, exports, module) {
 
         this.validation = function() {
 
+            if (!this.element.validate) {
+                return false;
+            }
             var o = this;
-
             var _options = {
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', //default input error message class
