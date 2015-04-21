@@ -226,7 +226,7 @@ define(function(require, exports, module) {
 
     };
 
-    app.page.message = function() {
+    app.page.alert = function() {
 
         $("#btn_alert_1").click(function() {
             $p.ui.alert("报表保持成功", "success");
@@ -294,13 +294,18 @@ define(function(require, exports, module) {
 
     };
 
-    app.page.form = function() {
-
-    };
 
     app.page.buttons = function() {
 
     };
+
+    app.page.popover = function() {
+
+    }
+
+    app.page.tooltip = function() {
+
+    }
 
 
     module.exports = app;
