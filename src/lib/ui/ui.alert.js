@@ -16,6 +16,21 @@ define(function(require, exports, module) {
             var obj = $(".global-message").length > 0 ?
                 $(".global-message").html(info).removeClass().addClass("global-message " + type) :
                 $('<div class="global-message ' + type + '">' + info + '</div>');
+
+            //在Modal中显示消息 
+            var visibleModal = false;
+            $(".modal").each(function() {
+                if ($(this).is(":visible") && (type === "error" || type === "warning")) {
+                    var _message = $(this).find(".modal-message");
+                    _message.html('<div class="global-message ' + type + '">' + info + '</div>');
+                    visibleModal = true;
+                }
+            });
+            if (visibleModal) {
+                return this;
+            }
+            
+            //在页面顶部显示
             $('body').append(obj);
             var margin = obj.outerWidth() / 2;
             obj.css({

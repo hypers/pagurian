@@ -283,11 +283,16 @@ define(function(require, exports, module) {
             validate: function(modal, data, params) {
                 return true;
             },
-            submit: function(modal, data, params, callback) {
+            submit: function(modal, data, params) {
                 //更新用户信息
-                model.update(params.id, data, function(resp) {
-                    $p.ui.alert(resp.message);
-                    modal.hide();
+                model.update(params.id, data, function(resp, valid) {
+
+                    modal.complete(resp, valid);
+
+                    if (valid) {
+                        modal.hide();
+                        $p.ui.alert(resp.message);
+                    }
                 });
             }
         });

@@ -27,6 +27,7 @@ define(function(require, exports, module) {
         template += '            <div class="modal-message"></div>';
         template += '            <div class="modal-body">{body}</div>';
         template += '            <div class="modal-footer">';
+        template += '                <span class="submit-waiting">ddddd</span>';
         template += '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>';
         template += '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>';
         template += '            </div>';
@@ -57,8 +58,9 @@ define(function(require, exports, module) {
 
         this.init = function(seletor, options) {
 
-            var modal = this;
+            var element = $("#modal" + _id);
 
+            var modal = this;
             //初始化模版
             this.tpl = $p.tpl(template, $.extend({
                 "title": "提示信息",
@@ -108,25 +110,35 @@ define(function(require, exports, module) {
 
                 //提交表单数据
                 if (typeof options.submit === "function") {
+                    $(this).addClass("disabled").prop("disabled", true);
+                    $("#modal" + _id + " .submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
                     options.submit(modal, data, modal.params);
                 }
 
             });
 
             return this;
-        }
+        };
 
+        this.complete = function(data, valid) {
+
+            $("#modal" + _id + " .submit-waiting").html('');
+            $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
+        };
         this.show = function() {
 
             resetForm($("#modal" + _id + " form"));
+            $('#modal' + _id + " .submit-waiting").html("");
+            $('#modal' + _id + " .modal-message").html("");
+            $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
             $('#modal' + _id).modal('show');
             return this;
-        }
+        };
 
         this.hide = function() {
             $('#modal' + _id).modal('hide');
             return this;
-        }
+        };
     }
 
     g[PagurianAlias].ui.modal = function(seletor, options) {

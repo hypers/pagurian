@@ -16,7 +16,9 @@ define(function(require, exports, module) {
             this.request("post", url, params, callback);
         },
         request: function(type, url, params, callback) {
-            validateRequest(params);
+            if (!validateRequest(params)) {
+                return false;
+            }
 
             ajax.request(type, url, params, function(resp) {
 
@@ -24,7 +26,7 @@ define(function(require, exports, module) {
                 if (typeof callback === "function") {
                     callback(resp, valid);
                 }
-                
+
             });
         }
     }
@@ -39,6 +41,19 @@ define(function(require, exports, module) {
             return false;
         }
 
+        /**
+        - 200000     操作成功
+        - 200001     服务端验证-全局提示
+        - 200002     服务端验证-字段验证
+        - 200400     参数错误
+        - 200404     该页面不存在
+        - 200403     没有权限
+        - 200403.11  没有权限：密码更改而导致无权查看
+        - 200403.13  没有权限：管理员注销了当前用户
+        - 200403.17  没有权限：session失效
+        - 200403.18  没有权限：当前用户在别的终端登录，被注销
+        - 100500     出现异常
+        */
         switch (data.code) {
             case "200000":
                 return true;
@@ -109,6 +124,6 @@ define(function(require, exports, module) {
 
         return true;
     }
-    
+
     module.exports = service;
 });
