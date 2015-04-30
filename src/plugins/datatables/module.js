@@ -457,8 +457,7 @@
  								oSettings.oInit.callback(a);
  							}
 
-
- 							if (oSettings.oInit.fnExtendDetails) {
+ 							if (oSettings.oInit.fnExtendDetails && a.result && a.result.length) {
 
 
  								var nCloneTh = document.createElement('th');
@@ -477,19 +476,32 @@
  									this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
  								});
 
- 								$(seletor).on('click', ' tbody td .row-details', function() {
+ 								$(options.id + '  tbody td .row-details').unbind("click");
+ 								$(options.id + '  tbody td .row-details').click(function() {
+
+ 									var row_details = $(this);
  									var nTr = $(this).parents('tr')[0];
+
  									if (oTable.fnIsOpen(nTr)) {
+
  										/* This row is already open - close it */
- 										$(this).addClass("row-details-close").removeClass("row-details-open");
+ 										row_details.addClass("row-details-close").removeClass("row-details-open");
  										oTable.fnClose(nTr);
  									} else {
+
+ 										if (row_details.hasClass("disabled")) {
+ 											return;
+ 										}
  										/* Open this row */
- 										$(this).addClass("row-details-open").removeClass("row-details-close");
- 										oTable.fnOpen(nTr, oSettings.oInit.fnExtendDetails(oTable, nTr), 'details');
- 										var ndetails = $(this).parents("tr").next().find(".details");
- 										ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
+ 										row_details.addClass("row-details-open disabled").removeClass("row-details-close");
+ 										oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
+ 											oTable.fnOpen(nTr, tb_details, 'details');
+ 											var ndetails = row_details.parents("tr").next().find(".details");
+ 											row_details.removeClass("disabled");
+ 											ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
+ 										});
  									}
+
  								});
  							}
 

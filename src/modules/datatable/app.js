@@ -57,15 +57,16 @@ define(function(require, exports, module) {
             "fnParams": function() {
                 return {};
             },
-            "fnExtendDetails": function(oTable, nTr) {
+            "fnExtendDetails": function(oTable, nTr, fnCallback) {
 
                 var aData = oTable.fnGetData(nTr);
                 var sOut = '<table class="table"><tbody>';
-                sOut += '<tr><td class="w50"></td><td >'+aData.keywords+'-细分</td><td class="w150">'+aData.searchEngine+'</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
-                sOut += '<tr><td class="w50"></td><td >'+aData.keywords+'-细分</td><td class="w150">'+aData.searchEngine+'</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
-                sOut += '<tr><td class="w50"></td><td >'+aData.keywords+'-细分</td><td class="w150">'+aData.searchEngine+'</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w50"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w50"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w50"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
                 sOut += '</tbody></table>';
-                return sOut;
+                
+                fnCallback(sOut);
             },
             "aoColumns": [{
                 "bSortable": false,
@@ -77,7 +78,7 @@ define(function(require, exports, module) {
             }, {
                 "bSortable": false,
                 "sTitle": "搜索引擎",
-                "sClass":"w150",
+                "sClass": "w150",
                 "mData": "searchEngine"
             }, {
                 "sClass": "t-a-r w150",
