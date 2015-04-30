@@ -67,7 +67,7 @@
         "items": [{
             "name": "dataTables",
             "title": "DataTables",
-            "url": "plugin-datatable.html",
+            "url": "datatable.html",
             "active": 0
         }, {
             "name": "echarts",

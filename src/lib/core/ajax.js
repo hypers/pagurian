@@ -32,19 +32,24 @@ define(function(require, exports, module) {
 
 
     var ajax = {
-        bundle: false,
+        bundle: true,
         options: {
             data: []
         },
-        init: function(params) {
+        init: function(type, params) {
+
 
             this.options.data = [];
             if (Object.prototype.toString.call(params) == "[object Array]") {
                 for (var i = 0; i < params.length; i++) {
-                    params[i].value = encodeURIComponent(params[i].value);
+                    if (type == "get") {
+                        params[i].value = encodeURIComponent(params[i].value);
+                    }
+
                     this.options.data.push(params[i]);
                 }
             } else {
+
                 for (var i in params) {
                     if (typeof params[i] === "function") {
                         continue;
@@ -55,15 +60,14 @@ define(function(require, exports, module) {
                         for (var j = 0; j < params[i].length; j++) {
                             this.options.data.push({
                                 "name": i,
-                                "value": encodeURIComponent(params[i][j])
+                                "value": (type === "get") ? encodeURIComponent(params[i][j]) : params[i][j]
                             });
                         }
                         continue;
                     }
-
                     this.options.data.push({
                         name: i,
-                        value: encodeURIComponent(params[i])
+                        value: (type === "get") ? encodeURIComponent(params[i]) : params[i]
                     });
                 }
             }
@@ -79,7 +83,8 @@ define(function(require, exports, module) {
         },
         send: function(type, url, params, callback) {
 
-            this.init(params);
+            this.init(type, params);
+            var data = this.options.data;
 
             var options = {
                 url: pagurian.path.api + url + ".json",
@@ -116,7 +121,7 @@ define(function(require, exports, module) {
                 }
             };
 
-            var data = this.options.data;
+
             if (this.bundle) {
                 options.contentType = "application/json";
                 if (type == "post" || type == "put" || type == "patch") {

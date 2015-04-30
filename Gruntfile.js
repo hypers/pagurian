@@ -180,11 +180,11 @@ module.exports = function(grunt) {
 
     var task_default = [];
 
-    task_default.push("clean:dist");
+    //task_default.push("clean:dist");
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("uglify:all");
+    //task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 
@@ -200,7 +200,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template-html');
-
 
 
     grunt.registerTask('check', ['jshint']);

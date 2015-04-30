@@ -699,38 +699,43 @@ Datatables Plugin(in v1.3)
 }
 
 .dataTable .row-details.row-details-close {
-  background: url("../img/datatable-row-openclose.png") no-repeat 0 0;
+  background: url("img/datatable-row-openclose.png") no-repeat 0 0;
 }
 
 .dataTable .row-details.row-details-open {  
-  background: url("../img/datatable-row-openclose.png") no-repeat 0 -23px ;
+  background: url("img/datatable-row-openclose.png") no-repeat 0 -23px ;
 }
 
 .dataTable .details {
-  background-color: #eee ;
+  padding: 0 !important ;
+}
+.dataTable .details .table{
+  margin-top: -1px;
+  margin-bottom: 0  !important;
 }
 
 .dataTable .details td,
 .dataTable .details th {
   padding: 4px;
-  background: none ;
-  border: 0;
-}
-
-.dataTable .details tr:hover td,
-.dataTable .details tr:hover th {
-  background: none ;
+  background: #e5e5e5 ;
+  border-top: 1px solid #ddd;
 }
 
 .dataTable .details tr:nth-child(odd) td,
 .dataTable .details tr:nth-child(odd) th {
-  background-color: #eee ;
+  background-color: #e5e5e5 ;
 }
 
 .dataTable .details tr:nth-child(even) td,
 .dataTable .details tr:nth-child(even) th {
-  background-color: #eee ;
+  background-color: #e5e5e5 ;
 }
+
+.dataTable .details tr:hover td,
+.dataTable .details tr:hover th {
+  background: #dddddd;
+}
+
 
 .dataTable > thead > tr > th.sorting,
 .dataTable > thead > tr > th.sorting_asc,

@@ -28,7 +28,17 @@
                 </div>
             </div>
 
-            
+            <div class="tabs-wrap">
+               <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="datatable.html" >基础 </a>
+                    </li>
+                    <li  class="active">
+                        <a href="datatable-extend.html" >扩展</a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <table id="my_table"></table>
@@ -122,7 +132,7 @@ $p.ui.dataTable("#my_table", {
 {{>fixtures/footer}}
 <script type="text/javascript">
     pagurian.call("modules/datatable/app", function(app) {
-        app.page.dataTable();
+        app.page.dataTableExtend();
     });
 </script>
 

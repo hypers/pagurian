@@ -11,6 +11,7 @@
 @B900:#575757;
 
 @M001:#ff0000;
+@gap:18px;
 
 .login{
     position: absolute;
@@ -42,7 +43,7 @@
             text-decoration: none
         }
         .form-actions {
-            margin: 20px 0;
+            margin: @gap 0;
             border-bottom: 0;
             padding: 0;
             .checkbox {
@@ -119,7 +120,7 @@
     }
 
     .btn{
-        padding: 5px 20px;
+        padding: 5px @gap;
         height: 40px;
     }
 }

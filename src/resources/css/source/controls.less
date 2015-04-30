@@ -48,7 +48,7 @@
 		color:@H300;
 	}
 }
-.btn-primary{
+.btn-primary,.btn-ok{
 	background: @H500;
 	border-color: @H500;
 	color: @B000;
@@ -70,7 +70,7 @@
 	}
 }
 
-.btn-primary[disabled]{
+.btn-primary[disabled],.btn-ok[disabled]{
 	border-color: @H200 !important;
 	background: @H200 !important;
 	color: @B000;
@@ -198,7 +198,7 @@
 	left: 0;
 	z-index: 5;
 	margin: 5px 0;
-	height: 20px;
+	height: @gap;
 	color: @M001;
 	font-size: 12px;
 	&.tip {
@@ -211,28 +211,33 @@
 
 /***Table****/
 
-
-.table-bordered {
-
+.table{
 	border: none;
 	tr {
 		th, td {
-			padding: 10px 20px !important;
-		}
-		:nth-child(odd) {
-			td {
-				background: @B000;
-			}
-		}
-		:nth-child(even) {
-			td {
-				background: @B050;
-			}
+			padding: 10px @gap !important;
+			border-top:1px solid @B100;
 		}
 	}
 }
+.table-bordered {
+
+	
+}
 .table-striped {
 	tbody {
+		tr{
+			:nth-child(odd) {
+				td {
+					background: @B000;
+				}
+			}
+			:nth-child(even) {
+				td {
+					background: @B050;
+				}
+			}
+		}
 		tr:hover {
 			th, td {
 				background: @B050 !important;
@@ -334,15 +339,15 @@
 	}
 	.modal-header {
 		border-bottom: none;
-		padding: 10px 20px;
+		padding: 10px @gap;
 		background: @B050;
 		.modal-title {
 			color: @H500;
 		}
 		.close {
 			.icon;
-			width: 20px;
-			height: 20px;
+			width: @gap;
+			height: @gap;
 			display: inline-block;
 			margin-top: 3px;
 			margin-right: 0px;
@@ -368,7 +373,7 @@
 	.modal-footer {
 		position: relative;
 		margin-top: 0;
-		padding: 30px 20px 40px;
+		padding: 30px @gap 40px;
 		border-top: 0;
 		border-top: none;
 		.btn {
@@ -388,7 +393,7 @@
 	}
 
 	.modal-body {
-		margin: 20px 20px 0;
+		margin: @gap @gap 0;
 		padding: 0;
 		max-height: 400px;
 		overflow-x: hidden;
@@ -420,5 +425,5 @@
 
 .tabs-wrap{
 	clear: both;
-	margin:20px 0;
+	margin:@gap 0;
 }

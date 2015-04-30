@@ -131,7 +131,7 @@
 
 .control-title{
 	color:@B900;
-	margin: 0 0 20px;
+	margin: 0 0 @gap;
 }
 
 
@@ -157,7 +157,7 @@
 	.logo {
 		width: 180px !important;
 		height: @header-height;
-		margin-left: 20px;
+		margin-left: @gap;
 		color: @B000;
 		font-size: 30px;
 		padding: 0;
@@ -175,7 +175,7 @@
 			a{
 				font-size: 18px;
 				height: @header-height;
-				padding: 20px 30px;
+				padding: @gap 30px;
 				line-height: 1;
 				color: @B000;
 				float:left;
@@ -209,11 +209,18 @@
 	}
 	.nav_right {
 		position: absolute;
-		right: 0;
+		right: 1px;
 		top: 0;
 		height: 40px;
-		a{
-			font-size:14px !important;
+		.nav > li{
+			border-left: 1px solid @H600;
+			float: left;
+			a{
+				color: #fff;
+			}
+			i{
+				font-size: 16px;
+			}
 		}
 	}
 	.homebar {
@@ -230,7 +237,7 @@
 			a {
 				min-width: 160px;
 				padding: 0;
-				padding: 0 20px;
+				padding: 0 @gap;
 				font-size: 14px;
 				text-align: center;
 				overflow: hidden;
@@ -250,7 +257,7 @@
 				height: 40px;
 				line-height: 40px;
 				a {
-					padding: 0 0 0 20px;
+					padding: 0 0 0 @gap;
 					line-height: 40px;
 					text-align: left;
 					&:hover {
@@ -268,7 +275,6 @@
 		li {
 			position: relative;
 			a {
-				min-width: 144px;
 				padding: 0;
 				padding: 0 30px;
 				text-align: center;
@@ -301,7 +307,7 @@
 					width: 100%;
 					text-align: left;
 					line-height: 40px;
-					padding: 0 20px;
+					padding: 0 @gap;
 					&:hover {
 						background: @H100;
 					}
@@ -336,11 +342,11 @@
 	.copyright{
 		display: inline-block;
 		color: @H500;
-		margin: 16px 20px 10px;
+		margin: 16px @gap 10px;
 	}
 	.link{
 	    float: right;
-	    padding: 16px 20px 10px;
+	    padding: 16px @gap 10px;
 	    a{
 	    	color: @H500;
 	    }
@@ -361,7 +367,7 @@
 	background-color: @B050;
 	color: @H500;
 	z-index: 2;
-	padding: 0 20px;
+	padding: 0 @gap;
 	span {
 		float:left;
 	}
@@ -371,7 +377,7 @@
 		margin: 0;
 		li {
 			float: left;
-			margin: 0 0 0 20px;
+			margin: 0 0 0 @gap;
 			a {
 				color: @H500;
 			}
@@ -379,7 +385,7 @@
 	}
 	.contact {
 		float: right;
-		margin-right: 20px;
+		margin-right: @gap;
 		color: @H500;
 		a {
 			color: @H500;
@@ -388,17 +394,17 @@
 }
 
 .form-body{
-	padding: 20px;
+	padding: @gap;
 }
 .form-actions {
 	background: none;
 	border: 0;
-	padding: 20px;
+	padding: @gap;
 	&.right{
-		padding-right: 20px;
+		padding-right: @gap;
 	}
 	.btn {
-		padding: 9px 20px;
+		padding: 9px @gap;
 		min-width: 100px;
 	}
 }
@@ -408,7 +414,7 @@
 	margin-bottom: @gap;
 	&.box{
 		.portlet-body{
-			padding: 20px;
+			padding: @gap;
 		}
 	}
 	.portlet-body {
@@ -449,11 +455,11 @@
 	display: none;
 	margin: 10px 0;
 	border: 1px solid @B300;
-	padding: 10px 20px 10px 200px;
+	padding: 10px @gap 10px 200px;
 	.title{
 		position: absolute;
 		top:10px;
-		left: 20px;
+		left: @gap;
 	}
 	.expand {
 		background: @expand-icon no-repeat scroll 0 0 @B000;
@@ -496,7 +502,7 @@
 		font-size: 16px;
 		padding: 7px 12px;
 		height: 40px;
-		i{line-height: 20px;
+		i{line-height: @gap;
 			margin-top: 3px;
 		}
 		&.btn-icon{
@@ -518,10 +524,10 @@
 		}
 	}
 }
-.tool-action{ clear:both; padding-top: 20px}
+.tool-action{ clear:both; padding-top: @gap}
 
 .tab-wrap {
-	margin-bottom: 20px;
+	margin-bottom: @gap;
 	position: relative;
 	clear: both;
 	.radio > span {
@@ -573,7 +579,7 @@
 .panel-summary{
 	height: 82px;
 	min-width: 900px;
-	margin:20px 0;
+	margin:@gap 0;
 	background: @B050;
 	ul{ 
 		display: none;
@@ -630,7 +636,7 @@
 		margin-left: 25px !important;
 	    margin-top: 0px !important;
 	    min-height: 760px !important;
-	    padding: 25px 20px 20px 20px !important;
+	    padding: 25px @gap @gap @gap !important;
 	}
 	.page-sidebar-fixed .page-content {
     	min-height: 600px; 
