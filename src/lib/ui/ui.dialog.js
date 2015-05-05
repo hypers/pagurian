@@ -1,6 +1,6 @@
 /**
  * [demo]
- * $p.ui.modal({
+ * $p.ui.dialog({
  *     id:"#btn_"
  *     onClickSubmit:function(){
  *
@@ -11,7 +11,9 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function Modal() {
+
+
+    function Dialog() {
 
         var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
 
@@ -27,7 +29,7 @@ define(function(require, exports, module) {
         template += '            <div class="modal-message"></div>';
         template += '            <div class="modal-body">{body}</div>';
         template += '            <div class="modal-footer">';
-        template += '                <span class="submit-waiting">ddddd</span>';
+        template += '                <span class="submit-waiting"></span>';
         template += '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>';
         template += '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>';
         template += '            </div>';
@@ -58,9 +60,12 @@ define(function(require, exports, module) {
 
         this.init = function(seletor, options) {
 
-            var element = $("#modal" + _id);
+
 
             var modal = this;
+
+
+
             //初始化模版
             this.tpl = $p.tpl(template, $.extend({
                 "title": "提示信息",
@@ -74,23 +79,19 @@ define(function(require, exports, module) {
             var form = $("#modal" + _id + " form");
 
             if (seletor) {
-
                 //给按钮绑定事件
                 $(document).delegate(seletor, 'click', function() {
 
                     var params = $(this).data("params");
                     modal.params = eval("(" + params + ")") || {};
-
+                    modal.show();
                     if (typeof options.initForm === "function") {
                         options.initForm(modal, form, modal.params);
                     }
-
-
-                    modal.show();
                 });
             }
 
-
+            this.element = $("#modal" + _id);
 
             //提交按钮绑定事件
             $("#btn_submit" + _id).click(function() {
@@ -141,10 +142,10 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].ui.modal = function(seletor, options) {
-        var modal = new Modal();
-        modal.init(seletor, options);
-        return modal;
+    g[PagurianAlias].ui.dialog = function(seletor, options) {
+        var dialog = new Dialog();
+        dialog.init(seletor, options);
+        return dialog;
     }
 
 });

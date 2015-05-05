@@ -15,7 +15,7 @@ define(function(require, exports, module) {
     require('./core/tpl');
     require('./ui/ui.form');
     require('./ui/ui.alert');
-    require('./ui/ui.modal');
+    require('./ui/ui.dialog');
     require('./ui/ui.select');
 
 

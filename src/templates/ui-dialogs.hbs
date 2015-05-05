@@ -45,7 +45,7 @@
                             
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.modal("#btn_remove", {
+$p.ui.dialog("#btn_remove", {
     title: "提示",
     body: "你确定要删除吗？",
     submit: function(modal, data, params, callback) {
@@ -73,7 +73,7 @@ $p.ui.modal("#btn_remove", {
                             <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.modal("#btn_add", {
+$p.ui.dialog("#btn_add", {
     title: "添加用户",
     body: $("#tpl_user").html(),
     validate: function(modal, data, params) {
@@ -111,7 +111,7 @@ $p.ui.modal("#btn_add", {
                             
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.modal("#btn_update", {
+$p.ui.dialog("#btn_update", {
     title: "编辑用户",
     body: $("#tpl_user").html(),
     initForm: function(modal, form, params) {

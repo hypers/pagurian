@@ -7,20 +7,25 @@
 define(function(require, exports, module) {
 
     function arrayToObject(arr) {
+
+
+        if (Object.prototype.toString.call(arr) == "[object Object]") {
+            return arr;
+        }
+
         var obj = {};
         for (var i = 0; i < arr.length; i++) {
 
             //把"带有."的属性名转化为对象
             var a = arr[i]['name'].split(".");
-
-            _value = arr[i]['value'];
+            var _value = arr[i]['value'];
 
             if (typeof _value === "string") {
                 _value = $.trim(_value);
             }
 
             if (a.length > 1) {
-                obj[a[0]] = {};
+                obj[a[0]] = obj[a[0]] || {};
                 obj[a[0]][a[1]] = _value;
                 continue;
             }
@@ -50,6 +55,8 @@ define(function(require, exports, module) {
                 }
             } else {
 
+
+
                 for (var i in params) {
                     if (typeof params[i] === "function") {
                         continue;
@@ -70,6 +77,8 @@ define(function(require, exports, module) {
                         value: (type === "get") ? encodeURIComponent(params[i]) : params[i]
                     });
                 }
+
+
             }
 
             /*this.options.data.push({
@@ -121,12 +130,12 @@ define(function(require, exports, module) {
                 }
             };
 
-
             if (this.bundle) {
                 options.contentType = "application/json";
                 if (type == "post" || type == "put" || type == "patch") {
+
                     data = $.toJSON({
-                        data: arrayToObject(params)
+                        data: arrayToObject(data)
                     });
                 }
             }

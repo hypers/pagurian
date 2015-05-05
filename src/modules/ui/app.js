@@ -248,7 +248,7 @@ define(function(require, exports, module) {
 
     app.page.modals = function() {
 
-        $p.ui.modal("#btn_remove", {
+        $p.ui.dialog("#btn_remove", {
             title: "提示",
             body: "你确定要删除吗？",
             submit: function(modal, data, params, callback) {
@@ -257,7 +257,7 @@ define(function(require, exports, module) {
             }
         });
 
-        $p.ui.modal("#btn_add", {
+        $p.ui.dialog("#btn_add", {
             title: "添加用户",
             body: $("#tpl_user").html(),
             validate: function(modal, data, params) {
@@ -269,7 +269,7 @@ define(function(require, exports, module) {
             }
         });
 
-        $p.ui.modal("#btn_update", {
+        $p.ui.dialog("#btn_update", {
             title: "编辑用户",
             body: $("#tpl_user").html(),
             initForm: function(modal, form, params) {
