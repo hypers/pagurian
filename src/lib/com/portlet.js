@@ -58,7 +58,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].ui.protlet = function(seletor, options) {
+    g[PagurianAlias].com.protlet = function(seletor, options) {
         var obj = new Portlet(seletor, options);
         return obj;
     }

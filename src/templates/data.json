@@ -2,7 +2,7 @@
     "user": {
         "name": "系统管理员"
     },
-    "version":"1.2.0503",
+    "version": "1.2.0506",
     "page": {
         "color": "配色 Color",
         "button": "按钮 Button",
@@ -14,50 +14,55 @@
         "datatables": "DataTables",
         "datepicker": "Date Pickers",
         "echarts": "Echarts",
-        "ckeditor":"CKEditor",
+        "ckeditor": "CKEditor",
         "catalogue": "目录设计",
         "js": "Javascript规范",
         "css": "CSS规范",
         "login": "Pagurian 单页-登录"
     },
     "menu": [{
-        "name": "ui",
-        "title": "UI",
-        "icon": "fa fa-briefcase",
+        "name": "theme",
+        "title": "主题",
+        "icon": "fa fa-picture-o",
         "items": [{
             "name": "color",
             "title": "配色 Color",
-            "url": "ui-color.html",
+            "url": "theme-color.html",
             "active": 0
         }, {
             "name": "buttons",
             "title": "按钮 Button",
-            "url": "ui-buttons.html",
+            "url": "theme-buttons.html",
             "active": 0
-        }, {
+        }]
+    }, {
+        "name": "com",
+        "title": "组件",
+        "icon": "fa fa-briefcase",
+        "items": [{
             "name": "form",
             "title": "表单 Form",
-            "url": "ui-form.html",
+            "url": "com-form.html",
             "active": 0
         }, {
             "name": "dialogs",
             "title": "模态窗口 Dialog",
-            "url": "ui-dialogs.html",
+            "url": "com-dialogs.html",
             "active": 0
         }, {
             "name": "alerts",
             "title": "警告框 Alert",
-            "url": "ui-alert.html",
+            "url": "com-alert.html",
             "active": 0
         }, {
             "name": "Tooltip",
             "title": "提示框 Tooltip",
-            "url": "ui-tooltip.html",
+            "url": "com-tooltip.html",
             "active": 0
         }, {
             "name": "Popover",
             "title": "弹出框 Popover",
-            "url": "ui-popover.html",
+            "url": "com-popover.html",
             "active": 0
         }]
     }, {

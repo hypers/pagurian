@@ -21,7 +21,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].ui.select = function(seletor, options) {
+    g[PagurianAlias].com.select = function(seletor, options) {
 
         var obj = new Select();
         obj.init(seletor, options);

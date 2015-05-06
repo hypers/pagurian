@@ -53,7 +53,7 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].ui.checkboxs = function(seletor, options) {
+    g[PagurianAlias].com.checkboxs = function(seletor, options) {
         var obj = new Checkboxs();
         obj.init(seletor, options);
 

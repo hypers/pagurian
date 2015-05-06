@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 
     app.page.dataTable = function() {
 
-        $p.ui.dataTable("#my_table", {
+        $p.plugin.dataTable("#my_table", {
             "dataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 
     app.page.dataTableExtend = function() {
 
-        var oTable = $p.ui.dataTable("#my_table", {
+        var oTable = $p.plugin.dataTable("#my_table", {
             "dataSource": model.getDataList,
             "sClass": "table-fixed",
             "bExtendDetails": true,

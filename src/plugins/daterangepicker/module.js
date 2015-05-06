@@ -72,7 +72,7 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].ui.dateRangePicker = function(seletor, options, callback) {
+    g[PagurianAlias].plugin.dateRangePicker = function(seletor, options, callback) {
         var picker = new DateRangePicker(seletor, options, callback);
         picker.init();
         return picker;

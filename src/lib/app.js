@@ -13,11 +13,11 @@ define(function(require, exports, module) {
     require('../plugins/moment/moment');
 
     require('./core/tpl');
-    require('./ui/ui.form');
-    require('./ui/ui.alert');
-    require('./ui/ui.dialog');
-    require('./ui/ui.select');
 
+    require('./com/form');
+    require('./com/alert');
+    require('./com/dialog');
+    require('./com/select');
 
     require('./tool/url');
 
@@ -46,7 +46,7 @@ define(function(require, exports, module) {
                     app.events.resize();
                 }
             });
-
+            
         }
     };
 

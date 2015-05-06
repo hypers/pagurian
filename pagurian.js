@@ -14,12 +14,13 @@
 	 * @type {Object}
 	 */
 	var pagurian = {
-		version: "1.2.0503",
+		version: "1.2.0506",
 		util: {},
-		ui: {},
+		com: {},
+		plugin: {},
 		path: {
 			api: schema + domain + "/",
-			app: schema + domain + "/" + (this.debug ? "src" : "dist") + "/"
+			app: schema + domain + "/" + (this.debug ? "src" : "src") + "/"
 		},
 		call: function() {
 			return (this.queue = this.queue || []).push(arguments);

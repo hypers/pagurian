@@ -334,7 +334,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].ui.echarts = function(seletor, options) {
+    g[PagurianAlias].plugin.echarts = function(seletor, options) {
         var chart = new Echarts(seletor, options);
         chart.init();
         return chart;

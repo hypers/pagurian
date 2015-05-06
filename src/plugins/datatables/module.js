@@ -584,7 +584,7 @@
  	}
 
 
- 	g[PagurianAlias].ui.dataTable = function(seletor, options) {
+ 	g[PagurianAlias].plugin.dataTable = function(seletor, options) {
  		var table = new DataTables(seletor, options);
  		table.init();
  		return table;

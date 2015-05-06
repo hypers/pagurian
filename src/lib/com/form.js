@@ -145,7 +145,7 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].ui.form = function(seletor, options) {
+    g[PagurianAlias].com.form = function(seletor, options) {
         var form = new Form(seletor, options);
         form.init();
         return form;

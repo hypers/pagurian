@@ -126,6 +126,7 @@ define(function(require, exports, module) {
             $("#modal" + _id + " .submit-waiting").html('');
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
         };
+        
         this.show = function() {
 
             resetForm($("#modal" + _id + " form"));
@@ -142,7 +143,7 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].ui.dialog = function(seletor, options) {
+    g[PagurianAlias].com.dialog = function(seletor, options) {
         var dialog = new Dialog();
         dialog.init(seletor, options);
         return dialog;

@@ -57,7 +57,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].ui.datePicker = function(seletor, options, callback) {
+    g[PagurianAlias].plugin.datePicker = function(seletor, options, callback) {
         var picker = new DatePicker(seletor, options, callback);
         return picker.init();
     }

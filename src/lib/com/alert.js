@@ -44,7 +44,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].ui.alert = function(info, type) {
+    g[PagurianAlias].com.alert = function(info, type) {
         var obj = new Alert();
         obj.show(info, type);
         return obj;

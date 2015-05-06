@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 
     app.page.echarts_line = function() {
 
-        var chart = $p.ui.echarts("my_chart", {
+        var chart = $p.plugin.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -35,7 +35,7 @@ define(function(require, exports, module) {
     app.page.echarts_stack = function() {
 
 
-        var chart = $p.ui.echarts("my_chart", {
+        var chart = $p.plugin.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
     app.page.echarts_pie = function() {
 
 
-        var chart = $p.ui.echarts("my_chart", {
+        var chart = $p.plugin.echarts("my_chart", {
             type: "pie"
         });
 
@@ -131,7 +131,7 @@ define(function(require, exports, module) {
 
     app.page.echarts_bar = function() {
 
-        var chart = $p.ui.echarts("my_chart", {
+        var chart = $p.plugin.echarts("my_chart", {
             type: "bar"
         });
         chart.load({
@@ -164,7 +164,7 @@ define(function(require, exports, module) {
 
     app.page.echarts_map = function() {
 
-        var chart = $p.ui.echarts("my_chart", {
+        var chart = $p.plugin.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图"

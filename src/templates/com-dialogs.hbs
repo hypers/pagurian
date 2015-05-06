@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-	<title>{{data.page.modal}}</title>
+	<title>{{data.page.dialog}}</title>
 	{{>fixtures/head}}
 </head>
 <body>
@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.modal}}
+					{{data.page.dialog}}
 					</h3>
 				</div>
 			</div>
@@ -45,11 +45,11 @@
                             
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.dialog("#btn_remove", {
+$p.com.dialog("#btn_remove", {
     title: "提示",
     body: "你确定要删除吗？",
     submit: function(modal, data, params, callback) {
-        $p.ui.alert("你点击了确定");
+        $p.com.alert("你点击了确定");
         modal.hide();
     }
 });
@@ -73,14 +73,14 @@ $p.ui.dialog("#btn_remove", {
                             <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.dialog("#btn_add", {
+$p.com.dialog("#btn_add", {
     title: "添加用户",
     body: $("#tpl_user").html(),
     validate: function(modal, data, params) {
         return true;
     },
     submit: function(modal, data, params, callback) {
-        $p.ui.alert("你点击了确定");
+        $p.com.alert("你点击了确定");
         modal.hide();
     }
 }); 
@@ -111,14 +111,14 @@ $p.ui.dialog("#btn_add", {
                             
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.ui.dialog("#btn_update", {
+$p.com.dialog("#btn_update", {
     title: "编辑用户",
     body: $("#tpl_user").html(),
     initForm: function(modal, form, params) {
 
         //获取用户信息
         model.getUser(params.id, params, function(data) {
-            $p.ui.form(form).val(data);
+            $p.com.form(form).val(data);
         });
 
     },
@@ -128,7 +128,7 @@ $p.ui.dialog("#btn_update", {
     submit: function(modal, data, params, callback) {
         //更新用户信息
         model.update(params.id, data, function(resp) {
-            $p.ui.alert(resp.message);
+            $p.com.alert(resp.message);
             modal.hide();
         });
     }
@@ -176,8 +176,8 @@ $p.ui.dialog("#btn_update", {
 </script>
 
 <script type="text/javascript">
-	pagurian.call("modules/ui/app", function(app) {
-		app.page.modals();
+	pagurian.call("modules/com/app", function(app) {
+		app.page.dialogs();
 	});
 </script>
 
