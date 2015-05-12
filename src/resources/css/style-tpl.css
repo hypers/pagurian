@@ -719,6 +719,11 @@ fieldset[disabled] .form-control {
   cursor:default;
   background-color: #fff !important;
 }
+.form-control[disabled]{
+  background-color: #f5f5f5 !important;
+  border-color: #ddd;
+  color: #ddd;
+}
 
 .uneditable-input {
   padding: 6px 12px;
