@@ -43,13 +43,38 @@ define(function(require, exports, module) {
             });
         }
 
+        this.message = function(status, message) {
+
+            this.chart.hideLoading();
+            this.chart.clear();
+            var icon = "fa-info-circle";
+            var msg = message || "查询结果为空";
+
+            if (status == "timeout") {
+                icon = "fa-exclamation-circle fa-red";
+                msg += "<br/><a class='btn btn-default' id='btn_reload'>重新查询</a>"
+            }
+            if (status == "empty") {
+
+            }
+            if (status == "error") {
+                icon = "fa-exclamation-circle fa-red";
+            }
+            if ($(".chart-message").length > 0) {
+                $(".chart-message").html("<h3><i class='fa " + icon + "' ></i> " + msg + "</h3>");
+                return;
+            }
+            $("#" + this.id).append("<div class='chart-message'><h3><i class='fa " + icon + "' ></i> " + msg + "</h3></div>");
+
+            return this;
+        }
+
         this.load = function(data) {
 
 
             $(".chart-message").remove();
 
             var type = this.options.type || "line";
-
             var options = $.extend(true, {}, this.options, chartOptions[type](data));
 
             this.chart.hideLoading();
@@ -62,6 +87,8 @@ define(function(require, exports, module) {
 
     var chartOptions = {
         line: function(options) {
+
+            console.log(options);
 
             var rows = options.rows || [];
             var option = {

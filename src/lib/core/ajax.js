@@ -140,20 +140,30 @@ define(function(require, exports, module) {
                 }
             }
 
-            options.data = data;
+            if (type == "delete") {
+                var split = "?",
+                    p = "";
+                for (var i = 0; i < data.length; i++) {
+                    p += split + data[i].name + "=" + data[i].value;
+                    split = "&";
+                }
+                if (p) {
+                    options.url += p;
+                }
+            }
 
+            options.data = data;
             $.ajax(options);
 
             return this;
-
         },
         request: function(type, url, params, callback) {
-
             this.send(type, url, params, callback);
             return this;
         }
-    };
 
+    };
+    
     module.exports = ajax;
 
 });

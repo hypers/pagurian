@@ -59,7 +59,7 @@ define(function(require, exports, module) {
                 return true;
                 break;
             case "200001":
-                $p.ui.alert(data.message, "warning");
+                $p.com.alert(data.message, "warning");
                 return false;
                 break;
             case "200002":
@@ -76,46 +76,46 @@ define(function(require, exports, module) {
                 return false;
                 break;
             case "200403":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case "200403.11":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case "200403.13":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case "200403.17":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 break;
             case "200403.18":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case "200404":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case 404:
-                $p.ui.alert($p.locale.exception, "error");
+                $p.com.alert($p.locale.exception, "error");
                 return false;
                 break;
             case "100500":
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             case 500:
-                $p.ui.alert($p.locale.exception, "error");
+                $p.com.alert($p.locale.exception, "error");
                 return false;
                 break;
             case 400:
-                $p.ui.alert($p.locale.params_error, "error");
+                $p.com.alert($p.locale.params_error, "error");
                 return false;
                 break;
             case 0:
-                $p.ui.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.exception, "warning");
                 return false;
                 break;
             default:
