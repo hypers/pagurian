@@ -197,12 +197,13 @@ define(function(require, exports, module) {
                 },
                 startAngle: 0,
                 minAngle: 3,
-                calculable: true,
+                calculable: false,
                 series: [{
                     name: '',
                     type: 'pie',
-                    radius: '65%',
-                    center: ['50%', '48%'],
+                    radius: '60%',
+                    minAngle: 3,
+                    center: ['50%', '50%'],
                     data: []
                 }]
             };

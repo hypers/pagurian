@@ -20,7 +20,7 @@
 		plugin: {},
 		path: {
 			api: schema + domain + "/",
-			app: schema + domain + "/" + (this.debug ? "src" : "src") + "/"
+			app: schema + domain + "/" + (this.debug ? "src" : "dist") + "/"
 		},
 		call: function() {
 			return (this.queue = this.queue || []).push(arguments);

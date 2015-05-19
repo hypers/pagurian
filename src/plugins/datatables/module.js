@@ -463,7 +463,7 @@
  								var nCloneTh = document.createElement('th');
  								var nCloneTd = document.createElement('td');
 
- 								$(nCloneTh).addClass("w50 nCloneTh");
+ 								$(nCloneTh).addClass("w60 nCloneTh");
  								nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
  								$(seletor + ' thead tr').each(function() {

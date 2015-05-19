@@ -96,8 +96,8 @@
         }]
     }, {
         "name": "styleguide",
-        "title": "前端规范",
-        "icon": "fa fa-bookmark",
+        "title": "规范",
+        "icon": "fa fa-book",
         "items": [{
             "name": "catalogue",
             "title": "目录设计",
