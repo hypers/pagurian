@@ -432,7 +432,7 @@
  							//设置默认值，如果返回的值为空默认为"--"
  							for (var i = 0; i < a.result.length; i++) {
  								for (var o in a.result[i]) {
- 									if (!a.result[i][o]) {
+ 									if (!a.result[i][o] && a.result[i][o]!==0) {
  										a.result[i][o] = "--";
  									}
  								}
@@ -449,7 +449,7 @@
 
  							fnCallback(data, b, c);
  							//生成序号
- 							if (oSettings.oInit.isCreateOrder && total) {
+ 							if (oSettings.oInit.isCreateOrder && a.result.length) {
  								createNumber(a.page.current, a.page.pagesize);
  							}
 
@@ -548,6 +548,7 @@
  				"sInfo": "共 <span class='num'>_TOTAL_</span> 条数据",
  				"sInfoEmpty": "",
  				"sEmptyTable": "<i class='fa fa-info-circle green big'></i>  查询结果为空",
+                "sZeroRecords": "<i class='fa fa-info-circle green big'></i>  查询结果为空",
  				"sLoadingRecords": "加载中..."
 
  			}

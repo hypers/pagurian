@@ -1018,6 +1018,8 @@ Bootstrap Daterangepicker
   width: 70px !important;
   font-size: 11px;
   vertical-align: middle;
+  padding: 2px;
+  text-align:center;
 }
 
 .daterangepicker .ranges label {

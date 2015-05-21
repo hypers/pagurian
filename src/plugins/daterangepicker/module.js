@@ -22,7 +22,7 @@ define(function(require, exports, module) {
             separator: ' -- ',
             startDate: momentStartDate.format("YYYY-MM-DD"),
             endDate: momentEndDate.format('YYYY-MM-DD'),
-            maxDate: moment().format("YYYY-MM-DD"),
+            maxDate: moment().subtract('days', -1).format("YYYY-MM-DD"),
             ranges: {
                 '今天': [moment(), moment()],
                 '昨天': [moment().subtract('days', 1), moment().subtract('days', 1)],

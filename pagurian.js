@@ -7,8 +7,10 @@
 
 	global.PagurianAlias = name;
 
-	var schema = ("https:" == document.location.protocol) ? "https://" : "http://";
+	var schema = ("https:" == document.location.protocol) ? "https://" :
+		"http://";
 	var domain = window.location.hostname || "/";
+
 	/**
 	 * Pagurian 对象
 	 * @type {Object}
@@ -66,6 +68,5 @@
 
 
 	global[name] = global['pagurian'] = pagurian;
-
 
 })(this, "$p");
