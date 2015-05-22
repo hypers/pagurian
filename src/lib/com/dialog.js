@@ -133,7 +133,9 @@ define(function(require, exports, module) {
             $('#modal' + _id + " .submit-waiting").html("");
             $('#modal' + _id + " .modal-message").html("");
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
+            $('#modal' + _id + " .form-group").removeClass("has-error");
             $('#modal' + _id).modal('show');
+
             return this;
         };
 

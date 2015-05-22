@@ -115,7 +115,11 @@ define(function(require, exports, module) {
                 return false;
                 break;
             case 0:
-                $p.com.alert($p.locale.exception, "warning");
+                if (data.result && data.result.statusText === "timeout") {
+                    $p.com.alert($p.locale.timeout, "error");
+                    return false;
+                }
+                $p.com.alert($p.locale.exception, "error");
                 return false;
                 break;
             default:

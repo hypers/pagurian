@@ -1,5 +1,4 @@
 /*
-
 var chart = $p.ui.echarts("my_chart", {
     type: "line"
 });
@@ -20,8 +19,8 @@ chart.load({
         value: [320, 332, 301, 334, 390, 330, 320]
     }]
 });
-
 */
+
 define(function(require, exports, module) {
 
     require('./js/2.0.0/echarts-plain-map');
@@ -75,6 +74,7 @@ define(function(require, exports, module) {
             $(".chart-message").remove();
 
             var type = this.options.type || "line";
+
             var options = $.extend(true, {}, this.options, chartOptions[type](data));
 
             this.chart.hideLoading();
@@ -86,13 +86,12 @@ define(function(require, exports, module) {
     }
 
     var chartOptions = {
-        line: function(options) {
 
-            console.log(options);
+        line: function(options) {
 
             var rows = options.rows || [];
             var option = {
-                color: ['#fe8463', '#0084c6', '#9bca63', '#fad860', '#60c0dd', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
+                
                 title: {
                     x: "center",
                     y: "20",
@@ -195,8 +194,7 @@ define(function(require, exports, module) {
                     y: "bottom",
                     data: []
                 },
-                startAngle: 0,
-                minAngle: 3,
+
                 calculable: false,
                 series: [{
                     name: '',
@@ -307,9 +305,10 @@ define(function(require, exports, module) {
             return option;
         },
         map: function(options) {
+
             var dataList = options.data || [];
             var option = {
-                color: ['#f0805a', '#ffded4'],
+                color: ['#fe8463', '#ffede8'],
                 title: {
                     x: "center",
                     y: "20",
@@ -324,16 +323,17 @@ define(function(require, exports, module) {
                 dataRange: {
                     orient: 'horizontal',
                     min: 0,
-                    max: 2500,
+                    max: 5000,
                     text: ['高', '低'],
-                    calculable: true,
-                    color: ['#f0805a', '#ffded4'],
+                    calculable: false,
+                    color: ['#fe8463', '#ffede8']
                 },
                 series: [{
                     name: '独立用户数',
                     type: 'map',
                     roam: true,
                     mapType: 'china',
+                    calculable: false,
                     roam: false, //是否开启缩放功能
                     itemStyle: {
                         normal: {
@@ -343,7 +343,13 @@ define(function(require, exports, module) {
                         },
                         emphasis: {
                             label: {
-                                show: true
+                                show: true,
+                                textStyle: {
+                                    color: "#fff"
+                                }
+                            },
+                            areaStyle: {
+                                color: '#d7504b'
                             }
                         }
                     },
@@ -356,6 +362,7 @@ define(function(require, exports, module) {
                 option.series[0].data.push(dataList[i]);
             }
             option.series[0].name = options.name;
+            $.extend(true, option, options.options);
             this.option = option;
 
             return option;

@@ -351,7 +351,7 @@
  							length = aoData[i].value;
  						}
  					}
- 					var s = total + length;
+ 					var s = parseInt(total) + parseInt(length);
  					if (s % length) {
  						return parseInt(s / length) + 1;
  					}
@@ -398,7 +398,7 @@
 
  				//自定义的业务参数
  				if (typeof oSettings.oInit.fnParams === "function") {
- 					var params = oSettings.oInit.fnParams() || {};
+ 					var params = oSettings.oInit.fnParams(apData) || {};
 
  					for (var i in params) {
  						if (typeof params[i] !== "function") {

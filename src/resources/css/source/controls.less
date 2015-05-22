@@ -15,6 +15,7 @@
 	&:active{
 		barder-color: @B600;
 	}
+	resize:none
 }
 
 
@@ -22,12 +23,13 @@
 
 .btn{
 	border-width: 1px;
+	font-size: 16px;
 }
 .btn[disabled] {
 	background: @B100 !important;
 }
 .btn-default {
-	border-color: @B300;
+	border:1px solid @B300;
 	color: inherit;
 	&:hover {
 		border-color: @B500;
@@ -76,6 +78,85 @@
 	color: @B000;
 }
 
+.btn-select {
+	&.open > .dropdown-menu {
+	  display: block;
+	}
+	&.open > .dropdown-wrap {
+	  display: block;
+	}
+	.dropdown-wrap{
+		height: 300px;
+	    overflow: hidden;
+	    position: absolute;
+	    z-index: 1000;
+	    display: none;
+	    float: left;
+	    list-style: none;
+	    text-shadow: none;
+	    padding: 0px;
+	    margin:0px;
+	    background-color: @B000; 
+	    font-size: 14px;
+	    border: 1px solid @B500;
+	    width: 100%;
+	    overflow:auto;
+	    top: 40px;
+	    .dropdown-menu{
+	       display: block;
+	       position: relative;
+	       top: 0 !important;
+	       border: none;
+	       margin:0;
+	       -webkit-box-shadow:none;
+	      -moz-box-shadow: none;
+	      box-shadow: none;  
+	    }
+	}
+	.dropdown-menu {
+		min-width: inherit;
+		overflow: hidden;
+		width: 100%;
+	}
+	.btn-default {
+		min-width: 200px;
+		overflow: hidden;
+		padding-right: 30px;
+		text-align: left;
+		height: 40px;
+		&.w-unset {
+			min-width: inherit;
+		}
+		i {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			line-height: normal !important;
+		}
+	}
+	&.open {
+		.btn {
+			background: @B000;
+			border-bottom: none;
+			z-index: 1001;
+		}
+		.dropdown-menu {
+			border-color: @B500;
+			top: 39px;
+			min-height: 50px
+		}
+	}
+}
+.open {
+	.dropdown-toggle.btn-default {
+		border-color: @B500;
+		background: @B000;
+	}
+}
+.btn-hide {
+	display: none
+}
+
 .btn-radio {
 	.btn-active {
 		border-color: @B300;
@@ -97,9 +178,10 @@
 	padding: 4px 10px;
 }
 .input-group-btn{
-	.btn{border: none;}
+	button,li a{
+		font-size: 13px;
+    }
 }
-
 .btn-dropdown {
 	.dropdown-menu {
 		min-width: inherit;
@@ -198,7 +280,7 @@
 	left: 0;
 	z-index: 5;
 	margin: 5px 0;
-	height: @gap;
+	height: 20px;
 	color: @M001;
 	font-size: 12px;
 	&.tip {
@@ -211,56 +293,23 @@
 
 /***Table****/
 
-.table{
+
+.table-bordered {
 	border: none;
 	tr {
-		th, td {
-			padding: 10px @gap !important;
-			border-top:1px solid @B100;
+        th{
+            border-width: 0px !important;
+        }
+		th, td {	
+			padding: 10px 20px !important;
 		}
 	}
 }
-.table-bordered {
-
-	
-}
 .table-striped {
 	tbody {
-		tr{
-			:nth-child(odd) {
-				td {
-					background: @B000;
-				}
-			}
-			:nth-child(even) {
-				td {
-					background: @B050;
-				}
-			}
-		}
 		tr:hover {
 			th, td {
 				background: @B050 !important;
-			}
-		}
-		tr:nth-child(2n) {
-			th, td {
-				background: @B050
-			}
-		}
-		tr:nth-child(2n+1) {
-			th, td {
-				background: @B000
-			}
-		}
-		.odd {
-			th, td {
-				background: @B000
-			}
-		}
-		.even {
-			th, td {
-				background: @B050
 			}
 		}
 	}
@@ -280,8 +329,15 @@
 	a{
 		color: @H500;
 		&:hover,&:focus{
-			color: @H700;
+			color: #40af71;
 		}
+	}
+	.disabled{
+		color: @B600;
+    	text-decoration: none;
+    	&:hover,&:focus{
+    		color: @B600;
+    	}
 	}
 	thead th {
 		background: @B050 !important;
@@ -296,7 +352,7 @@
 			}
 		}
 	}
-	td{
+	td,td div{
 		overflow: hidden;
 		text-overflow:ellipsis;
 	}
@@ -304,10 +360,17 @@
 		font-size: 16px;
 		font-weight: bold;
 	}
+	tbody td{
+		border-width: 1px 0 0 !important; 
+	}
+	tbody td.link,.high{
+		color: @H500;
+	}
 	&.table-fixed {
 		table-layout: fixed;
 	}
 }
+
 .table-scrollable {
 	margin: 0px !important;
 	border-width: 1px 1px 1px 1px;
@@ -339,15 +402,15 @@
 	}
 	.modal-header {
 		border-bottom: none;
-		padding: 10px @gap;
+		padding: 10px 20px;
 		background: @B050;
 		.modal-title {
 			color: @H500;
 		}
 		.close {
 			.icon;
-			width: @gap;
-			height: @gap;
+			width: 20px;
+			height: 20px;
 			display: inline-block;
 			margin-top: 3px;
 			margin-right: 0px;
@@ -373,7 +436,7 @@
 	.modal-footer {
 		position: relative;
 		margin-top: 0;
-		padding: 30px @gap 40px;
+		padding: 30px 20px 40px;
 		border-top: 0;
 		border-top: none;
 		.btn {
@@ -393,9 +456,9 @@
 	}
 
 	.modal-body {
-		margin: @gap @gap 0;
+		margin: 20px 20px 0;
 		padding: 0;
-		max-height: 400px;
+		max-height: 500px;
 		overflow-x: hidden;
 		overflow-y: auto;
 		.modal-hr {
@@ -403,7 +466,7 @@
 		}
 	}
 	.modal-message {
-		height: @gap;
+		height: 20px;
 	    margin-top: 4px;
 	    padding-top: 10px;
 		.global-message {
@@ -425,5 +488,37 @@
 
 .tabs-wrap{
 	clear: both;
-	margin:@gap 0;
+	margin:20px 0;
+	.nav-tabs{
+		a{
+			color: @B900;
+		}
+		.active{
+			 a{
+			 	border-top: 2px solid @H500 !important;
+			 }
+		}
+	}
+}
+
+
+.checkboxs {
+    border: 1px solid #b5b5b5;
+    height: 150px;
+    overflow: auto;
+    padding: 0px;
+    white-space:nowrap;
+	label{
+	    padding: 2px 4px;
+	    display: block;
+	    overflow: hidden;
+	    text-overflow:ellipsis;
+	    white-space:nowrap;
+	    -ms-text-overflow: ellipsis;
+	    -o-text-overflow: ellipsis;/* Opera */
+	    -moz-binding: url("ellipsis.xml#ellipsis");/*FireFox*/
+	    &:hover{
+		    background: #ddefe5;
+		}
+	}
 }
