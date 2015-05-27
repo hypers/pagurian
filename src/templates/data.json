@@ -7,7 +7,7 @@
         "color": "配色 Color",
         "button": "按钮 Button",
         "form": "表单 Form",
-        "dialog": "模态窗口 Dialog",
+        "dialog": "对话框 Dialog",
         "alert": "警告框 Alert",
         "tooltip": "提示框 Tooltip",
         "popover": "弹出框 Popover",
@@ -46,7 +46,7 @@
             "active": 0
         }, {
             "name": "dialogs",
-            "title": "模态窗口 Dialog",
+            "title": "对话框 Dialog",
             "url": "com-dialogs.html",
             "active": 0
         }, {

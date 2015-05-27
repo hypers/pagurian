@@ -38,7 +38,6 @@ template {
 }
 
 html {
-  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -305,7 +304,8 @@ html {
 body {
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
+  font-family:"Microsoft YaHei", "Hiragino Sans GB", "STXihei", "Open Sans",sans-serif;
+  color: #575757;
   background-color: #ffffff;
 }
 
@@ -319,7 +319,7 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: #1b9451;
   text-decoration: none;
 }
 

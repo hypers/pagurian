@@ -104,8 +104,110 @@ define(function(require, exports, module) {
                 }
 
                 return rgb;
+            },
+            hsl2rgb: function(H, S, L) {
+
+                /*
+                 * H ∈ [0°, 360°)
+                 * S ∈ [0, 1]
+                 * L ∈ [0, 1]
+                 */
+
+                /* calculate chroma */
+                var C = (1 - Math.abs((2 * L) - 1)) * S;
+
+                /* Find a point (R1, G1, B1) along the bottom three faces of the RGB cube, with the same hue and chroma as our color (using the intermediate value X for the second largest component of this color) */
+                var H_ = H / 60;
+
+                var X = C * (1 - Math.abs((H_ % 2) - 1));
+
+                var R1, G1, B1;
+
+                if (H === undefined || isNaN(H) || H === null) {
+                    R1 = G1 = B1 = 0;
+                } else {
+
+                    if (H_ >= 0 && H_ < 1) {
+                        R1 = C;
+                        G1 = X;
+                        B1 = 0;
+                    } else if (H_ >= 1 && H_ < 2) {
+                        R1 = X;
+                        G1 = C;
+                        B1 = 0;
+                    } else if (H_ >= 2 && H_ < 3) {
+                        R1 = 0;
+                        G1 = C;
+                        B1 = X;
+                    } else if (H_ >= 3 && H_ < 4) {
+                        R1 = 0;
+                        G1 = X;
+                        B1 = C;
+                    } else if (H_ >= 4 && H_ < 5) {
+                        R1 = X;
+                        G1 = 0;
+                        B1 = C;
+                    } else if (H_ >= 5 && H_ < 6) {
+                        R1 = C;
+                        G1 = 0;
+                        B1 = X;
+                    }
+                }
+
+                /* Find R, G, and B by adding the same amount to each component, to match lightness */
+
+                var m = L - (C / 2);
+
+                var R, G, B;
+
+                /* Normalise to range [0,255] by multiplying 255 */
+                R = (R1 + m) * 255;
+                G = (G1 + m) * 255;
+                B = (B1 + m) * 255;
+
+                R = Math.round(R);
+                G = Math.round(G);
+                B = Math.round(B);
+
+                return {
+                    R: R,
+                    G: G,
+                    B: B
+                };
+            },
+            rgb2hsl: function(r, g, b) {
+                r /= 255, g /= 255, b /= 255;
+                var max = Math.max(r, g, b),
+                    min = Math.min(r, g, b);
+                var h, s, l = (max + min) / 2;
+
+                if (max == min) {
+                    h = s = 0; // achromatic
+                } else {
+                    var d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case r:
+                            h = (g - b) / d + (g < b ? 6 : 0);
+                            break;
+                        case g:
+                            h = (b - r) / d + 2;
+                            break;
+                        case b:
+                            h = (r - g) / d + 4;
+                            break;
+                    }
+                    h /= 6;
+                }
+
+                return {
+                    H: h,
+                    S: s,
+                    L: l
+                }
             }
         };
+        var colors_name = ['@H050', '@H100', '@H200', '@H300', '@H400', '@H500', '@H600', '@H700', '@H800', '@H900'];
 
 
         function createColorPanel(rbg_color) {
@@ -123,7 +225,6 @@ define(function(require, exports, module) {
             var v = bc_hsv.V / 100;
 
             var colors = [];
-            var colors_name = ['@H050', '@H100', '@H200', '@H300', '@H400', '@H500', '@H600', '@H700', '@H800', '@H900'];
 
 
             var k_s = [-0.8, -0.5, -0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3, 0.5];
@@ -223,6 +324,35 @@ define(function(require, exports, module) {
 
 
         handleColorPicker();
+
+        function colorLoop() {
+
+            var count = 0,
+                base_color, k = 0,
+                rgb;
+
+            for (var i = 19; i >= 0; i--) {
+                base_color = "";
+
+                if (i % 2 == 0) {
+                    continue;
+                }
+                if (k == 5) {
+                    base_color = "base_color";
+                }
+                $("#palette").append("<div class='color-title " + base_color + "'>" + colors_name[k] + "</div>");
+                for (var j = 0; j < 36; j++) {
+
+                    $("#palette").append("<div class='color-dot " + base_color + "'></div>");
+                    rgb = color.hsl2rgb(j * 10, 1, (i + 1) / 21);
+
+                    //$(".color-dot").eq(count++).css("background-color", "hsl(" + (j * 10) + ", " + "100%, " + parseInt(((i + 1) / 21) * 100) + "%)");
+                    $(".color-dot").eq(count++).css("background-color", "rgb(" + rgb.R + ", " + rgb.G + ", " + rgb.B + ")");
+                }
+                $("#palette").append("<div style='clear: both;'></div>");
+                k++;
+            }
+        }
 
     };
 
