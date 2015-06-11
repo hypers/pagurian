@@ -1,6 +1,6 @@
 #Pagurian
 
-[ ![Build Status](https://img.shields.io/travis/joyent/node/v0.6.svg) ](http://www.pagurian.com)[ ![tag-1.2.0](https://img.shields.io/badge/tag-v1.2.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.2.0)[ ![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
+[ ![Build Status](https://img.shields.io/travis/joyent/node/v0.6.svg) ](http://www.pagurian.com)[ ![tag-1.3.0](https://img.shields.io/badge/tag-v1.3.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.3.0)[ ![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
 
 一个管理系统的前端解决方案， 致力于让前端设计，开发，测试，发布更简单。
 
@@ -76,9 +76,10 @@ grunt
 参考、使用的项目
 ----------------
 
--	[Sea.js](https://github.com/seajs/seajs) ([MIT License](https://github.com/seajs/seajs/blob/master/LICENSE.md)\)
--	[Handlebars.js](https://github.com/wycats/handlebars.js) ([MIT License](https://github.com/wycats/handlebars.js/blob/master/LICENSE)\)
--	[FontAwesome](https://github.com/FortAwesome/Font-Awesome/) ([CC BY 3.0 License](http://creativecommons.org/licenses/by/3.0/)\)
--	[Bootstrap](https://github.com/twbs/bootstrap) ([MIT License](https://github.com/twbs/bootstrap/blob/master/LICENSE)\)
--	[bootstrap-datepicker.js](http://www.eyecon.ro/bootstrap-datepicker/) ([Apache License 2.0](http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js)\)
--	[Datatabls](http://www.datatables.net/)\([MIT License](http://www.datatables.net/license/mit)\)
+-	[Sea.js](https://github.com/seajs/seajs) ([MIT License](https://github.com/seajs/seajs/blob/master/LICENSE.md)\)[V]
+-	[FontAwesome v4.0.1](https://github.com/FortAwesome/Font-Awesome/) ([CC BY 3.0 License](http://creativecommons.org/licenses/by/3.0/)\)
+-	[Bootstrap v3.0.3](https://github.com/twbs/bootstrap) ([MIT License](https://github.com/twbs/bootstrap/blob/master/LICENSE)\)
+-	[bootstrap-datepicker.js v1.2](http://www.eyecon.ro/bootstrap-datepicker/) ([Apache License 2.0](http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js)\)
+-	[Datatabls v1.9.4](http://www.datatables.net/)\([MIT License](http://www.datatables.net/license/mit)\)
+-	[Echarts v2.0](http://echarts.baidu.com/)\([MIT License](https://github.com/ecomfe/echarts/blob/master/LICENSE.txt)\)
+-	[jQuery v1.9.1](http://jquery.com/)\([MIT License](https://jquery.org/license/)\)

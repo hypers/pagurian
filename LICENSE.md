@@ -21,10 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-* [Sea.js](https://github.com/seajs/seajs) ([MIT License](https://github.com/seajs/seajs/blob/master/LICENSE.md))
-* [Handlebars.js](https://github.com/wycats/handlebars.js) ([MIT
-License](https://github.com/wycats/handlebars.js/blob/master/LICENSE))
-* [FontAwesome](https://github.com/FortAwesome/Font-Awesome/) ([CC BY 3.0 License](http://creativecommons.org/licenses/by/3.0/))
-* [Bootstrap](https://github.com/twbs/bootstrap) ([MIT License](https://github.com/twbs/bootstrap/blob/master/LICENSE))
-* [bootstrap-datepicker.js](http://www.eyecon.ro/bootstrap-datepicker/) ([Apache License 2.0](http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js))
-* [Datatabls](http://www.datatables.net/)([MIT License](http://www.datatables.net/license/mit))
+-	[Sea.js](https://github.com/seajs/seajs) ([MIT License](https://github.com/seajs/seajs/blob/master/LICENSE.md)\)[V]
+-	[FontAwesome v4.0.1](https://github.com/FortAwesome/Font-Awesome/) ([CC BY 3.0 License](http://creativecommons.org/licenses/by/3.0/)\)
+-	[Bootstrap v3.0.3](https://github.com/twbs/bootstrap) ([MIT License](https://github.com/twbs/bootstrap/blob/master/LICENSE)\)
+-	[bootstrap-datepicker.js v1.2](http://www.eyecon.ro/bootstrap-datepicker/) ([Apache License 2.0](http://www.eyecon.ro/bootstrap-datepicker/js/bootstrap-datepicker.js)\)
+-	[Datatabls v1.9.4](http://www.datatables.net/)\([MIT License](http://www.datatables.net/license/mit)\)
+-	[Echarts v2.0](http://echarts.baidu.com/)\([MIT License](https://github.com/ecomfe/echarts/blob/master/LICENSE.txt)\)
+-	[jQuery v1.9.1](http://jquery.com/)\([MIT License](https://jquery.org/license/)\)
