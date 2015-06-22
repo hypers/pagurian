@@ -16,6 +16,7 @@ define(function(require, exports, module) {
             this.request("post", url, params, callback);
         },
         request: function(type, url, params, callback) {
+
             if (!validateRequest(params)) {
                 return false;
             }
@@ -130,4 +131,5 @@ define(function(require, exports, module) {
     }
 
     module.exports = service;
+
 });

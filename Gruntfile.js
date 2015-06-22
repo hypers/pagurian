@@ -72,11 +72,7 @@ module.exports = function(grunt) {
                         'src/plugins/datepicker/datepicker.css',
                         'src/plugins/uniform/css/uniform.default.css',
                         'src/plugins/font-awesome/css/font-awesome.min.css',
-                        'src/plugins/datatables/1.9.4/bs.css',
-                        'src/resources/css/style-tpl.css',
-                        'src/resources/css/style.css',
-                        'src/resources/css/style-responsive.css',
-                        'src/resources/css/plugins.css',
+                        'src/plugins/datatables/1.9.4/bs.css'
                     ],
                     'src/resources/css/themes-default.css': ['src/resources/css/themes-default.css'],
                     'src/resources/css/themes-green.css': ['src/resources/css/themes-green.css'],
@@ -184,7 +180,7 @@ module.exports = function(grunt) {
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("uglify:all");
+    //task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 

@@ -1,0 +1,77 @@
+
+.tools-expand{
+
+    position: relative;
+    display: none;
+    margin: 10px 0;
+    border: 1px solid @B300;
+    padding: 10px 20px 10px 200px;
+    .title{
+        position: absolute;
+        top:10px;
+        left: 20px;
+    }
+    .expand {
+        background: @expand-icon no-repeat scroll 0 0 @B000;
+        display: block;
+        height: 8px;
+        position: absolute;
+        right: 82px;
+        top: -7px;
+        width: 10px;
+        z-index: 10;
+        &.dashboard{
+            right: 65px;
+        }
+    }
+    .item-list{
+        min-height: 25px;
+        label{
+            min-width: 210px;
+            line-height: 25px;
+        }
+    }
+}
+
+.tools-wrap {
+    position: relative;
+    clear:both;
+    min-height: 32px;
+    margin-bottom: 18px;
+}
+.tools-top {
+    display: flex;
+    position: absolute;
+    top: 1px;
+    right: 0px;
+    > a, .btn-group,.input-search {
+        margin-left: 5px;
+        float: left;
+    }
+    .btn {
+        i{line-height: 20px;
+            margin-top: 3px;
+        }
+        &.btn-green {
+            background: @B000;
+            border: 1px solid @B300;
+            padding: 6px 11px;
+            text-align: center;
+            text-decoration: none;
+            color: @H500;
+            &:hover {
+                border-color: @B500;
+                
+            }
+            &:active {
+                border-color: @B600;
+                
+            }
+            &:focus{
+                border-color: @B600;
+                
+            }
+        }
+    }
+}
+.tool-action{ clear:both; padding-top: 20px}
