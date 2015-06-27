@@ -202,11 +202,7 @@ Language Bar
 	background-color: @H500 !important;
 	position: relative;
 	min-width: 1300px;
-	._bar {
-		display: inline-block;
-		height: @header-height;
-		line-height: @header-height;
-	}
+
 	.header-inner{
 	  position: relative;
 	}
@@ -289,12 +285,15 @@ Language Bar
 			.dropdown-toggle {
 				padding: 7px 4px 4px 9px
 			}
+            &.open>a{
+                background-color: @H700; 
+            }
 		}
 		li{
 			a{
 				font-size: 16px;
 				height: @header-height;
-				padding: 0 30px;
+				padding: 0 18px;
 				line-height: @header-height;
 				color: @B000;
 				float:left;
@@ -304,6 +303,7 @@ Language Bar
 					background-color: @H700;
 				}
 			}
+           
 		}
 	}
 	.nav {
@@ -332,7 +332,6 @@ Language Bar
 		top: 0;
 		height: 40px;
 		.nav > li{
-			border-left: 1px solid @H600;
 			float: left;
 			a{
 				color: #fff;
@@ -342,100 +341,5 @@ Language Bar
 			}
 		}
 	}
-	.homebar {
-		._bar;
-		float: left;
-		> li > a{
-				border-color:@H600;
-				border-width: 0 1px 0 1px;
-				border-style: solid;
-		}
-		li {
-			position: relative;
-			
-			a {
-				width: 280px;
-				padding: 0 20px;
-				font-size: 14px;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				-ms-text-overflow: ellipsis;
-				-o-text-overflow: ellipsis;
-				-moz-binding: url("ellipsis.xml#ellipsis");
-				position: relative;
-				.icon-r{
-					position: absolute;
-					right: 10px;
-					top: 18px;
-				}
-			}
-		}
-		.dropdown-toggle {
-			color: @B000;
-		}
-		.dropdown-menu {
-			width: 278px;
-			li {
-				height: 40px;
-				line-height: 40px;
-				a {
-					padding: 0 0 0 18px;
-					line-height: 40px;
-					text-align: left;
-				}
-			}
-		}
-	}
 	
-	.userbar {
-		._bar;
-		float: right;
-		border: none;
-		li {
-			position: relative;
-			a {
-				padding: 0;
-				padding: 0 18px;
-				text-align: center;
-				font-size: 14px;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				-ms-text-overflow: ellipsis;
-				-o-text-overflow: ellipsis;
-				-moz-binding: url("ellipsis.xml#ellipsis");
-			}
-			.fa-angle-down {
-				position: absolute;
-				right: 15px;
-				top: 12px;
-				z-index: 999
-			}
-		}
-		.dropdown-toggle {
-			color: @B000;
-		}
-		.dropdown-menu {
-			left: -1px !important;
-			right: auto !important;
-			width: 100%;
-			li {
-				height: 40px;
-				line-height: 40px;
-				a {
-					width: 100%;
-					text-align: left;
-					line-height: 40px;
-					padding: 0 20px;
-					&:hover {
-						background: @H100;
-					}
-					i {
-						color: @H500
-					}
-				}
-			}
-		}
-	}
 }

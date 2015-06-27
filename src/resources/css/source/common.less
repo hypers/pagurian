@@ -16,7 +16,6 @@
 
 @M001:#ff0000;
 
-@gap:18px;
 
 @font-face {
 	font-family: 'icomoon';
@@ -25,6 +24,96 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+
+
+.opacity(@opacity) {
+	opacity: @opacity;
+	// IE8 filter
+	@opacity-ie: (@opacity * 100);
+}
+.box-shadow(@x:0px,@y:2px,@blur:5px,@color:#999){
+	-moz-box-shadow:@arguments ;
+    -webkit-box-shadow:@arguments;
+    box-shadow:@arguments;
+}
+.box-shadow-inset(@x:0px,@y:2px,@blur:5px,@color:#999){
+	-moz-box-shadow:@arguments inset;
+    -webkit-box-shadow:@arguments inset;
+    box-shadow:@arguments inset;
+}
+
+.placeholder(@color:#bcbec0) {
+	&::-moz-placeholder {
+		color: @color;
+	}
+	// Firefox
+	&:-ms-input-placeholder {
+		color: @color;
+	}
+	// Internet Explorer 10+
+	&::-webkit-input-placeholder {
+		color: @color;
+	}
+	// Safari and Chrome
+}
+.radius(@c){
+	-webkit-border-radius: @c !important;
+     -moz-border-radius: @c !important;
+          border-radius: @c !important;
+}
+
+.h1,h1{font-size: 40px}
+.h2,h2{font-size: 20px}
+.h3,h3{font-size: 18px}
+.h4,h4{font-size: 16px}
+.h5,h5{font-size: 14px}
+.h6,h6{font-size: 12px}
+
+/* remove rounds from all elements */
+
+div, 
+input, 
+select, 
+textarea, 
+span, 
+img, 
+table, 
+td, 
+th, 
+p, 
+a, 
+button, 
+ul,
+code,
+pre, 
+li {
+  .radius(0);
+}
+a {
+  text-shadow: none !important; 
+  color:@H500;
+}
+
+/***
+Fix link outlines after click
+***/
+a,a:focus, a:hover, a:active {
+  outline: 0;
+}
+
+
+/***
+General HR
+***/
+
+.hr,hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #E0DFDF;
+  border-bottom: 1px solid #FEFEFE;
+}
+
 [class^="icon-"], [class*=" icon-"] {
 	speak: none;
 	font-style: normal;
@@ -47,6 +136,8 @@
 		line-height: 20px;
 	}
 }
+
+
 
 .icon-user:before { content: "\e600"; }
 .icon-upload:before { content: "\e601"; }
@@ -82,44 +173,75 @@
 .icon-arrow-top-sort:before { content: "\e61f"; }
 .icon-arrow-bottom-sort:before { content: "\e620"; }
 .icon-arrow-bottom:before { content: "\e621"; }
-
-.opacity(@opacity) {
-	opacity: @opacity;
-	// IE8 filter
-	@opacity-ie: (@opacity * 100);
-}
-.placeholder(@color:#bcbec0) {
-	&::-moz-placeholder {
-		color: @color;
-	}
-	// Firefox
-	&:-ms-input-placeholder {
-		color: @color;
-	}
-	// Internet Explorer 10+
-	&::-webkit-input-placeholder {
-		color: @color;
-	}
-	// Safari and Chrome
-}
-.fa {
-	&.active{
-		color: @H500 !important;
-	}
+.icon {
 	&.red {
 		color: #ae4e3b !important;
 	}
-	&.green{
+	&.green {
 		color: #1b9451 !important;
 	}
 	&.gray {
 		color: #bbb !important;
 	}
-	&.big {
+	&.blue{
+		color: #60c0dd !important;
+	}
+	&.yellow{
+		color: #fad860 !important;
+	}
+}
+
+
+/***
+Font Awesome Icons
+***/
+[class^="fa-"],
+[class*=" fa-"] {
+  display: inline-block;
+  margin-top: 1px;
+  font-size: 14px;
+  *margin-right: .3em;
+  line-height: 14px;
+}
+
+/***
+Make font awesome icons fixed width(latest version issue)
+***/
+li [class^="fa-"],
+li [class*=" fa-"] {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+li [class^="fa-"].icon-large,
+li [class*=" fa-"].icon-large {
+  /* increased font size for icon-large */
+  width: 1.5625em;
+}
+.fa {
+
+	&.fa-red,&.red {
+		color: #ae4e3b !important;
+	}
+	&.fa-green,&.green {
+		color: #1b9451 !important;
+	}
+	&.fa-gray,&.gray {
+		color: #bbb !important;
+	}
+	&.fa-blue,&.blue{
+		color: #60c0dd !important;
+	}
+	&.fa-yellow,&.yellow{
+		color: #fad860 !important;
+	}
+	&.fa-big,&.big {
 		font-size: 20px !important;
 		line-height: 20px !important;
 	}
+
 }
+
 .t-a-r {
 	text-align: right !important;
 }
@@ -150,7 +272,7 @@
 
 
 .global-message {
-	padding: 15px @gap;
+	padding: 15px 20px;
 	max-width: 33.33333333333333%;
 	font-size: 14px;
 	font-weight: bold;
@@ -192,7 +314,7 @@
 
 
 .markdown{
-	padding: @gap 0;
+	padding: 20px 0;
 	&.inner{
 		padding: 10px 0;
 	}
@@ -200,7 +322,7 @@
 		color: #555;
 	}
 	h2,h3{
-		margin: @gap 0;
+		margin: 20px 0;
 	}
 	ol, ul{
 		padding-left: 15px
@@ -263,9 +385,6 @@
 		}
 	}
 
-	
-	
-
 	.pre-numbering {
 	    position: absolute;
 	    top: 0;
@@ -287,7 +406,8 @@
 }
 .row:after{ clear: inherit;}
 
-
+.bold{font-weight: bold;}
+.relative{ position: relative;}
 .nobg { background: none !important }
 .m0 { margin: 0 }
 .m5 { margin: 5px }
@@ -368,6 +488,7 @@
 .pr50 { padding-right: 50px }
 .pr100 { padding-right: 100px }
 .minh500 { min-height: 500px }
+
 .w10{ width: 10px;}
 .w20{ width: 20px;}
 .w30{ width: 30px;}
