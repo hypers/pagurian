@@ -7,8 +7,7 @@
 
 	global.PagurianAlias = name;
 
-	var schema = ("https:" == document.location.protocol) ? "https://" :
-		"http://";
+	var schema = ("https:" == document.location.protocol) ? "https://" : "http://";
 	var domain = window.location.hostname || "/";
 
 	/**
@@ -17,6 +16,7 @@
 	 */
 	var pagurian = {
 		version: "1.2.0506",
+		debug: false,
 		util: {},
 		com: {},
 		plugin: {},
