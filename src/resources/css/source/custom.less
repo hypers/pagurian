@@ -51,6 +51,120 @@
     }
 }
 
+.header{
+    .nav-title{
+        display: inline-block;
+        height: @header-height;
+        line-height: @header-height;
+        color: @B000;
+        text-decoration: none;
+        font-size: 18px;
+        padding: 0 18px;
+    }
+    ._bar {
+        display: inline-block;
+        height: @header-height;
+        line-height: @header-height;
+    }
+    .homebar {
+        ._bar;
+        float: left;
+        > li > a{
+                border-color:@H600;
+                border-width: 0 1px 0 1px;
+                border-style: solid;
+        }
+        li {
+            position: relative;
+            
+            a {
+                width: 280px;
+                padding: 0 20px;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                -ms-text-overflow: ellipsis;
+                -o-text-overflow: ellipsis;
+                -moz-binding: url("ellipsis.xml#ellipsis");
+                position: relative;
+                .icon-r{
+                    position: absolute;
+                    right: 10px;
+                    top: 18px;
+                }
+            }
+        }
+        .dropdown-toggle {
+            color: @B000;
+        }
+        .dropdown-menu {
+            width: 278px;
+            li {
+                height: 40px;
+                line-height: 40px;
+                a {
+                    padding: 0 0 0 18px;
+                    line-height: 40px;
+                    text-align: left;
+                }
+            }
+        }
+    }
+    
+    .userbar {
+        ._bar;
+        float: right;
+        border: none;
+        li {
+            position: relative;
+            a {
+                padding: 0;
+                padding: 0 18px;
+                text-align: center;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                -ms-text-overflow: ellipsis;
+                -o-text-overflow: ellipsis;
+                -moz-binding: url("ellipsis.xml#ellipsis");
+            }
+            .fa-angle-down {
+                position: absolute;
+                right: 15px;
+                top: 12px;
+                z-index: 999
+            }
+        }
+        .dropdown-toggle {
+            color: @B000;
+        }
+        .dropdown-menu {
+            left: auto !important;
+            right: 0 !important;
+            margin-top:-1px;
+            width: auto;
+            li {
+                height: 40px;
+                line-height: 40px;
+                a {
+                    width: 100%;
+                    text-align: left;
+                    line-height: 40px;
+                    padding: 0 20px;
+                    color: @B900;
+                    &:hover {
+                        background: @H050;
+                    }
+                    i {
+                        color: @H500
+                    }
+                }
+            }
+        }
+    }
+}
 
 #btn_date_type{ position: relative; display: none;}
 #data_panel .whisper{
