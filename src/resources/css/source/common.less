@@ -15,7 +15,7 @@
 @B900:#575757;
 
 @M001:#ff0000;
-
+@gap:18px;
 
 @font-face {
 	font-family: 'icomoon';
@@ -138,41 +138,103 @@ General HR
 }
 
 
+.icon-arrow-bottom:before {
+	content: "\e621";
+}
+.icon-btn-off:before {
+	content: "\e61e";
+}
+.icon-btn-on:before {
+	content: "\e61d";
+}
+.icon-building:before {
+	content: "\e61c";
+}
+.icon-close:before {
+	content: "\e61b";
+}
+.icon-close-circle:before {
+	content: "\e61a";
+}
+.icon-download:before {
+	content: "\e619";
+}
+.icon-edit:before {
+	content: "\e618";
+}
+.icon-exclamation-circle:before {
+	content: "\e617";
+}
+.icon-flow:before {
+	content: "\e616";
+}
+.icon-frame:before {
+	content: "\e615";
+}
+.icon-gear:before {
+	content: "\e614";
+}
+.icon-gears:before {
+	content: "\e613";
+}
+.icon-join:before {
+	content: "\e611";
+}
+.icon-logo-analytics:before {
+	content: "\e610";
+}
+.icon-logo-dmp:before {
+	content: "\e60f";
+}
+.icon-magic:before {
+	content: "\e60e";
+}
+.icon-member:before {
+	content: "\e60d";
+}
+.icon-ok-circle:before {
+	content: "\e60c";
+}
+.icon-play:before {
+	content: "\e60b";
+}
+.icon-plus:before {
+	content: "\e60a";
+}
+.icon-profile:before {
+	content: "\e609";
+}
+.icon-question:before {
+	content: "\e608";
+}
+.icon-question-circle:before {
+	content: "\e607";
+}
+.icon-refresh:before {
+	content: "\e606";
+}
+.icon-stop:before {
+	content: "\e605";
+}
+.icon-trash:before {
+	content: "\e604";
+}
+.icon-tree-close:before {
+	content: "\e603";
+}
+.icon-tree-open:before {
+	content: "\e602";
+}
+.icon-upload:before {
+	content: "\e601";
+}
+.icon-user:before {
+	content: "\e600";
+}
+.icon-info:before {
+	content: "\e622";
+}
 
-.icon-user:before { content: "\e600"; }
-.icon-upload:before { content: "\e601"; }
-.icon-tree-open:before { content: "\e602"; }
-.icon-tree-close:before { content: "\e603"; }
-.icon-trash:before { content: "\e604"; }
-.icon-stop:before { content: "\e605"; }
-.icon-refresh:before { content: "\e606"; }
-.icon-question-circle:before { content: "\e607"; }
-.icon-question:before { content: "\e608"; }
-.icon-profile:before { content: "\e609"; }
-.icon-plus:before { content: "\e60a"; }
-.icon-play:before { content: "\e60b"; }
-.icon-ok-circle:before { content: "\e60c"; }
-.icon-member:before { content: "\e60d"; }
-.icon-magic:before { content: "\e60e"; }
-.icon-logo-dmp:before { content: "\e60f"; }
-.icon-logo-analytics:before { content: "\e610"; }
-.icon-join:before { content: "\e611"; }
-.icon-gotop:before { content: "\e612"; }
-.icon-gears:before { content: "\e613"; }
-.icon-gear:before { content: "\e614"; }
-.icon-frame:before { content: "\e615"; }
-.icon-flow:before { content: "\e616"; }
-.icon-exclamation-circle:before { content: "\e617"; }
-.icon-edit:before { content: "\e618"; }
-.icon-download:before { content: "\e619"; }
-.icon-close-circle:before { content: "\e61a"; }
-.icon-close:before { content: "\e61b"; }
-.icon-building:before { content: "\e61c"; }
-.icon-btn-on:before { content: "\e61d"; }
-.icon-btn-off:before { content: "\e61e"; }
-.icon-arrow-top-sort:before { content: "\e61f"; }
-.icon-arrow-bottom-sort:before { content: "\e620"; }
-.icon-arrow-bottom:before { content: "\e621"; }
 .icon {
 	&.red {
 		color: #ae4e3b !important;
@@ -218,6 +280,7 @@ li [class*=" fa-"].icon-large {
   /* increased font size for icon-large */
   width: 1.5625em;
 }
+
 .fa {
 
 	&.fa-red,&.red {
@@ -241,7 +304,9 @@ li [class*=" fa-"].icon-large {
 	}
 
 }
-
+.fa-item{
+	line-height: 30px;
+}
 .t-a-r {
 	text-align: right !important;
 }
