@@ -489,9 +489,7 @@
                                  createNumber(a.page.current, a.page.pagesize);
                              }
 
-                             if (typeof oSettings.oInit.callback === "function") {
-                                 oSettings.oInit.callback(a);
-                             }
+
 
                              if (oSettings.oInit.fnExtendDetails && a.result && a.result.length) {
 
@@ -499,7 +497,8 @@
                                  var nCloneTh = document.createElement('th');
                                  var nCloneTd = document.createElement('td');
 
-                                 $(nCloneTh).addClass("w60 nCloneTh");
+                                 $(nCloneTh).addClass("w60 nCloneTh nExtend");
+                                 $(nCloneTd).addClass("w60 nCloneTd nExtend");
                                  nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
                                  $(seletor + ' thead tr').each(function() {
@@ -563,6 +562,11 @@
                              } else {
                                  $(seletor + "_wrapper .bottom").hide();
                              }
+
+                             if (typeof oSettings.oInit.callback === "function") {
+                                 oSettings.oInit.callback(a);
+                             }
+
                          });
                      }
 
