@@ -383,7 +383,6 @@
                      return s / length;
                  }
 
-
                  for (var i = 0; i < aoData.length; i++) {
 
                      //页码
@@ -581,7 +580,7 @@
                  }
              },
              "oLanguage": {
-                 "sProcessing": '<i class="fa fa-coffee"></i>&nbsp;加载中...',
+                 "sProcessing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;加载中',
                  "sLengthMenu": "每页 _MENU_ 条 ",
                  "oPaginate": {
                      "sPrevious": "上一页",
