@@ -9,16 +9,16 @@
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-	
+
 	{{>fixtures/sidebar}}
 
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		
+
 		<div class="page-content">
-			
+
 			{{>fixtures/theme-panel}}
-		
+
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
@@ -30,8 +30,8 @@
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-6">
-					
-					
+
+
 
                     <!-- BEGIN PORTLET-->
                     <div class="portlet box default">
@@ -42,7 +42,7 @@
                         </div>
                         <div class="portlet-body">
                             <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
-                            
+
                             <div class="markdown inner">
                                 <pre><code class="javascript">
 $p.com.dialog("#btn_remove", {
@@ -55,7 +55,7 @@ $p.com.dialog("#btn_remove", {
 });
                                 </code></pre>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- END PORTLET-->
@@ -83,21 +83,21 @@ $p.com.dialog("#btn_add", {
         $p.com.alert("你点击了确定");
         modal.hide();
     }
-}); 
+});
                                 </code></pre>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- END PORTLET-->
 
 
-                    
+
 
 				</div>
                 <div class="col-md-6">
-                    
-                     
+
+
 
                     <!-- BEGIN PORTLET-->
                     <div class="portlet box default">
@@ -108,7 +108,7 @@ $p.com.dialog("#btn_add", {
                         </div>
                         <div class="portlet-body">
                             <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
-                            
+
                             <div class="markdown inner">
                                 <pre><code class="javascript">
 $p.com.dialog("#btn_update", {
@@ -135,7 +135,7 @@ $p.com.dialog("#btn_update", {
 });
                                 </code></pre>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- END PORTLET-->
@@ -143,9 +143,9 @@ $p.com.dialog("#btn_update", {
                 </div>
 
 			</div>
-            
-			
-        
+
+
+
 
 			<!-- END PAGE CONTENT-->
 		</div>
@@ -181,5 +181,6 @@ $p.com.dialog("#btn_update", {
 	});
 </script>
 
+{{>fixtures/tracker}}
 </body>
 </html>

@@ -258,15 +258,12 @@ Bootstrap Tables
 }
 /***Table****/
 .table-bordered {
-  border: none;
-  tr {
-		th{
-			border-width: 0px !important;
-		}
-	th, td {
-	  padding: 10px 20px !important;
-	}
-  }
+    border: none;
+    tr{
+	    th{
+		    border-width: 0px !important;
+	    }
+    }
 }
 .table-striped {
   tbody {
@@ -288,31 +285,34 @@ Bootstrap Tables
 }
 
 .table-custom {
-  clear: inherit !important;
-  a{
-	color: @H500;
-	&:hover,&:focus{
-	  color: @H400;
+    th, td {
+	    padding: 10px 20px !important;
 	}
-  }
-  .disabled{
-	color: @B600;
-	  text-decoration: none;
-	  &:hover,&:focus{
-		color: @B600;
-	  }
-  }
-  thead th {
-	background: @B050 !important;
-	font-size: 14px !important;
-  }
-  th {
-	font-weight: 100 !important;
-	&.title {
-	  span {
-		font-size: 18px;
-		color: @H500;
-	  }
+    clear: inherit !important;
+    a{
+	    color: @H500;
+	    &:hover,&:focus{
+	        color: @H400;
+	    }
+    }
+    .disabled{
+	    color: @B600;
+	    text-decoration: none;
+	    &:hover,&:focus{
+		    color: @B600;
+	    }
+    }
+    thead th {
+	    background: @B050 !important;
+	    font-size: 14px !important;
+    }
+    th {
+	    font-weight: 100 !important;
+	    &.title {
+	        span {
+		    font-size: 18px;
+		    color: @H500;
+	    }
 	}
   }
   td,td div{

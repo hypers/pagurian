@@ -9,12 +9,12 @@
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-	
+
 	{{>fixtures/sidebar}}
 
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		
+
 		<div class="page-content">
 			{{>fixtures/theme-panel}}
             <div class="row">
@@ -132,9 +132,9 @@ Dialog.prototype = {
 <p>好的：</p>
 
 <pre class="prettyprint"><code class="language-js hljs ">
-<span class="hljs-keyword">for</span> ( t <span class="hljs-keyword">in</span> selected ) { 
+<span class="hljs-keyword">for</span> ( t <span class="hljs-keyword">in</span> selected ) {
     <span class="hljs-keyword">if</span> ( !hash[t] ) {
-        deselect(t); 
+        deselect(t);
     }
 }</code></pre></li>
 <li><p>长语句采用断行 <br>
@@ -161,7 +161,7 @@ embedSWF(id, { url: <span class="hljs-string">'/swf/player30792.swf?url='</span>
 
 <pre class="prettyprint"><code class="language-js hljs ">
 embedSWF(id, {
-    url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href, 
+    url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href,
     width: <span class="hljs-number">261</span>,
     height: <span class="hljs-number">30</span>,
     params: { wmode:<span class="hljs-string">'transparent'</span> },
@@ -172,7 +172,7 @@ embedSWF(id, {
 });</code></pre></li>
 </ul>
 </div>
-<!--end markdown-->	
+<!--end markdown-->
 </div>
 </div>
 		</div>
@@ -190,6 +190,6 @@ embedSWF(id, {
 	});
 </script>
 
-
+{{>fixtures/tracker}}
 </body>
 </html>

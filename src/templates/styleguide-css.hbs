@@ -10,12 +10,12 @@
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-	
+
     {{>fixtures/sidebar}}
 
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		
+
 		<div class="page-content">
 			{{>fixtures/theme-panel}}
             <div class="row">
@@ -158,8 +158,8 @@
 <li><p>尽量避免使用CSS Hack, IE Hack推荐用法</p>
 
 <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-class">.selector</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;     <span class="hljs-comment">/* 所有浏览器 */</span> 
-    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">9</span></span></span>;   <span class="hljs-comment">/* 所有IE浏览器 */</span> 
+    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;     <span class="hljs-comment">/* 所有浏览器 */</span>
+    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">9</span></span></span>;   <span class="hljs-comment">/* 所有IE浏览器 */</span>
     <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">0</span></span></span>;   <span class="hljs-comment">/* IE8 */</span>
     <span class="hljs-rule">+<span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE7 */</span>
     <span class="hljs-rule"><span class="hljs-attribute">_property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE6 */</span>
@@ -176,7 +176,7 @@
 
 <pre class="prettyprint"><code class="language-css hljs ">
 <span class="hljs-comment">/* bad */</span>
-<span class="hljs-class">.page_CANVAS</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span> 
+<span class="hljs-class">.page_CANVAS</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
 
 <span class="hljs-comment">/* good */</span>
 <span class="hljs-class">.page-wrapper</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
@@ -186,7 +186,7 @@
 
 <pre class="prettyprint"><code class="language-css hljs ">
 <span class="hljs-comment">/* bad */</span>
-<span class="hljs-class">.MOCS</span> 
+<span class="hljs-class">.MOCS</span>
 
 <span class="hljs-comment">/* good */</span>
 <span class="hljs-class">.page-wrapper</span>
@@ -195,7 +195,7 @@
 <li><p>使用功能和作用进行命名</p>
 
 <pre class="prettyprint"><code class="language-css hljs ">
-<span class="hljs-comment">/* bad */</span> 
+<span class="hljs-comment">/* bad */</span>
 <span class="hljs-class">.MO-CS</span>
 
 <span class="hljs-comment">/* good */</span>
@@ -206,8 +206,8 @@
 <li><p>避免在ID或class前设置多余的元素类型</p>
 
 <pre class="prettyprint"><code class="language-css hljs ">
-<span class="hljs-comment">/* bad */</span> 
-<span class="hljs-tag">div</span><span class="hljs-class">.contemt</span> 
+<span class="hljs-comment">/* bad */</span>
+<span class="hljs-tag">div</span><span class="hljs-class">.contemt</span>
 <span class="hljs-tag">p</span><span class="hljs-class">.visible</span>
 <span class="hljs-tag">span</span><span class="hljs-id">#test</span>
 
@@ -234,7 +234,7 @@
 
 <span class="hljs-comment">/* good */</span>
 <span class="hljs-class">.content</span> <span class="hljs-rules">{
-    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px <span class="hljs-number">5</span>px <span class="hljs-number">0</span> <span class="hljs-number">0</span></span></span>; 
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px <span class="hljs-number">5</span>px <span class="hljs-number">0</span> <span class="hljs-number">0</span></span></span>;
 <span class="hljs-rule">}</span></span></code></pre></li>
 </ul>
 
@@ -317,5 +317,6 @@
 	});
 </script>
 
+{{>fixtures/tracker}}
 </body>
 </html>
