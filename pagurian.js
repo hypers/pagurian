@@ -1,28 +1,30 @@
 /**
  * @fileOverview Pagurian
- * @version 0.1
- *
+ * @version 1.3
+ * @param  {Object} global window
+ * @param  {String} name   Pagurian alias
+ * @param  {Boolean} debug
  */
-(function(global, name) {
+(function(global, name, debug) {
 
 	global.PagurianAlias = name;
 
-	var schema = ("https:" == document.location.protocol) ? "https://" : "http://";
+	var prot = ("https:" == document.location.protocol) ? "https://" : "http://";
 	var domain = window.location.hostname || "/";
 
+
 	/**
-	 * Pagurian 对象
+	 * Pagurian
 	 * @type {Object}
 	 */
 	var pagurian = {
-		version: "1.2.0506",
-		debug: false,
+		version: "1.3.0710",
 		util: {},
 		com: {},
 		plugin: {},
 		path: {
-			api: schema + domain + "/",
-			app: schema + domain + "/" + (this.debug ? "src" : "dist") + "/"
+			api: prot + domain + "/",
+			app: prot + domain + "/" + (debug ? "src" : "dist") + "/"
 		},
 		call: function() {
 			return (this.queue = this.queue || []).push(arguments);
@@ -66,7 +68,6 @@
 
 	})("seajs");
 
-
 	global[name] = global['pagurian'] = pagurian;
 
-})(this, "$p");
+})(this,"$p",false);

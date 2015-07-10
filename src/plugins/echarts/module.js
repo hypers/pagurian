@@ -91,7 +91,7 @@ define(function(require, exports, module) {
 
             var rows = options.rows || [];
             var option = {
-                
+
                 title: {
                     x: "center",
                     y: "20",
@@ -100,14 +100,14 @@ define(function(require, exports, module) {
                         fontWeight: '100',
                     }
                 },
-                calculable: true,
+                calculable: false,
                 tooltip: {
                     trigger: 'axis'
                 },
                 grid: {
-                    x: 60,
+                    x: 70,
                     y: 60,
-                    x2: 50,
+                    x2: 60,
                     y2: 60
                 },
                 legend: {
@@ -201,6 +201,7 @@ define(function(require, exports, module) {
                     type: 'pie',
                     radius: '60%',
                     minAngle: 3,
+                    startAngle: 0,
                     center: ['50%', '50%'],
                     data: []
                 }]
@@ -237,7 +238,7 @@ define(function(require, exports, module) {
                 toolbox: {
                     show: false
                 },
-                calculable: true,
+                calculable: false,
                 xAxis: [{
                     type: 'category',
                     data: [],
@@ -293,7 +294,6 @@ define(function(require, exports, module) {
             //初始化数据
             for (var i = 0; i < dataList.length; i++) {
                 option.xAxis[0].data.push(dataList[i].name);
-
                 option.series[0].data.push(dataList[i].value);
             }
             if (options.name) {
@@ -305,7 +305,20 @@ define(function(require, exports, module) {
             return option;
         },
         map: function(options) {
-
+            var provinceList = ['重庆', '河北', '河南', '云南', '辽宁', '黑龙江', '湖南', '安徽',
+				'山东', '新疆', '江苏', '浙江', '江西', '湖北', '广西', '甘肃', '山西', '内蒙古', '陕西', '吉林',
+				'福建', '贵州', '广东', '青海', '西藏', '四川', '宁夏', '海南', '台湾', '香港', '澳门'
+			];
+            var getProvinceName=function(name) {
+				if (name) {
+					for (var i = 0; i < provinceList.length; i++) {
+						if (name.indexOf(provinceList[i]) >= 0) {
+							return provinceList[i];
+						}
+					}
+				}
+				return name;
+			}
             var dataList = options.data || [];
             var option = {
                 color: ['#fe8463', '#ffede8'],
@@ -318,7 +331,8 @@ define(function(require, exports, module) {
                     }
                 },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: options.name + "<br/>{b} : {c} {d}"
                 },
                 dataRange: {
                     orient: 'horizontal',
@@ -326,19 +340,25 @@ define(function(require, exports, module) {
                     max: 5000,
                     text: ['高', '低'],
                     calculable: false,
-                    color: ['#fe8463', '#ffede8']
+                    color: ['#fe8463', '#ffede8'],
+                    x: "18",
+                    y: "420"
                 },
                 series: [{
                     name: '独立用户数',
                     type: 'map',
                     roam: true,
-                    mapType: 'china',
+                    mapType: options.options.mapType,
                     calculable: false,
+                    nameMap:options.options.nameMap,
+                    mapLocation: {
+                        y : 60
+                    },
                     roam: false, //是否开启缩放功能
                     itemStyle: {
                         normal: {
                             label: {
-                                show: true
+                                show: options.options.mapType === "china" ? true : false
                             }
                         },
                         emphasis: {
@@ -359,11 +379,13 @@ define(function(require, exports, module) {
 
             //初始化数据
             for (var i = 0; i < dataList.length; i++) {
+                dataList[i].name=getProvinceName(dataList[i].name);
                 option.series[0].data.push(dataList[i]);
             }
             option.series[0].name = options.name;
             $.extend(true, option, options.options);
             this.option = option;
+
 
             return option;
         }

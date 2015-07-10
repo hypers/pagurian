@@ -534,7 +534,7 @@
                                          row_details.addClass("row-details-open disabled").removeClass("row-details-close");
                                          oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
 
-                                            oTable.fnOpen(nTr, tb_details || "<div class='p10 t-a-c'>查询结果为空</div>", 'details');
+                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='fa fa-info-circle  big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
                                              var ndetails = row_details.parents("tr").next().find(".details");
                                              row_details.removeClass("disabled");
                                              ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
