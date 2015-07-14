@@ -305,10 +305,12 @@ define(function(require, exports, module) {
             return option;
         },
         map: function(options) {
+
             var provinceList = ['重庆', '河北', '河南', '云南', '辽宁', '黑龙江', '湖南', '安徽',
 				'山东', '新疆', '江苏', '浙江', '江西', '湖北', '广西', '甘肃', '山西', '内蒙古', '陕西', '吉林',
 				'福建', '贵州', '广东', '青海', '西藏', '四川', '宁夏', '海南', '台湾', '香港', '澳门'
 			];
+
             var getProvinceName=function(name) {
 				if (name) {
 					for (var i = 0; i < provinceList.length; i++) {
@@ -319,6 +321,7 @@ define(function(require, exports, module) {
 				}
 				return name;
 			}
+
             var dataList = options.data || [];
             var option = {
                 color: ['#fe8463', '#ffede8'],
@@ -337,7 +340,7 @@ define(function(require, exports, module) {
                 dataRange: {
                     orient: 'horizontal',
                     min: 0,
-                    max: 5000,
+                    max: 0,
                     text: ['高', '低'],
                     calculable: false,
                     color: ['#fe8463', '#ffede8'],
@@ -354,7 +357,7 @@ define(function(require, exports, module) {
                     mapLocation: {
                         y : 60
                     },
-                    roam: false, //是否开启缩放功能
+                    roam: false,
                     itemStyle: {
                         normal: {
                             label: {
@@ -379,8 +382,13 @@ define(function(require, exports, module) {
 
             //初始化数据
             for (var i = 0; i < dataList.length; i++) {
+
                 dataList[i].name=getProvinceName(dataList[i].name);
                 option.series[0].data.push(dataList[i]);
+                if(dataList[i].value > option.dataRange.max){
+                    option.dataRange.max = dataList[i].value;
+                }
+
             }
             option.series[0].name = options.name;
             $.extend(true, option, options.options);
