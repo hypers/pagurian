@@ -90,15 +90,15 @@ define(function(require, exports, module) {
             return this;
 
         },
-        send: function(type, url, params, callback) {
+        send: function(type, url, params, callback, options) {
 
             this.init(type, params);
             var data = this.options.data;
-
-            var options = {
-                url: pagurian.path.api + url + ".json",
+            var options = options || {};
+            var ajaxOptions = {
+                url: pagurian.path.api + url,
                 type: type || "get",
-                dataType: "json",
+                dataType: options.dataType || "json",
                 data: data,
                 timeout: 20000,
                 success: function(data, textStatus, jqXHR) {
@@ -131,9 +131,8 @@ define(function(require, exports, module) {
             };
 
             if (this.bundle) {
-                options.contentType = "application/json";
+                ajaxOptions.contentType = "application/json";
                 if (type == "post" || type == "put" || type == "patch") {
-
                     data = $.toJSON({
                         data: arrayToObject(data)
                     });
@@ -148,22 +147,23 @@ define(function(require, exports, module) {
                     split = "&";
                 }
                 if (p) {
-                    options.url += p;
+                    ajaxOptions.url += p;
                 }
             }
 
-            options.data = data;
-            $.ajax(options);
+            ajaxOptions.data = data;
 
+            $.ajax(ajaxOptions);
             return this;
         },
-        request: function(type, url, params, callback) {
-            this.send(type, url, params, callback);
+        request: function(type, url, params, callback, options) {
+
+            this.send(type, url, params, callback, options);
             return this;
         }
 
     };
-    
+
     module.exports = ajax;
 
 });

@@ -70,4 +70,4 @@
 
 	global[name] = global['pagurian'] = pagurian;
 
-})(this,"$p",false);
+})(this,"$p",true);

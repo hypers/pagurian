@@ -9,26 +9,24 @@ define(function(require, exports, module) {
     var ajax = require('./core/ajax');
     var service = {
 
-        get: function(url, params, callback) {
-            this.request("get", url, params, callback);
+        get: function(url, params, callback, options) {
+            this.request("get", url, params, callback, options);
         },
-        post: function(url, params, callback) {
-            this.request("post", url, params, callback);
+        post: function(url, params, callback, options) {
+            this.request("post", url, params, callback, options);
         },
-        request: function(type, url, params, callback) {
+        request: function(type, url, params, callback, options) {
 
             if (!validateRequest(params)) {
                 return false;
             }
-
-            ajax.request(type, url, params, function(resp) {
-
+            ajax.request(type, url + ".json", params, function(resp) {
                 var valid = validateRespone(resp);
+
                 if (typeof callback === "function") {
                     callback(resp, valid);
                 }
-
-            });
+            }, options);
         }
     }
 

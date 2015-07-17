@@ -81,7 +81,7 @@ define(function(require, exports, module) {
                 }
                 resize = setTimeout(function() {
                     doResponsive();
-                }, 50); // wait 50ms until window resize finishes.                
+                }, 50); // wait 50ms until window resize finishes.
                 currheight = document.documentElement.clientHeight; // store last body client height
             });
         } else {
@@ -128,6 +128,8 @@ define(function(require, exports, module) {
                     container.css("min-height", available_height + 'px');
 
                 }
+
+                //console.log($(".page-sidebar-wrapper").height());
             }
 
 
