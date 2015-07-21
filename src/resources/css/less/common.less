@@ -21,25 +21,25 @@ ul,
 code,
 pre,
 li {
-  .radius(0);
+    .radius(0);
 }
 a {
-  text-shadow: none !important;
-  color:@H500;
+    text-shadow: none !important;
+    color:@H500;
 }
 
 /***
 Fix link outlines after click
 ***/
 a,a:focus, a:hover, a:active {
-  outline: 0;
+    outline: 0;
 }
 
 
 a:hover,
 a:focus {
-  color: @H300;
-  text-decoration: underline;
+    color: @H300;
+    text-decoration: underline;
 }
 
 /***
@@ -47,13 +47,11 @@ General HR
 ***/
 
 .hr,hr {
-  margin: 20px 0;
-  border: 0;
-  border-top: 1px solid #E0DFDF;
-  border-bottom: 1px solid #FEFEFE;
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #E0DFDF;
+    border-bottom: 1px solid #FEFEFE;
 }
-
-
 
 .t-a-r {
 	text-align: right !important;
@@ -70,7 +68,6 @@ General HR
 .f-l {
 	float: left;
 }
-
 .clear{
 	zoom: 1;
 	clear: both;
@@ -87,6 +84,7 @@ General HR
 .bold{font-weight: bold;}
 .relative{ position: relative;}
 .nobg { background: none !important }
+
 .m0 { margin: 0 }
 .m5 { margin: 5px }
 .m10 { margin: 10px }
@@ -102,6 +100,7 @@ General HR
 .mt40 { margin-top: 40px }
 .mt50 { margin-top: 50px }
 .mt100 { margin-top: 100px }
+
 .mb0 { margin-bottom: 0 }
 .mb5 { margin-bottom: 5px }
 .mb10 { margin-bottom: 10px }
@@ -111,6 +110,7 @@ General HR
 .mb40 { margin-bottom: 40px }
 .mb50 { margin-bottom: 50px }
 .mb100 { margin-bottom: 100px }
+
 .ml0 { margin-left: 0 !important }
 .ml5 { margin-left: 5px }
 .ml10 { margin-left: 10px }
@@ -121,6 +121,7 @@ General HR
 .ml50 { margin-left: 50px }
 .ml100 { margin-left: 100px }
 .ml-15 { margin-left: -15px }
+
 .mr0 { margin-right: 0 }
 .mr5 { margin-right: 5px }
 .mr10 { margin-right: 10px }
@@ -130,6 +131,7 @@ General HR
 .mr40 { margin-right: 40px }
 .mr50 { margin-right: 50px }
 .mr100 { margin-right: 100px }
+
 .p0 { padding: 0 }
 .p10 { padding: 10px }
 .p15 { padding: 15px }
@@ -143,6 +145,7 @@ General HR
 .pt30 { padding-top: 30px }
 .pt50 { padding-top: 50px !important }
 .pt100 { padding-top: 100px !important }
+
 .pb0 { padding-bottom: 0 }
 .pb5 { padding-bottom: 5px }
 .pb10 { padding-bottom: 10px !important }
@@ -151,6 +154,7 @@ General HR
 .pb30 { padding-bottom: 30px }
 .pb50 { padding-bottom: 50px }
 .pb100 { padding-bottom: 100px }
+
 .pl0 { padding-left: 0 }
 .pl5 { padding-left: 5px }
 .pl10 { padding-left: 10px }
@@ -159,41 +163,19 @@ General HR
 .pl30 { padding-left: 30px }
 .pl50 { padding-left: 50px }
 .pl100 { padding-left: 100px }
+
 .pr10 { padding-right: 10px }
 .pr15 { padding-right: 15px }
 .pr20 { padding-right: 20px }
 .pr30 { padding-right: 30px }
 .pr50 { padding-right: 50px }
 .pr100 { padding-right: 100px }
-.minh500 { min-height: 500px }
 
-.w10{ width: 10px;}
-.w20{ width: 20px;}
-.w30{ width: 30px;}
-.w40{ width: 40px;}
-.w50{ width: 50px;}
-.w60{ width: 60px;}
-.w70{ width: 70px;}
-.w80{ width: 80px;}
-.w90{ width: 90px;}
-.w100{ width: 100px;}
-.w110{ width: 110px;}
-.w120{ width: 120px;}
-.w130{ width: 130px;}
-.w140{ width: 140px;}
-.w150{ width: 150px;}
-.w160{ width: 160px;}
-.w170{ width: 170px;}
-.w180{ width: 180px;}
-.w190{ width: 190px;}
-.w200{ width: 200px;}
-.w210{ width: 210px;}
-.w220{ width: 220px;}
-.w230{ width: 230px;}
-.w240{ width: 240px;}
-.w250{ width: 250px;}
-.w260{ width: 260px;}
-.w270{ width: 270px;}
-.w280{ width: 280px;}
-.w290{ width: 290px;}
-.w230{ width: 300px;}
+
+
+.generate-w(@n, @i: 1) when (@i =< @n) {
+      @wi:@i*10;
+  　　.w@{wi} {width: @wi + 0px;}
+  .generate-w(@n, (@i + 1));
+}
+.generate-w(30);
