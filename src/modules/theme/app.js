@@ -99,7 +99,7 @@ define(function(require, exports, module) {
             $('.colorpicker-default').colorpicker({
                 format: 'hex'
             });
-            $('.colorpicker-rgba').colorpicker();
+            
         };
 
 

@@ -222,6 +222,8 @@ define(function(require, exports, module) {
 					type: 'changeColor',
 					color: this.color
 				});
+
+				console.log(this.color);
 			},
 
 			hide: function() {
@@ -337,6 +339,13 @@ define(function(require, exports, module) {
 					type: 'changeColor',
 					color: this.color
 				});
+				/**
+				 * update :simon
+				 * mousemove 的时候同时改变文本框里面的值
+				 */
+				if (this.component) {
+					this.element.find('input').prop('value', this.format.call(this));
+				}
 				return false;
 			},
 
