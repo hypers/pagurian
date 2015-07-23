@@ -73,17 +73,32 @@ Datatables Plugin(in v1.3)
 .dataTables_wrapper .row:after{ clear: inherit;}
 
 
-.table-scrollable { position: relative; min-height: 88px;}
-.table-scrollable thead th{ vertical-align: top !important;}
-.table-scrollable thead .sorting { background: @sort_both no-repeat scroll right 12px #f2f3f2 !important; }
-.table-scrollable thead .sorting_asc { background: @sort_asc no-repeat scroll right 12px #f2f3f2 !important; }
-.table-scrollable thead .sorting_desc { background: @sort_desc no-repeat scroll right 12px #f2f3f2 !important; }
+.table-scrollable {
 
-.table-scrollable thead .sorting_asc_disabled { background: @sort_asc_disabled no-repeat scroll right 12px #f2f3f2 !important; }
-.table-scrollable thead .sorting_desc_disabled { background: @sort_desc_disabled no-repeat scroll right 12px #f2f3f2 !important; }
-.table-scrollable thead th:hover{  background-color: #ecedeb !important;}
-
-
+    position: relative;
+    min-height: 80px;
+    thead {
+        th{
+            vertical-align: top !important;
+            &:hover{  background-color: #ecedeb !important;}
+        }
+        .sorting {
+            background: @sort_both no-repeat scroll right 12px #f2f3f2 !important;
+        }
+        .sorting_asc {
+            background: @sort_asc no-repeat scroll right 12px #f2f3f2 !important;
+        }
+        .sorting_desc {
+            background: @sort_desc no-repeat scroll right 12px #f2f3f2 !important;
+        }
+        .sorting_asc_disabled {
+            background: @sort_asc_disabled no-repeat scroll right 12px #f2f3f2 !important;
+        }
+        .sorting_desc_disabled {
+            background: @sort_desc_disabled no-repeat scroll right 12px #f2f3f2 !important;
+        }
+    }
+}
 /* datatable style */
 .dataTables_empty {
 	text-align: center;
