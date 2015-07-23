@@ -102,6 +102,7 @@ define(function(require, exports, module) {
     var doSidebarAndContentHeight = function() {
         var content = $('.page-content');
         var sidebar = $('.page-sidebar');
+        var sidebarMenu = $('.page-sidebar-menu');
         var container = $('.page-container');
         var body = $('body');
         var height;
@@ -120,13 +121,13 @@ define(function(require, exports, module) {
                 height = _calculateFixedSidebarViewportHeight();
             } else {
                 var available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
-                var side_height = sidebar.height();
+                var side_height = sidebarMenu.height();
                 if (content.height() < available_height) {
                     if (available_height < side_height) {
                         available_height = side_height;
                     }
+                    console.log(side_height);
                     container.css("min-height", available_height + 'px');
-
                 }
 
                 //console.log($(".page-sidebar-wrapper").height());
