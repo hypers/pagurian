@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'src/resources',
-                    src: ['**/*', '!css/less/**/*'],
+                    src: ['**/*', '!less/**/*'],
                     dest: 'dist/resources',
                     flatten: false
                 }, {
@@ -46,13 +46,13 @@ module.exports = function(grunt) {
              */
             build: {
                 files: {
-                    "src/resources/css/themes-default.css": ["src/resources/css/less/themes/default.less"],
-                    "src/resources/css/themes-green.css": ["src/resources/css/less/themes/green.less"],
-                    "src/resources/css/themes-blue.css": ["src/resources/css/less/themes/blue.less"],
-                    "src/resources/css/themes-purple.css": ["src/resources/css/less/themes/purple.less"],
-                    "src/resources/css/themes-orange.css": ["src/resources/css/less/themes/orange.less"],
-                    "src/resources/css/themes-red.css": ["src/resources/css/less/themes/red.less"],
-                    "src/resources/css/page-login.css": ["src/resources/css/less/pages/login.less"]
+                    "src/resources/css/themes-default.css": ["src/resources/less/themes/default.less"],
+                    "src/resources/css/themes-green.css": ["src/resources/less/themes/green.less"],
+                    "src/resources/css/themes-blue.css": ["src/resources/less/themes/blue.less"],
+                    "src/resources/css/themes-purple.css": ["src/resources/less/themes/purple.less"],
+                    "src/resources/css/themes-orange.css": ["src/resources/less/themes/orange.less"],
+                    "src/resources/css/themes-red.css": ["src/resources/less/themes/red.less"],
+                    "src/resources/css/page-login.css": ["src/resources/less/pages/login.less"]
                 }
             }
         },

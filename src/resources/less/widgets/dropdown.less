@@ -66,8 +66,9 @@ Dropdown Menu
 	margin-bottom: 2px;
 }
 
+
 .dropdown-menu li > a {
-	padding: 6px 0 6px 14px;
+	padding: 6px 0 6px 18px;
 	color: @B900;
 	text-decoration: none;
 	display: block;
@@ -76,7 +77,9 @@ Dropdown Menu
 	line-height: 18px;
 	white-space: nowrap;
 	margin: 0;
+	font-size: 14px;
 }
+
 
 .dropdown-menu li > a:hover,
 .dropdown-menu .active > a,
@@ -84,7 +87,7 @@ Dropdown Menu
 	text-decoration: none;
 	background-image: none;
 	background-color: #eee;
-	color: @B900;
+	color:@B900;
 	filter:none;
 }
 
@@ -105,6 +108,7 @@ Dropdown Menu
 }
 
 .dropup .dropdown-submenu > .dropdown-menu {
+
 	top: auto;
 	bottom: 0;
 	margin-top: 0;
@@ -115,7 +119,7 @@ Dropdown Menu
 	position: absolute;
 	display: inline-block;
 	font-size: 14px;
-	right: 7px;
+	right: 10px;
 	top: 7px;
 	font-family: FontAwesome;
 	height: auto;
@@ -338,76 +342,8 @@ Dropdown Menu
 	margin-bottom: 2px;
 }
 
-.dropdown-menu li > a {
-	padding: 6px 0 6px 14px;
-	color: @B900;
-	text-decoration: none;
-	display: block;
-	clear: both;
-	font-weight: normal;
-	line-height: 18px;
-	white-space: nowrap;
-	margin: 0;
-	font-size: 14px;
-}
 
-.dropdown-menu li > a:hover,
-.dropdown-menu .active > a,
-.dropdown-menu .active > a:hover {
-	text-decoration: none;
-	background-image: none;
-	background-color: #eee;
-	color: #333;
-	filter:none;
-}
 
-/* dropdown sub menu support for Bootsrap 3 */
-.dropdown-submenu {
-	position: relative;
-}
-
-.dropdown-submenu > .dropdown-menu {
-	top: 5px;
-	left: 100%;
-	margin-top: -6px;
-	margin-left: -1px;
-}
-
-.dropdown-submenu:hover > .dropdown-menu {
-	display: block;
-}
-
-.dropup .dropdown-submenu > .dropdown-menu {
-	top: auto;
-	bottom: 0;
-	margin-top: 0;
-	margin-bottom: -2px;
-}
-
-.dropdown-submenu > a:after {
-	position: absolute;
-	display: inline-block;
-	font-size: 14px;
-	right: 10px;
-	top: 7px;
-	font-family: FontAwesome;
-	height: auto;
-	content: "\f105";
-	font-weight: 300;
-}
-
-.dropdown-submenu:hover > a:after {
-	border-left-color: #ffffff;
-}
-
-.dropdown-submenu.pull-left {
-	float: none;
-}
-
-.dropdown-submenu.pull-left > .dropdown-menu {
-	left: -100%;
-	margin-left: 10px;
-}
 
 .nav.pull-right > li > .dropdown-menu,
 .nav > li > .dropdown-menu.pull-right {
