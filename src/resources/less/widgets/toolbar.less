@@ -1,14 +1,12 @@
-
-.tools-expand{
-
+.tools-expand {
     position: relative;
     display: none;
-    margin: 0 0 18px 0;
+    margin: 0 0 18px;
     border: 1px solid @B300;
     padding: 10px 20px 10px 200px;
-    .title{
+    .title {
         position: absolute;
-        top:10px;
+        top: 10px;
         left: 20px;
     }
     .expand {
@@ -20,22 +18,21 @@
         top: -7px;
         width: 10px;
         z-index: 10;
-        &.dashboard{
+        &.dashboard {
             right: 65px;
         }
     }
-    .item-list{
+    .item-list {
         min-height: 25px;
-        label{
+        label {
             min-width: 210px;
             line-height: 25px;
         }
     }
 }
-
 .tools-wrap {
     position: relative;
-    clear:both;
+    clear: both;
     min-height: 32px;
     margin-bottom: 18px;
 }
@@ -43,13 +40,15 @@
     display: flex;
     position: absolute;
     top: 1px;
-    right: 0px;
-    > a, .btn-group,.input-search {
+    right: 0;
+    > a,
+    .btn-group,
+    .input-search {
         margin-left: 5px;
         float: left;
     }
     .btn {
-        i{
+        i {
             line-height: 20px;
             margin-top: 1px;
         }
@@ -62,17 +61,17 @@
             color: @H500;
             &:hover {
                 border-color: @B500;
-
             }
             &:active {
                 border-color: @B600;
-
             }
-            &:focus{
+            &:focus {
                 border-color: @B600;
-
             }
         }
     }
 }
-.tool-action{ clear:both; padding-top: 20px}
+.tool-action {
+    clear: both;
+    padding-top: 20px;
+}

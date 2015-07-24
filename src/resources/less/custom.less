@@ -1,57 +1,57 @@
 .input-icon {
-	&.input-search {
-		width: 150px;
-		input {
-			height: 40px;
-			font-size: 16px;
-		}
-		i {
-			margin: 12px 2px 4px 12px
-		}
-	}
-	i {
-		color: @B500;
-		margin: 10px 2px 4px 12px
-	}
-	input {
-		padding-left: 36px !important
-	}
+    &.input-search {
+        width: 150px;
+        input {
+            height: 40px;
+            font-size: 16px;
+        }
+        i {
+            margin: 12px 2px 4px 12px;
+        }
+    }
+    i {
+        color: @B500;
+        margin: 10px 2px 4px 12px;
+    }
+    input {
+        padding-left: 36px !important;
+    }
 }
-
-.daterangepicker-custom{
+.daterangepicker-custom {
     border: 1px solid @B300;
-    &:hover{
-            border-color: @B500;
+    &:hover {
+        border-color: @B500;
     }
     input {
         border-right: none;
         cursor: pointer;
-
     }
-    input, button {
+    input,
+    button {
         border: none;
         background: #fff;
-
     }
-    .input-group-btn{
-    	.btn{
-    		&:hover,&:active,&:focus{
-	            background-color: #fff !important;
-	        }
-    	}
+    .input-group-btn {
+        .btn {
+            &:hover,
+            &:active,
+            &:focus {
+                background-color: #fff !important;
+            }
+        }
     }
     &.disabled {
         background: @B050;
-        input, button {
+        input,
+        button {
             border-color: @B200;
             color: @B600;
             background: none !important;
         }
     }
 }
-
-.header{
-    .nav-title{
+.header {
+    .nav-title {
         display: inline-block;
         height: @header-height;
         line-height: @header-height;
@@ -68,14 +68,13 @@
     .homebar {
         ._bar;
         float: left;
-        > li > a{
-                border-color:@H600;
-                border-width: 0 1px 0 1px;
-                border-style: solid;
+        > li > a {
+            border-color: @H600;
+            border-width: 0 1px 0 1px;
+            border-style: solid;
         }
         li {
             position: relative;
-
             a {
                 width: 280px;
                 padding: 0 20px;
@@ -87,7 +86,7 @@
                 -o-text-overflow: ellipsis;
                 -moz-binding: url("ellipsis.xml#ellipsis");
                 position: relative;
-                .icon-r{
+                .icon-r {
                     position: absolute;
                     right: 10px;
                     top: 18px;
@@ -110,7 +109,6 @@
             }
         }
     }
-
     .userbar {
         ._bar;
         float: right;
@@ -120,7 +118,6 @@
             a {
                 padding: 0;
                 padding: 0 18px;
-                text-align: center;
                 font-size: 14px;
                 overflow: hidden;
                 white-space: nowrap;
@@ -133,7 +130,7 @@
                 position: absolute;
                 right: 15px;
                 top: 12px;
-                z-index: 999
+                z-index: 999;
             }
         }
         .dropdown-toggle {
@@ -142,7 +139,7 @@
         .dropdown-menu {
             left: auto !important;
             right: 0 !important;
-            margin-top:-1px;
+            margin-top: -1px;
             width: auto;
             li {
                 height: 40px;
@@ -157,35 +154,37 @@
                         background: @H050;
                     }
                     i {
-                        color: @H500
+                        color: @H500;
                     }
                 }
             }
         }
     }
 }
-
-#btn_date_type{ position: relative; display: none;}
-#data_panel .whisper{
-	left: 90px;
+#btn_date_type {
+    position: relative;
+    display: none;
+}
+#data_panel .whisper {
+    left: 90px;
     position: absolute;
     top: 240px;
 }
-#panel_color_wrap{ margin-left: -@edge;
-	.panel_color{
-		padding: 0;
-		margin:@edge;
-		list-style: none;
-		width: 300px;
-		float:left;
-		li{
-			padding: 10px;
-			font-family: 'DejaVu Sans Mono';
-		}
-	}
+#panel_color_wrap {
+    margin-left: -@edge;
+    .panel_color {
+        padding: 0;
+        margin: @edge;
+        list-style: none;
+        width: 300px;
+        float: left;
+        li {
+            padding: 10px;
+            font-family: 'DejaVu Sans Mono';
+        }
+    }
 }
-
-.color-title{
+.color-title {
     background: #f1f1f1;
     color: #5f5f5f;
     float: left;
@@ -193,12 +192,12 @@
     padding: 4px;
     width: 64px;
 }
-.color-dot{
+.color-dot {
     width: 26px;
     height: 26px;
     float: left;
 }
-.base_color{
+.base_color {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }

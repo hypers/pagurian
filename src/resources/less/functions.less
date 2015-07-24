@@ -1,35 +1,38 @@
 .opacity(@opacity) {
     opacity: @opacity;
+
     // IE8 filter
     @opacity-ie: (@opacity * 100);
 }
-.box-shadow(@x:0px,@y:2px,@blur:5px,@color:#999){
-    -moz-box-shadow:@arguments ;
-    -webkit-box-shadow:@arguments;
-    box-shadow:@arguments;
+.box-shadow(@x:0px, @y:2px, @blur:5px, @color:#999) {
+    -moz-box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+    box-shadow: @arguments;
 }
-.box-shadow-inset(@x:0px,@y:2px,@blur:5px,@color:#999){
-    -moz-box-shadow:@arguments inset;
-    -webkit-box-shadow:@arguments inset;
-    box-shadow:@arguments inset;
+.box-shadow-inset(@x:0px, @y:2px, @blur:5px, @color:#999) {
+    -moz-box-shadow: @arguments inset;
+    -webkit-box-shadow: @arguments inset;
+    box-shadow: @arguments inset;
 }
-
 .placeholder(@color:#bcbec0) {
     &::-moz-placeholder {
         color: @color;
     }
+
     // Firefox
     &:-ms-input-placeholder {
         color: @color;
     }
+
     // Internet Explorer 10+
     &::-webkit-input-placeholder {
         color: @color;
     }
+
     // Safari and Chrome
 }
-.radius(@c:1){
+.radius(@c:1) {
     -webkit-border-radius: @c !important;
-     -moz-border-radius: @c !important;
-          border-radius: @c !important;
+    -moz-border-radius: @c !important;
+    border-radius: @c !important;
 }

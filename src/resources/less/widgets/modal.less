@@ -1,143 +1,136 @@
 /**********Modal**********/
 .modal {
-	.radio-list.inline label, .checkbox-list.inline label {
-		margin-left: 0px !important;
-		width: 160px;
-		word-break: break-all;
-	}
-	.modal-dialog {
-		width: 400px;
-		margin: 30px auto;
-		&.modal-sm{
-			width: 400px;
-		}
-	}
-	.modal-header {
-		border-bottom: none;
-		padding: 10px 20px;
-		background: @B050;
-		.modal-title {
-			color: @H500;
-		}
-		.close {
-			.icon;
-			width: 20px;
-			height: 20px;
-			display: inline-block;
-			margin-top: 3px;
-			margin-right: 0px;
-			text-indent: -10000px;
-			outline: none;
-			.opacity(1);
-			background: none !important;
-			text-indent: 0;
-			font-size: 18px;
-			color: @B600;
-			&:hover, &:focus {
-				cursor: pointer;
-				.opacity(1);
-				background: none !important;
-				color: @B900;
-			}
-			&:before {
-				content: "\e603";
-			}
-		}
-	}
+    .radio-list.inline label,
+    .checkbox-list.inline label {
+        margin-left: 0 !important;
+        width: 160px;
+        word-break: break-all;
+    }
+    .modal-dialog {
+        width: 400px;
+        margin: 30px auto;
+        &.modal-sm {
+            width: 400px;
+        }
+    }
+    .modal-header {
+        border-bottom: none;
+        padding: 10px 20px;
+        background: @B050;
+        .modal-title {
+            color: @H500;
+        }
+        .close {
+            .icon;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-top: 3px;
+            margin-right: 0;
+            text-indent: -10000px;
+            outline: none;
+            .opacity(1);
+            background: none !important;
+            text-indent: 0;
+            font-size: 18px;
+            color: @B600;
+            &:hover,
+            &:focus {
+                cursor: pointer;
+                .opacity(1);
+                background: none !important;
+                color: @B900;
+            }
+            &:before {
+                content: "\e603";
+            }
+        }
+    }
+    .modal-footer {
+        position: relative;
+        margin-top: 0;
+        padding: 0 18px 18px;
+        border-top: 0;
+        border-top: none;
+        .btn {
 
-	.modal-footer {
-		position: relative;
-		margin-top: 0;
-		padding: 0 18px 18px 18px;
-		border-top: 0;
-		border-top: none;
-		.btn {
-
-		}
-		.whisper{
-			position: absolute;
-			top: 30px;
-		}
-		.submit-waiting{
-			margin-right: 18px;
-			i{
-				font-size: 18px;
-				vertical-align: middle;
-			}
-		}
-	}
-
-	.modal-body {
-		margin: 0 18px;
-		padding: 0;
-		max-height: 500px;
-		.modal-hr {
-			margin-top: 30px
-		}
-	}
-	.modal-message {
-		height: 20px;
-	    margin-top: 4px;
-	    padding-top: 10px;
-		.global-message {
-			max-width:none;
-			border: none;
-			background: none;
-		    font-weight: 100;
-		    left: 0;
-		    margin: 0 auto;
-		    padding: 0;
-		    position: static;
-		    top: 0;
-		    &.warning{
-		    	color:red;
-		    }
-		}
-	}
+        }
+        .whisper {
+            position: absolute;
+            top: 30px;
+        }
+        .submit-waiting {
+            margin-right: 18px;
+            i {
+                font-size: 18px;
+                vertical-align: middle;
+            }
+        }
+    }
+    .modal-body {
+        margin: 0 18px;
+        padding: 0;
+        max-height: 500px;
+        .modal-hr {
+            margin-top: 30px;
+        }
+    }
+    .modal-message {
+        height: 20px;
+        margin-top: 4px;
+        padding-top: 10px;
+        .global-message {
+            max-width: none;
+            border: none;
+            background: none;
+            font-weight: 100;
+            left: 0;
+            margin: 0 auto;
+            padding: 0;
+            position: static;
+            top: 0;
+            &.warning {
+                color: red;
+            }
+        }
+    }
 }
 
 /***
 Close icon used for modal dialog and other UI element close buttons
 ***/
 .close {
-  display: inline-block;
-  margin-top: 0px;
-  margin-right: 0px;
-  width: 9px;
-  height: 9px;
-  background-repeat: no-repeat !important;
-  text-indent: -10000px;
-  outline: none;
+    display: inline-block;
+    margin-top: 0;
+    margin-right: 0;
+    width: 9px;
+    height: 9px;
+    background-repeat: no-repeat !important;
+    text-indent: -10000px;
+    outline: none;
 }
-
 
 /***
 Bootstrap modal
 ***/
-
 .modal {
-  z-index: 10050 !important;
-  outline: none !important;
+    z-index: 10050 !important;
+    outline: none !important;
 }
-
 .modal-header {
-  border-bottom: 1px solid #EFEFEF;
+    border-bottom: 1px solid #efefef;
 }
-
-.modal-header h3{
-  font-weight: 300;
+.modal-header h3 {
+    font-weight: 300;
 }
-
 .modal-small {
-  width: 400px !important;
+    width: 400px !important;
 }
-
 .modal-wide {
-  width: 60% !important;
+    width: 60% !important;
 }
-
 .modal-full {
-  width: 100% !important;
+    width: 100% !important;
 }
 
 /***
@@ -146,37 +139,32 @@ Modal header close button fix
 .modal-header .close {
 
 }
-
 .modal > .loading {
-  position: absolute;
-  top: 50%;
-  left:50%;
-  margin-top: -22px;
-  margin-left: -22px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -22px;
+    margin-left: -22px;
 }
-
 .modal-backdrop {
-  border: 0 !important;
-  outline: none !important;
-  z-index: 10049 !important;
+    border: 0 !important;
+    outline: none !important;
+    z-index: 10049 !important;
 }
-
 .modal-backdrop,
 .modal-backdrop.fade.in {
-  background-color: #333 !important;
+    background-color: #333 !important;
 }
 
 /* fix: content shifting to the right on modal open due to scrollbar closed */
 .modal {
-  overflow-y: auto !important;
+    overflow-y: auto !important;
 }
-
 .modal-open {
-  overflow-y: auto !important;
+    overflow-y: auto !important;
 }
-
 .modal-open-noscroll {
-  overflow-y: hidden !important;
+    overflow-y: hidden !important;
 }
 
 /* fix: content shifting to the right on modal open */
@@ -184,9 +172,8 @@ Modal header close button fix
 .modal-open.page-overflow .page-container .navbar-fixed-top,
 .modal-open.page-overflow .page-container .navbar-fixed-bottom,
 .modal-open.page-overflow .modal-scrollable {
-  overflow-y: auto !important;
+    overflow-y: auto !important;
 }
-
 .modal-scrollable {
-  overflow: hidden !important;
+    overflow: hidden !important;
 }

@@ -1,46 +1,41 @@
-
 .checker {
-  margin-top: -4px !important;
-  margin-right: 0px !important;
+    margin-top: -4px !important;
+    margin-right: 0 !important;
 }
-
 .radio > span {
-  margin-top: 2px;
+    margin-top: 2px;
 }
-
 .checker input,
 .radio input {
-  outline: none !important;
+    outline: none !important;
 }
-
 div.checker.disabled span,
-div.checker.disabled.active span{
+div.checker.disabled.active span {
     background-position: -152px -260px;
 }
-
 div.checker.disabled:hover,
 div.radio.disabled:hover {
     cursor: not-allowed;
 }
-
-
 .checkboxs {
     border: 1px solid #b5b5b5;
     height: 150px;
     overflow: auto;
-    padding: 0px;
-    white-space:nowrap;
-	label{
-	    padding: 2px 4px;
-	    display: block;
-	    overflow: hidden;
-	    text-overflow:ellipsis;
-	    white-space:nowrap;
-	    -ms-text-overflow: ellipsis;
-	    -o-text-overflow: ellipsis;/* Opera */
-	    -moz-binding: url("ellipsis.xml#ellipsis");/*FireFox*/
-	    &:hover{
-		    background: #ddefe5;
-		}
-	}
+    padding: 0;
+    white-space: nowrap;
+    label {
+        padding: 2px 4px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        /* Opera */
+        -moz-binding: url("ellipsis.xml#ellipsis");
+        /*FireFox*/
+        &:hover {
+            background: #ddefe5;
+        }
+    }
 }
