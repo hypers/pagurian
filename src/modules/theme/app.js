@@ -57,19 +57,19 @@ define(function(require, exports, module) {
             }];
         };
 
-        function ColorPanel(){
+        function ColorPanel() {
 
-            var id='_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
-            this.element=$("<ul id='cl_" + id + "' class='panel_color'></ul>");
-            i=0;
+            var id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+            this.element = $("<ul id='cl_" + id + "' class='panel_color'></ul>");
+            i = 0;
 
-            this.draw=function(color){
+            this.draw = function(color) {
 
                 $("#panel_color_wrap").append(this.element);
-                var colors=computeColors(color),
-                    i=0,
-                    element=this.element,
-                    font_color="#f5f5f5";
+                var colors = computeColors(color),
+                    i = 0,
+                    element = this.element,
+                    font_color = "#f5f5f5";
                 var timer = setInterval(function() {
                     if (i === colors.length) {
                         clearInterval(timer);
@@ -99,7 +99,7 @@ define(function(require, exports, module) {
             $('.colorpicker-default').colorpicker({
                 format: 'hex'
             });
-            
+
         };
 
 
