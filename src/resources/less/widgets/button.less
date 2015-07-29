@@ -286,21 +286,25 @@ Buttons & Dropdown Buttons
     background: @H500;
     border-color: @H500;
     color: @B000;
+    &:focus{
+        background: @H500;
+        border-color: @H500;
+    }
     &:hover {
-        border-color: @H300;
-        background: @H300;
+        border-color: @H600;
+        background: @H600;
         color: @B000;
     }
+
     &:active,
-    &:focus,
     &.active {
         border-color: @H700;
         background: @H700;
         color: @B000;
     }
     &.disabled {
-        border-color: @H200 !important;
-        background: @H200 !important;
+        border-color: @H100 !important;
+        background: @H100 !important;
         color: @B000;
     }
 }
