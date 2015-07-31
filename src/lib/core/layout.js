@@ -126,11 +126,9 @@ define(function(require, exports, module) {
                     if (available_height < side_height) {
                         available_height = side_height;
                     }
-                    console.log(side_height);
                     container.css("min-height", available_height + 'px');
                 }
 
-                //console.log($(".page-sidebar-wrapper").height());
             }
 
 
