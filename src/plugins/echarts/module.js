@@ -100,7 +100,8 @@ define(function(require, exports, module) {
                         fontWeight: '100',
                     }
                 },
-                calculable: false,
+                //设置是否每个节点都显示出来
+                calculable: true,
                 tooltip: {
                     trigger: 'axis'
                 },

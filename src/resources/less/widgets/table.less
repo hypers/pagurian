@@ -86,6 +86,7 @@ Datatables Plugin(in v1.3)
         }
     }
 }
+
 /* datatable style */
 .dataTables_empty {
     text-align: center;
@@ -258,6 +259,14 @@ Bootstrap Tables
         }
     }
 }
+.table-fixed {
+    table-layout: fixed;
+    td,
+    td div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
 .table-custom {
     th,
     td {
@@ -292,11 +301,6 @@ Bootstrap Tables
             }
         }
     }
-    td,
-    td div {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
     .title {
         font-size: 16px;
         font-weight: bold;
@@ -310,9 +314,6 @@ Bootstrap Tables
         p {
             margin: 0;
         }
-    }
-    &.table-fixed {
-        table-layout: fixed;
     }
 }
 .table-scrollable {

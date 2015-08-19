@@ -59,9 +59,10 @@ define(function(require, exports, module) {
 
         function ColorPanel() {
 
-            var id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+            var id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
+                i = 0;
+
             this.element = $("<ul id='cl_" + id + "' class='panel_color'></ul>");
-            i = 0;
 
             this.draw = function(color) {
 
