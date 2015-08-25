@@ -28,11 +28,13 @@ define(function(require, exports, module) {
     var g = window;
 
     function Echarts(seletor, options) {
+
         this.options = {
             backgroundColor: '#f5f5f5',
             color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
 
         };
+
         this.init = function() {
             this.id = seletor;
             $.extend(true, this.options, options);
@@ -75,7 +77,7 @@ define(function(require, exports, module) {
 
             var type = this.options.type || "line";
 
-            var options = $.extend(true, {}, this.options, chartOptions[type](data));
+            var options = $.extend(true, {}, chartOptions[type](data), this.options);
 
             this.chart.hideLoading();
             this.chart.clear();
@@ -308,20 +310,20 @@ define(function(require, exports, module) {
         map: function(options) {
 
             var provinceList = ['重庆', '河北', '河南', '云南', '辽宁', '黑龙江', '湖南', '安徽',
-				'山东', '新疆', '江苏', '浙江', '江西', '湖北', '广西', '甘肃', '山西', '内蒙古', '陕西', '吉林',
-				'福建', '贵州', '广东', '青海', '西藏', '四川', '宁夏', '海南', '台湾', '香港', '澳门'
-			];
+                '山东', '新疆', '江苏', '浙江', '江西', '湖北', '广西', '甘肃', '山西', '内蒙古', '陕西', '吉林',
+                '福建', '贵州', '广东', '青海', '西藏', '四川', '宁夏', '海南', '台湾', '香港', '澳门'
+            ];
 
-            var getProvinceName=function(name) {
-				if (name) {
-					for (var i = 0; i < provinceList.length; i++) {
-						if (name.indexOf(provinceList[i]) >= 0) {
-							return provinceList[i];
-						}
-					}
-				}
-				return name;
-			}
+            var getProvinceName = function(name) {
+                if (name) {
+                    for (var i = 0; i < provinceList.length; i++) {
+                        if (name.indexOf(provinceList[i]) >= 0) {
+                            return provinceList[i];
+                        }
+                    }
+                }
+                return name;
+            }
 
             var dataList = options.data || [];
             var option = {
@@ -354,9 +356,9 @@ define(function(require, exports, module) {
                     roam: true,
                     mapType: options.options.mapType,
                     calculable: false,
-                    nameMap:options.options.nameMap,
+                    nameMap: options.options.nameMap,
                     mapLocation: {
-                        y : 60
+                        y: 60
                     },
                     roam: false,
                     itemStyle: {
@@ -384,9 +386,9 @@ define(function(require, exports, module) {
             //初始化数据
             for (var i = 0; i < dataList.length; i++) {
 
-                dataList[i].name=getProvinceName(dataList[i].name);
+                dataList[i].name = getProvinceName(dataList[i].name);
                 option.series[0].data.push(dataList[i]);
-                if(dataList[i].value > option.dataRange.max){
+                if (dataList[i].value > option.dataRange.max) {
                     option.dataRange.max = dataList[i].value;
                 }
 
