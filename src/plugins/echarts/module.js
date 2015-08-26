@@ -160,6 +160,9 @@ define(function(require, exports, module) {
 
             //初始化数据
             for (var i = 0; i < rows.length; i++) {
+
+
+
                 option.legend.data.push(rows[i].name);
                 var series = {
                     name: rows[i].name,
@@ -169,7 +172,7 @@ define(function(require, exports, module) {
                     symbol: "emptyCircle",
                     symbolSize: 5,
 
-                }
+                };
                 $.extend(series, rows[i]);
                 option.series.push(series);
             }

@@ -170,6 +170,9 @@ define(function(require, exports, module) {
                 text: "浏览量（PV）地域分布图"
             }
         });
+
+
+
         chart.load({
             name: "pv",
             data: [{
@@ -193,7 +196,10 @@ define(function(require, exports, module) {
             }, {
                 value: 114,
                 name: '香港'
-            }]
+            }],
+            options: {
+                mapType: "china"
+            }
         });
     };
 
