@@ -102,7 +102,7 @@ define(function(require, exports, module) {
                         fontWeight: '100',
                     }
                 },
-                //设置是否每个节点都显示出来
+                //当设置为true 所有的节点都显示出来，同时可以拖拽
                 calculable: true,
                 tooltip: {
                     trigger: 'axis'
