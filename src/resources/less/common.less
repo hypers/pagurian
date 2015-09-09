@@ -350,3 +350,92 @@ hr {
     .generate-w(@n, (@i + 1));
 }
 .generate-w(30);
+
+.datalistview-container {
+    @tw: 845px; //表格宽度
+    @tl: 318px; //左侧宽度
+    .dataListView.data-list-view-video-info-search {
+        width: 845px;
+        margin: 10px 0;
+        .dataListView_paginate {
+            .fl;
+        }
+
+        .dataListView_info {
+            line-height: 14px;
+            margin: 18px 10px;
+        }
+
+        .data-list-view {
+            width: @tw;
+            margin: 18px 10px;
+
+            .table-data-list-left {
+                width: @tl;
+            }
+            .table-data-list-right {
+                width: @tw - @tl;
+
+                .fl {
+                    .fl;
+                }
+                .ellipsis {
+                    .d-b;
+                    width: 475px;
+                    .ellipsis-basic;
+                }
+            }
+
+            .update-time {
+                .fr;
+                margin-top: 10px;
+            }
+
+            .video_name {
+                font-size: 22px;
+                color: @H500;
+            }
+
+            .font-gray {
+                color: @B500;
+            }
+
+            a {
+                color: @H500;
+
+                &:hover {
+                    .tu;
+                }
+            }
+        }
+
+    }
+    .tools-wrap {
+        &.tools-video-info {
+            min-height: 56px;
+            background-color: @B050;
+            margin-bottom: 0;
+        }
+
+        .tools-left {
+            display: flex;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+
+            .btn.btn-green {
+
+            }
+        }
+
+        .input-video-info {
+            width: 770px;
+            .fl;
+        }
+    }
+
+    .table-scrollable.table-no-border {
+        border: none;
+        min-height: 270px;
+    }
+}

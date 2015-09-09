@@ -1,0 +1,156 @@
+{{>fixtures/doctype}}
+<head>
+    <title> {{data.page.datalistview}}</title>
+    {{>fixtures/head}}
+</head>
+<body>
+
+    {{>fixtures/header}}
+
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container datalistview-container">
+
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.datalistview}}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="datatable.html">基础 </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="dataListView" class="dataListView data-list-view-video-info-search"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="markdown">
+                            <h3>HTML代码</h3>
+                            <pre><code class="html">&lt;!--页面--&gt;
+    &lt;div id="dataListView" class="dataListView data-list-view-video-info-search"&gt;&lt;/div&gt;
+&lt;!--模板--&gt;
+    &lt;scrip t type="text/html" id="dataListViewTpl"&gt;
+        &lt;table class="data-list-view"&gt;
+            &lt;tbody&gt;
+                &lt;tr&gt;
+                &lt;td colspan="4"&gt;
+                &lt;span class="video_name"&gt;{videoName}&lt;/span&gt;
+                &lt;span&gt;(&lt;a href="{url}" target="_blank"&gt;链接地址&lt;/a&gt;)&lt;/span&gt;
+                &lt;span class="font-gray update-time"&gt;{infoUpdateTime}&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;频道：&lt;/span&gt;&lt;span&gt;{channelName}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;
+                &lt;span class="font-gray fl"&gt;演员：&lt;/span&gt;
+                &lt;span class="ellipsis fl"&gt;{actor}&lt;/span&gt;
+                &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;专辑：&lt;/span&gt;&lt;span&gt;{albumName}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;导演：&lt;/span&gt;&lt;span&gt;{director}&lt;/span&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;类型：&lt;/span&gt;&lt;span&gt;{videoType}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;版权：&lt;/span&gt;&lt;span&gt;{copyright}&lt;/span&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;地区：&lt;/span&gt;&lt;span&gt;{area}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;上映时间：&lt;/span&gt;&lt;span&gt;{pubTime}&lt;/span&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/script&gt;
+                             </code></pre>
+                            <h3>Javascript代码</h3>
+                            <pre><code class="javascript">require('../../plugins/datalistview/module');
+var tpl = $("#dataListViewTpl").html();
+var oDataListView = $p.plugin.dataListView("#dataListView", {
+    "dataSource": model.getDataList,
+    "tplHtml": tpl,
+    "sDom": ["T", "D", "S", "P"],
+    "fnParams": function () {
+        return {};
+    },
+    "fnFormat": function (row) {
+        return $p.tpl(tpl, row);
+    }
+});
+                                </code></pre>
+                            <h3>JSON 数据</h3>
+                            <a href="/test/api/datalistdata.json" target="_blank">datalistdata.json</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    {{>fixtures/footer}}
+    <script type="text/html" id="dataListViewTpl">
+        <table class="data-list-view">
+            <tbody>
+            <tr>
+                <td colspan="4">
+                    <span class="video_name">{videoName}</span>
+                    <span>(<a href="{url}" target="_blank">链接地址</a>)</span>
+                    <span class="font-gray update-time">{infoUpdateTime}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-data-list-left"><span class="font-gray">频道：</span><span>{channelName}</span></td>
+                <td class="table-data-list-right">
+                    <span class="font-gray fl">演员：</span>
+                    <span class="ellipsis fl">{actor}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-data-list-left"><span class="font-gray">专辑：</span><span>{albumName}</span></td>
+                <td class="table-data-list-right"><span class="font-gray">导演：</span><span>{director}</span></td>
+            </tr>
+            <tr>
+                <td class="table-data-list-left"><span class="font-gray">类型：</span><span>{videoType}</span></td>
+                <td class="table-data-list-right"><span class="font-gray">版权：</span><span>{copyright}</span></td>
+            </tr>
+            <tr>
+                <td class="table-data-list-left"><span class="font-gray">地区：</span><span>{area}</span></td>
+                <td class="table-data-list-right"><span class="font-gray">上映时间：</span><span>{pubTime}</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </script>
+
+    <script type="text/javascript">
+        pagurian.call("modules/datalistview/app", function (app) {
+            app.page.dataListView();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+</html>
