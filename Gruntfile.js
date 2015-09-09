@@ -145,7 +145,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dist/',
-                    src: ['modules/**/*.js'],
+                    src: ['modules/echarts/app.js'],
                     dest: 'dist/',
                     ext: '.js'
                 }]
@@ -171,7 +171,7 @@ module.exports = function(grunt) {
             }
         }
 
-    }
+    };
 
 
     var task_default = [];
@@ -180,7 +180,7 @@ module.exports = function(grunt) {
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("uglify:all");
+    //task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 
