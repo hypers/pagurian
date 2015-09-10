@@ -1,5 +1,6 @@
 /**
  * Created by hypers-godfery on 2015/7/24.
+ * Updated by hypers-godfery on 2015/9/10.
  */
 define(function (require, exports, module) {
     var g = window;
@@ -205,6 +206,8 @@ define(function (require, exports, module) {
             }
 
             o.find('#' + this.dataListName + '_paginate').remove();
+            o.find('#' + this.dataListName + '_info').remove();
+            o.find('#' + this.dataListName + '_length').remove();
             o.find('#' + this.dataListName + '_data_body').remove();
             o.append(sDom);
 
