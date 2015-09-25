@@ -56,6 +56,7 @@ define(function(require, exports, module) {
 
             //今天 昨天 最近一周，最近一个月，最近三个月，最近半年
             $(selector).daterangepicker(this.options, function(start, end) {
+                $(this).foramt=_options.textForamt;
                 $(selector).find('input').val(start.format(_options.textForamt) + ' -- ' + end.format(_options.textForamt));
                 if ("function" === typeof callback) callback(start.format(_options.format), end.format(_options.format));
             });
@@ -67,7 +68,7 @@ define(function(require, exports, module) {
             $(selector).find('input').prop("readonly", true);
 
             return this;
-        }
+        };
 
     }
 
@@ -76,6 +77,6 @@ define(function(require, exports, module) {
         var picker = new DateRangePicker(seletor, options, callback);
         picker.init();
         return picker;
-    }
+    };
 
 });
