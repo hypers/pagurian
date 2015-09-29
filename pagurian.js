@@ -7,67 +7,67 @@
  */
 (function(global, name, debug) {
 
-	global.PagurianAlias = name;
+    global.PagurianAlias = name;
 
-	var prot = ("https:" == document.location.protocol) ? "https://" : "http://";
-	var domain = window.location.hostname || "/";
-
-
-	/**
-	 * Pagurian
-	 * @type {Object}
-	 */
-	var pagurian = {
-		version: "1.3.0710",
-		util: {},
-		com: {},
-		plugin: {},
-		path: {
-			api: prot + domain + "/",
-			app: prot + domain + "/" + (debug ? "src" : "dist") + "/"
-		},
-		call: function() {
-			return (this.queue = this.queue || []).push(arguments);
-		}
-	}
-
-	/**
-	 * Seajs config
-	 */
-	pagurian.call("config", {
-		base: pagurian.path.app,
-		alias: {
-			"jquery": "lib/vendor/jquery.1.9.1.min",
-		},
-		map: [
-			[/^(.*\/dist\/modules\/.*\.(?:js))(?:.*)$/i, '$1?v=' + pagurian.version]
-		],
-		preload: ["jquery"], //预加载
-		charset: 'utf-8',
-		timeout: 20000,
-		debug: false
-	});
+    var prot = ("https:" == document.location.protocol) ? "https://" : "http://";
+    var domain = window.location.hostname || "/";
 
 
-	/**
-	 * 载入Seajs文件
-	 * @param  {String} o seajs
-	 * @param  {Docement Object} s Script
-	 * @param  {Docement Object} f Script
-	 */
-	(function callSeajs(o, s, f) {
+    /**
+     * Pagurian
+     * @type {Object}
+     */
+    var pagurian = {
+        version: "1.3.0710",
+        util: {},
+        com: {},
+        plugin: {},
+        path: {
+            api: prot + domain + "/",
+            app: prot + domain + "/" + (debug ? "src" : "dist") + "/"
+        },
+        call: function() {
+            return (this.queue = this.queue || []).push(arguments);
+        }
+    };
 
-		if (global[o]) return;
-		s = document.createElement("script");
-		s.src = pagurian.path.app + "lib/vendor/sea.js";
-		s.charset = "utf-8";
-		s.async = true;
-		s.id = o + "node";
-		f = document.getElementsByTagName("script")[0];
-		f.parentNode.insertBefore(s, f);
+    /**
+     * Seajs config
+     */
+    pagurian.call("config", {
+        base: pagurian.path.app,
+        alias: {
+            "jquery": "lib/vendor/jquery.1.9.1.min",
+        },
+        map: [
+            [/^(.*\/dist\/modules\/.*\.(?:js))(?:.*)$/i, '$1?v=' + pagurian.version]
+        ],
+        preload: ["jquery"], //预加载
+        charset: 'utf-8',
+        timeout: 20000,
+        debug: false
+    });
 
-	})("seajs");
 
-	global[name] = global['pagurian'] = pagurian;
+    /**
+     * 载入Seajs文件
+     * @param  {String} o seajs
+     * @param  {Docement Object} s Script
+     * @param  {Docement Object} f Script
+     */
+    (function callSeajs(o, s, f) {
 
-})(this,"$p",true);
+        if (global[o]) return;
+        s = document.createElement("script");
+        s.src = pagurian.path.app + "lib/vendor/sea.js";
+        s.charset = "utf-8";
+        s.async = true;
+        s.id = o + "node";
+        f = document.getElementsByTagName("script")[0];
+        f.parentNode.insertBefore(s, f);
+
+    })("seajs");
+
+    global[name] = global.pagurian = pagurian;
+
+})(this, "$p", false);
