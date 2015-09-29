@@ -47,7 +47,7 @@ define(function(require, exports, module) {
         }
 
 
-    }
+    };
 
 
     /**
@@ -56,14 +56,15 @@ define(function(require, exports, module) {
     var doResponsive = function() {
         doSidebarAndContentHeight();
         doAppResizeEvent();
-    }
+        doModalHeight();
+    };
 
     /**
      *  在初始化页面加载布局
      */
     var doResponsiveOnInit = function() {
         doSidebarAndContentHeight();
-    }
+    };
 
     /**
      *  处理窗口大小调整布局初始化
@@ -94,7 +95,7 @@ define(function(require, exports, module) {
                 }, 50); // wait 50ms until window resize finishes.
             });
         }
-    }
+    };
 
     /**
      * 设置适当的高度，侧边栏和内容。内容和侧边栏的高度必须始终同步。
@@ -106,9 +107,11 @@ define(function(require, exports, module) {
         var container = $('.page-container');
         var body = $('body');
         var height;
+        var available_height;
+        var side_height;
 
         if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
-            var available_height = $(window).height() - $('.footer').outerHeight();
+            available_height = $(window).height() - $('.footer').outerHeight();
             if (content.height() < available_height) {
                 content.css("min-height", available_height + 'px');
             }
@@ -120,8 +123,8 @@ define(function(require, exports, module) {
             if (body.hasClass('page-sidebar-fixed')) {
                 height = _calculateFixedSidebarViewportHeight();
             } else {
-                var available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
-                var side_height = sidebarMenu.height();
+                available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
+                side_height = sidebarMenu.height();
                 if (content.height() < available_height) {
                     if (available_height < side_height) {
                         available_height = side_height;
@@ -133,8 +136,36 @@ define(function(require, exports, module) {
 
 
         }
-    }
+    };
 
+    /**
+     * 设置Modal的滚动高度
+     */
+    var doModalHeight = function() {
+        var modal_body = $(".modal.in .modal-body");
+
+
+        if(modal_body.length<1){
+            return;
+        }
+        //modal 滚动高度
+        var available_height = modal_body[0].scrollHeight;
+
+        //$('#modal' + _id + ' .modal-footer') + $('#modal' + _id + ' .modal-footer');
+        var custom_height = 114;
+        //$('.footer').outerHeight()
+        var footer_height = 50;
+        //$('.header').outerHeight()
+        var header_height = 50;
+
+        //页面的工作区域高度
+        var content_height = $(window).height() - footer_height - header_height - custom_height;
+
+        if (available_height >= content_height) {
+            modal_body.css("max-height", content_height);
+        }
+
+    };
 
 
     /**
@@ -147,7 +178,7 @@ define(function(require, exports, module) {
         }
 
         return sidebarHeight;
-    }
+    };
 
 
 
@@ -224,7 +255,7 @@ define(function(require, exports, module) {
             $(this).parent('.alert').hide();
             e.preventDefault();
         });
-    }
+    };
 
 
     /**
@@ -233,7 +264,7 @@ define(function(require, exports, module) {
     var doPopovers = function() {
         jQuery('.popovers').popover();
 
-    }
+    };
 
     /**
      * 处理 Tabs
@@ -251,7 +282,7 @@ define(function(require, exports, module) {
             });
             $('a[href="#' + tabid + '"]').click();
         }
-    }
+    };
 
 
     /**

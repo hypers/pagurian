@@ -26,8 +26,9 @@ define(function(require, exports, module) {
         template += '                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>';
         template += '                <h4 class="modal-title">{title}</h4>';
         template += '            </div>';
+        template += '            <div class="modal-body">';
         template += '            <div class="modal-message"></div>';
-        template += '            <div class="modal-body">{body}</div>';
+        template += '            {body} </div>';
         template += '            <div class="modal-footer">';
         template += '                <span class="submit-waiting"></span>';
         template += '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>';
@@ -75,7 +76,6 @@ define(function(require, exports, module) {
             }, options));
 
             $("body").append(this.tpl);
-
             var form = $("#modal" + _id + " form");
 
             if (seletor) {
@@ -126,7 +126,7 @@ define(function(require, exports, module) {
             $("#modal" + _id + " .submit-waiting").html('');
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
         };
-        
+
         this.show = function() {
 
             resetForm($("#modal" + _id + " form"));
@@ -135,6 +135,28 @@ define(function(require, exports, module) {
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
             $('#modal' + _id + " .form-group").removeClass("has-error");
             $('#modal' + _id).modal('show');
+
+            setTimeout(function() {
+
+                var modal_body = $('#modal' + _id + ' .modal-body');
+                //modal 滚动高度
+                var available_height = modal_body.height();
+
+                // $('#modal' + _id + ' .modal-footer') + $('#modal' + _id + ' .modal-footer');
+                var custom_height = 114;
+                // $('.footer').outerHeight()
+                var footer_height = 50;
+                //$('.header').outerHeight()
+                var header_height = 50;
+
+                //页面的工作区域高度
+                var content_height = $(window).height() - footer_height - header_height - custom_height;
+
+                if (available_height >= content_height) {
+                    modal_body.css("max-height", content_height);
+                }
+
+            }, 200);
 
             return this;
         };
@@ -149,6 +171,6 @@ define(function(require, exports, module) {
         var dialog = new Dialog();
         dialog.init(seletor, options);
         return dialog;
-    }
+    };
 
 });

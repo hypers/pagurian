@@ -54,13 +54,13 @@ define(function(require, exports, module) {
 
             return picker;
 
-        }
+        };
     }
 
     g[PagurianAlias].plugin.datePicker = function(seletor, options, callback) {
         var picker = new DatePicker(seletor, options, callback);
         return picker.init();
-    }
+    };
 
 
 });

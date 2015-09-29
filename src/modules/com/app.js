@@ -47,6 +47,21 @@ define(function(require, exports, module) {
             }
         });
 
+        $p.com.dialog("#btn_form_lang", {
+            title: "长表单",
+            body: $("#tpl_user_lang").html(),
+            validate: function(modal, data, params) {
+                return true;
+            },
+            submit: function(modal, data, params, callback) {
+                $p.com.alert("你点击了确定");
+                modal.hide();
+            }
+        });
+
+
+
+
         $p.com.dialog("#btn_update", {
             title: "编辑用户",
             body: $("#tpl_user").html(),
@@ -86,5 +101,5 @@ define(function(require, exports, module) {
     };
 
     module.exports = app;
-    
+
 });
