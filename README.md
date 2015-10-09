@@ -1,5 +1,6 @@
 # Pagurian
-[ ![Build Status](https://img.shields.io/travis/joyent/node/v0.6.svg) ](http://www.pagurian.com)[ ![tag-1.3.0](https://img.shields.io/badge/tag-v1.3.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.3.0)[ ![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
+[![tag-1.4.0](https://img.shields.io/badge/tag-v1.4.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.4.0)
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
 
 一个管理系统的前端框架
 
