@@ -61,9 +61,10 @@ Clone 项目文件:
 git clone https://github.com/hypers/pagurian.git
 ```
 
-然后进入目录安装依赖：
+安装grunt插件:
 
 ```
+cd pagurian
 npm install
 ```
 

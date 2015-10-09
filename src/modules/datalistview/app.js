@@ -20,7 +20,7 @@ define(function (require, exports, module) {
                 return $p.tpl(tpl, row);
             }
         });
-    }
+    };
 
     module.exports = app;
 });

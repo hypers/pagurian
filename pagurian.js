@@ -9,6 +9,7 @@
 
     global.PagurianAlias = name;
 
+    var CONFIG = global.CONFIG || {};
     var prot = ("https:" == document.location.protocol) ? "https://" : "http://";
     var domain = window.location.hostname || "/";
 
@@ -18,7 +19,8 @@
      * @type {Object}
      */
     var pagurian = {
-        version: "1.3.0710",
+        version: CONFIG.version || "1.4.0",
+        language: CONFIG.language || "en", //简体中文:zh_cn , 英文:en
         util: {},
         com: {},
         plugin: {},
@@ -28,6 +30,9 @@
         },
         call: function() {
             return (this.queue = this.queue || []).push(arguments);
+        },
+        set: function(key, value) {
+            this[key] = value;
         }
     };
 
@@ -70,4 +75,4 @@
 
     global[name] = global.pagurian = pagurian;
 
-})(this, "$p", false);
+})(this, "$p", true);

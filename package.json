@@ -1,6 +1,6 @@
 {
 	"family": "hypers",
-	"version": "0.0.1",
+	"version": "1.4.0",
 	"name": "pagurian",
 	"spm": {},
 	"devDependencies": {

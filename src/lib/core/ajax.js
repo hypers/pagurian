@@ -93,8 +93,9 @@ define(function(require, exports, module) {
         send: function(type, url, params, callback, options) {
 
             this.init(type, params);
+            options = options || {};
             var data = this.options.data;
-            var options = options || {};
+
             var ajaxOptions = {
                 url: pagurian.path.api + url,
                 type: type || "get",
@@ -104,12 +105,12 @@ define(function(require, exports, module) {
                 success: function(data, textStatus, jqXHR) {
                     if ("function" == typeof callback) {
                         callback(data, textStatus, jqXHR);
-                    };
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 
                     //TODO: 处理status， http status code，超时 408
-                    //注意：如果发生了错误，错误信息（第二个参数）除了得到null之外，还可能 
+                    //注意：如果发生了错误，错误信息（第二个参数）除了得到null之外，还可能
                     //是"timeout", "error", "notmodified" 和 "parsererror"
                     //alert(textStatus + ":" + XMLHttpRequest.status);
 
@@ -124,6 +125,7 @@ define(function(require, exports, module) {
                     if ("function" == typeof callback) {
                         callback({
                             code: jqXHR.status,
+                            message: textStatus,
                             result: data
                         });
                     }
