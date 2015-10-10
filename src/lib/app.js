@@ -27,8 +27,8 @@ define(function(require, exports, module) {
     var api = require('../conf/api');
 
     var locale = {};
-    locale.zh_cn = require('../conf/locale.zh-cn');
-    locale.en = require('../conf/locale.en');
+    locale.zh_CN = require('../conf/locale.zh_CN');
+    locale.en_US = require('../conf/locale.en_US');
 
     pagurian.locale = locale[pagurian.language];
     pagurian.lib = {

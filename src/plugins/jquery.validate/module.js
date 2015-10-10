@@ -57,13 +57,12 @@ define(function(require, exports, module) {
 
 
     require('./jquery.validate');
-    var locale_en = require('./locale/en');
-    var locale_zh_cn = require('./locale/zh_cn');
-    var locale = {
-        en: locale_en,
-        zh_cn: locale_zh_cn
-    };
-    var active_locale = locale[pagurian.language || "zh_cn"];
+    var locale = {};
+
+    locale.zh_CN = require('./locale/zh_CN');
+    locale.en_US = require('./locale/en_US');
+
+    var active_locale = locale[pagurian.language || "zh_CN"];
 
     (function($) {
 

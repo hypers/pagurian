@@ -19,8 +19,8 @@
      * @type {Object}
      */
     var pagurian = {
-        version: CONFIG.version || "1.4.0",
-        language: CONFIG.language || "en", //简体中文:zh_cn , 英文:en
+        version: CONFIG.version || "1.4.10101147",
+        language: CONFIG.language || "en_US", //简体中文:zh_CN , 英文:en_US
         util: {},
         com: {},
         plugin: {},

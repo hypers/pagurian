@@ -14,10 +14,9 @@ define(function(require, exports, module) {
         });
     };
 
-    
+
     app.page.date = function() {
         $p.plugin.datePicker('#my_picker', {
-            textFormat: "YYYY年MM月DD日",
             defaultDate: moment(),
         }, function(date) {
             $p.com.alert(date);

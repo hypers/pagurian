@@ -1,13 +1,12 @@
 define(function(require, exports, module) {
 
     var g = window;
+    var locale = {};
+
     require('./1.9.4/jquery.dataTables');
-    var locale_zh_cn = require('./locale/zh_cn');
-    var locale_en = require('./locale/en');
-    var locale = {
-        zh_cn: locale_zh_cn,
-        en: locale_en
-    };
+
+    locale.zh_CN = require('./locale/zh_CN');
+    locale.en_US = require('./locale/en_US');
 
     /* Set the defaults for DataTables initialisation */
     $.extend(true, $.fn.dataTable.defaults, {

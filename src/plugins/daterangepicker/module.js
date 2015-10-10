@@ -17,10 +17,10 @@ define(function(require, exports, module) {
 
 
         var _options = {
-            en: {
+            en_US: {
                 opens: 'right',
                 format: 'YYYY-MM-DD',
-                textForamt: 'MM/DD/YYYY',
+                textForamt: 'YYYY-MM-DD',
                 separator: ' -- ',
                 startDate: momentStartDate.format("YYYY-MM-DD"),
                 endDate: momentEndDate.format('YYYY-MM-DD'),
@@ -44,7 +44,7 @@ define(function(require, exports, module) {
                     firstDay: 1
                 }
             },
-            zh_cn: {
+            zh_CN: {
                 opens: 'right',
                 format: 'YYYY-MM-DD',
                 textForamt: 'YYYY年MM月DD日',
@@ -73,7 +73,7 @@ define(function(require, exports, module) {
             }
         };
 
-        this.options = _options[pagurian.language || "zh_cn"];
+        this.options = _options[pagurian.language || "zh_CN"];
 
         this.init = function() {
 
