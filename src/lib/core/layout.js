@@ -47,7 +47,7 @@ define(function(require, exports, module) {
         }
 
 
-    }
+    };
 
 
     /**
@@ -56,14 +56,15 @@ define(function(require, exports, module) {
     var doResponsive = function() {
         doSidebarAndContentHeight();
         doAppResizeEvent();
-    }
+        doModalHeight();
+    };
 
     /**
      *  在初始化页面加载布局
      */
     var doResponsiveOnInit = function() {
         doSidebarAndContentHeight();
-    }
+    };
 
     /**
      *  处理窗口大小调整布局初始化
@@ -94,7 +95,7 @@ define(function(require, exports, module) {
                 }, 50); // wait 50ms until window resize finishes.
             });
         }
-    }
+    };
 
     /**
      * 设置适当的高度，侧边栏和内容。内容和侧边栏的高度必须始终同步。
@@ -106,9 +107,11 @@ define(function(require, exports, module) {
         var container = $('.page-container');
         var body = $('body');
         var height;
+        var available_height;
+        var side_height;
 
         if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
-            var available_height = $(window).height() - $('.footer').outerHeight();
+            available_height = $(window).height() - $('.footer').outerHeight();
             if (content.height() < available_height) {
                 content.css("min-height", available_height + 'px');
             }
@@ -120,8 +123,8 @@ define(function(require, exports, module) {
             if (body.hasClass('page-sidebar-fixed')) {
                 height = _calculateFixedSidebarViewportHeight();
             } else {
-                var available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
-                var side_height = sidebarMenu.height();
+                available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
+                side_height = sidebarMenu.height();
                 if (content.height() < available_height) {
                     if (available_height < side_height) {
                         available_height = side_height;
@@ -133,8 +136,38 @@ define(function(require, exports, module) {
 
 
         }
-    }
+    };
 
+    /**
+     * 设置Modal的滚动高度
+     */
+    var doModalHeight = function() {
+
+        var modal_body = $(".modal:visible .modal-body");
+
+        if (modal_body.length < 1) {
+            return;
+        }
+        //modal 滚动高度
+        var available_height = modal_body[0].scrollHeight;
+
+        //$('#modal' + _id + ' .modal-footer') + $('#modal' + _id + ' .modal-footer');
+        var custom_height = 114;
+        //$('.footer').outerHeight()
+        var footer_height = 50;
+        //$('.header').outerHeight()
+        var header_height = 50;
+
+        //页面的工作区域高度
+        var content_height = $(window).height() - footer_height - header_height - custom_height;
+
+        if (available_height >= content_height) {
+            modal_body.css("max-height", content_height);
+        }else{
+            modal_body.css("max-height", "none");
+        }
+
+    };
 
 
     /**
@@ -147,7 +180,7 @@ define(function(require, exports, module) {
         }
 
         return sidebarHeight;
-    }
+    };
 
 
 
@@ -170,7 +203,7 @@ define(function(require, exports, module) {
                 el.slideDown(200);
             }
         });
-    }
+    };
 
     /**
      * 处理使用jQuery插件统一定制的复选框和收音机
@@ -182,13 +215,13 @@ define(function(require, exports, module) {
         var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
         if (test.size() > 0) {
             test.each(function() {
-                if ($(this).parents(".checker").size() == 0) {
+                if ($(this).parents(".checker").size() === 0) {
                     $(this).show();
                     $(this).uniform();
                 }
             });
         }
-    }
+    };
 
 
 
@@ -197,7 +230,7 @@ define(function(require, exports, module) {
      */
     var doTooltips = function() {
         jQuery('.tooltips').tooltip();
-    }
+    };
 
     /**
      * 处理 Bootstrap Dropdowns
@@ -207,14 +240,14 @@ define(function(require, exports, module) {
         $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
         });
-    }
+    };
 
     /**
      * 处理 Hower Dropdowns
      */
     var doDropdownHover = function() {
         $('[data-hover="dropdown"]').dropdownHover();
-    }
+    };
 
     /**
      * 处理 Alerts
@@ -224,7 +257,7 @@ define(function(require, exports, module) {
             $(this).parent('.alert').hide();
             e.preventDefault();
         });
-    }
+    };
 
 
     /**
@@ -233,7 +266,7 @@ define(function(require, exports, module) {
     var doPopovers = function() {
         jQuery('.popovers').popover();
 
-    }
+    };
 
     /**
      * 处理 Tabs
@@ -251,7 +284,7 @@ define(function(require, exports, module) {
             });
             $('a[href="#' + tabid + '"]').click();
         }
-    }
+    };
 
 
     /**
@@ -263,7 +296,7 @@ define(function(require, exports, module) {
 
                 var input = jQuery(this);
 
-                if (input.val() == '' && input.attr("placeholder") != '') {
+                if (input.val() === '' && input.attr("placeholder") !== '') {
                     input.addClass("placeholder").val(input.attr('placeholder'));
                 }
 
@@ -274,13 +307,13 @@ define(function(require, exports, module) {
                 });
 
                 input.blur(function() {
-                    if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                    if (input.val() === '' || input.val() == input.attr('placeholder')) {
                         input.val(input.attr('placeholder'));
                     }
                 });
             });
         }
-    }
+    };
 
 
 
@@ -294,7 +327,7 @@ define(function(require, exports, module) {
                 allowClear: true
             });
         }
-    }
+    };
 
     /**
      * 处理 Theme Settings
@@ -306,7 +339,7 @@ define(function(require, exports, module) {
         var setColor = function(color) {
             $("#style_themes").attr("href", pagurian.path.app + "resources/css/themes-" + (color || "default") + ".css");
             $.cookie('style_color', color);
-        }
+        };
 
         $('.toggler', panel).click(function() {
             $('.toggler').hide();
@@ -329,7 +362,7 @@ define(function(require, exports, module) {
         });
 
 
-    }
+    };
 
     var doHLJS = function() {
         if (!window.hljs) {
@@ -351,7 +384,7 @@ define(function(require, exports, module) {
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-    }
+    };
 
     //处理APP回调事件
     var doAppResizeEvent = function() {
@@ -360,7 +393,7 @@ define(function(require, exports, module) {
                 callbackQueue[i]();
             }
         }
-    }
+    };
 
     var callbackQueue = [];
 
@@ -392,6 +425,25 @@ define(function(require, exports, module) {
         resize: function(callback) {
             callbackQueue.push(callback);
         },
+        initDropdownMenu: function() {
+
+            var dropdown = new Dropdown("#dropdown_pro_menu");
+            callbackQueue.push(function() {
+                dropdown.update();
+            });
+            this.dropdown = dropdown;
+            return this;
+        },
+        initMenu: function() {
+            if (window.CONFIG && CONFIG.appId) {
+                var a = CONFIG.appId.split("_");
+                if (a.length > 1) {
+                    var o = $(".page-sidebar-menu > li:eq(" + (a[0] - 1) + ")");
+                    o.addClass("open").find("li:eq(" + (a[1] - 1) + ")").addClass("active");
+                    o.find(".arrow").addClass("open");
+                }
+            }
+        },
         custom: function() {
 
             $(".page-sidebar-menu>li>a").click(function() {
@@ -410,6 +462,366 @@ define(function(require, exports, module) {
         }
 
     };
+
+
+    function Dropdown(seletor, options) {
+
+        this.windowHeight = $(window).height();
+        this.isExpandSubMenu = 0;
+
+        var dom = $(seletor); //当前菜单对象
+        var header_h = 60; //的高度
+        var item_h = 40; //每一个菜单高度
+        var scroll_min_h = 200; //滚动最小高度
+        var arrow_h = 20; //上下箭头高度
+
+        var first = dom.find(".dropdown-level-first"); //一级菜单
+        var second = dom.find(".dropdown-level-second"); //二级菜单
+        var third = dom.find(".dropdown-level-third"); //三级菜单
+
+        var first_count = first.children("ul").children("li").length; //一级菜单个数
+        var first_h = first_count * item_h; //一级菜单的总高度
+
+        this.initFirstHeight = function() {
+            first.find(".dropdown-scroll-top").remove();
+            first.find(".dropdown-scroll-bottom").remove();
+
+            //如果可视高度小于一级菜单高度时显示箭头
+            if ((this.windowHeight - header_h) < first_h) {
+                first.prepend(
+                    '<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up "></i></a>'
+                );
+                first.append(
+                    '<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>'
+                );
+                first.css("height", this.windowHeight - header_h);
+            } else {
+                first.css("height", first_h);
+            }
+        };
+
+        this.init = function() {
+
+            this.level_in = 1;
+            this.level_out = 1;
+            this.level_base = 0;
+            var dropdown = this;
+
+            this.initFirstHeight();
+
+            dom.hover(function() {
+                dropdown.level_base = 1;
+                first.show();
+                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
+            }, function() {
+                first.hide();
+                dropdown.level_base = 0;
+                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
+                if (dropdown.level_in == 1 && dropdown.level_out ==
+                    1) {
+                    second.hide();
+                    third.hide();
+                }
+            });
+
+            $(".dropdown-wrap").mouseenter(function() {
+                //console.log(dropdown.level_in + "========" + dropdown.level_out+"--------"+dropdown.level_base);
+                dropdown.level_in = $(this).data("level");
+
+
+                $(".dropdown-wrap").each(function() {
+                    var o = $(this);
+                    var level = o.data("level");
+                    if (dropdown.isExpandSubMenu ==
+                        1 && (level - dropdown.level_in ==
+                            1)) {
+
+                    } else if (level > dropdown.level_in) {
+                        o.hide();
+                    }
+                });
+            });
+
+            $(".dropdown-wrap").mouseleave(function() {
+                dropdown.level_out = $(this).data("level");
+                var o = $(this);
+
+                var k = setTimeout(function() {
+
+                    //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
+
+                    if (dropdown.level_base) {
+                        return;
+                    }
+                    if (dropdown.level_in ==
+                        dropdown.level_out) {
+                        first.hide();
+                        second.hide();
+                        third.hide();
+                        dom.find("li").removeClass(
+                            "active");
+                    }
+
+
+
+                    clearTimeout(k);
+
+                }, 100);
+            });
+
+
+
+            $(".dropdown-wrap").click(function() {
+                second.hide();
+                third.hide();
+            });
+
+
+
+            //设置一级滚动事件
+            this.setDropdownScroll(first);
+
+            //展开二级菜单
+            this.hoverMenu(first, second);
+
+            this.dropdownMouseWheel(first);
+            this.dropdownMouseWheel(second);
+            this.dropdownMouseWheel(third);
+
+        };
+        this.update = function() {
+            this.windowHeight = $(window).height();
+            this.initFirstHeight();
+            this.setDropdownScroll(first);
+            this.hoverMenu(first, second);
+        };
+
+        //鼠标滚动事件
+        this.dropdownMouseWheel = function(obj) {
+            obj.unbind("mousewheel");
+            obj.bind('mousewheel', function(event, delta) {
+
+
+                var scroll_top = obj.find(
+                    ".dropdown-scroll-top");
+                var scroll_bottom = obj.find(
+                    ".dropdown-scroll-bottom");
+
+                var dir = delta > 0 ? 'up' : 'down';
+
+
+
+                if ($(this).find(".dropdown-scroll-top").length === 0) {
+                    return;
+                }
+
+                var item = $(this).children(
+                    ".dropdown-menu");
+                var t = parseInt(item.css("top"));
+                var _l = item.children("li").length;
+
+
+                if (dir === "up") {
+                    scroll_bottom.removeClass("disabled");
+                    if (t >= 20) {
+                        scroll_top.addClass("disabled");
+                        return false;
+                    }
+                    t += 20;
+                    item.css("top", t);
+                } else {
+                    scroll_top.removeClass("disabled");
+                    if (t <= ($(this).height() - (_l *
+                            item_h) - arrow_h)) {
+                        scroll_bottom.addClass("disabled");
+                        return false;
+                    }
+                    t -= 20;
+                    item.css("top", t);
+                }
+                return false;
+            });
+        };
+
+        this.setDropdownScroll = function(obj) {
+
+
+            var levels = ['first', 'second', 'third'];
+            var _l = obj.children("ul").children("li").length;
+            var dropdown = this;
+            var timer; //定时器
+            obj.find(".dropdown-scroll-top").unbind();
+            obj.find(".dropdown-scroll-top").hover(function() {
+
+
+
+                obj.find(".dropdown-scroll-bottom").removeClass(
+                    "disabled");
+                var scroll = $(this);
+
+                hideChild(scroll);
+
+                var o = $(this).next();
+                var t = parseInt(o.css("top"));
+                timer = setInterval(function() {
+                    if (t >= 20) {
+                        scroll.addClass("disabled");
+                        clearInterval(timer);
+                        return;
+                    }
+                    t += 10;
+                    o.css("top", t);
+                }, 30);
+
+            }, function() {
+                clearInterval(timer);
+            });
+
+            obj.find(".dropdown-scroll-bottom").unbind();
+            obj.find(".dropdown-scroll-bottom").hover(function() {
+
+
+                obj.find(".dropdown-scroll-top").removeClass(
+                    "disabled");
+
+                var scroll = $(this);
+                hideChild(scroll);
+
+                var o = $(this).prev();
+                var t = parseInt(o.css("top"));
+
+                timer = setInterval(function() {
+
+                    if (t <= (obj.height() - (_l *
+                            item_h) - arrow_h)) {
+                        scroll.addClass("disabled");
+                        clearInterval(timer);
+                        return;
+                    }
+
+                    t -= 10;
+                    o.css("top", t);
+                }, 30);
+            }, function() {
+                clearInterval(timer);
+            });
+
+
+            function hideChild(activeObj) {
+                var obj_dropdown = activeObj.parents(
+                    ".dropdown-wrap");
+                var level = obj_dropdown.data("level");
+                if (level == 1) {
+                    second.hide();
+                    third.hide();
+                }
+                if (level == 2) {
+                    third.hide();
+                }
+
+            }
+        };
+
+        this.hoverMenu = function(obj, subObj) {
+
+            var dropdown = this;
+            var timer;
+            var level_active = 0;
+            obj.find("li").unbind("mouseenter");
+            obj.find("li").mouseenter(function() {
+
+                level_active = dropdown.level_in;
+                obj.find("li").removeClass("active");
+
+                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base + ">>>>>>>>>" + dropdown.isExpandSubMenu + "//////////////" + level_active);
+
+                if ($(this).hasClass("dropdown-submenu")) {
+
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+
+                    dropdown.isExpandSubMenu = 1;
+
+                    $(this).addClass("active");
+                    var offset = $(this).offset();
+                    var top = offset.top;
+                    var item = $(this).find(
+                        ".dropdown-menu:eq(0)");
+                    var l = item.children("li").length;
+                    var total_h = item_h * l; //二级菜单高度
+
+                    subObj.html(item.clone());
+                    subObj.css("top", top - 1);
+
+                    //如果可视高度小于二级菜单高度时显示箭头
+                    if (dropdown.windowHeight < (total_h +
+                            top)) {
+
+                        if (total_h > scroll_min_h) {
+                            subObj.prepend(
+                                '<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up"></i></a>'
+                            );
+                            subObj.append(
+                                '<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>'
+                            );
+                        }
+
+                        var _total_h = dropdown.windowHeight -
+                            top; //二级菜单可显示的高度
+
+                        if (scroll_min_h > _total_h) {
+                            subObj.css("height",
+                                scroll_min_h);
+                            subObj.css("top", top - (
+                                scroll_min_h -
+                                _total_h));
+                        } else {
+
+                            subObj.css("height", _total_h);
+                        }
+
+                    } else {
+                        subObj.css("height", total_h);
+                    }
+
+                    subObj.show();
+
+                    //设置滚动事件
+                    dropdown.setDropdownScroll(subObj);
+
+                    //展开三级菜单
+                    dropdown.hoverMenu(second, third);
+
+                    return;
+                }
+
+                dropdown.isExpandSubMenu = 0;
+                timer = setTimeout(function() {
+
+                    if (level_active == 2) {
+                        subObj.hide();
+                        return;
+                    }
+
+                    if (dropdown.level_in >
+                        dropdown.level_out ||
+                        dropdown.isExpandSubMenu ==
+                        1) {
+                        return;
+                    }
+
+                    subObj.hide();
+
+                }, 300);
+
+
+            });
+        };
+
+        this.init();
+    }
+
 
     module.exports = loyout;
 

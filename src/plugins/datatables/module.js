@@ -1,7 +1,12 @@
 define(function(require, exports, module) {
 
     var g = window;
+    var locale = {};
+
     require('./1.9.4/jquery.dataTables');
+
+    locale.zh_CN = require('./locale/zh_CN');
+    locale.en_US = require('./locale/en_US');
 
     /* Set the defaults for DataTables initialisation */
     $.extend(true, $.fn.dataTable.defaults, {
@@ -480,7 +485,7 @@ define(function(require, exports, module) {
                                 "iTotalDisplayRecords": total,
                                 "iTotalRecords": total,
                                 "sColumns": null
-                            }
+                            };
 
 
 
@@ -550,14 +555,16 @@ define(function(require, exports, module) {
 
                             if (a.code === 0 && a.result) {
                                 var status_text = "";
+
                                 if (a.result.statusText === "timeout") {
-                                    status_text = "请求超时";
+                                    status_text = locale[pagurian.language || "zh_CN"].timeout;
                                 } else {
-                                    status_text = a.result.statusText;
+                                    status_text = a.message;
                                 }
+
                                 $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i>  " + status_text);
                             } else if (a.code == 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i> " + a.result.statusText);
+                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i> " + a.message);
                             }
 
                             if (a && a.page && a.page.total > 0) {
@@ -583,22 +590,7 @@ define(function(require, exports, module) {
                     });
                 }
             },
-            "oLanguage": {
-                "sProcessing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;加载中',
-                "sLengthMenu": "每页 _MENU_ 条 ",
-                "oPaginate": {
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sFirst": "第一页",
-                    "sLast": "最后一页"
-                },
-                "sInfo": "共 <span class='num'>_TOTAL_</span> 条数据",
-                "sInfoEmpty": "",
-                "sEmptyTable": "<i class='fa fa-info-circle  big'></i>  查询结果为空",
-                "sZeroRecords": "<i class='fa fa-info-circle  big'></i>  查询结果为空",
-                "sLoadingRecords": "加载中..."
-
-            }
+            "oLanguage": locale[pagurian.language || "zh_CN"]
         };
 
         this.init = function() {
@@ -608,14 +600,11 @@ define(function(require, exports, module) {
             this.table = oTable = $(seletor).dataTable(this.options);
             $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
             $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
-
-        }
-
-
+        };
 
         this.update = function() {
             this.table.fnPageChange(0);
-        }
+        };
 
         function createNumber(current, pagesize) {
             var index = (current - 1) * pagesize,
@@ -631,6 +620,6 @@ define(function(require, exports, module) {
         var table = new DataTables(seletor, options);
         table.init();
         return table;
-    }
+    };
 
 });

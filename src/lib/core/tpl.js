@@ -11,7 +11,7 @@ define(function(require, exports, module) {
         "'": "\\'"
     };
 
-    
+
     function Tpl() {
 
         this.render = function(template, data) {
@@ -23,13 +23,13 @@ define(function(require, exports, module) {
                 }).replace(/\{\s*(\w+)\s*\}/g, "'+(_.$1?(_.$1+'').replace(/[&\"<>]/g,function(e){return e}):(_.$1===0?0:''))+'") + "'"
             );
             return FN[template](data);
-        }
+        };
 
     }
 
     g[PagurianAlias].tpl = function(template, data) {
         var tpl = new Tpl();
         return tpl.render(template, data);
-    }
+    };
 
 });

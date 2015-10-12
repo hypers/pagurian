@@ -25,13 +25,16 @@ define(function(require, exports, module) {
     var service = require('./service');
 
     var api = require('../conf/api');
-    var locale = require('../conf/locale.zh-cn');
 
-    pagurian.locale = locale;
+    var locale = {};
+    locale.zh_CN = require('../conf/locale.zh_CN');
+    locale.en_US = require('../conf/locale.en_US');
+
+    pagurian.locale = locale[pagurian.language];
     pagurian.lib = {
         service: service,
         api: api
-    }
+    };
 
     var app = {
         page: {},
@@ -46,7 +49,7 @@ define(function(require, exports, module) {
                     app.events.resize();
                 }
             });
-            
+
         }
     };
 

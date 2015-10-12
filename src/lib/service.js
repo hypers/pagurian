@@ -28,7 +28,7 @@ define(function(require, exports, module) {
                 }
             }, options);
         }
-    }
+    };
 
     function validateRequest(data) {
         return true;
@@ -56,11 +56,11 @@ define(function(require, exports, module) {
         switch (data.code) {
             case "200000":
                 return true;
-                break;
+
             case "200001":
                 $p.com.alert(data.message, "warning");
                 return false;
-                break;
+
             case "200002":
 
                 var fields = data.fields;
@@ -73,46 +73,46 @@ define(function(require, exports, module) {
 
                 }
                 return false;
-                break;
+
             case "200403":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case "200403.11":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case "200403.13":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case "200403.17":
                 $p.com.alert($p.locale.exception, "warning");
-                break;
+                return false;
             case "200403.18":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case "200404":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case 404:
                 $p.com.alert($p.locale.exception, "error");
                 return false;
-                break;
+
             case "100500":
                 $p.com.alert($p.locale.exception, "warning");
                 return false;
-                break;
+
             case 500:
                 $p.com.alert($p.locale.exception, "error");
                 return false;
-                break;
+
             case 400:
                 $p.com.alert($p.locale.params_error, "error");
                 return false;
-                break;
+
             case 0:
                 if (data.result && data.result.statusText === "timeout") {
                     $p.com.alert($p.locale.timeout, "error");
@@ -120,7 +120,7 @@ define(function(require, exports, module) {
                 }
                 $p.com.alert($p.locale.exception, "error");
                 return false;
-                break;
+
             default:
                 return true;
         }
