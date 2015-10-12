@@ -1,6 +1,6 @@
 /**
  * @fileOverview Pagurian
- * @version 1.3
+ * @version 1.4
  * @param  {Object} global window
  * @param  {String} name   Pagurian alias
  * @param  {Boolean} debug
@@ -9,9 +9,19 @@
 
     global.PagurianAlias = name;
 
-    var CONFIG = global.CONFIG || {};
-    var prot = ("https:" == document.location.protocol) ? "https://" : "http://";
-    var domain = window.location.hostname || "/";
+
+    var CONFIG = global.CONFIG || {},
+        location = global.location,
+        //协议
+        protocol = ("https:" == location.protocol) ? "https://" : "http://",
+        //域名
+        domain = location.hostname || "/",
+        //端口
+        port = location.port ? ":" + location.port : "",
+        //路径
+        path = CONFIG.rootPath || "",
+        //完整URL
+        url = protocol + domain + port + path;
 
 
     /**
@@ -25,8 +35,8 @@
         com: {},
         plugin: {},
         path: {
-            api: prot + domain + "/",
-            app: prot + domain + "/" + (debug ? "src" : "dist") + "/"
+            api: url + "/test/api/",
+            app: url + "/" + (debug ? "src" : "dist") + "/"
         },
         call: function() {
             return (this.queue = this.queue || []).push(arguments);
@@ -44,13 +54,14 @@
         alias: {
             "jquery": "lib/vendor/jquery.1.9.1.min",
         },
+        //对dist/modules目录下的文件添加版本号
         map: [
             [/^(.*\/dist\/modules\/.*\.(?:js))(?:.*)$/i, '$1?v=' + pagurian.version]
         ],
         preload: ["jquery"], //预加载
         charset: 'utf-8',
         timeout: 20000,
-        debug: false
+        debug: debug
     });
 
 

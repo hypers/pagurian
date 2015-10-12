@@ -1,6 +1,6 @@
 define({
-    keywords: "test/api/keywords",
-    user: "test/api/user",
-    succeed: "test/api/succeed",
-    dataListData:"test/api/datalistdata"
+    keywords: "keywords",
+    user: "user",
+    succeed: "succeed",
+    dataListData:"datalistdata"
 });
