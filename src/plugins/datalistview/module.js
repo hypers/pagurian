@@ -1,7 +1,7 @@
 /**
  * Created by hypers-godfery on 2015/7/24.
  * Updated by hypers-godfery on 2015/9/10 fixbug.
- * Updated by hypers-godfery on 2015/9/10 添加国际化.
+ * Updated by hypers-godfery on 2015/10/12 添加国际化.
  */
 define(function (require, exports, module) {
     var g = window,
