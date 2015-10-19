@@ -20,6 +20,7 @@ define(function (require, exports, module) {
 
             this.version = "0.1"; //版本
             this.sizerName = _nameStr + _id; //id
+            this.promtText = "";//提示文字
             this.params = {}; //参数
             this.allDatas = []; //全部可用数据
             this.selectDatas = [];//已选数据
@@ -52,10 +53,12 @@ define(function (require, exports, module) {
                 o.options = $.extend(o.options, options);
                 if (o.options.isMultiple) {
                     o._tmpSelectDatas = [];//暂存数据
-                    o.isFirstClick = true;
+                    o.isFirstClick = true;//是否为第一次点击
+                    o.isFirstSearch = true;//是否为第一次搜索
                 }
                 bindEvent(selector, options);
                 drawDom(selector, options);
+                o.promtText = $("#" + o.sizerName).find("button").attr("title");
                 if (o.options.isExpand) {
                     o.expandPanel();
                 }
@@ -120,7 +123,7 @@ define(function (require, exports, module) {
                 });
 
                 //选项点击事件
-                $(document).delegate(".sizer-data-list-li", 'click', function () {
+                $(document).delegate("#" + o.sizerName + " .sizer-data-list-li", 'click', function () {
                     var _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
                         _dataName = o.options.dataMapping.name,
                         _dataValue = o.options.dataMapping.value,
@@ -139,6 +142,8 @@ define(function (require, exports, module) {
                             $(this).addClass("selected");
                             _selectDatas.push(_data);
                         }
+                        ;
+                        singleSetText(_data[_dataName]);
                         o.selectDatas = _selectDatas;
                         o.options.callbackOption && o.options.callbackOption(_data, isSelect);
                         closePanel();
@@ -204,13 +209,37 @@ define(function (require, exports, module) {
                     if (!o.options.isMultiple) {
                         $(".sizer-data-list-li").removeClass("selected");
                         o.selectDatas = [];
+                        singleSetText(o.promtText);
                         closePanel();
                     }
                 });
 
                 //搜索框事件
                 $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (e) {
-                    o.options.callbackSearch && o.options.callbackSearch($(this).val(), e);
+                    var word = $(this).val(),
+                        $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
+                        _datas = o.allDatas,
+                        _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas;
+                    if (o.isFirstSearch) {
+                        _selectDatas = _selectDatas.concat(o.selectDatas);
+                    }
+                    word = $.trim(word);
+                    for (var i = 0, len = _datas.length; i < len; i++) {
+                        var _tpl = '';
+                        if (!(_datas[i][o.options.dataMapping["name"]].indexOf(word) > -1)) {
+                            continue;
+                        }
+                        _tpl += '<li class="sizer-data-list-li ';
+                        for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
+                            if (_datas[i][o.options.dataMapping["value"]] === _selectDatas[j][o.options.dataMapping["value"]]) {
+                                _tpl += 'selected ';
+                            }
+                        }
+                        _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
+                        _tpl += 'title="' + _datas[i][o.options.dataMapping["name"]] + '" data-value="' + _datas[i][o.options.dataMapping["value"]] + '">';
+                        _tpl += '<a href="javascript:;">' + _datas[i][o.options.dataMapping["name"]] + '</a></li>';
+                        $dataList.append(_tpl);
+                    }
                 });
 
                 //多选筛选器独有事件
@@ -248,8 +277,17 @@ define(function (require, exports, module) {
                 if (o.options.isMultiple) {
                     o._tmpSelectDatas = [];
                     o.isFirstClick = true;
+                    o.isFirstSearch = true;
                 }
+                $("#" + _nameStr + '_search' + _id).val("");
+                $("#" + _nameStr + '_search' + _id).keyup();
                 o.options.callbackClose && o.options.callbackClose(o.selectDatas);
+            };
+
+            //为单选按钮设置文字
+            var singleSetText = function (text) {
+                $("#" + o.sizerName).find("span.sizer-btn-text").empty().append(text);
+                $("#" + o.sizerName).find("button").attr("title", text);
             };
 
             //打开面板
@@ -275,7 +313,7 @@ define(function (require, exports, module) {
             //载入数据
             this.loadData = function () {
                 var $listWrap = $("#" + _nameStr + "_listwrap" + _id),
-                    $dataList = $("#" + _nameStr + "_datalist" + _id);
+                    $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
                 o.params = o.options.dataParams;
                 o.options.dataSource(o.options.params, function (resp) {
                     if ($listWrap.hasClass("loading")) {
@@ -303,7 +341,7 @@ define(function (require, exports, module) {
                 });
             };
 
-            //更新面板
+            //使用自定义数据更新面板
             this.updatePanel = function (datas) {
                 var $dataListLi = $("#" + _nameStr + '_datalist' + _id + " li"),
                     _selectData = datas;
@@ -312,6 +350,11 @@ define(function (require, exports, module) {
                     $('.sizer-data-list-li[data-value="' + _selectData[i][o.options.dataMapping.value] + '"]').addClass("selected");
                 }
             };
+
+            //重新拉取数据
+            this.update = function () {
+                this.loadData();
+            }
 
             init();
         }
