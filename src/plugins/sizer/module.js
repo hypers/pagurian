@@ -9,22 +9,51 @@ define(function (require, exports, module) {
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
         /**
-         * [DataListView 筛选器类]
+         * [Sizer 筛选器类]
          * @param {[type]} selector [选择器]
          * @param {[type]} options [参数]
+         * @param {[type]} chooseDatas [选中的选项]
          */
         function Sizer(selector, options, chooseDatas) {
             var o = this,
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
-
-            this.version = "0.1"; //版本
-            this.sizerName = _nameStr + _id; //id
-            this.promtText = "";//提示文字
-            this.params = {}; //参数
-            this.allDatas = []; //全部可用数据
-            this.selectDatas = [];//已选数据
+            //版本
+            this.version = "0.1";
+            //id
+            this.sizerName = _nameStr + _id;
+            //提示文字
+            this.promtText = "";
+            //参数
+            this.params = {};
+            //全部可用数据
+            this.allDatas = [];
+            //已选数据
+            this.selectDatas = [];
+            //是否需要载入
             this.needLoad = true;
+            /**
+             *
+             * @type {
+             * {isMultiple: boolean,//是否为多选 默认为false
+             * isExpand: boolean,//是否展开 默认为false
+             * dataSource: null,//数据源的params
+             * dataParams: {}, //数据源的参数
+             * dataMapping: {name: string, value: string}, //数据源的映射关系
+             * class: string,//custom类型
+             * processing: (*|function(event, Object, boolean)), //loading文字
+             * search: (*|string|string|string|string),//搜索框内的placeholder
+             * callbackExpand: null,//面板展开时的回调
+             * callbackClose: null,//面板关闭时的回调
+             * callbackOption: null,//点击选项的回调
+             * callbackSearch: null,//搜索框录入回调
+             * callbackClean: null,//点击清除/清除选择的回调
+             * ======仅isMultiple为true时有效========
+             * callbackSelectAll: null,//全选时的回调
+             * callbackSubmit: null,//确认按钮回调
+             * callbackCancel: null}//取消按钮回调
+             * }
+             */
             this.options = {
                 isMultiple: false,//是否为多选 默认为false
                 isExpand: false,//是否展开 默认为false
@@ -115,7 +144,11 @@ define(function (require, exports, module) {
                 $(selector).after(_sizerSelectPanel);
             }
 
-            //绑定事件
+            /**
+             * 绑定事件
+             * @param selector
+             * @param options
+             */
             var bindEvent = function (selector, options) {
                 var _isMultiple = o.options.isMultiple;
                 $(document).delegate(selector, 'click', function () {
@@ -200,8 +233,12 @@ define(function (require, exports, module) {
                         if (o.isFirstClick) {
                             o.isFirstClick = false;
                         }
-                        $(".sizer-data-list-li").removeClass("selected");
-                        o._tmpSelectDatas = [];
+                        var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
+                        $dataLis.each(function () {
+                            if ($(this).hasClass("selected")) {
+                                $(this).click();
+                            }
+                        });
                         o.options.callbackClean && o.options.callbackClean(o._tmpSelectDatas);
                     }
 
@@ -219,27 +256,25 @@ define(function (require, exports, module) {
                     var word = $(this).val(),
                         $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
                         _datas = o.allDatas,
-                        _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas;
+                        _tempDatas = [],
+                        _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
+                        _tempSelectDatas = [];
                     if (o.isFirstSearch) {
                         _selectDatas = _selectDatas.concat(o.selectDatas);
                     }
                     word = $.trim(word);
                     for (var i = 0, len = _datas.length; i < len; i++) {
-                        var _tpl = '';
                         if (!(_datas[i][o.options.dataMapping["name"]].indexOf(word) > -1)) {
                             continue;
                         }
-                        _tpl += '<li class="sizer-data-list-li ';
+                        _tempDatas.push(_datas[i]);
                         for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
                             if (_datas[i][o.options.dataMapping["value"]] === _selectDatas[j][o.options.dataMapping["value"]]) {
-                                _tpl += 'selected ';
+                                _tempSelectDatas.push(_datas[i]);
                             }
                         }
-                        _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
-                        _tpl += 'title="' + _datas[i][o.options.dataMapping["name"]] + '" data-value="' + _datas[i][o.options.dataMapping["value"]] + '">';
-                        _tpl += '<a href="javascript:;">' + _datas[i][o.options.dataMapping["name"]] + '</a></li>';
-                        $dataList.append(_tpl);
                     }
+                    setData(_tempDatas, _tempSelectDatas);
                 });
 
                 //多选筛选器独有事件
@@ -249,8 +284,12 @@ define(function (require, exports, module) {
                         if (o.isFirstClick) {
                             o.isFirstClick = false;
                         }
-                        $(".sizer-data-list-li").addClass("selected");
-                        o._tmpSelectDatas = o.allDatas;
+                        var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
+                        $dataLis.each(function () {
+                            if (!$(this).hasClass("selected")) {
+                                $(this).click();
+                            }
+                        });
                         o.options.callbackSelectAll && o.options.callbackSelectAll(o._tmpSelectDatas);
                     });
 
@@ -270,7 +309,9 @@ define(function (require, exports, module) {
                 }
             }
 
-            //关闭面板
+            /**
+             * 关闭面板
+             */
             var closePanel = function () {
                 var $sizerWrap = $("#" + o.sizerName);
                 $sizerWrap.removeClass("sizer-open");
@@ -284,13 +325,43 @@ define(function (require, exports, module) {
                 o.options.callbackClose && o.options.callbackClose(o.selectDatas);
             };
 
-            //为单选按钮设置文字
+            /**
+             * 为单选按钮设置文字
+             * @param text
+             */
             var singleSetText = function (text) {
                 $("#" + o.sizerName).find("span.sizer-btn-text").empty().append(text);
                 $("#" + o.sizerName).find("button").attr("title", text);
             };
 
-            //打开面板
+            /**
+             * 设置数据
+             * @param allDatas
+             * @param chooseDatas
+             */
+            var setData = function (allDatas, chooseDatas) {
+                var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
+                for (var i = 0, len = allDatas.length; i < len; i++) {
+                    var _tpl = '';
+                    _tpl += '<li class="sizer-data-list-li ';
+                    //选中默认选中项
+                    if (chooseDatas) {
+                        for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
+                            if (allDatas[i][o.options.dataMapping["value"]] === chooseDatas[j][o.options.dataMapping["value"]]) {
+                                _tpl += 'selected ';
+                            }
+                        }
+                    }
+                    _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
+                    _tpl += 'title="' + allDatas[i][o.options.dataMapping["name"]] + '" data-value="' + allDatas[i][o.options.dataMapping["value"]] + '">';
+                    _tpl += '<a href="javascript:;">' + allDatas[i][o.options.dataMapping["name"]] + '</a></li>';
+                    $dataList.append(_tpl);
+                }
+            }
+
+            /**
+             * 打开面板
+             */
             this.expandPanel = function () {
                 var $sizerWrap = $("#" + o.sizerName),
                     _isExpand = $sizerWrap.hasClass("sizer-open");
@@ -301,7 +372,6 @@ define(function (require, exports, module) {
                     if (o.needLoad) {
                         o.loadData();
                     }
-                    o.updatePanel(o.selectDatas);
                     o.options.callbackExpand && o.options.callbackExpand(o.selectDatas);
                 }
                 //关闭面板时执行的方法
@@ -310,7 +380,9 @@ define(function (require, exports, module) {
                 }
             };
 
-            //载入数据
+            /**
+             * 载入数据
+             */
             this.loadData = function () {
                 var $listWrap = $("#" + _nameStr + "_listwrap" + _id),
                     $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
@@ -321,37 +393,15 @@ define(function (require, exports, module) {
                     }
                     var _datas = resp.result;
                     o.allDatas = _datas;
-                    for (var i = 0, len = _datas.length; i < len; i++) {
-                        var _tpl = '';
-                        _tpl += '<li class="sizer-data-list-li ';
-                        //选中默认选中项
-                        if (chooseDatas) {
-                            for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
-                                if (_datas[i][o.options.dataMapping["value"]] === chooseDatas[j][o.options.dataMapping["value"]]) {
-                                    _tpl += 'selected ';
-                                }
-                            }
-                        }
-                        _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
-                        _tpl += 'title="' + _datas[i][o.options.dataMapping["name"]] + '" data-value="' + _datas[i][o.options.dataMapping["value"]] + '">';
-                        _tpl += '<a href="javascript:;">' + _datas[i][o.options.dataMapping["name"]] + '</a></li>';
-                        $dataList.append(_tpl);
-                    }
+                    chooseDatas = chooseDatas ? chooseDatas : [];
+                    setData(_datas, chooseDatas);
                     o.needLoad = false;
                 });
             };
 
-            //使用自定义数据更新面板
-            this.updatePanel = function (datas) {
-                var $dataListLi = $("#" + _nameStr + '_datalist' + _id + " li"),
-                    _selectData = datas;
-                $dataListLi.removeClass("selected");
-                for (var i = 0, len = _selectData.length; i < len; i++) {
-                    $('.sizer-data-list-li[data-value="' + _selectData[i][o.options.dataMapping.value] + '"]').addClass("selected");
-                }
-            };
-
-            //重新拉取数据
+            /**
+             * 重新拉取数据
+             */
             this.update = function () {
                 this.loadData();
             }
@@ -360,14 +410,13 @@ define(function (require, exports, module) {
         }
 
         /**
-         * [dataListView 数据列表视图]
-         * @param  {[type]} selector [选择器]
-         * @param  {[type]} options [选项]
-         * @return {[type]}         [dataListView]
+         * [Sizer 筛选器类]
+         * @param {[type]} selector [选择器]
+         * @param {[type]} options [参数]
+         * @param {[type]} chooseDatas [选中的选项]
          */
         g[PagurianAlias].plugin.sizer = function (seletor, options, chooseDatas) {
             var sizer = new Sizer(seletor, options, chooseDatas);
-            //sizer.init();
             return sizer;
         }
     }
