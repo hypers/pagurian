@@ -1,0 +1,71 @@
+{{>fixtures/doctype}}
+<head>
+    <title> {{data.page.sizer}}</title>
+    {{>fixtures/head}}
+</head>
+<body>
+
+    {{>fixtures/header}}
+
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container datalistview-container">
+
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.sizer}}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="sizer-single.html">单选 </a>
+                        </li>
+                        <li class="active">
+                            <a href="sizer-multiple.html">多选 </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="portlet box default">
+                            <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn" title="版本">
+                                <span class="sizer-btn-text">版本</span>
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    {{>fixtures/footer}}
+
+    <script type="text/javascript">
+        pagurian.call("modules/sizer/app", function (app) {
+            app.page.multiple();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+</html>

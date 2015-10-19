@@ -1,0 +1,203 @@
+@charset "utf-8";
+@import "../functions";
+
+@ns: sizer-;
+.@{ns}wrap {
+    .pos(r);
+    //关闭状态
+    @pd: 18px;
+    @search-h: 36px; //搜索框的宽度
+    @select-panel-w: 588px;
+
+    .@{ns}select-panel {
+        border: 1px solid @B500;
+        .pos(a);
+        .d-n;
+        top: 35px;
+        left: 0;
+        background: #ffffff;
+    }
+    .@{ns}top {
+        padding: @pd;
+    }
+    .@{ns}select-panel {
+        .@{ns}search-wrap {
+            .clearfix;
+        }
+
+        &.@{ns}multiple {
+            .@{ns}top {
+                padding: 18px 18px 10px;
+            }
+        }
+    }
+
+    //选择面板-搜索部分
+    .@{ns}search-wrap {
+
+        .input-search {
+            .d-ib;
+            .fl;
+            width: 259px;
+
+            i {
+                margin: 10px 2px 4px 12px;
+            }
+
+            input {
+                height: @search-h;
+            }
+        }
+
+        .@{ns}prompt {
+            .l-h(@search-h);
+            .fl;
+            padding-left: 15px;
+            margin-bottom: 0;
+            color: @B600;
+        }
+
+        .@{ns}btn-group {
+            .fr;
+            .l-h(@search-h);
+        }
+    }
+
+    //选择面板-选项列表部分
+    .@{ns}list-wrap {
+        margin-top: 10px;
+        width: @select-panel-w -@pd*2;
+        .pos(r);
+        min-height: 22.5px;
+        max-height: 155px;
+        overflow-y: auto;
+        width: 550px;
+
+        &.scollbar {
+            width: 567px;
+        }
+
+        &.loading {
+            .@{ns}loading {
+                visibility: visible;
+            }
+
+            @{ns}data-list {
+                visibility: hidden;
+            }
+        }
+
+        .@{ns}loading, @{ns}-list-body {
+            width: 100%;
+        }
+
+        .@{ns}loading {
+            text-align: center;
+            visibility: hidden;
+            .pos(a);
+            top: 50%;
+            left: 0;
+            margin-top: -11px;
+        }
+
+        .@{ns}data-list {
+            margin: 0;
+            padding: 0;
+            visibility: visible;
+
+            li {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+
+    .@{ns}data-list {
+        .clearfix;
+        @li-w: 130px;
+        @li-pd: 10px;
+        li.@{ns}data-list-li {
+            .fl;
+            width: 130px;
+            margin: 1px 10px 0 0;
+            .l-h(30px);
+            padding: 0  @li-pd;
+            color: @B900;
+            cursor: pointer;
+            .ellipsis-basic;
+
+            &.mr-n {
+                margin-right: 0;
+            }
+
+            &:hover {
+                background: @H050;
+            }
+
+            &.selected {
+                background: @H500;
+                color: #ffffff;
+                & a {
+                    color: #fff;
+                }
+            }
+
+            & a {
+                .d-b;
+                width: 100%;
+                height: 100%;
+                color: @B900;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            .@{ns}data-btn {
+                width: @li-w - @li-pd*2;
+                text-align: left;
+            }
+        }
+        .@{ns}data-none {
+            color: @B600;
+            .fl;
+        }
+    }
+
+    //多选筛选器底部
+    .@{ns}footer {
+        background: @B050;
+        padding: 18px;
+        .tr;
+    }
+
+    //打开状态
+    &.@{ns}open {
+        .@{ns}btn {
+            border-color: @B500;
+        }
+        .@{ns}select-panel {
+            .d-b;
+        }
+    }
+}
+
+//sizer按钮
+.@{ns}btn {
+    .pos(r);
+    padding: 5px 36px 4.5px 18px;
+
+    .@{ns}btn-text {
+        max-width: 74px;
+        .ellipsis-basic;
+        .d-ib;
+    }
+
+    i {
+        .pos(a);
+        top: 8px;
+        right: 16px;
+    }
+}

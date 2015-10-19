@@ -1,0 +1,11 @@
+define({
+    "search": '请输入查询字段',
+    "multiple": '（多选）',
+    "single": '(单选)',
+    "chooseAll": '全选',
+    "clearMultiple": '清除选择',
+    "clearSingle": '清除',
+    "processing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;加载中',
+    "btnSubmit": '确定',
+    "btnCancel": '取消'
+});

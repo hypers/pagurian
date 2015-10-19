@@ -2,5 +2,6 @@ define({
     keywords: "keywords",
     user: "user",
     succeed: "succeed",
-    dataListData:"datalistdata"
+    dataListData:"datalistdata",
+    sizerData:"sizerdata"
 });

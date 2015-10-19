@@ -3,8 +3,8 @@
         "name": "系统管理员"
     },
     "version": "1.4.0",
-    "description":"一个管理系统的前端框架",
-    "update":"<p>版本更新:</p><p>1:支持国际化</p><p>2:新增DataListView插件</p><p>2:修复一些BUG</p>",
+    "description": "一个管理系统的前端框架",
+    "update": "<p>版本更新:</p><p>1:支持国际化</p><p>2:新增DataListView插件</p><p>2:修复一些BUG</p>",
     "page": {
         "color": "配色 Color",
         "button": "按钮 Button",
@@ -16,6 +16,7 @@
         "datatables": "DataTables",
         "datalistview": "DataListView",
         "datepicker": "Date Pickers",
+        "sizer": "筛选器",
         "echarts": "Echarts",
         "ckeditor": "CKEditor",
         "catalogue": "目录设计",
@@ -77,6 +78,11 @@
                     "title": "弹出框 Popover",
                     "url": "com-popover.html",
                     "active": 0
+                },
+                {
+                    "name": "sizer",
+                    "title": "筛选器 Sizer",
+                    "url": "sizer-multiple.html"
                 }
             ]
         },
