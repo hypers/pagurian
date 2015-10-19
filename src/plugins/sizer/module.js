@@ -19,7 +19,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "0.1";
+            this.version = "2015.10.19.2350";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
