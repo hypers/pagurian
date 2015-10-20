@@ -54,6 +54,7 @@ define(function(require, exports, module) {
      * 重新初始化上的窗口大小调整布局
      */
     var doResponsive = function() {
+
         doSidebarAndContentHeight();
         doAppResizeEvent();
         doModalHeight();
@@ -70,6 +71,7 @@ define(function(require, exports, module) {
      *  处理窗口大小调整布局初始化
      */
     var doResponsiveOnResize = function() {
+
         var resize;
         if (isIE8) {
             var currheight;
@@ -163,24 +165,26 @@ define(function(require, exports, module) {
 
         if (available_height >= content_height) {
             modal_body.css("max-height", content_height);
-        }else{
+        } else {
             modal_body.css("max-height", "none");
         }
 
     };
 
 
+
     /**
      * 辅助函数来计算侧边栏高度固定侧边栏布局。
      */
     var _calculateFixedSidebarViewportHeight = function() {
-        var sidebarHeight = $(window).height() - $('.header').height() + 1;
+        var sidebarHeight = $(window).height() - $('.header').height() +
+            1;
         if ($('body').hasClass("page-footer-fixed")) {
             sidebarHeight = sidebarHeight - $('.footer').outerHeight();
         }
 
         return sidebarHeight;
-    };
+    }
 
 
 
@@ -188,22 +192,29 @@ define(function(require, exports, module) {
      * 把手portlet的工具和行动
      */
     var doPortletTools = function() {
-        jQuery('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
-            e.preventDefault();
-            jQuery(this).closest(".portlet").remove();
-        });
-        jQuery('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function(e) {
-            e.preventDefault();
-            var el = jQuery(this).closest(".portlet").children(".portlet-body");
-            if (jQuery(this).hasClass("collapse")) {
-                jQuery(this).removeClass("collapse").addClass("expand");
-                el.slideUp(200);
-            } else {
-                jQuery(this).removeClass("expand").addClass("collapse");
-                el.slideDown(200);
-            }
-        });
-    };
+        jQuery('body').on('click',
+            '.portlet > .portlet-title > .tools > a.remove',
+            function(e) {
+                e.preventDefault();
+                jQuery(this).closest(".portlet").remove();
+            });
+        jQuery('body').on('click',
+            '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand',
+            function(e) {
+                e.preventDefault();
+                var el = jQuery(this).closest(".portlet").children(
+                    ".portlet-body");
+                if (jQuery(this).hasClass("collapse")) {
+                    jQuery(this).removeClass("collapse").addClass(
+                        "expand");
+                    el.slideUp(200);
+                } else {
+                    jQuery(this).removeClass("expand").addClass(
+                        "collapse");
+                    el.slideDown(200);
+                }
+            });
+    }
 
     /**
      * 处理使用jQuery插件统一定制的复选框和收音机
@@ -212,7 +223,9 @@ define(function(require, exports, module) {
         if (!jQuery().uniform) {
             return;
         }
-        var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
+        var test = $(
+            "input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)"
+        );
         if (test.size() > 0) {
             test.each(function() {
                 if ($(this).parents(".checker").size() === 0) {
@@ -240,6 +253,13 @@ define(function(require, exports, module) {
         $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
         });
+
+        $("[data-type='select'] .dropdown-menu a").click(function() {
+            var text = $(this).text();
+            var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
+            $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
+        });
+
     };
 
     /**
@@ -257,7 +277,7 @@ define(function(require, exports, module) {
             $(this).parent('.alert').hide();
             e.preventDefault();
         });
-    };
+    }
 
 
     /**
@@ -266,7 +286,7 @@ define(function(require, exports, module) {
     var doPopovers = function() {
         jQuery('.popovers').popover();
 
-    };
+    }
 
     /**
      * 处理 Tabs
@@ -278,13 +298,14 @@ define(function(require, exports, module) {
         });
         if (location.hash) {
             var tabid = location.hash.substr(1);
-            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function() {
+            $('a[href="#' + tabid + '"]').parents(
+                '.tab-pane:hidden').each(function() {
                 var tabid = $(this).attr("id");
                 $('a[href="#' + tabid + '"]').click();
             });
             $('a[href="#' + tabid + '"]').click();
         }
-    };
+    }
 
 
     /**
@@ -292,23 +313,29 @@ define(function(require, exports, module) {
      */
     var doFixInputPlaceholderForIE = function() {
         if (isIE8 || isIE9) {
-            jQuery('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function() {
+            jQuery(
+                'input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)'
+            ).each(function() {
 
                 var input = jQuery(this);
 
-                if (input.val() === '' && input.attr("placeholder") !== '') {
-                    input.addClass("placeholder").val(input.attr('placeholder'));
+                if (input.val() == '' && input.attr(
+                        "placeholder") != '') {
+                    input.addClass("placeholder").val(input
+                        .attr('placeholder'));
                 }
 
                 input.focus(function() {
-                    if (input.val() == input.attr('placeholder')) {
+                    if (input.val() == input.attr(
+                            'placeholder')) {
                         input.val('');
                     }
                 });
 
                 input.blur(function() {
                     if (input.val() === '' || input.val() == input.attr('placeholder')) {
-                        input.val(input.attr('placeholder'));
+                        input.val(input.attr(
+                            'placeholder'));
                     }
                 });
             });
@@ -329,6 +356,7 @@ define(function(require, exports, module) {
         }
     };
 
+
     /**
      * 处理 Theme Settings
      */
@@ -337,9 +365,11 @@ define(function(require, exports, module) {
         var panel = $('.theme-panel');
 
         var setColor = function(color) {
-            $("#style_themes").attr("href", pagurian.path.app + "resources/css/themes-" + (color || "default") + ".css");
+            $("#style_themes").attr("href", pagurian.path.app +
+                "resources/css/themes-" + (color ||
+                    "default") + ".css");
             $.cookie('style_color', color);
-        };
+        }
 
         $('.toggler', panel).click(function() {
             $('.toggler').hide();
@@ -362,7 +392,7 @@ define(function(require, exports, module) {
         });
 
 
-    };
+    }
 
     var doHLJS = function() {
         if (!window.hljs) {
@@ -371,7 +401,8 @@ define(function(require, exports, module) {
 
         $('pre code').each(function() {
             var lines = $(this).text().split('\n').length;
-            var $numbering = $('<ul/>').addClass('pre-numbering');
+            var $numbering = $('<ul/>').addClass(
+                'pre-numbering');
             $(this)
                 .addClass('has-numbering')
                 .parent()
@@ -384,7 +415,7 @@ define(function(require, exports, module) {
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-    };
+    }
 
     //处理APP回调事件
     var doAppResizeEvent = function() {
@@ -398,7 +429,6 @@ define(function(require, exports, module) {
     var callbackQueue = [];
 
     var loyout = {
-
         init: function() {
 
             doInit();
@@ -412,6 +442,7 @@ define(function(require, exports, module) {
             doPortletTools();
             doAlerts();
             doDropdowns();
+            doDropdownHover();
             doTooltips();
             doPopovers();
             doTabs();
@@ -426,8 +457,8 @@ define(function(require, exports, module) {
             callbackQueue.push(callback);
         },
         initDropdownMenu: function() {
-
             var dropdown = new Dropdown("#dropdown_pro_menu");
+
             callbackQueue.push(function() {
                 dropdown.update();
             });
@@ -821,7 +852,6 @@ define(function(require, exports, module) {
 
         this.init();
     }
-
 
     module.exports = loyout;
 
