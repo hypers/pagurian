@@ -47,7 +47,7 @@ define(function(require, exports, module) {
             zh_CN: {
                 opens: 'right',
                 format: 'YYYY-MM-DD',
-                textForamt: 'YYYY年MM月DD日',
+                textForamt: 'YYYY-MM-DD',
                 separator: ' -- ',
                 startDate: momentStartDate.format("YYYY-MM-DD"),
                 endDate: momentEndDate.format('YYYY-MM-DD'),
