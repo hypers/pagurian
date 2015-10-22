@@ -20,6 +20,7 @@ define(function(require, exports, module) {
     require('./com/select');
 
     require('./tool/url');
+    require('./tool/str');
 
     var layout = require('./core/layout');
     var service = require('./service');
