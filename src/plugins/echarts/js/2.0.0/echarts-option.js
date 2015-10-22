@@ -267,8 +267,7 @@ define(function(require, exports, module) {
 
         },
         map: function(opt) {
-
-            var mapType = options.options.mapType || "china";
+            var mapType = opt.mapType || "china";
             var chinaProvince = $p.locale.chinaProvince || {};
             var country = $p.locale.country || {};
 
@@ -295,6 +294,17 @@ define(function(require, exports, module) {
                     }
                     return list;
                 }
+            };
+
+            var getProvinceName = function(name) {
+                if (name) {
+                    for (var key in chinaProvince) {
+                        if (name.indexOf(chinaProvince[key]) >= 0) {
+                            return chinaProvince[key];
+                        }
+                    }
+                }
+                return name;
             };
 
             var dataList = opt.data || [];
@@ -350,7 +360,7 @@ define(function(require, exports, module) {
 
             //初始化数据
             for (var i = 0; i < dataList.length; i++) {
-                dataList[i].name = get_province_name(dataList[i].name);
+                dataList[i].name = getProvinceName(dataList[i].name);
                 option.series[0].data.push(dataList[i]);
             }
 
