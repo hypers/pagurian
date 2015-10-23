@@ -244,7 +244,7 @@ define(function (require, exports, module) {
 
                     //单选
                     if (!o.options.isMultiple) {
-                        $(".sizer-data-list-li").removeClass("selected");
+                        $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
                         o.selectDatas = [];
                         singleSetText(o.promtText);
                         closePanel();
@@ -341,6 +341,11 @@ define(function (require, exports, module) {
              */
             var setData = function (allDatas, chooseDatas) {
                 var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
+                if (!allDatas || allDatas.length == 0) {
+                    var _empty = '<div class="sizer-empty">' + oLanguage.empty + '</div>';
+                    $dataList.append(_empty);
+                    return;
+                }
                 for (var i = 0, len = allDatas.length; i < len; i++) {
                     var _tpl = '';
                     _tpl += '<li class="sizer-data-list-li ';
@@ -365,6 +370,8 @@ define(function (require, exports, module) {
             this.expandPanel = function () {
                 var $sizerWrap = $("#" + o.sizerName),
                     _isExpand = $sizerWrap.hasClass("sizer-open");
+                //关闭所有已展开的面板
+                $('[id^="' + _nameStr + '"].sizer-wrap').removeClass("sizer-open");
                 //判断是否展开如果展开则关闭
                 _isExpand ? $sizerWrap.removeClass("sizer-open") : $sizerWrap.addClass("sizer-open");
                 //打开面板时执行的方法
@@ -384,10 +391,9 @@ define(function (require, exports, module) {
              * 载入数据
              */
             this.loadData = function () {
-                var $listWrap = $("#" + _nameStr + "_listwrap" + _id),
-                    $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
+                var $listWrap = $("#" + _nameStr + "_listwrap" + _id);
                 o.params = o.options.dataParams;
-                o.options.dataSource(o.options.params, function (resp) {
+                o.options.dataSource(o.options.dataParams, function (resp) {
                     if ($listWrap.hasClass("loading")) {
                         $listWrap.removeClass("loading");
                     }
