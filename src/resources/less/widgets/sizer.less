@@ -3,6 +3,7 @@
 
 @ns: sizer-;
 .@{ns}wrap {
+    display: inline-block;
     .pos(r);
     //关闭状态
     @pd: 18px;
@@ -16,6 +17,7 @@
         top: 35px;
         left: 0;
         background: #ffffff;
+        z-index: 99;
     }
     .@{ns}top {
         padding: @pd;
@@ -87,17 +89,27 @@
             }
         }
 
-        .@{ns}loading, @{ns}-list-body {
+        .@{ns}loading, .@{ns}empty, @{ns}-list-body {
             width: 100%;
         }
 
-        .@{ns}loading {
+        .@{ns}loading, .@{ns}empty {
             text-align: center;
-            visibility: hidden;
             .pos(a);
             top: 50%;
             left: 0;
             margin-top: -11px;
+        }
+
+        .@{ns}empty {
+            i {
+                color: @H500;
+                font-size: 16px !important;
+            }
+        }
+
+        .@{ns}loading {
+            visibility: hidden;
         }
 
         .@{ns}data-list {
