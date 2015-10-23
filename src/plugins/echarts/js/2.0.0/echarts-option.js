@@ -268,8 +268,8 @@ define(function(require, exports, module) {
         },
         map: function(opt) {
             var mapType = opt.mapType || "china";
-            var chinaProvince = $p.locale.chinaProvince || {};
-            var country = $p.locale.country || {};
+            var chinaProvince = $p.locale.echartsChinaProvince || {};
+            var country = $p.locale.echartCountry || {};
 
             var nameMap = {
                 china: function(locale) {
