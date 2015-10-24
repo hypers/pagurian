@@ -1,16 +1,16 @@
 define({
-    "sProcessing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;Loading',
-    "sLengthMenu": "Show _MENU_ entries ",
+    "sProcessing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;loading',
+    "sLengthMenu": "View _MENU_ per page ",
     "oPaginate": {
-        "sPrevious": "Prev",
+        "sPrevious": "Previous",
         "sNext": "Next",
         "sFirst": "First",
         "sLast": "Last"
     },
-    "sInfo": "Total <span class='num'>_TOTAL_</span> entries",
+    "sInfo": "Total <span class='num'>_TOTAL_</span> found",
     "sInfoEmpty": "",
-    "sEmptyTable": "<i class='fa fa-info-circle  big'></i>  Empty",
-    "sZeroRecords": "<i class='fa fa-info-circle  big'></i>  Empty",
-    "sLoadingRecords": "Loading...",
-    "sTimeout": "Timeout"
+    "sEmptyTable": "<i class='fa fa-info-circle  big'></i>  No data found",
+    "sZeroRecords": "<i class='fa fa-info-circle  big'></i>  No data found",
+    "sLoadingRecords": "loading”",
+    "sTimeout": "Request timed out"
 });
