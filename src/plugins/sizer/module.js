@@ -40,7 +40,7 @@ define(function (require, exports, module) {
              * dataSource: null,//数据源的params
              * dataParams: {}, //数据源的参数
              * dataMapping: {name: string, value: string}, //数据源的映射关系
-             * positon: { left: 0 }//设置面板的位置 与$.css()数据格式相同
+             * position: { left: 0 }//设置面板的位置 与$.css()数据格式相同
              * class: string,//custom类型
              * processing: (*|function(event, Object, boolean)), //loading文字
              * search: (*|string|string|string|string),//搜索框内的placeholder
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
                     "name": "name",
                     "value": "id"
                 },
-                positon: { //设置面板的位置
+                position: { //设置面板的位置
                     left: 0
                 },
                 class: "", //筛选器自定义class
@@ -146,7 +146,7 @@ define(function (require, exports, module) {
                 }
                 _sizerSelectPanel += '</div>';
                 $(selector).after(_sizerSelectPanel);
-                $("#" + _nameStr + '_select_panel' + _id).css(o.options.positon);
+                $("#" + _nameStr + '_select_panel' + _id).css(o.options.position);
 
             }
 
