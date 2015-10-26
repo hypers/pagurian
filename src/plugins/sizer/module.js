@@ -19,7 +19,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.10.19.2350";
+            this.version = "2015.10.26.1152";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -409,6 +409,10 @@ define(function (require, exports, module) {
              * 重新拉取数据
              */
             this.update = function () {
+                $("#" + _nameStr + '_clean' + _id).click();
+                if(!o.isMultiple){
+                    singleSetText(o.promtText);
+                }
                 this.loadData();
             }
 
