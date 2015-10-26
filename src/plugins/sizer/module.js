@@ -40,6 +40,7 @@ define(function (require, exports, module) {
              * dataSource: null,//数据源的params
              * dataParams: {}, //数据源的参数
              * dataMapping: {name: string, value: string}, //数据源的映射关系
+             * positon: { left: 0 }//设置面板的位置 与$.css()数据格式相同
              * class: string,//custom类型
              * processing: (*|function(event, Object, boolean)), //loading文字
              * search: (*|string|string|string|string),//搜索框内的placeholder
@@ -62,6 +63,9 @@ define(function (require, exports, module) {
                 dataMapping: {
                     "name": "name",
                     "value": "id"
+                },
+                positon: { //设置面板的位置
+                    left: 0
                 },
                 class: "", //筛选器自定义class
                 processing: oLanguage.processing,//loading默认文字
@@ -105,7 +109,7 @@ define(function (require, exports, module) {
                 _sizerWrap += '"></div>';
 
                 $(selector).wrap(_sizerWrap);
-                _sizerSelectPanel += '<div class="sizer-select-panel ';
+                _sizerSelectPanel += '<div id="' + _nameStr + '_select_panel' + _id + '" class="sizer-select-panel ';
                 _sizerSelectPanel += o.options.isMultiple ? "sizer-multiple" : "";
                 _sizerSelectPanel += '">';
                 _sizerSelectPanel += '    <div class="sizer-top">';
@@ -142,6 +146,8 @@ define(function (require, exports, module) {
                 }
                 _sizerSelectPanel += '</div>';
                 $(selector).after(_sizerSelectPanel);
+                $("#" + _nameStr + '_select_panel' + _id).css(o.options.positon);
+
             }
 
             /**
@@ -411,7 +417,7 @@ define(function (require, exports, module) {
              */
             this.update = function () {
                 $("#" + _nameStr + '_clean' + _id).click();
-                if(!o.isMultiple){
+                if (!o.isMultiple) {
                     singleSetText(o.promtText);
                 }
                 this.loadData();
