@@ -19,7 +19,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.10.26.1152";
+            this.version = "2015.10.26.1643";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -43,15 +43,15 @@ define(function (require, exports, module) {
              * class: string,//custom类型
              * processing: (*|function(event, Object, boolean)), //loading文字
              * search: (*|string|string|string|string),//搜索框内的placeholder
-             * callbackExpand: null,//面板展开时的回调
-             * callbackClose: null,//面板关闭时的回调
-             * callbackOption: null,//点击选项的回调
-             * callbackSearch: null,//搜索框录入回调
-             * callbackClean: null,//点击清除/清除选择的回调
+             * callbackExpand: function(){},//面板展开时的回调
+             * callbackClose: function(datas){},//面板关闭时的回调
+             * callbackOption: function(data){},//点击选项的回调
+             * callbackSearch: function(datas){},//搜索框录入回调
+             * callbackClean: function(){},//点击清除/清除选择的回调
              * ======仅isMultiple为true时有效========
-             * callbackSelectAll: null,//全选时的回调
-             * callbackSubmit: null,//确认按钮回调
-             * callbackCancel: null}//取消按钮回调
+             * callbackSelectAll: function(){},//全选时的回调
+             * callbackSubmit: function(){},//确认按钮回调
+             * callbackCancel: function(){}}//取消按钮回调
              * }
              */
             this.options = {
@@ -275,6 +275,7 @@ define(function (require, exports, module) {
                         }
                     }
                     setData(_tempDatas, _tempSelectDatas);
+                    o.options.callbackSearch && o.options.callbackSearch(_tempDatas);
                 });
 
                 //多选筛选器独有事件

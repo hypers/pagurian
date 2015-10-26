@@ -27,8 +27,8 @@ define(function (require, exports, module) {
             callbackOption: function (data) {//点击选项的回调
                 console.log(data);
             },
-            callbackSearch: function (data) {//搜索框录入回调
-                console.log(data);
+            callbackSearch: function (datas) {//搜索框录入回调
+                console.log(datas);
             },
             //仅isMultiple为true时有效
             callbackSelectAll: function () {//全选时的回调
