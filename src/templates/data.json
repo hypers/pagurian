@@ -78,11 +78,6 @@
                     "title": "弹出框 Popover",
                     "url": "com-popover.html",
                     "active": 0
-                },
-                {
-                    "name": "sizer",
-                    "title": "筛选器 Sizer",
-                    "url": "sizer-multiple.html"
                 }
             ]
         },
@@ -113,6 +108,11 @@
                     "name": "datepicker",
                     "title": "Date Pickers",
                     "url": "datepicker.html"
+                },
+                {
+                    "name": "sizer",
+                    "title": "筛选器 Sizer",
+                    "url": "sizer-multiple.html"
                 }
             ]
         },
