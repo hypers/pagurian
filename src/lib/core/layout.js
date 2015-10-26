@@ -266,7 +266,9 @@ define(function(require, exports, module) {
      * 处理 Hower Dropdowns
      */
     var doDropdownHover = function() {
-        $('[data-hover="dropdown"]').dropdownHover();
+        if ($.fn.dropdownHover) {
+            $('[data-hover="dropdown"]').dropdownHover();
+        }
     };
 
     /**

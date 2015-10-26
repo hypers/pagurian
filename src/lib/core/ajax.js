@@ -17,8 +17,8 @@ define(function(require, exports, module) {
         for (var i = 0; i < arr.length; i++) {
 
             //把"带有."的属性名转化为对象
-            var a = arr[i]['name'].split(".");
-            var _value = arr[i]['value'];
+            var a = arr[i].name.split(".");
+            var _value = arr[i].value;
 
             if (typeof _value === "string") {
                 _value = $.trim(_value);
@@ -30,7 +30,7 @@ define(function(require, exports, module) {
                 continue;
             }
 
-            obj[arr[i]['name']] = _value;
+            obj[arr[i].name] = _value;
         }
         return obj;
     }
@@ -43,10 +43,10 @@ define(function(require, exports, module) {
         },
         init: function(type, params) {
 
-
+            var i;
             this.options.data = [];
             if (Object.prototype.toString.call(params) == "[object Array]") {
-                for (var i = 0; i < params.length; i++) {
+                for (i = 0; i < params.length; i++) {
                     if (type == "get") {
                         params[i].value = encodeURIComponent(params[i].value);
                     }
@@ -56,8 +56,7 @@ define(function(require, exports, module) {
             } else {
 
 
-
-                for (var i in params) {
+                for (i in params) {
                     if (typeof params[i] === "function") {
                         continue;
                     }
@@ -97,7 +96,7 @@ define(function(require, exports, module) {
             var data = this.options.data;
 
             var ajaxOptions = {
-                url: pagurian.path.api + url,
+                url: pagurian.path.api + url + ".json?_ts=" + "_" + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
                 type: type || "get",
                 dataType: options.dataType || "json",
                 data: data,
