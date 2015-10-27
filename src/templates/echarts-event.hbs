@@ -30,7 +30,7 @@
 
 
             <div class="tabs-wrap">
-                <ul  class="nav nav-tabs">
+               <ul  class="nav nav-tabs">
                     <li>
                         <a href="echarts-line.html" >曲线图 </a>
                     </li>
@@ -40,15 +40,15 @@
                     <li >
                         <a href="echarts-pie.html" >饼图</a>
                     </li>
-                    <li class="active">
+                    <li >
                         <a href="echarts-bar.html" >柱状图</a>
                     </li>
                     <li >
                         <a href="echarts-map.html" >地图</a>
                     </li>
-                    <li >
-                        <a href="echarts-event.html" >自定义事件</a>
-                    </li>
+                   <li class="active">
+                       <a href="echarts-event.html" >自定义事件</a>
+                   </li>
                 </ul>
             </div>
 
@@ -75,45 +75,53 @@
 
             <div class="row">
                 <div class="col-md-12">
-                <div class="markdown">
-                    <h3>Javascript</h3>
-                    <pre><code class="javascript">
+                    <div class="markdown">
+                        <h3>Javascript</h3>
+                        <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
 var chart = $p.plugin.echarts("my_chart", {
-    type: "bar"
+    type: "line",
+    title: {
+        text: '来源分析',
+        subtext: '最近一周数据'
+    }
 });
-chart.load({
-    name:"PV",
-    data: [{
-        value: 735,
-        name: '百度'
+
+var option = {
+    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+    rows: [{
+        name: "搜索引擎",
+        value: [120, 132, 101, 134, 90, 230, 210]
     }, {
-        value: 310,
-        name: '谷歌'
+        name: "外部链接",
+        value: [220, 182, 191, 234, 290, 330, 310],
     }, {
-        value: 234,
-        name: '360搜索'
+        name: "直接访问",
+        value: [150, 232, 201, 154, 190, 330, 410]
     }, {
-        value: 135,
-        name: '搜狗'
-    }, {
-        value: 548,
-        name: '必应'
-    }, {
-        value: 148,
-        name: '雅虎'
-    }, {
-        value: 114,
-        name: '网易有道'
+        name: "站内链接",
+        value: [320, 332, 301, 334, 390, 330, 320]
     }]
-});
+};
 
-                </code></pre>
+function eConsole(param) {
+    var mes = '【' + param.type + '】';
+    if (typeof param.seriesIndex != 'undefined') {
+        mes += '  seriesIndex : ' + param.seriesIndex;
+        mes += '  dataIndex : ' + param.dataIndex;
+    }
+    console.log(param);
+    $p.com.alert(mes, "success");
+}
 
-                {{>fixtures/echarts-footer}}
+chart.on(echarts.config.EVENT.CLICK, eConsole);
 
-                </div>
+                    </code></pre>
+
+                    {{>fixtures/echarts-footer}}
+
+                    </div>
                 </div>
             </div>
 			<!-- END PAGE CONTENT-->
@@ -127,8 +135,9 @@ chart.load({
 
 
 <script type="text/javascript">
+
     pagurian.call(["modules/echarts/app","plugins/echarts/loader"], function(app) {
-		app.page.echarts_bar();
+		app.page.echarts_event();
 	});
 </script>
 
