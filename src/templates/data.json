@@ -81,7 +81,7 @@
                 {
                     "name": "sizer",
                     "title": "筛选器 Sizer",
-                    "url": "sizer-multiple.html"
+                    "url": "sizer-single.html"
                 },
                 {
                     "name": "dataListView",

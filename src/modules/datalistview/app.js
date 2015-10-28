@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     var app = require('../../lib/app');
     var model = require('./model');
 
-    require('../../plugins/datalistview/module');
+    require('../../widgets/datalistview/module');
 
     app.page.dataListView = function () {
         var tpl = $("#dataListViewTpl").html();
