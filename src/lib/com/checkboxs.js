@@ -32,7 +32,8 @@ define(function(require, exports, module) {
             if (jQuery().uniform) {
                 this.dom.find("input").uniform();
             }
-        }
+        };
+
         this.checkAll = function() {
             var els = this.dom.find("input");
             els.prop("checked", true);
@@ -41,7 +42,8 @@ define(function(require, exports, module) {
                 $.uniform.update(els);
             }
 
-        }
+        };
+
         this.uncheckAll = function() {
             var els = this.dom.find("input");
             els.prop("checked", false);
@@ -49,7 +51,7 @@ define(function(require, exports, module) {
             if (jQuery().uniform) {
                 $.uniform.update(els);
             }
-        }
+        };
     }
 
 
@@ -58,6 +60,6 @@ define(function(require, exports, module) {
         obj.init(seletor, options);
 
         return obj;
-    }
+    };
 
 });

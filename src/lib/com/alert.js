@@ -10,14 +10,14 @@ define(function(require, exports, module) {
     var g = window;
 
     function Alert() {
-        this.show = function(info, type) {
+        this.show = function(info, _type) {
 
-            var type = type || "success";
+            var type = _type || "success";
             var obj = $(".global-message").length > 0 ?
                 $(".global-message").html(info).removeClass().addClass("global-message " + type) :
                 $('<div class="global-message ' + type + '">' + info + '</div>');
 
-            //在Modal中显示消息 
+            //在Modal中显示消息
             var visibleModal = false;
             $(".modal").each(function() {
                 if ($(this).is(":visible") && (type === "error" || type === "warning")) {
@@ -29,7 +29,7 @@ define(function(require, exports, module) {
             if (visibleModal) {
                 return this;
             }
-            
+
             //在页面顶部显示
             $('body').append(obj);
             var margin = obj.outerWidth() / 2;
@@ -41,13 +41,13 @@ define(function(require, exports, module) {
             }, 3000);
 
             return this;
-        }
+        };
     }
 
     g[PagurianAlias].com.alert = function(info, type) {
         var obj = new Alert();
         obj.show(info, type);
         return obj;
-    }
+    };
 
 });

@@ -19,6 +19,7 @@ define(function(require, exports, module) {
     require('./com/dialog');
     require('./com/select');
 
+    require('./tool/tool');
     require('./tool/url');
     require('./tool/str');
 

@@ -6,34 +6,74 @@
  */
 define(function(require, exports, module) {
 
+    function isArray(o) {
+        return Object.prototype.toString.call(o) == "[object Array]";
+    }
+
+    function isObject(o) {
+        return Object.prototype.toString.call(o) == "[object Object]";
+    }
+
     function arrayToObject(arr) {
 
-
-        if (Object.prototype.toString.call(arr) == "[object Object]") {
+        if (isObject(arr)) {
             return arr;
         }
+        var obj = {},
+            format_obj = {};
 
-        var obj = {};
         for (var i = 0; i < arr.length; i++) {
+            if (obj[arr[i].name]) {
+                var _t = obj[arr[i].name];
+                if (!isArray(obj[arr[i].name])) {
+                    obj[arr[i].name] = [_t];
+                }
+                obj[arr[i].name].push(arr[i].value);
+                continue;
+            }
+            if (arr[i].type === "array") {
+                obj[arr[i].name] = [arr[i].value];
+                continue;
+            }
+            obj[arr[i].name] = arr[i].value;
+        }
+
+        for (var k in obj) {
 
             //把"带有."的属性名转化为对象
-            var a = arr[i].name.split(".");
-            var _value = arr[i].value;
-
+            var a = k.split(".");
+            var _value = obj[k];
             if (typeof _value === "string") {
                 _value = $.trim(_value);
             }
 
             if (a.length > 1) {
-                obj[a[0]] = obj[a[0]] || {};
-                obj[a[0]][a[1]] = _value;
+
+                if (isArray(_value)) {
+
+                    format_obj[a[0]] = format_obj[a[0]] || [];
+
+                    for (var j = 0, _v; j < _value.length; j++) {
+                        _v = {};
+                        _v[a[1]] = _value[j];
+                        format_obj[a[0]].push(_v);
+                    }
+
+                    continue;
+                }
+
+                format_obj[a[0]] = format_obj[a[0]] || {};
+                format_obj[a[0]][a[1]] = _value;
+
                 continue;
             }
-
-            obj[arr[i].name] = _value;
+            format_obj[k] = _value;
         }
-        return obj;
+
+        return format_obj;
+
     }
+
 
 
     var ajax = {
@@ -45,24 +85,26 @@ define(function(require, exports, module) {
 
             var i;
             this.options.data = [];
-            if (Object.prototype.toString.call(params) == "[object Array]") {
+
+            if (isArray(params)) {
+
                 for (i = 0; i < params.length; i++) {
                     if (type == "get") {
                         params[i].value = encodeURIComponent(params[i].value);
                     }
-
                     this.options.data.push(params[i]);
                 }
+
             } else {
 
-
                 for (i in params) {
+
                     if (typeof params[i] === "function") {
                         continue;
                     }
 
                     //如果是一个数组的，就设置多个值
-                    if (typeof params[i] === "object") {
+                    if (isArray(params[i])) {
                         for (var j = 0; j < params[i].length; j++) {
                             this.options.data.push({
                                 "name": i,
@@ -71,36 +113,35 @@ define(function(require, exports, module) {
                         }
                         continue;
                     }
+
                     this.options.data.push({
                         name: i,
                         value: (type === "get") ? encodeURIComponent(params[i]) : params[i]
                     });
                 }
-
-
             }
 
-            /*this.options.data.push({
-                name: "_",
-                value: '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase()
-            });
-            */
+            if (type === "get") {
+                this.options.data.push({
+                    name: "_ts",
+                    value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase()
+                });
+            }
 
             return this;
 
         },
-        send: function(type, url, params, callback, options) {
+        send: function(type, url, params, callback) {
 
             this.init(type, params);
-            options = options || {};
-            var data = this.options.data;
 
-            var ajaxOptions = {
-                url: pagurian.path.api + url + ".json?_ts=" + "_" + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
+            var data = this.options.data;
+            var options = {
+                url: pagurian.path.api + url + ".json",
                 type: type || "get",
-                dataType: options.dataType || "json",
+                dataType: "json",
                 data: data,
-                timeout: 20000,
+                timeout: 30000,
                 success: function(data, textStatus, jqXHR) {
                     if ("function" == typeof callback) {
                         callback(data, textStatus, jqXHR);
@@ -121,10 +162,10 @@ define(function(require, exports, module) {
                             data[v] = jqXHR[v];
                         }
                     }
+
                     if ("function" == typeof callback) {
                         callback({
                             code: jqXHR.status,
-                            message: textStatus,
                             result: data
                         });
                     }
@@ -132,12 +173,14 @@ define(function(require, exports, module) {
             };
 
             if (this.bundle) {
-                ajaxOptions.contentType = "application/json";
+
+                options.contentType = "application/json";
                 if (type == "post" || type == "put" || type == "patch") {
                     data = $.toJSON({
                         data: arrayToObject(data)
                     });
                 }
+
             }
 
             if (type == "delete") {
@@ -147,22 +190,23 @@ define(function(require, exports, module) {
                     p += split + data[i].name + "=" + data[i].value;
                     split = "&";
                 }
+
                 if (p) {
-                    ajaxOptions.url += p;
+                    options.url += p;
                 }
             }
 
-            ajaxOptions.data = data;
+            options.data = data;
 
-            $.ajax(ajaxOptions);
+            $.ajax(options);
+
             return this;
-        },
-        request: function(type, url, params, callback, options) {
 
-            this.send(type, url, params, callback, options);
+        },
+        request: function(type, url, params, callback) {
+            this.send(type, url, params, callback);
             return this;
         }
-
     };
 
     module.exports = ajax;

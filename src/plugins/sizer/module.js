@@ -207,7 +207,6 @@ define(function (require, exports, module) {
                         o.options.callbackOption && o.options.callbackOption(_data, isSelect);
                     }
 
-
                     //去重
                     function uniqueDatas(attr) {
                         var _o = {}, _attr = [];

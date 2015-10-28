@@ -58,22 +58,30 @@ define(function(require, exports, module) {
             });
         }
 
-
+        this.language = {
+            zh_CN: {
+                title: "提示信息",
+                btn_submit: "确定",
+                btn_cancel: "取消",
+                body: "你好，我是一个模式对话框。"
+            },
+            en_US: {
+                title: 'Title',
+                btn_submit: "Confirm",
+                btn_cancel: "Cancel",
+                body: "Hello, I am a dialog ."
+            }
+        };
         this.init = function(seletor, options) {
-
-
 
             var modal = this;
 
 
 
             //初始化模版
-            this.tpl = $p.tpl(template, $.extend({
-                "title": "提示信息",
-                "btn_submit": "确定",
-                "btn_cancel": "取消",
-                "body": "你好，我是一个模式对话框。"
-            }, options));
+            this.tpl = $p.tpl(template, $.extend(this.language[$p.language || "zh_CN"], options));
+
+
 
             $("body").append(this.tpl);
             var form = $("#modal" + _id + " form");

@@ -18,7 +18,7 @@ define(function(require, exports, module) {
                 elements.append("<option value='" + dataList[i].id + "' " + selected + ">" + dataList[i].name + "</option>");
             }
             return this;
-        }
+        };
     }
 
     g[PagurianAlias].com.select = function(seletor, options) {
@@ -27,5 +27,5 @@ define(function(require, exports, module) {
         obj.init(seletor, options);
         return obj;
 
-    }
+    };
 });
