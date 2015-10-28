@@ -27,7 +27,7 @@
     "menu": [
         {
             "name": "theme",
-            "title": "主题",
+            "title": "基础UI",
             "icon": "fa fa-picture-o",
             "items": [
                 {
@@ -41,15 +41,7 @@
                     "title": "按钮 Button",
                     "url": "theme-buttons.html",
                     "active": 0
-                }
-            ]
-        },
-        {
-            "name": "com",
-            "title": "组件",
-            "icon": "fa fa-briefcase",
-            "items": [
-                {
+                },{
                     "name": "form",
                     "title": "表单 Form",
                     "url": "com-form.html",
@@ -82,6 +74,24 @@
             ]
         },
         {
+            "name": "com",
+            "title": "组件",
+            "icon": "fa fa-briefcase",
+            "items": [
+                {
+                    "name": "sizer",
+                    "title": "筛选器 Sizer",
+                    "url": "sizer-multiple.html"
+                },
+                {
+                    "name": "dataListView",
+                    "title": "数据列表 DataListView",
+                    "url": "datalistview.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
             "name": "plugin",
             "title": "插件",
             "icon": "fa fa-puzzle-piece",
@@ -90,12 +100,6 @@
                     "name": "dataTables",
                     "title": "DataTables",
                     "url": "datatable.html",
-                    "active": 0
-                },
-                {
-                    "name": "dataListView",
-                    "title": "DataListView",
-                    "url": "datalistview.html",
                     "active": 0
                 },
                 {
@@ -108,12 +112,8 @@
                     "name": "datepicker",
                     "title": "Date Pickers",
                     "url": "datepicker.html"
-                },
-                {
-                    "name": "sizer",
-                    "title": "筛选器 Sizer",
-                    "url": "sizer-multiple.html"
                 }
+
             ]
         },
         {
