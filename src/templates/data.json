@@ -17,6 +17,7 @@
         "datalistview": "DataListView",
         "datepicker": "Date Pickers",
         "sizer": "筛选器",
+        "summary":"汇总面板",
         "echarts": "Echarts",
         "ckeditor": "CKEditor",
         "catalogue": "目录设计",
@@ -87,6 +88,12 @@
                     "name": "dataListView",
                     "title": "数据列表 DataListView",
                     "url": "datalistview.html",
+                    "active": 0
+                },
+                {
+                    "name": "summary",
+                    "title": "汇总面板 Summary",
+                    "url": "summary.html",
                     "active": 0
                 }
             ]

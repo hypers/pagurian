@@ -3,5 +3,6 @@ define({
     user: "user",
     succeed: "succeed",
     dataListData:"datalistdata",
-    sizerData:"sizerdata"
+    sizerData:"sizerdata",
+    summaryData:"summaryData"
 });
