@@ -30,7 +30,7 @@
 
 
             <div class="tabs-wrap">
-               <ul  class="nav nav-tabs">
+                <ul  class="nav nav-tabs">
                     <li class="active">
                         <a href="echarts-line.html" >曲线图 </a>
                     </li>
@@ -45,6 +45,9 @@
                     </li>
                     <li >
                         <a href="echarts-map.html" >地图</a>
+                    </li>
+                    <li >
+                        <a href="echarts-event.html" >自定义事件</a>
                     </li>
                 </ul>
             </div>
@@ -122,7 +125,7 @@ var option = {
 
 <script type="text/javascript">
 
-    pagurian.call("modules/echarts/app", function(app) {
+    pagurian.call(["modules/echarts/app","plugins/echarts/loader"], function(app) {
 		app.page.echarts_line();
 	});
 

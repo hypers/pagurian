@@ -1,7 +1,8 @@
 define(function(require, exports, module) {
 
     //直接在页面中引入,因为Grunt uglify 执行太慢了
-    //require('./js/2.0.0/echarts-plain-map');
+    //require("plugins/echarts/loader"); //基础包（不含map）
+    //require("plugins/echarts/loader-map"); //完整包
 
     var g = window;
     var locale = {},
@@ -66,6 +67,16 @@ define(function(require, exports, module) {
 
             return this;
         };
+
+        /**
+         * 外部接口绑定事件
+         * @param {Object} eventName 事件名称
+         * @param {Object} eventListener 事件响应函数
+         */
+        this.on = function(eventName,eventListener){
+            this.chart.on(eventName,eventListener);
+            return this;
+        }
     }
 
     g[PagurianAlias].plugin.echarts = function(seletor, options) {

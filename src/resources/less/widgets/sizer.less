@@ -14,7 +14,7 @@
         border: 1px solid @B500;
         .pos(a);
         .d-n;
-        top: 35px;
+        top: 34px;
         background: #ffffff;
         z-index: 99;
     }
@@ -189,6 +189,8 @@
     &.@{ns}open {
         .@{ns}btn {
             border-color: @B500;
+            z-index: 100;
+            border-bottom: 0px none;
         }
         .@{ns}select-panel {
             .d-b;
@@ -199,7 +201,11 @@
 //sizer按钮
 .@{ns}btn {
     .pos(r);
-    padding: 5px 36px 4.5px 18px;
+    padding: 6px 36px 3.5px 18px;
+
+    &:hover{
+        border-color: @B500;
+    }
 
     .@{ns}btn-text {
         max-width: 74px;
@@ -209,7 +215,7 @@
 
     i {
         .pos(a);
-        top: 8px;
+        top: 10px;
         right: 16px;
     }
 }
