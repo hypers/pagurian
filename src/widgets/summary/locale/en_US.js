@@ -1,3 +1,6 @@
 define({
-    "search": 'Enter a query field'
+    "maxNum": 'Most can choose {0} target',
+    "resetDefault": "Reset",
+    "btnSubmit":"Submit",
+    "btnCancel":"Cancel"
 });

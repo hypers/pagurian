@@ -1,16 +1,25 @@
 @charset "utf-8";
 @import "../functions";
 
-@ns: summary-;
+@ns-sum: summary-;
 @rate-reduce: #c40707;
 @rate-add: #1b9451;
+@sum-min-height: 142px;
 
-.@{ns}wrap {
+.@{ns-sum}wrap {
     width: 100%;
     .pos(r);
+    min-height: @sum-min-height;
+    background: @B050;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
 }
 
-.@{ns}ul {
+.@{ns-sum}div-ul {
     .d-b;
     width: 100%;
     background: @B050;
@@ -20,89 +29,91 @@
     .clearfix;
 
     &.li1 {
-        li {
+        .@{ns-sum}div-li {
             width: 100%;
         }
     }
 
     &.li2 {
-        li {
+        .@{ns-sum}div-li {
             width: 50%;
         }
     }
 
     &.li3 {
-        li {
+        .@{ns-sum}div-li {
             width: 33.3333333%;
         }
     }
 
     &.li4 {
-        li {
+        .@{ns-sum}div-li {
             width: 25%;
         }
     }
 
     &.li5 {
-        li {
+        .@{ns-sum}div-li {
             width: 20%;
         }
     }
+
+    &.li6 {
+        .@{ns-sum}div-li {
+            width: 16.66666667%;
+        }
+    }
+
+    &.li7 {
+        .@{ns-sum}div-li {
+            width: 14.2857%;
+        }
+    }
+
+    &.li8 {
+        .@{ns-sum}div-li {
+            width: 12.5%;
+        }
+    }
+
+    &.li9 {
+        .@{ns-sum}div-li {
+            width: 11.1111111%;
+        }
+    }
+
+    &.li10 {
+        .@{ns-sum}div-li {
+            width: 10%;
+        }
+    }
 }
 
-.@{ns}li {
-    min-height: 135px;
+.@{ns-sum}div-li {
+    min-height: @sum-min-height;
     padding: 18px;
     .fl;
+    height: 100%;
+    .pos(r);
 
-    &:hover{
+    &:hover {
         background: @B200;
     }
 
-    [class^="@{ns}span"] {
+    ul, li {
+        width: 100%;
         .d-b;
         cursor: default;
-    }
-
-    .@{ns}span-title {
-        font-size: 16px;
-        .l-h(18px);
-        padding-bottom: 19px;
-        color: @B600;
-    }
-
-    .@{ns}span-value {
-        font-size: 30px;
-        margin: 20px 0px 5px;
-        color: @H500;
-        font-weight: 300;
-    }
-
-    .@{ns}span-rate {
-        font-size: 14px;
-
-        &.add {
-            color: @rate-add;
-        }
-
-        &.reduce {
-            color: @rate-reduce;
-        }
-
-        i {
-            .font-wb;
-            font-family: inherit;
-            font-style: normal;
-        }
+        word-break: break-all;
     }
 }
 
-.@{ns}sizer-wrap{
+.@{ns-sum}setting-wrap {
     .pos(a);
     right: 10px;
-    top:18px;
+    top: 18px;
 
-    .@{ns}sizer-setting{
+    .@{ns-sum}setting-icon {
         color: @B600;
         width: 16px;
         height: 16px;
@@ -110,14 +121,111 @@
         display: block;
         line-height: 16px;
 
-        i{
+        i {
             line-height: 16px;
             width: 16px;
             text-align: center;
         }
 
-        &:hover{
-          color: @B900;
+        &:hover {
+            color: @B900;
         }
+    }
+}
+
+.@{ns-sum}setting-panel {
+    .pos(a);
+    top: 23px;
+    right: -9px;
+    .d-n;
+
+    &.open {
+        .d-b;
+    }
+
+    .@{ns-sum}setting-panel-arrows {
+        .d-b;
+        width: 14px;
+        height: 7px;
+        background: url("img/arrow-top.png");
+        .pos(a);
+        top: -6px;
+        right: 10px;
+        z-index: 9;
+    }
+
+    .@{ns-sum}setting-panel-body {
+        width: 500px;
+        min-height: 188px;
+        overflow-y: auto;
+        padding: 18px;
+        background: white;
+        border: 1px solid @B300;
+        border-bottom: none;
+    }
+
+    .@{ns-sum}setting-panel-footer {
+        background: @B050;
+        padding: 18px;
+        .tr;
+        border: 1px solid @B300;
+        border-top: none;
+    }
+}
+
+.@{ns-sum}setting-panel-body {
+    .@{ns-sum}setting-panel-text {
+        color: @B600;
+        .clearfix;
+    }
+
+    .@{ns-sum}reset {
+        .fr;
+    }
+}
+
+.@{ns-sum}setting-ul {
+    .clearfix;
+
+    .@{ns-sum}setting-li {
+        .fl;
+        width: 222px;
+        margin-top: 6px;
+
+        &.mr {
+            margin-right: 18px;
+        }
+    }
+}
+
+/***
+Custom Class
+***/
+.@{ns-sum}span-title {
+    font-size: 16px;
+    //line-height: 18px;
+    color: @B600;
+}
+
+.@{ns-sum}span-value {
+    font-size: 30px;
+    margin: 20px 0px 5px;
+    color: @H500;
+    font-weight: 300;
+}
+
+.@{ns-sum}span-rate {
+    font-size: 14px;
+    word-wrap: break-word;
+    text-align: right;
+    display: block;
+    padding-right: 20px;
+
+    &.add {
+        color: @rate-add;
+    }
+
+    &.reduce {
+        color: @rate-reduce;
     }
 }

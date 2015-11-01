@@ -1,8 +1,8 @@
 @charset "utf-8";
 @import "../functions";
 
-@ns: sizer-;
-.@{ns}wrap {
+@ns_sizzer: sizer-;
+.@{ns_sizzer}wrap {
     display: inline-block;
     .pos(r);
     //关闭状态
@@ -10,7 +10,7 @@
     @search-h: 36px; //搜索框的宽度
     @select-panel-w: 588px;
 
-    .@{ns}select-panel {
+    .@{ns_sizzer}select-panel {
         border: 1px solid @B500;
         .pos(a);
         .d-n;
@@ -18,23 +18,23 @@
         background: #ffffff;
         z-index: 99;
     }
-    .@{ns}top {
+    .@{ns_sizzer}top {
         padding: @pd;
     }
-    .@{ns}select-panel {
-        .@{ns}search-wrap {
+    .@{ns_sizzer}select-panel {
+        .@{ns_sizzer}search-wrap {
             .clearfix;
         }
 
-        &.@{ns}multiple {
-            .@{ns}top {
+        &.@{ns_sizzer}multiple {
+            .@{ns_sizzer}top {
                 padding: 18px 18px 10px;
             }
         }
     }
 
     //选择面板-搜索部分
-    .@{ns}search-wrap {
+    .@{ns_sizzer}search-wrap {
 
         .input-search {
             .d-ib;
@@ -50,7 +50,7 @@
             }
         }
 
-        .@{ns}prompt {
+        .@{ns_sizzer}prompt {
             .l-h(@search-h);
             .fl;
             padding-left: 15px;
@@ -58,14 +58,14 @@
             color: @B600;
         }
 
-        .@{ns}btn-group {
+        .@{ns_sizzer}btn-group {
             .fr;
             .l-h(@search-h);
         }
     }
 
     //选择面板-选项列表部分
-    .@{ns}list-wrap {
+    .@{ns_sizzer}list-wrap {
         margin-top: 10px;
         width: @select-panel-w -@pd*2;
         .pos(r);
@@ -79,20 +79,20 @@
         }
 
         &.loading {
-            .@{ns}loading {
+            .@{ns_sizzer}loading {
                 visibility: visible;
             }
 
-            @{ns}data-list {
+            @{ns_sizzer}data-list {
                 visibility: hidden;
             }
         }
 
-        .@{ns}loading, .@{ns}empty, @{ns}-list-body {
+        .@{ns_sizzer}loading, .@{ns_sizzer}empty, @{ns_sizzer}-list-body {
             width: 100%;
         }
 
-        .@{ns}loading, .@{ns}empty {
+        .@{ns_sizzer}loading, .@{ns_sizzer}empty {
             text-align: center;
             .pos(a);
             top: 50%;
@@ -100,18 +100,18 @@
             margin-top: -11px;
         }
 
-        .@{ns}empty {
+        .@{ns_sizzer}empty {
             i {
                 color: @H500;
                 font-size: 16px !important;
             }
         }
 
-        .@{ns}loading {
+        .@{ns_sizzer}loading {
             visibility: hidden;
         }
 
-        .@{ns}data-list {
+        .@{ns_sizzer}data-list {
             margin: 0;
             padding: 0;
             visibility: visible;
@@ -124,11 +124,11 @@
         }
     }
 
-    .@{ns}data-list {
+    .@{ns_sizzer}data-list {
         .clearfix;
         @li-w: 130px;
         @li-pd: 10px;
-        li.@{ns}data-list-li {
+        li.@{ns_sizzer}data-list-li {
             .fl;
             width: 130px;
             margin: 1px 10px 0 0;
@@ -167,39 +167,39 @@
                 }
             }
 
-            .@{ns}data-btn {
+            .@{ns_sizzer}data-btn {
                 width: @li-w - @li-pd*2;
                 text-align: left;
             }
         }
-        .@{ns}data-none {
+        .@{ns_sizzer}data-none {
             color: @B600;
             .fl;
         }
     }
 
     //多选筛选器底部
-    .@{ns}footer {
+    .@{ns_sizzer}footer {
         background: @B050;
         padding: 18px;
         .tr;
     }
 
     //打开状态
-    &.@{ns}open {
-        .@{ns}btn {
+    &.@{ns_sizzer}open {
+        .@{ns_sizzer}btn {
             border-color: @B500;
             z-index: 100;
             border-bottom: 0px none;
         }
-        .@{ns}select-panel {
+        .@{ns_sizzer}select-panel {
             .d-b;
         }
     }
 }
 
 //sizer按钮
-.@{ns}btn {
+.@{ns_sizzer}btn {
     .pos(r);
     padding: 6px 36px 3.5px 18px;
 
@@ -207,7 +207,7 @@
         border-color: @B500;
     }
 
-    .@{ns}btn-text {
+    .@{ns_sizzer}btn-text {
         max-width: 74px;
         .ellipsis-basic;
         .d-ib;

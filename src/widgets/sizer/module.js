@@ -89,8 +89,8 @@ define(function (require, exports, module) {
                     o.isFirstClick = true;//是否为第一次点击
                     o.isFirstSearch = true;//是否为第一次搜索
                 }
-                bindEvent(selector, options);
-                drawDom(selector, options);
+                bindEvent(selector);
+                drawDom(selector);
                 o.promtText = $("#" + o.sizerName).find("button").attr("title");
                 if (o.options.isExpand) {
                     o.expandPanel();
@@ -101,7 +101,7 @@ define(function (require, exports, module) {
             };
 
             //绘制组件
-            var drawDom = function (selector, options) {
+            var drawDom = function (selector) {
                 var _sizerWrap = '',
                     _sizerSelectPanel = '';
                 _sizerWrap += '<div id="' + o.sizerName + '"class="sizer-wrap ' + o.options.class;
@@ -148,14 +148,14 @@ define(function (require, exports, module) {
                 $(selector).after(_sizerSelectPanel);
                 $("#" + _nameStr + '_select_panel' + _id).css(o.options.position);
 
-            }
+            };
 
             /**
              * 绑定事件
              * @param selector
              * @param options
              */
-            var bindEvent = function (selector, options) {
+            var bindEvent = function (selector) {
                 var _isMultiple = o.options.isMultiple;
                 $(document).delegate(selector, 'click', function () {
                     o.expandPanel();
@@ -181,7 +181,6 @@ define(function (require, exports, module) {
                             $(this).addClass("selected");
                             _selectDatas.push(_data);
                         }
-                        ;
                         singleSetText(_data[_dataName]);
                         o.selectDatas = _selectDatas;
                         o.options.callbackOption && o.options.callbackOption(_data, isSelect);
@@ -269,12 +268,12 @@ define(function (require, exports, module) {
                     }
                     word = $.trim(word);
                     for (var i = 0, len = _datas.length; i < len; i++) {
-                        if (!(_datas[i][o.options.dataMapping["name"]].indexOf(word) > -1)) {
+                        if (_datas[i][o.options.dataMapping.name].indexOf(word) <= -1) {
                             continue;
                         }
                         _tempDatas.push(_datas[i]);
                         for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                            if (_datas[i][o.options.dataMapping["value"]] === _selectDatas[j][o.options.dataMapping["value"]]) {
+                            if (_datas[i][o.options.dataMapping.value] === _selectDatas[j][o.options.dataMapping.value]) {
                                 _tempSelectDatas.push(_datas[i]);
                             }
                         }
@@ -313,7 +312,7 @@ define(function (require, exports, module) {
                         closePanel();
                     });
                 }
-            }
+            };
 
             /**
              * 关闭面板
@@ -347,7 +346,7 @@ define(function (require, exports, module) {
              */
             var setData = function (allDatas, chooseDatas) {
                 var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
-                if (!allDatas || allDatas.length == 0) {
+                if (!allDatas || allDatas.length === 0) {
                     var _empty = '<div class="sizer-empty">' + oLanguage.empty + '</div>';
                     $dataList.append(_empty);
                     return;
@@ -358,17 +357,17 @@ define(function (require, exports, module) {
                     //选中默认选中项
                     if (chooseDatas) {
                         for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
-                            if (allDatas[i][o.options.dataMapping["value"]] === chooseDatas[j][o.options.dataMapping["value"]]) {
+                            if (allDatas[i][o.options.dataMapping.value] === chooseDatas[j][o.options.dataMapping.value]) {
                                 _tpl += 'selected ';
                             }
                         }
                     }
                     _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
-                    _tpl += 'title="' + allDatas[i][o.options.dataMapping["name"]] + '" data-value="' + allDatas[i][o.options.dataMapping["value"]] + '">';
-                    _tpl += '<a href="javascript:;">' + allDatas[i][o.options.dataMapping["name"]] + '</a></li>';
+                    _tpl += 'title="' + allDatas[i][o.options.dataMapping.name] + '" data-value="' + allDatas[i][o.options.dataMapping.value] + '">';
+                    _tpl += '<a href="javascript:;">' + allDatas[i][o.options.dataMapping.name] + '</a></li>';
                     $dataList.append(_tpl);
                 }
-            }
+            };
 
             /**
              * 打开面板
@@ -379,7 +378,11 @@ define(function (require, exports, module) {
                 //关闭所有已展开的面板
                 $('[id^="' + _nameStr + '"].sizer-wrap').removeClass("sizer-open");
                 //判断是否展开如果展开则关闭
-                _isExpand ? $sizerWrap.removeClass("sizer-open") : $sizerWrap.addClass("sizer-open");
+                if (_isExpand) {
+                    $sizerWrap.removeClass("sizer-open");
+                } else {
+                    $sizerWrap.addClass("sizer-open");
+                }
                 //打开面板时执行的方法
                 if (!_isExpand) {
                     if (o.needLoad) {
@@ -420,7 +423,7 @@ define(function (require, exports, module) {
                     singleSetText(o.promtText);
                 }
                 this.loadData();
-            }
+            };
 
             init();
         }
@@ -434,6 +437,6 @@ define(function (require, exports, module) {
         g[PagurianAlias].plugin.sizer = function (seletor, options, chooseDatas) {
             var sizer = new Sizer(seletor, options, chooseDatas);
             return sizer;
-        }
+        };
     }
 );
