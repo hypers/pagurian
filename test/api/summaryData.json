@@ -5,54 +5,48 @@
         "pagesize": 30,
         "total": 200
     },
-    "result":[
+    "result": [
         {
-            "cName":"showCounts",
-            "value":3423498018,
-            "increase":56521,
-            "rate":0.234354
+            "cName": "clickCounts",
+            "value": 321321435,
+            "increase": 232134,
+            "rate": 0.4324
         },
         {
-            "cName":"clickCounts",
-            "value":321321435,
-            "increase":232134,
-            "rate":0.4324
+            "cName": "viewCounts",
+            "value": 43124234,
+            "increase": 433213265,
+            "rate": 0.1342
         },
         {
-            "cName":"viewCounts",
-            "value":43124234,
-            "increase":433213265,
-            "rate":0.1342
+            "cName": "pageView",
+            "value": 31231,
+            "increase": 34545,
+            "rate": -0.341
         },
         {
-            "cName":"pageView",
-            "value":4123412312312341,
-            "increase":34545,
-            "rate":-0.341
+            "cName": "bounceRate",
+            "value": 2323131,
+            "increase": 43214123,
+            "rate": 0.43124
         },
         {
-            "cName":"bounceRate",
-            "value":4312453213456,
-            "increase":43214123,
-            "rate":0.43124
+            "cName": "showCounts",
+            "value": 65673734,
+            "increase": "213213",
+            "rate": -0.43124213
         },
         {
-            "cName":"showCounts",
-            "value":65673734,
-            "increase":"41433211432132312414332114321323124143321143213231241433211432132312",
-            "rate":-0.43124213
+            "cName": "avgDayView",
+            "value": 4312412354,
+            "increase": 43242134,
+            "rate": 0.4132421
         },
         {
-            "cName":"avgDayView",
-            "value":4312412354,
-            "increase":43242134,
-            "rate":0.4132421
-        },
-        {
-            "cName":"avgViewDeep",
-            "value":32435,
-            "increase":432151354,
-            "rate":0.412341
+            "cName": "avgViewDeep",
+            "value": 32435,
+            "increase": 432151354,
+            "rate": 0.412341
         }
     ]
 }

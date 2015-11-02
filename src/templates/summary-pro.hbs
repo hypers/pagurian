@@ -1,0 +1,68 @@
+{{>fixtures/doctype}}
+<head>
+    <title> {{data.page.summary}}</title>
+    {{>fixtures/head}}
+</head>
+<body>
+
+    {{>fixtures/header}}
+
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container datalistview-container">
+
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.summary}}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="summary.html">基础</a>
+                        </li>
+                        <li class="active">
+                            <a href="summary-pro.html">高级</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div id="summaryTest" class="summary-wrap">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    {{>fixtures/footer}}
+
+    <script type="text/javascript">
+        pagurian.call("modules/summary/app", function (app) {
+            app.page.summaryPro();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+</html>

@@ -100,6 +100,14 @@
         background: @B200;
     }
 
+    &.choose {
+        background: @B200;
+
+        .@{ns-sum}triangle {
+            .d-b;
+        }
+    }
+
     ul, li {
         width: 100%;
         .d-b;
@@ -137,6 +145,7 @@
     .pos(a);
     top: 23px;
     right: -9px;
+    z-index: 9;
     .d-n;
 
     &.open {
@@ -196,6 +205,16 @@
             margin-right: 18px;
         }
     }
+}
+
+.@{ns-sum}triangle {
+    .triangle-t(@w:14px,@color:@B050);
+    bottom: 0px;
+    .pos(a);
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    display: none;
 }
 
 /***

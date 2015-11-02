@@ -52,13 +52,56 @@ define(function (require, exports, module) {
             this.maxNum = 0;
             //最小展示数
             this.minNum = 0;
+            //是否可切换
+            this.canChoose = false;
             //展示的列
             this.showColumns = [];
             //临时存储需要展示的列
             this._showColumns = [];
             //全部数据
             this.allDatas = [];
-            //选项
+            /**
+             * 选项
+             *{
+                //数据源data cName的key
+                "cName": "cName",
+                //所有的行
+                "allRows": [{
+                    //dataName
+                    "dataName": "title",
+                    //是否为Title字段 默认填充列名
+                    "isTitle": true,
+                    //自定义class
+                    "klass": "summary-span-title",
+                    "tpl": "增长数:{0}" //模板填充,
+                    //key为datame的值 填充方法(优先级高于tpl)
+                    'render': function (data, full) {}
+                }],
+                //所有的列
+                "allColumns": [{
+                    //cName key默认为cName可在option中配置
+                    "cName": "showCounts",
+                    //title
+                    "title": "展示次数"
+                }],
+                //最大展示数
+                "maxNum": 5,
+                //最小展示数
+                "minNum": 1,
+                //可以选择
+                "canChoose":false,
+                //数据源
+                "dataSource": null,
+                //数据源的params
+                "dataParams": {},
+                //展开面板的回调
+                "callbackOpen": null,
+                //确定按钮的回调
+                "callbackSubmit": null,
+                //取消按钮的回调
+                "callbackCancel": null
+                }
+             */
             this.options = {
                 //数据源data cName的key
                 "cName": "cName",
@@ -70,16 +113,26 @@ define(function (require, exports, module) {
                 "maxNum": 5,
                 //最小展示数
                 "minNum": 1,
+                //可以切换
+                "canChoose": false,
                 //数据源
                 "dataSource": null,
                 //数据源的params
                 "dataParams": {},
                 //展开面板的回调
                 "callbackOpen": null,
-                //确定按钮的回调
+                /**
+                 * 确定按钮的回调
+                 * "callbackSubmit": function (showColumns, datas) {} //展示的列 全部数据
+                 */
                 "callbackSubmit": null,
                 //取消按钮的回调
-                "callbackCancel": null
+                "callbackCancel": null,
+                /**
+                 * 点击面板的回调
+                 * "callBackPanel"：function(_columnName, _columnData, _columnsData){}//点击的列名，当前列数据，所有数据
+                 */
+                "callBackPanel": null
             };
 
             /**
@@ -98,6 +151,7 @@ define(function (require, exports, module) {
                 _allRows = o.options.allRows;
                 o.maxNum = o.options.maxNum;
                 o.minNum = o.options.minNum;
+                o.canChoose = o.options.canChoose;
                 if (!isArray(_allColumns)) {
                     alert('Summary:[' + selector + '] allColumns不为正确的类型:[Array],请正确设置allColumns');
                     return;
@@ -109,16 +163,26 @@ define(function (require, exports, module) {
                     o.maxNum = _allColumns.length;
                     _showNum = _allColumns.length;
                 }
+                //设置展示的列
                 _cookieName = _nameStr + '.' + o.selectorStr;
 
-                var cookie = params.get(_cookieName);
-                if (!cookie) {
+                var cookieShowColumns = params.get(_cookieName);
+                if (!cookieShowColumns) {
                     for (i = 0; i < o.maxNum; i++) {
                         o.showColumns.push(_allColumns[i][o.options.cName]);
                     }
                     params.set(_cookieName, o.showColumns.join(","));
                 } else {
-                    o.showColumns = cookie.split(",");
+                    o.showColumns = cookieShowColumns.split(",");
+                }
+                //如果可以切换则设置已选择的列
+                if (o.canChoose) {
+                    var cookieChooseColumns = params.get(_cookieName + ".chooseColumns");
+                    if (!cookieChooseColumns) {
+                        o.chooseColumns = o.showColumns[0];
+                    } else {
+                        o.chooseColumns = cookieChooseColumns;
+                    }
                 }
 
                 bindEvent(selector, options);
@@ -206,23 +270,51 @@ define(function (require, exports, module) {
                     var checkNum = $selectCheckBoxes.length;
                     if (checkNum >= o.maxNum) {
                         $unselectCheckBoxes.attr("disabled", "disabled");
-                        if ($unselectCheckBoxes.uniform) {
-                            $unselectCheckBoxes.uniform.update();
+                        if ($.uniform) {
+                            $allCheckBoxes.uniform.update();
                         }
                     } else {
                         $allCheckBoxes.removeAttr("disabled");
-                        if ($unselectCheckBoxes.uniform) {
+                        if ($.uniform) {
                             $allCheckBoxes.uniform.update();
                         }
                     }
                     if (checkNum === o.minNum) {
                         $selectCheckBoxes.attr("disabled", "disabled");
+                        if ($.uniform) {
+                            $allCheckBoxes.uniform.update();
+                        }
                     }
                     o._showColumns = [];
                     $selectCheckBoxes.each(function () {
                         o._showColumns.push($(this).val());
                     });
                 });
+
+                /**
+                 * 面板点击回调
+                 */
+                if (o.options.callBackPanel) {
+                    $(document).delegate('.jsSummary' + _id + '_content', 'click', function () {
+                        var _columnName = $(this).data("name"),
+                            _columnData = {},
+                            _columnsData = o.allDatas;
+                        for (i in _columnsData) {
+                            if (_columnsData[i][o.options.cName] === _columnName) {
+                                _columnData = _columnsData[i];
+                                break;
+                            }
+                        }
+                        if (o.canChoose) {
+                            o.chooseColumns = _columnName;
+                            params.set(_cookieName + ".chooseColumns", o.chooseColumns);
+                            $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
+                            $(this).parent().addClass("choose");
+                        }
+                        o.options.callBackPanel && o.options.callBackPanel(_columnName, _columnData, _columnsData);
+                    });
+                }
+
             };
 
 
@@ -255,16 +347,22 @@ define(function (require, exports, module) {
                             _div_li_tpl += '<div class="summary-div-li">';
                             _div_li_tpl += '    <ul data-name="' + _allColumns[i].cName + '" class="jsSummary' + _id + '_content">';
                             for (var k = 0; k < _allRows.length; k++) {
-                                var _class = _allRows[k].class ? _allRows[k].class : "",
+                                var _class = _allRows[k].klass ? _allRows[k].klass : "",
                                     _text = _allRows[k].tpl ? _allRows[k].tpl.replace("{0}", "--") : "--";
                                 _text = _allRows[k].isTitle ? _allColumns[j].title : _text;
                                 _div_li_tpl += ' <li class="' + _class + '" data-name="' + _allRows[k].dataName + '">' + _text + '</li>';
                             }
                             _div_li_tpl += '    </ul>';
+                            if (o.canChoose) {
+                                _div_li_tpl += '<div class="summary-triangle"></div>';
+                            }
                             _div_li_tpl += '</div>';
                             obj.append(_div_li_tpl);
                         }
                     }
+                }
+                if (o.canChoose) {
+                    $('.jsSummary' + _id + '_content[data-name="' + o.chooseColumns + '"]').parent().addClass("choose");
                 }
                 adjustHeight();
             }
@@ -293,6 +391,9 @@ define(function (require, exports, module) {
                     $unselectCheckBoxes = obj.find('[type="checkbox"]:not(:checked)');
                 if ($selectCheckBoxes.length >= o.maxNum) {
                     $unselectCheckBoxes.attr("disabled", "disabled");
+                }
+                if ($selectCheckBoxes.length <= o.minNum) {
+                    $selectCheckBoxes.attr("disabled", "disabled");
                 }
                 var $checkboxes = obj.find('[type="checkbox"]');
                 if ($checkboxes.uniform) {
