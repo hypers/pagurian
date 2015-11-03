@@ -57,6 +57,7 @@ define(function(require, exports, module) {
 
 
     require('./jquery.validate');
+    require('./additional-methods');
     var locale = {};
 
     locale.zh_CN = require('./locale/zh_CN');

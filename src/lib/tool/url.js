@@ -14,7 +14,7 @@ define(function(require, exports, module) {
                 }
             }
             return null;
-        }
+        };
         this.format = function(url) {
             if (!url) {
                 return "";
@@ -23,14 +23,14 @@ define(function(require, exports, module) {
                 url = "http://" + url;
             }
             return url;
-        }
+        };
 
         this.forward = function(url) {
             setTimeout(function() {
                 window.location.href = url;
             }, 1000);
             return this;
-        }
+        };
 
         /**
          * [reload description]
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
         this.reload = function() {
             window.location.reload();
             return this;
-        }
+        };
 
         /**
          * [convertParams Object To URL Params]
@@ -65,7 +65,7 @@ define(function(require, exports, module) {
                 }
             }
             return str_params;
-        }
+        };
     }
 
 

@@ -141,7 +141,7 @@ define(function(require, exports, module) {
             if (typeof this.options.submit === "function") {
                 this.options.submit(form, data);
             }
-        }
+        };
 
     }
 
@@ -149,7 +149,7 @@ define(function(require, exports, module) {
         var form = new Form(seletor, options);
         form.init();
         return form;
-    }
+    };
 
 
 

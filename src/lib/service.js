@@ -9,24 +9,33 @@ define(function(require, exports, module) {
     var ajax = require('./core/ajax');
     var service = {
 
-        get: function(url, params, callback, options) {
-            this.request("get", url, params, callback, options);
-        },
-        post: function(url, params, callback, options) {
-            this.request("post", url, params, callback, options);
-        },
-        request: function(type, url, params, callback, options) {
+        get: function(url, params, callback) {
+            if ($.isArray(params)) {
 
-            if (!validateRequest(params)) {
-                return false;
+                params.push({
+                    name: "locale",
+                    value: $p.language
+                });
+            } else {
+                params.locale = $p.language;
             }
-            ajax.request(type, url + ".json", params, function(resp) {
-                var valid = validateRespone(resp);
 
+            this.request("get", url, params, callback);
+        },
+        post: function(url, params, callback) {
+            this.request("post", url, params, callback);
+        },
+        request: function(type, url, params, callback) {
+            validateRequest(params);
+
+            ajax.request(type, url, params, function(resp) {
+
+                var valid = validateRespone(resp);
                 if (typeof callback === "function") {
                     callback(resp, valid);
                 }
-            }, options);
+
+            });
         }
     };
 
@@ -40,27 +49,12 @@ define(function(require, exports, module) {
             return false;
         }
 
-        /**
-        - 200000     操作成功
-        - 200001     服务端验证-全局提示
-        - 200002     服务端验证-字段验证
-        - 200400     参数错误
-        - 200404     该页面不存在
-        - 200403     没有权限
-        - 200403.11  没有权限：密码更改而导致无权查看
-        - 200403.13  没有权限：管理员注销了当前用户
-        - 200403.17  没有权限：session失效
-        - 200403.18  没有权限：当前用户在别的终端登录，被注销
-        - 100500     出现异常
-        */
         switch (data.code) {
             case "200000":
                 return true;
-
             case "200001":
                 $p.com.alert(data.message, "warning");
                 return false;
-
             case "200002":
 
                 var fields = data.fields;
@@ -73,40 +67,45 @@ define(function(require, exports, module) {
 
                 }
                 return false;
-
             case "200403":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403);
                 return false;
 
             case "200403.11":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_11);
                 return false;
 
             case "200403.13":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_13);
                 return false;
 
             case "200403.17":
-                $p.com.alert($p.locale.exception, "warning");
-                return false;
+                window.location.reload();
+                break;
             case "200403.18":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_18);
+
                 return false;
 
             case "200404":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error404);
                 return false;
 
             case 404:
-                $p.com.alert($p.locale.exception, "error");
+                $p.com.alert($p.locale.handle_exception, "error");
                 return false;
 
             case "100500":
-                $p.com.alert($p.locale.exception, "warning");
+                $p.com.alert($p.locale.handle_exception, "warning");
                 return false;
 
             case 500:
-                $p.com.alert($p.locale.exception, "error");
+                $p.com.alert($p.locale.handle_exception, "error");
                 return false;
 
             case 400:
@@ -115,10 +114,10 @@ define(function(require, exports, module) {
 
             case 0:
                 if (data.result && data.result.statusText === "timeout") {
-                    $p.com.alert($p.locale.timeout, "error");
+                    $p.com.alert($p.locale.handle_timeout, "error");
                     return false;
                 }
-                $p.com.alert($p.locale.exception, "error");
+                $p.com.alert($p.locale.handle_exception, "error");
                 return false;
 
             default:
@@ -128,6 +127,7 @@ define(function(require, exports, module) {
         return true;
     }
 
-    module.exports = service;
+    service.validateRespone = validateRespone;
 
+    module.exports = service;
 });

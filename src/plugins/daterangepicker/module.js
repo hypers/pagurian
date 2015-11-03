@@ -29,16 +29,17 @@ define(function(require, exports, module) {
                 ranges: {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last Week': [moment().subtract('days', 6), moment()],
                     'Last Month': [moment().subtract('month', 1), moment()],
-                    'Last Three Month': [moment().subtract('month', 3), moment()],
-                    'The Past Six Month': [moment().subtract('month', 6), moment()]
+                    'Last 3 Months': [moment().subtract('month', 3), moment()],
+                    'Last 6 Months': [moment().subtract('month', 6), moment()]
                 },
                 locale: {
-                    applyLabel: 'Submit',
+                    applyLabel: 'Confirm',
+                    cancelLabel: 'Cancel',
                     fromLabel: 'From',
                     toLabel: 'To',
-                    customRangeLabel: 'Custom Range',
+                    customRangeLabel: 'Custom',
                     daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
                     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     firstDay: 1
@@ -47,7 +48,7 @@ define(function(require, exports, module) {
             zh_CN: {
                 opens: 'right',
                 format: 'YYYY-MM-DD',
-                textForamt: 'YYYY年MM月DD日',
+                textForamt: 'YYYY-MM-DD',
                 separator: ' -- ',
                 startDate: momentStartDate.format("YYYY-MM-DD"),
                 endDate: momentEndDate.format('YYYY-MM-DD'),

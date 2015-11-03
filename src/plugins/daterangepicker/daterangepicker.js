@@ -1,18 +1,18 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
     /**
-    * @version: 1.2
-    * @author: Dan Grossman http://www.dangrossman.info/
-    *
-    * @Improved by KeenThemes for Metronic Bootstrap 3.0
+     * @version: 1.2
+     * @author: Dan Grossman http://www.dangrossman.info/
+     *
+     * @Improved by KeenThemes for Metronic Bootstrap 3.0
 
-    * @date: 2013-07-25
-    * @copyright: Copyright (c) 2012-2013 Dan Grossman. All rights reserved.
-    * @license: Licensed under Apache License v2.0. See http://www.apache.org/licenses/LICENSE-2.0
-    * @website: http://www.improvely.com/
-    */
-    ! function($) {
+     * @date: 2013-07-25
+     * @copyright: Copyright (c) 2012-2013 Dan Grossman. All rights reserved.
+     * @license: Licensed under Apache License v2.0. See http://www.apache.org/licenses/LICENSE-2.0
+     * @website: http://www.improvely.com/
+     */
+    !function ($) {
 
-        var DateRangePicker = function(element, options, cb) {
+        var DateRangePicker = function (element, options, cb) {
             var hasOptions = typeof options == 'object';
             var localeObject;
 
@@ -39,6 +39,8 @@ define(function(require, exports, module) {
             this.format = 'MM/DD/YYYY';
             this.separator = ' - ';
 
+            this.inDialog = false;
+
             this.locale = {
                 applyLabel: 'Apply',
                 cancelLabel: 'Cancel',
@@ -51,7 +53,8 @@ define(function(require, exports, module) {
                 firstDay: 0
             };
 
-            this.cb = function() {};
+            this.cb = function () {
+            };
 
             //element that triggered the date range picker
             this.element = $(element);
@@ -72,7 +75,7 @@ define(function(require, exports, module) {
 
             if (hasOptions) {
                 if (typeof options.locale == 'object') {
-                    $.each(localeObject, function(property, value) {
+                    $.each(localeObject, function (property, value) {
                         localeObject[property] = options.locale[property] || value;
                     });
                 }
@@ -106,7 +109,13 @@ define(function(require, exports, module) {
                 '</div>' +
                 '</div>';
 
-            this.container = $(DRPTemplate).appendTo('body');
+            //判断是否在dialog中 如果在则添加到dialog
+            if (this.element.parents(".modal-dialog").length > 0) {
+                this.inDialog = true;
+                this.container = $(DRPTemplate).insertAfter(this.element.parents(".modal-dialog"));
+            } else {
+                this.container = $(DRPTemplate).appendTo('body');
+            }
 
             if (hasOptions) {
 
@@ -232,7 +241,7 @@ define(function(require, exports, module) {
 
             //apply CSS classes to buttons
             var c = this.container;
-            $.each(this.buttonClasses, function(idx, val) {
+            $.each(this.buttonClasses, function (idx, val) {
                 c.find('button').addClass(val);
             });
 
@@ -321,11 +330,11 @@ define(function(require, exports, module) {
 
             constructor: DateRangePicker,
 
-            mousedown: function(e) {
+            mousedown: function (e) {
                 e.stopPropagation();
             },
 
-            updateView: function() {
+            updateView: function () {
                 this.leftCalendar.month.month(this.startDate.month()).year(this.startDate.year());
                 this.rightCalendar.month.month(this.endDate.month()).year(this.endDate.year());
 
@@ -339,7 +348,7 @@ define(function(require, exports, module) {
                 }
             },
 
-            updateFromControl: function() {
+            updateFromControl: function () {
                 if (!this.element.is('input')) return;
                 if (!this.element.val().length) return;
 
@@ -357,12 +366,12 @@ define(function(require, exports, module) {
                 this.updateCalendars();
             },
 
-            notify: function() {
+            notify: function () {
                 this.updateView();
                 this.cb(this.startDate, this.endDate);
             },
 
-            move: function() {
+            move: function () {
                 var minWidth = $(this.container).find('.ranges').outerWidth();
                 if ($(this.container).find('.calendar').is(':visible')) {
                     var padding = 24; // FIXME: this works for the default styling, but isn't flexible
@@ -370,7 +379,7 @@ define(function(require, exports, module) {
                 }
                 if (this.opens == 'left') {
                     this.container.css({
-                        top: this.element.offset().top + this.element.outerHeight(),
+                        top: this.element.offset().top + this.element.outerHeight() - (this.inDialog ? $(document).scrollTop() : 0),
                         right: $(window).width() - this.element.offset().left - this.element.outerWidth(),
                         left: 'auto',
                         'min-width': minWidth
@@ -383,7 +392,7 @@ define(function(require, exports, module) {
                     }
                 } else {
                     this.container.css({
-                        top: this.element.offset().top + this.element.outerHeight(),
+                        top: this.element.offset().top + this.element.outerHeight() - (this.inDialog ? $(document).scrollTop() : 0),
                         left: this.element.offset().left,
                         right: 'auto',
                         'min-width': minWidth
@@ -397,7 +406,7 @@ define(function(require, exports, module) {
                 }
             },
 
-            show: function(e) {
+            show: function (e) {
                 this.container.show();
                 this.move();
 
@@ -413,7 +422,7 @@ define(function(require, exports, module) {
                 });
             },
 
-            hide: function(e) {
+            hide: function (e) {
                 this.container.hide();
 
                 if (!this.startDate.isSame(this.oldStartDate) || !this.endDate.isSame(this.oldEndDate))
@@ -428,7 +437,7 @@ define(function(require, exports, module) {
                 });
             },
 
-            enterRange: function(e) {
+            enterRange: function (e) {
                 var label = e.target.innerHTML;
                 if (label == this.locale.customRangeLabel) {
                     this.updateView();
@@ -439,12 +448,12 @@ define(function(require, exports, module) {
                 }
             },
 
-            showCalendars: function() {
+            showCalendars: function () {
                 this.container.find('.calendar').show();
                 this.move();
             },
 
-            updateInputText: function() {
+            updateInputText: function () {
                 var formatDate = this.startDate.format(this.textForamt) + this.separator + this.endDate.format(this.textForamt);
                 if (this.element.is('input')) {
                     this.element.val(formatDate);
@@ -453,7 +462,7 @@ define(function(require, exports, module) {
                 }
             },
 
-            clickRange: function(e) {
+            clickRange: function (e) {
                 var label = e.target.innerHTML;
                 if (label == this.locale.customRangeLabel) {
                     this.showCalendars();
@@ -479,7 +488,7 @@ define(function(require, exports, module) {
                 }
             },
 
-            clickPrev: function(e) {
+            clickPrev: function (e) {
                 var cal = $(e.target).parents('.calendar');
                 if (cal.hasClass('left')) {
                     this.leftCalendar.month.subtract('month', 1);
@@ -489,7 +498,7 @@ define(function(require, exports, module) {
                 this.updateCalendars();
             },
 
-            clickNext: function(e) {
+            clickNext: function (e) {
                 var cal = $(e.target).parents('.calendar');
                 if (cal.hasClass('left')) {
                     this.leftCalendar.month.add('month', 1);
@@ -499,7 +508,7 @@ define(function(require, exports, module) {
                 this.updateCalendars();
             },
 
-            enterDate: function(e) {
+            enterDate: function (e) {
 
                 var title = $(e.target).attr('data-title');
                 var row = title.substr(1, 1);
@@ -514,7 +523,7 @@ define(function(require, exports, module) {
 
             },
 
-            clickDate: function(e) {
+            clickDate: function (e) {
                 var title = $(e.target).attr('data-title');
                 var row = title.substr(1, 1);
                 var col = title.substr(3, 1);
@@ -557,12 +566,12 @@ define(function(require, exports, module) {
                 this.updateCalendars();
             },
 
-            clickApply: function(e) {
+            clickApply: function (e) {
                 this.updateInputText();
                 this.hide();
             },
 
-            clickCancel: function(e) {
+            clickCancel: function (e) {
                 this.startDate = this.oldStartDate;
                 this.endDate = this.oldEndDate;
                 this.updateView();
@@ -570,7 +579,7 @@ define(function(require, exports, module) {
                 this.hide();
             },
 
-            updateMonthYear: function(e) {
+            updateMonthYear: function (e) {
 
                 var isLeft = $(e.target).closest('.calendar').hasClass('left');
                 var cal = this.container.find('.calendar.left');
@@ -590,7 +599,7 @@ define(function(require, exports, module) {
 
             },
 
-            updateTime: function(e) {
+            updateTime: function (e) {
 
                 var isLeft = $(e.target).closest('.calendar').hasClass('left');
                 var cal = this.container.find('.calendar.left');
@@ -626,7 +635,7 @@ define(function(require, exports, module) {
 
             },
 
-            updateCalendars: function() {
+            updateCalendars: function () {
                 this.leftCalendar.calendar = this.buildCalendar(this.leftCalendar.month.month(), this.leftCalendar.month.year(), this.leftCalendar.month.hour(), this.leftCalendar.month.minute(), 'left');
                 this.rightCalendar.calendar = this.buildCalendar(this.rightCalendar.month.month(), this.rightCalendar.month.year(), this.rightCalendar.month.hour(), this.rightCalendar.month.minute(), 'right');
                 this.container.find('.calendar.left').html(this.renderCalendar(this.leftCalendar.calendar, this.startDate, this.minDate, this.maxDate));
@@ -654,7 +663,7 @@ define(function(require, exports, module) {
                     this.container.find('.ranges li:last').addClass('active');
             },
 
-            buildCalendar: function(month, year, hour, minute, side) {
+            buildCalendar: function (month, year, hour, minute, side) {
 
                 var firstDay = moment([year, month, 1]);
                 var lastMonth = moment(firstDay).subtract('month', 1).month();
@@ -691,7 +700,7 @@ define(function(require, exports, module) {
 
             },
 
-            renderDropdowns: function(selected, minDate, maxDate) {
+            renderDropdowns: function (selected, minDate, maxDate) {
                 var currentMonth = selected.month();
                 var monthHtml = '<select class="monthselect">';
                 var inMinYear = false;
@@ -722,7 +731,7 @@ define(function(require, exports, module) {
                 return monthHtml + yearHtml;
             },
 
-            renderCalendar: function(calendar, selected, minDate, maxDate) {
+            renderCalendar: function (calendar, selected, minDate, maxDate) {
 
                 var html = '<div class="calendar-date">';
                 html += '<table class="table-condensed">';
@@ -759,7 +768,7 @@ define(function(require, exports, module) {
                 if (this.showWeekNumbers)
                     html += '<th class="week">' + this.locale.weekLabel + '</th>';
 
-                $.each(this.locale.daysOfWeek, function(index, dayOfWeek) {
+                $.each(this.locale.daysOfWeek, function (index, dayOfWeek) {
                     html += '<th>' + dayOfWeek + '</th>';
                 });
 
@@ -869,8 +878,8 @@ define(function(require, exports, module) {
 
         };
 
-        $.fn.daterangepicker = function(options, cb) {
-            this.each(function() {
+        $.fn.daterangepicker = function (options, cb) {
+            this.each(function () {
                 var el = $(this);
                 if (!el.data('daterangepicker'))
                     el.data('daterangepicker', new DateRangePicker(el, options, cb));

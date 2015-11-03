@@ -3,8 +3,8 @@
         "name": "系统管理员"
     },
     "version": "1.4.0",
-    "description":"一个管理系统的前端框架",
-    "update":"<p>版本更新:</p><p>1:支持国际化</p><p>2:新增DataListView插件</p><p>2:修复一些BUG</p>",
+    "description": "一个管理系统的前端框架",
+    "update": "<p>版本更新:</p><p>1:支持国际化</p><p>2:新增DataListView插件</p><p>2:修复一些BUG</p>",
     "page": {
         "color": "配色 Color",
         "button": "按钮 Button",
@@ -14,8 +14,10 @@
         "tooltip": "提示框 Tooltip",
         "popover": "弹出框 Popover",
         "datatables": "DataTables",
-        "datalistview": "DataListView",
+        "datalistview": "数据列表 DataListView",
         "datepicker": "Date Pickers",
+        "sizer": "筛选器 Sizer",
+        "summary":"汇总面板 Summary",
         "echarts": "Echarts",
         "ckeditor": "CKEditor",
         "catalogue": "目录设计",
@@ -26,7 +28,7 @@
     "menu": [
         {
             "name": "theme",
-            "title": "主题",
+            "title": "基础UI",
             "icon": "fa fa-picture-o",
             "items": [
                 {
@@ -40,15 +42,7 @@
                     "title": "按钮 Button",
                     "url": "theme-buttons.html",
                     "active": 0
-                }
-            ]
-        },
-        {
-            "name": "com",
-            "title": "组件",
-            "icon": "fa fa-briefcase",
-            "items": [
-                {
+                },{
                     "name": "form",
                     "title": "表单 Form",
                     "url": "com-form.html",
@@ -81,6 +75,30 @@
             ]
         },
         {
+            "name": "com",
+            "title": "组件",
+            "icon": "fa fa-briefcase",
+            "items": [
+                {
+                    "name": "sizer",
+                    "title": "Sizer",
+                    "url": "sizer-single.html"
+                },
+                {
+                    "name": "dataListView",
+                    "title": "DataListView",
+                    "url": "datalistview.html",
+                    "active": 0
+                },
+                {
+                    "name": "summary",
+                    "title": "Summary",
+                    "url": "summary.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
             "name": "plugin",
             "title": "插件",
             "icon": "fa fa-puzzle-piece",
@@ -89,12 +107,6 @@
                     "name": "dataTables",
                     "title": "DataTables",
                     "url": "datatable.html",
-                    "active": 0
-                },
-                {
-                    "name": "dataListView",
-                    "title": "DataListView",
-                    "url": "datalistview.html",
                     "active": 0
                 },
                 {
@@ -108,6 +120,7 @@
                     "title": "Date Pickers",
                     "url": "datepicker.html"
                 }
+
             ]
         },
         {

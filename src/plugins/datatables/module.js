@@ -557,7 +557,7 @@ define(function(require, exports, module) {
                                 var status_text = "";
 
                                 if (a.result.statusText === "timeout") {
-                                    status_text = locale[pagurian.language || "zh_cn"].timeout;
+                                    status_text = locale[pagurian.language || "zh_CN"].timeout;
                                 } else {
                                     status_text = a.message;
                                 }
@@ -590,7 +590,7 @@ define(function(require, exports, module) {
                     });
                 }
             },
-            "oLanguage": locale[pagurian.language || "zh_cn"]
+            "oLanguage": locale[pagurian.language || "zh_CN"]
         };
 
         this.init = function() {

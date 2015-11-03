@@ -1,9 +1,14 @@
 /**
  * Created by hypers-godfery on 2015/7/24.
- * Updated by hypers-godfery on 2015/9/10.
+ * Updated by hypers-godfery on 2015/9/10 fixbug.
+ * Updated by hypers-godfery on 2015/10/12 添加国际化.
  */
 define(function (require, exports, module) {
-    var g = window;
+    var g = window,
+        locale = {};
+    locale.zh_CN = require('./locale/zh_CN');
+    locale.en_US = require('./locale/en_US');
+    var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
     /**
      * [DataListView 数据视图类]
@@ -35,7 +40,7 @@ define(function (require, exports, module) {
             "fnParams": null,
             "fnFormat": null,
             "fnCall": null,
-            "sProcessing": '<i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;加载中',
+            "sProcessing": oLanguage.sProcessing,
             "bInitLoad": true,
             "bEmptyData": true, //返回数据结果是否为空
             "sTplHtml": "",
@@ -84,7 +89,7 @@ define(function (require, exports, module) {
                 o.update();
             });
 
-            $(document).delegate('.dataTables_length select', 'change', function () {
+            $(document).delegate('.dataListView_length select', 'change', function () {
                 o.params.page = 1;
                 o.params.pagesize = $(this).val();
                 o.update();
@@ -130,8 +135,8 @@ define(function (require, exports, module) {
             //生成paginate
             sPaginate += '    <div class="dataListView_paginate" id="' + this.dataListName + '_paginate">';
             sPaginate += '        <ul style="visibility: visible;" class="pagination">';
-            sPaginate += '             <li class="prev" data-id="1"><a href="javascript:;" title="第一页"><i class="fa fa-angle-double-left"></i></a></li>';
-            sPaginate += '             <li class="prev" data-id="prev"><a href="javascript:;" title="上一页"><i class="fa fa-angle-left"></i></a></li>';
+            sPaginate += '             <li class="prev" data-id="1"><a href="javascript:;" title="' + oLanguage.oPaginate.sFirst + '"><i class="fa fa-angle-double-left"></i></a></li>';
+            sPaginate += '             <li class="prev" data-id="prev"><a href="javascript:;" title="' + oLanguage.oPaginate.sPrevious + '"><i class="fa fa-angle-left"></i></a></li>';
 
             if (oPaginate.pagenum < oPaginate.listLength) {
                 iStart = 1;
@@ -152,38 +157,44 @@ define(function (require, exports, module) {
                 sPaginate += '<li ' + sClass + ' data-id=' + j + '><a href="javascript:;">' + j + '</a></li>';
             }
 
-            sPaginate += '             <li class="next" data-id="next"><a href="javascript:;" title="下一页"><i class="fa fa-angle-right"></i></a></li>';
-            sPaginate += '             <li class="next" data-id="' + oPaginate.pagenum + '"><a href="javascript:;" title="最后一页"><i class="fa fa-angle-double-right"></i></a></li>';
+            sPaginate += '             <li class="next" data-id="next"><a href="javascript:;" title="' + oLanguage.oPaginate.sNext + '"><i class="fa fa-angle-right"></i></a></li>';
+            sPaginate += '             <li class="next" data-id="' + oPaginate.pagenum + '"><a href="javascript:;" title="' + oLanguage.oPaginate.sLast + '"><i class="fa fa-angle-double-right"></i></a></li>';
             sPaginate += '        </ul>';
             sPaginate += '    </div>';
 
             //生成pageSelect
             sPageSelect += '     <div class="dataListView_length" id="' + this.dataListName + '_length">';
-            sPageSelect += '         <label>每页';
-            sPageSelect += '                 <select class="form-control input-small">';
-            sPageSelect += '                         <option ';
+            sPageSelect += '         <label>';
+            var _sPageSelect = oLanguage.sLengthMenu,
+                _menu_ = "";
+            _menu_ += '                 <select class="form-control input-small">';
+            _menu_ += '                         <option ';
             if (oPaginate.pagesize === 30) {
-                sPageSelect += 'selected="selected"';
+                _menu_ += 'selected="selected"';
             }
-            sPageSelect += '                                  value="30">30</option>';
-            sPageSelect += '                         <option ';
+            _menu_ += '                                  value="30">30</option>';
+            _menu_ += '                         <option ';
             if (oPaginate.pagesize === 50) {
-                sPageSelect += 'selected="selected"';
+                _menu_ += 'selected="selected"';
             }
-            sPageSelect += '                                  value="50">50</option>';
-            sPageSelect += '                         <option ';
+            _menu_ += '                                  value="50">50</option>';
+            _menu_ += '                         <option ';
             if (oPaginate.pagesize === 100) {
-                sPageSelect += 'selected="selected"';
+                _menu_ += 'selected="selected"';
             }
-            sPageSelect += '                                  value="100">100</option>';
-            sPageSelect += '                 </select> 条';
+            _menu_ += '                                  value="100">100</option>';
+            _menu_ += '                 </select>';
+            _sPageSelect = _sPageSelect.replace(" _MENU_ ", _menu_);
+            sPageSelect += _sPageSelect;
             sPageSelect += '         </label>';
             sPageSelect += '     </div>'
 
             //生成pageTotal
             if (oPaginate.total) {
                 sPageTotal += '     <div class="dataListView_info"  id="' + this.dataListName + '_info"> ';
-                sPageTotal += '共 <span class="num">' + oPaginate.total + '</span> 条数据';
+                sPageTotal += oLanguage.sInfo;
+                sPageTotal = sPageTotal.replace("_TOTAL_", oPaginate.total);
+                //sPageTotal += '共 <span class="num">' + oPaginate.total + '</span> 条数据';
                 sPageTotal += '     </div>';
             }
 
@@ -261,8 +272,8 @@ define(function (require, exports, module) {
                 var _empty_tml = ['<table class="col-md-12">',
                     '            <tbody>',
                     '            <tr class="odd">',
-                    '                <td valign="top" colspan="8" class="dataTables_empty"><i class="fa fa-info-circle  big"></i>',
-                    '                    查询结果为空',
+                    '                <td valign="top" colspan="8" class="dataTables_empty">',
+                    oLanguage.sEmptyTable,
                     '                </td>',
                     '            </tr>',
                     '            </tbody>',

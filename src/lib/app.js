@@ -19,7 +19,9 @@ define(function(require, exports, module) {
     require('./com/dialog');
     require('./com/select');
 
+    require('./tool/tool');
     require('./tool/url');
+    require('./tool/str');
 
     var layout = require('./core/layout');
     var service = require('./service');

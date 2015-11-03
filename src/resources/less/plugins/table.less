@@ -6,9 +6,11 @@ Datatables Plugin(in v1.3)
     clear: both;
     margin-top: 5px;
 }
+
 .dataTables_filter label {
     line-height: 32px;
 }
+
 .dataTable .row-details {
     margin-top: 3px;
     display: inline-block;
@@ -16,51 +18,63 @@ Datatables Plugin(in v1.3)
     width: 14px;
     height: 14px;
 }
+
 .dataTable .row-details.row-details-close {
     background: url("../css/img/datatable-row-openclose.png") no-repeat 0 0;
 }
+
 .dataTable .row-details.row-details-open {
     background: url("../css/img/datatable-row-openclose.png") no-repeat 0 -23px;
 }
+
 .dataTable .details {
     padding: 0 !important;
     background: @B200;
 }
+
 .dataTable .details .table {
     margin-top: -1px;
     margin-bottom: 0 !important;
 }
+
 .dataTable .details td,
 .dataTable .details th {
     padding: 4px;
     background: #e5e5e5 !important;
     border-top: 1px solid #ddd;
 }
+
 .dataTable .details tr:nth-child(odd) td,
 .dataTable .details tr:nth-child(odd) th {
     background-color: #e5e5e5 !important;
 }
+
 .dataTable .details tr:nth-child(even) td,
 .dataTable .details tr:nth-child(even) th {
     background-color: #e5e5e5 !important;
 }
+
 .dataTable .details tr:hover td,
 .dataTable .details tr:hover th {
     background: #ddd !important;
 }
+
 .dataTable > thead > tr > th.sorting,
 .dataTable > thead > tr > th.sorting_asc,
 .dataTable > thead > tr > th.sorting_desc {
     padding-right: 18px;
 }
+
 .dataTable .table-checkbox {
     width: 8px !important;
 }
+
 .dataTables_wrapper .row:after {
     clear: inherit;
 }
+
 .table-scrollable {
-    position: static;
+    position: relative;
     min-height: 80px;
     thead {
         th {
@@ -95,42 +109,52 @@ Datatables Plugin(in v1.3)
         color: @H500;
     }
 }
+
 .dataTables_length {
     float: left;
     margin: 10px;
 }
+
 .dataTables_length select {
     width: 80px !important;
     display: inline;
     height: 36px;
 }
+
 .dataTables_length label {
     line-height: 36px;
 }
+
 .dataTables_wrapper {
     clear: both;
 }
+
 .dataTables_wrapper .bottom {
     display: none;
     background: #f5f5f5;
     height: 55px;
 }
+
 .dataTables_wrapper .bottom .dataTables_info {
     float: left;
     top: 0;
-    line-height: 34px;
+    line-height: 36px;
     margin: 10px;
 }
+
 .dataTables_wrapper .bottom .dataTables_info .num {
     color: @H500;
     font-weight: bold;
 }
+
 .dataTables_wrapper .bottom .pagination {
     margin: 10px;
 }
+
 .dataTables_wrapper .bottom .dataTables_paginate {
     float: right;
 }
+
 .table-bordered,
 .table-bordered > tbody > tr > td,
 .table-bordered > tbody > tr > th,
@@ -151,11 +175,13 @@ Responsive & Scrollable Tables
     border: 1px solid #ddd;
     margin: 10px 0 !important;
 }
+
 .table-scrollable > .table {
     width: 100% !important;
     margin: 0 !important;
     background-color: #fff;
 }
+
 .table-scrollable > .table > thead > tr > th,
 .table-scrollable > .table > tbody > tr > th,
 .table-scrollable > .table > tfoot > tr > th,
@@ -164,9 +190,11 @@ Responsive & Scrollable Tables
 .table-scrollable > .table > tfoot > tr > td {
     white-space: nowrap;
 }
+
 .table-scrollable > .table-bordered {
     border: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr > th:first-child,
 .table-scrollable > .table-bordered > tbody > tr > th:first-child,
 .table-scrollable > .table-bordered > tfoot > tr > th:first-child,
@@ -175,6 +203,7 @@ Responsive & Scrollable Tables
 .table-scrollable > .table-bordered > tfoot > tr > td:first-child {
     border-left: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr > th:last-child,
 .table-scrollable > .table-bordered > tbody > tr > th:last-child,
 .table-scrollable > .table-bordered > tfoot > tr > th:last-child,
@@ -183,6 +212,7 @@ Responsive & Scrollable Tables
 .table-scrollable > .table-bordered > tfoot > tr > td:last-child {
     border-right: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr:last-child > th,
 .table-scrollable > .table-bordered > tbody > tr:last-child > th,
 .table-scrollable > .table-bordered > tfoot > tr:last-child > th,
@@ -198,39 +228,48 @@ Bootstrap Tables
 .table thead > tr > th {
     border-bottom: 0;
 }
+
 .table tbody tr.active td,
 .table tbody tr.active th {
     background-color: #e9e9e9 !important;
 }
+
 .table tbody tr.active:hover td,
 .table tbody tr.active:hover th {
     background-color: #e1e1e1 !important;
 }
+
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active:nth-child(odd) th {
     background-color: #017ebc;
 }
+
 @media (max-width: 768px) {
     .dataTables_wrapper .dataTables_length .form-control,
     .dataTables_wrapper .dataTables_filter .form-control {
         display: inline-block;
     }
+
     .dataTables_wrapper .dataTables_info {
         top: 17px;
     }
+
     .dataTables_wrapper .dataTables_paginate {
         margin-top: -15px;
     }
 }
+
 @media (max-width: 480px) {
     .dataTables_wrapper .dataTables_filter .form-control {
         width: 175px !important;
     }
+
     .dataTables_wrapper .dataTables_paginate {
         float: left;
         margin-top: 20px;
     }
 }
+
 /***Table****/
 .table-bordered {
     border: none;
@@ -240,6 +279,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-striped {
     tbody {
         tr:hover {
@@ -250,6 +290,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-hover {
     tr {
         &:hover {
@@ -259,6 +300,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-fixed {
     table-layout: fixed;
     td,
@@ -267,6 +309,7 @@ Bootstrap Tables
         text-overflow: ellipsis;
     }
 }
+
 .table-custom {
     th,
     td {
@@ -313,14 +356,20 @@ Bootstrap Tables
         color: @H500;
         p {
             margin: 0;
+
+            span {
+                color: @B900;
+            }
         }
     }
 }
+
 .table-scrollable {
     margin: 0 !important;
     border-width: 1px 1px 1px 1px;
     border-color: @B100;
 }
+
 .pagination {
     .active {
         a {

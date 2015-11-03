@@ -41,7 +41,7 @@ define(function(require, exports, module) {
                 }
             });
             return this;
-        }
+        };
         this.reset = function() {
 
             var fields_list = this.element.find("[data-field]");
@@ -55,12 +55,12 @@ define(function(require, exports, module) {
             });
 
             return this;
-        }
+        };
     }
 
-    g[PagurianAlias].com.protlet = function(seletor, options) {
+    g[PagurianAlias].com.portlet = function(seletor, options) {
         var obj = new Portlet(seletor, options);
         return obj;
-    }
+    };
 
 });

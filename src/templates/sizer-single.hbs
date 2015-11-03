@@ -1,0 +1,119 @@
+{{>fixtures/doctype}}
+<head>
+    <title> {{data.page.sizer}}</title>
+    {{>fixtures/head}}
+</head>
+<body>
+
+    {{>fixtures/header}}
+
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container datalistview-container">
+
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.sizer}}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="sizer-single.html">单选 </a>
+                        </li>
+                        <li>
+                            <a href="sizer-multiple.html">多选 </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="portlet box default sizer-demo-wrap">
+                            <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn" title="版本">
+                                <span class="sizer-btn-text">版本</span>
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="markdown">
+                            <h3>HTML代码</h3>
+                            <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn" title="版本"&gt;
+    &lt;span class="sizer-btn-text"&gt;版本&lt;/span&gt;
+    &lt;i class="fa fa-angle-down"&gt;&lt;/i&gt;
+&lt;/button&gt;</code></pre>
+                            <h3>javascript代码</h3>
+                            <pre><code class="javascript">require('../../widgets/sizer/module');
+
+var selectDatas = [{
+    "id": 4,
+    "name": "2.1.4"
+}], options = {
+    isMultiple: false,//是否为多选 默认为false
+    isExpand: true,//是否默认展开 默认为false
+    dataSource: model.getSizerData,//数据源
+    class: "d-ib", //筛选器自定义class
+    dataMapping: {//数据映射 name为text value 为value,默认为{name:"name",value:"id"}
+        "name": "name",
+        "value": "id"
+    },
+    callbackExpand: function () {//面板展开时的回调
+        console.log("Expand");
+    },
+    callbackClose: function (datas) {//面板关闭时的回掉
+        console.log(datas);
+    },
+    callbackOption: function (data) {//点击选项的回调
+        console.log(data);
+    },
+    callbackSearch: function (data) {//搜索框录入回调
+        console.log(data);
+    },
+    callbackClean: function () {//点击清除/清楚选择的回调
+        console.log("Clean");
+    }
+};
+
+var sizer = $p.plugin.sizer("#sizer-multiple", options, selectDatas);
+                            </code></pre>
+                            <h3>JSON 数据</h3>
+                            <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    {{>fixtures/footer}}
+
+    <script type="text/javascript">
+        pagurian.call("modules/sizer/app", function (app) {
+            app.page.single();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+</html>
