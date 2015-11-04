@@ -25,6 +25,8 @@ define(function (require, exports, module) {
                 _allColumns, _allRows,
             //临时变量
                 $div_ul, $setting_ul, i, l, j;
+            //最小列数
+            var MIN_COLUMN_NUM = 1;
             //cookie设置及获取
             var params = {
                 set: function (key, value) {
@@ -54,6 +56,8 @@ define(function (require, exports, module) {
             this.minNum = 0;
             //是否可切换
             this.canChoose = false;
+            //是否显示setting
+            this.showSetting = false;
             //展示的列
             this.showColumns = [];
             //临时存储需要展示的列
@@ -85,11 +89,13 @@ define(function (require, exports, module) {
                     "title": "展示次数"
                 }],
                 //最大展示数
-                "maxNum": 5,
+                "maxNum": <int>,
                 //最小展示数
-                "minNum": 1,
+                "minNum": <int>,
                 //可以选择
                 "canChoose":false,
+                //是否显示setting按钮
+                "showSetting": true,
                 //数据源
                 "dataSource": null,
                 //数据源的params
@@ -110,11 +116,13 @@ define(function (require, exports, module) {
                 //所有的行
                 "allRows": [],
                 //最大展示数
-                "maxNum": 5,
+                //"maxNum": <int>,
                 //最小展示数
-                "minNum": 1,
+                //"minNum": <int>,
                 //可以切换
                 "canChoose": false,
+                //是否显示setting按钮
+                "showSetting": false,
                 //数据源
                 "dataSource": null,
                 //数据源的params
@@ -166,9 +174,10 @@ define(function (require, exports, module) {
                 o.options = $.extend(o.options, options);
                 _allColumns = o.options.allColumns;
                 _allRows = o.options.allRows;
-                o.maxNum = o.options.maxNum;
-                o.minNum = o.options.minNum;
+                o.maxNum = o.options.maxNum ? o.options.maxNum : _allColumns.length;
+                o.minNum = o.options.minNum ? o.options.minNum : MIN_COLUMN_NUM;
                 o.canChoose = o.options.canChoose;
+                o.showSetting = o.options.showSetting;
                 if (!isArray(_allColumns)) {
                     alert('Summary:[' + selector + '] allColumns不为正确的类型:[Array],请正确设置allColumns');
                     return;
@@ -217,26 +226,27 @@ define(function (require, exports, module) {
                     _classBorder = o.options.canChoose ? "border-bottom" : "";
 
                 _summaryPanelTpl += '<div id="' + getTagId("div_ul") + '" class="summary-div-ul li' + _showNum + ' ' + _classBorder + '">';
-                _settingPanelTpl += '</div>';
-
-                _settingPanelTpl += '<div id="' + getTagId("setting_wrap") + '" class="summary-setting-wrap">';
-                _settingPanelTpl += '    <a id="' + getTagId("setting_icon") + '" class="summary-setting-icon" href="javascript:;"><i class="fa fa-cog "></i></a>';
-                _settingPanelTpl += '    <div id="' + getTagId("setting_panel") + '" class="summary-setting-panel">';
-                _settingPanelTpl += '        <div class="summary-setting-panel-arrows"></div>';
-                _settingPanelTpl += '        <div class="summary-setting-panel-body">';
-                _settingPanelTpl += '            <div class="summary-setting-panel-text">';
-                _settingPanelTpl += '                <span>' + oLanguage.maxNum.replace("{0}", _showNum) + '</span>';
-                _settingPanelTpl += '                <a class="summary-reset" href="javascript:;">' + oLanguage.resetDefault + '</a>';
-                _settingPanelTpl += '            </div>';
-                _settingPanelTpl += '            <ul id="' + getTagId("setting_ul") + '" class="summary-setting-ul">';
-                _settingPanelTpl += '            </ul>';
-                _settingPanelTpl += '        </div>';
-                _settingPanelTpl += '        <div class="summary-setting-panel-footer">';
-                _settingPanelTpl += '            <button id="' + getTagId("btn_submit") + '" class="btn btn-primary" type="button">' + oLanguage.btnSubmit + '</button>';
-                _settingPanelTpl += '            <button id="' + getTagId("btn_cancel") + '" class="btn btn-default" type="button">' + oLanguage.btnCancel + '</button>';
-                _settingPanelTpl += '        </div>';
-                _settingPanelTpl += '    </div>';
-                _settingPanelTpl += '</div>';
+                _summaryPanelTpl += '</div>';
+                if (o.showSetting) {
+                    _settingPanelTpl += '<div id="' + getTagId("setting_wrap") + '" class="summary-setting-wrap">';
+                    _settingPanelTpl += '    <a id="' + getTagId("setting_icon") + '" class="summary-setting-icon" href="javascript:;"><i class="fa fa-cog "></i></a>';
+                    _settingPanelTpl += '    <div id="' + getTagId("setting_panel") + '" class="summary-setting-panel">';
+                    _settingPanelTpl += '        <div class="summary-setting-panel-arrows"></div>';
+                    _settingPanelTpl += '        <div class="summary-setting-panel-body">';
+                    _settingPanelTpl += '            <div class="summary-setting-panel-text">';
+                    _settingPanelTpl += '                <span>' + oLanguage.maxNum.replace("{0}", _showNum) + '</span>';
+                    _settingPanelTpl += '                <a class="summary-reset" href="javascript:;">' + oLanguage.resetDefault + '</a>';
+                    _settingPanelTpl += '            </div>';
+                    _settingPanelTpl += '            <ul id="' + getTagId("setting_ul") + '" class="summary-setting-ul">';
+                    _settingPanelTpl += '            </ul>';
+                    _settingPanelTpl += '        </div>';
+                    _settingPanelTpl += '        <div class="summary-setting-panel-footer">';
+                    _settingPanelTpl += '            <button id="' + getTagId("btn_submit") + '" class="btn btn-primary" type="button">' + oLanguage.btnSubmit + '</button>';
+                    _settingPanelTpl += '            <button id="' + getTagId("btn_cancel") + '" class="btn btn-default" type="button">' + oLanguage.btnCancel + '</button>';
+                    _settingPanelTpl += '        </div>';
+                    _settingPanelTpl += '    </div>';
+                    _settingPanelTpl += '</div>';
+                }
 
                 $(selector).append(_summaryPanelTpl).append(_settingPanelTpl);
 
@@ -250,64 +260,67 @@ define(function (require, exports, module) {
              * @param options
              */
             var bindEvent = function (selector, options) {
-                /**
-                 * 设置按钮
-                 */
-                $(document).delegate("#" + getTagId("setting_icon"), 'click', function () {
-                    expandSettingPanel();
-                });
-
-                /**
-                 * setting submit按钮
-                 */
-                $(document).delegate("#" + getTagId("btn_submit"), 'click', function () {
-                    expandSettingPanel();
-                    o.showColumns = o._showColumns;
-                    params.set(_cookieName, o.showColumns.join(","));
-                    drawPanel($div_ul);
-                    setData(o.allDatas);
-                    adjustHeight();
-                    o.options.callbackSubmit && o.options.callbackSubmit(o.showColumns, o.allDatas);
-                });
-
-                /**
-                 * setting cancel按钮
-                 */
-                $(document).delegate("#" + getTagId("btn_cancel"), 'click', function () {
-                    expandSettingPanel();
-                    o.options.callbackCancel && o.options.callbackCancel();
-                });
-
-                /**
-                 * setting 中的checkbox
-                 */
-                $(document).delegate('#' + getTagId("setting_ul") + ' [type="checkbox"]', 'click', function () {
-                    var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
-                        $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
-                        $unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
-                    var checkNum = $selectCheckBoxes.length;
-                    if (checkNum >= o.maxNum) {
-                        $unselectCheckBoxes.attr("disabled", "disabled");
-                        if ($.uniform) {
-                            $allCheckBoxes.uniform.update();
-                        }
-                    } else {
-                        $allCheckBoxes.removeAttr("disabled");
-                        if ($.uniform) {
-                            $allCheckBoxes.uniform.update();
-                        }
-                    }
-                    if (checkNum === o.minNum) {
-                        $selectCheckBoxes.attr("disabled", "disabled");
-                        if ($.uniform) {
-                            $allCheckBoxes.uniform.update();
-                        }
-                    }
-                    o._showColumns = [];
-                    $selectCheckBoxes.each(function () {
-                        o._showColumns.push($(this).val());
+                if (o.showSetting) {
+                    /**
+                     * 设置按钮
+                     */
+                    $(document).delegate("#" + getTagId("setting_icon"), 'click', function () {
+                        expandSettingPanel();
                     });
-                });
+
+                    /**
+                     * setting submit按钮
+                     */
+                    $(document).delegate("#" + getTagId("btn_submit"), 'click', function () {
+                        expandSettingPanel();
+                        o.showColumns = o._showColumns;
+                        params.set(_cookieName, o.showColumns.join(","));
+                        drawPanel($div_ul);
+                        setData(o.allDatas);
+                        adjustHeight();
+                        o.options.callbackSubmit && o.options.callbackSubmit(o.showColumns, o.allDatas);
+                    });
+
+                    /**
+                     * setting cancel按钮
+                     */
+                    $(document).delegate("#" + getTagId("btn_cancel"), 'click', function () {
+                        expandSettingPanel();
+                        o.options.callbackCancel && o.options.callbackCancel();
+                    });
+
+                    /**
+                     * setting 中的checkbox
+                     */
+                    $(document).delegate('#' + getTagId("setting_ul") + ' [type="checkbox"]', 'click', function () {
+                        var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
+                            $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
+                            $unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
+                        var checkNum = $selectCheckBoxes.length;
+                        if (checkNum >= o.maxNum) {
+                            $unselectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                $allCheckBoxes.uniform.update();
+                            }
+                        } else {
+                            $allCheckBoxes.removeAttr("disabled");
+                            if ($.uniform) {
+                                $allCheckBoxes.uniform.update();
+                            }
+                        }
+                        if (checkNum === o.minNum) {
+                            $selectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                $allCheckBoxes.uniform.update();
+                            }
+                        }
+                        o._showColumns = [];
+                        $selectCheckBoxes.each(function () {
+                            o._showColumns.push($(this).val());
+                        });
+                    });
+                }
+
 
                 /**
                  * 面板点击回调

@@ -17,7 +17,7 @@
         "datalistview": "数据列表 DataListView",
         "datepicker": "Date Pickers",
         "sizer": "筛选器 Sizer",
-        "summary":"汇总面板 Summary",
+        "summary": "汇总面板 Summary",
         "echarts": "Echarts",
         "ckeditor": "CKEditor",
         "catalogue": "目录设计",
@@ -32,9 +32,9 @@
             "icon": "fa fa-picture-o",
             "items": [
                 {
-                    "name": "color",
-                    "title": "配色 Color",
-                    "url": "theme-color.html",
+                    "name": "alerts",
+                    "title": "警告框 Alert",
+                    "url": "com-alert.html",
                     "active": 0
                 },
                 {
@@ -42,10 +42,11 @@
                     "title": "按钮 Button",
                     "url": "theme-buttons.html",
                     "active": 0
-                },{
-                    "name": "form",
-                    "title": "表单 Form",
-                    "url": "com-form.html",
+                },
+                {
+                    "name": "color",
+                    "title": "配色 Color",
+                    "url": "theme-color.html",
                     "active": 0
                 },
                 {
@@ -55,21 +56,21 @@
                     "active": 0
                 },
                 {
-                    "name": "alerts",
-                    "title": "警告框 Alert",
-                    "url": "com-alert.html",
-                    "active": 0
-                },
-                {
-                    "name": "Tooltip",
-                    "title": "提示框 Tooltip",
-                    "url": "com-tooltip.html",
+                    "name": "form",
+                    "title": "表单 Form",
+                    "url": "com-form.html",
                     "active": 0
                 },
                 {
                     "name": "Popover",
                     "title": "弹出框 Popover",
                     "url": "com-popover.html",
+                    "active": 0
+                },
+                {
+                    "name": "Tooltip",
+                    "title": "提示框 Tooltip",
+                    "url": "com-tooltip.html",
                     "active": 0
                 }
             ]
@@ -80,15 +81,15 @@
             "icon": "fa fa-briefcase",
             "items": [
                 {
-                    "name": "sizer",
-                    "title": "Sizer",
-                    "url": "sizer-single.html"
-                },
-                {
                     "name": "dataListView",
                     "title": "DataListView",
                     "url": "datalistview.html",
                     "active": 0
+                },
+                {
+                    "name": "sizer",
+                    "title": "Sizer",
+                    "url": "sizer-single.html"
                 },
                 {
                     "name": "summary",
@@ -110,17 +111,16 @@
                     "active": 0
                 },
                 {
+                    "name": "datepicker",
+                    "title": "Date Pickers",
+                    "url": "datepicker.html"
+                },
+                {
                     "name": "echarts",
                     "title": "Echarts",
                     "url": "echarts-line.html",
                     "active": 0
-                },
-                {
-                    "name": "datepicker",
-                    "title": "Date Pickers",
-                    "url": "datepicker.html"
                 }
-
             ]
         },
         {
@@ -148,15 +148,15 @@
                     "active": 0
                 },
                 {
-                    "name": "Javascript",
-                    "title": "Javascript规范",
-                    "url": "styleguide-js.html",
-                    "active": 0
-                },
-                {
                     "name": "css",
                     "title": "CSS规范",
                     "url": "styleguide-css.html",
+                    "active": 0
+                },
+                {
+                    "name": "javascript",
+                    "title": "Javascript规范",
+                    "url": "styleguide-js.html",
                     "active": 0
                 }
             ]

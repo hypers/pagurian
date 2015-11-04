@@ -126,32 +126,12 @@ var getRows = function () {
 };
 
 var option = {
-    //最大列数
-    "maxNum": 5,
-    //最小列数
-    "minNum": 3,
-    //数据key
-    "cName": "cName",
     //列
     "allColumns": getColumns(),
     //行
     "allRows": getRows(),
-    //数据源的参数
-    "dataParams": {},
     //数据源
-    "dataSource": model.getSummaryData,
-    //展开设置面板的回调
-    "callbackOpen": function () {
-        console.log("callbackOpen");
-    },
-    //确定按钮的回调
-    "callbackSubmit": function (showColumns, datas) {
-        console.log("callbackSubmit");
-    },
-    //取消按钮的回调
-    "callbackCancel": function () {
-        console.log("callbackCancel");
-    }
+    "dataSource": model.getSummaryData
 };
 var summary = $p.plugin.summary("#summaryTest", option);
                             </code></pre>
