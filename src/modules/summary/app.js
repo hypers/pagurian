@@ -6,6 +6,7 @@ define(function (require, exports, module) {
     var model = require('./model');
 
     require('../../widgets/summary/module');
+    require('../../plugins/echarts/module');
 
     app.page.summary = function () {
         var getColumns = function () {
@@ -106,6 +107,10 @@ define(function (require, exports, module) {
             //取消按钮的回调
             "callbackCancel": function () {
                 console.log("callbackCancel");
+            },
+            //加载完数据的回掉
+            "callBackGetData": function (allDatas) {
+                console.log(allDatas);
             }
         };
         var summary = $p.plugin.summary("#summaryTest", option);
@@ -185,6 +190,66 @@ define(function (require, exports, module) {
             return rows;
         };
 
+        var chartData = {
+            "clickCounts": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "点击次数(CLK)",
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                }]
+            },
+            "viewCounts": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "访问次数(VV)",
+                    data: [120, 312, 101, 134, 90, 230, 210]
+                }]
+            },
+            "pageView": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "浏览量(PV)",
+                    data: [789, 132, 101, 41, 90, 230, 210]
+                }]
+            },
+            "bounceRate": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "跳出率",
+                    data: [56, 132, 431, 134, 90, 230, 210]
+                }]
+            },
+            "showCounts": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "展示次数",
+                    data: [120, 132, 101, 134, 120, 321, 210]
+                }]
+            },
+            "avgDayView": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "平均日浏览次数",
+                    data: [345, 132, 101, 465, 90, 230, 123]
+                }]
+            },
+            "avgViewDeep": {
+                columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                rows: [{
+                    name: "平均页面访问深度",
+                    data: [120, 14, 101, 134, 90, 230, 210]
+                }]
+            }
+        };
+
+        var chart = $p.plugin.echarts("my_chart", {
+            type: "line",
+            title: {
+                text: '数据分析',
+                subtext: '最近一周数据'
+            }
+        });
+
         var option = {
             //最大列数
             "maxNum": 5,
@@ -214,12 +279,19 @@ define(function (require, exports, module) {
                 console.log("callbackCancel");
             },
             //点击面板的回调
-            "callBackPanel": function (columnName, columnData, columnsData) {
+            "callBackPanel": function (columnName, columnData, allDatas) {
+                $p.com.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
+                chart.load(chartData[columnName]);
                 console.log(columnName);
                 console.log(columnData);
-                console.log(columnsData);
+                console.log(allDatas);
+            },
+            //加载完数据的回调
+            "callBackGetData": function (chooseColumnsName, chooseColumnsData, allDatas) {
+                chart.load(chartData[chooseColumnsName]);
             }
         };
+
         var summary = $p.plugin.summary("#summaryTest", option);
     };
 

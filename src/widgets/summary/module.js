@@ -9,7 +9,7 @@ define(function (require, exports, module) {
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
         /**
-         * [Sizer 筛选器类]
+         * [Summary 汇总面板类]
          * @param {[type]} selector [选择器]
          * @param {[type]} options [参数]
          */
@@ -43,7 +43,7 @@ define(function (require, exports, module) {
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
             //版本
-            this.version = "2015.10.28.1626";
+            this.version = "2015.11.04.1040";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -130,9 +130,17 @@ define(function (require, exports, module) {
                 "callbackCancel": null,
                 /**
                  * 点击面板的回调
-                 * "callBackPanel"：function(_columnName, _columnData, _columnsData){}//点击的列名，当前列数据，所有数据
+                 * "callBackPanel"：function(_columnName, _columnData, _allDatas){}//点击的列名，当前列数据，所有数据
                  */
-                "callBackPanel": null
+                "callBackPanel": null,
+                /**
+                 * 数据渲染后的回调
+                 * [canChoose=true]
+                 *"callBackGetData":function(_chooseColumnsName, _chooseColumnsData, _allDatas){} 选中的列名,选中列的数据,所有数据
+                 * [canChoose=false]
+                 * "callBackGetData":function( _allDatas){} 所有数据
+                 */
+                "callBackGetData": null
             };
 
             /**
@@ -140,7 +148,16 @@ define(function (require, exports, module) {
              */
             this.update = function () {
                 drawData();
+                return this;
             };
+
+            /**
+             *  调整组件高度
+             */
+            this.autoHeight = function () {
+                adjustHeight();
+                return this;
+            }
 
             /**
              * 初始化组件
@@ -196,9 +213,10 @@ define(function (require, exports, module) {
              */
             var drawDom = function (selector, options) {
                 var _summaryPanelTpl = "",
-                    _settingPanelTpl = "";
+                    _settingPanelTpl = "",
+                    _classBorder = o.options.canChoose ? "border-bottom" : "";
 
-                _summaryPanelTpl += '<div id="' + getTagId("div_ul") + '" class="summary-div-ul li' + _showNum + '">';
+                _summaryPanelTpl += '<div id="' + getTagId("div_ul") + '" class="summary-div-ul li' + _showNum + ' ' + _classBorder + '">';
                 _settingPanelTpl += '</div>';
 
                 _settingPanelTpl += '<div id="' + getTagId("setting_wrap") + '" class="summary-setting-wrap">';
@@ -297,14 +315,9 @@ define(function (require, exports, module) {
                 if (o.options.callBackPanel) {
                     $(document).delegate('.jsSummary' + _id + '_content', 'click', function () {
                         var _columnName = $(this).data("name"),
-                            _columnData = {},
+                            _columnData = getColumnData(_columnName),
                             _columnsData = o.allDatas;
-                        for (i in _columnsData) {
-                            if (_columnsData[i][o.options.cName] === _columnName) {
-                                _columnData = _columnsData[i];
-                                break;
-                            }
-                        }
+
                         if (o.canChoose) {
                             o.chooseColumns = _columnName;
                             params.set(_cookieName + ".chooseColumns", o.chooseColumns);
@@ -341,30 +354,31 @@ define(function (require, exports, module) {
                 obj.addClass("li" + o.showColumns.length);
                 for (i = 0; i < o.showColumns.length; i++) {
                     var _columnsName = o.showColumns[i];
-                    for (j = 0; j < _allColumns.length; j++) {
-                        if (_columnsName === _allColumns[j][o.options.cName]) {
-                            var _div_li_tpl = '';
-                            _div_li_tpl += '<div class="summary-div-li">';
-                            _div_li_tpl += '    <ul data-name="' + _allColumns[i].cName + '" class="jsSummary' + _id + '_content">';
-                            for (var k = 0; k < _allRows.length; k++) {
-                                var _class = _allRows[k].klass ? _allRows[k].klass : "",
-                                    _text = _allRows[k].tpl ? _allRows[k].tpl.replace("{0}", "--") : "--";
-                                _text = _allRows[k].isTitle ? _allColumns[j].title : _text;
-                                _div_li_tpl += ' <li class="' + _class + '" data-name="' + _allRows[k].dataName + '">' + _text + '</li>';
-                            }
-                            _div_li_tpl += '    </ul>';
-                            if (o.canChoose) {
-                                _div_li_tpl += '<div class="summary-triangle"></div>';
-                            }
-                            _div_li_tpl += '</div>';
-                            obj.append(_div_li_tpl);
-                        }
+                    var _columnsConfig = getColumnConfig(_columnsName);
+                    var _clickStr = o.options.callBackPanel ? "canClick" : "";
+                    var _div_li_tpl = '';
+                    _div_li_tpl += '<div class="summary-div-li">';
+                    _div_li_tpl += '    <ul data-name="' + _columnsConfig.cName + '" class="jsSummary' + _id + '_content ' + _clickStr + '">';
+                    for (var k = 0; k < _allRows.length; k++) {
+                        var _class = _allRows[k].klass ? _allRows[k].klass : "",
+                            _text = _allRows[k].tpl ? _allRows[k].tpl.replace("{0}", "--") : "--";
+                        _text = _allRows[k].isTitle ? _columnsConfig.title : _text;
+                        _div_li_tpl += ' <li class="' + _class + '" data-name="' + _allRows[k].dataName + '">' + _text + '</li>';
                     }
+                    _div_li_tpl += '    </ul>';
+                    if (o.canChoose) {
+                        _div_li_tpl += '<div class="summary-triangle"></div>';
+                    }
+                    _div_li_tpl += '</div>';
+                    obj.append(_div_li_tpl);
                 }
                 if (o.canChoose) {
-                    $('.jsSummary' + _id + '_content[data-name="' + o.chooseColumns + '"]').parent().addClass("choose");
+                    var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + o.chooseColumns + '"]');
+                    $chooseColumns.parent().addClass("choose");
                 }
                 adjustHeight();
+
+
             }
 
             /**
@@ -411,9 +425,20 @@ define(function (require, exports, module) {
                 }
                 o.options.dataSource(o.options.dataParams, function (resp) {
                     var _datas = resp.result ? resp.result : [];
+                    for (i = 0; i < _datas.length; i++) {
+                        var _dataName = _datas[i][o.options.cName],
+                            _columnConfig = getColumnConfig(_dataName);
+                        _datas[i][o.options.cName + "Title"] = _columnConfig.title;
+                    }
                     o.allDatas = _datas;
                     setData(_datas);
                     adjustHeight();
+                    if (o.canChoose) {
+                        var _chooseColumnsData = getColumnData(o.chooseColumns);
+                        o.options.callBackGetData && o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                        return;
+                    }
+                    o.options.callBackGetData && o.options.callBackGetData(o.allDatas);
                 });
             }
 
@@ -422,31 +447,19 @@ define(function (require, exports, module) {
              * @param _datas
              */
             function setData(_datas) {
-                var _cName = o.options.cName,
-                    _rowsConfig = _allRows,
-                    $summaryContents = $('.jsSummary' + _id + '_content');
-                for (i = 0; i < _datas.length; i++) {
-                    for (j = 0; j < $summaryContents.length; j++) {
-                        var $summaryContent = $($summaryContents[j]);
-                        if ($summaryContent.data("name") === _datas[i][_cName]) {
-                            var _data = _datas[i];
-                            for (var _name in _data) {
-                                var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
-                                    _rowConfig = {};
-                                for (var k = 0; k < _rowsConfig.length; k++) {
-                                    if (_rowsConfig[k].dataName === _name) {
-                                        _rowConfig = _rowsConfig[k];
-                                        break;
-                                    }
-                                }
-                                if (_rowConfig.render) {
-                                    $contentLi.html(_rowConfig.render(_data[_name], _datas));
-                                } else if (_rowConfig.tpl) {
-                                    $contentLi.html(_rowConfig.tpl.replace("{0}", _data[_name]));
-                                } else {
-                                    $contentLi.html(_data[_name]);
-                                }
-                            }
+                var $summaryContents = $('.jsSummary' + _id + '_content');
+                for (i = 0; i < $summaryContents.length; i++) {
+                    var $summaryContent = $($summaryContents[i]),
+                        _data = getColumnData($summaryContent.data("name"));
+                    for (var _name in _data) {
+                        var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
+                            _rowConfig = getRowConfig(_name);
+                        if (_rowConfig.render) {
+                            $contentLi.html(_rowConfig.render(_data[_name], _datas));
+                        } else if (_rowConfig.tpl) {
+                            $contentLi.html(_rowConfig.tpl.replace("{0}", _data[_name]));
+                        } else {
+                            $contentLi.html(_data[_name]);
                         }
                     }
                 }
@@ -476,15 +489,65 @@ define(function (require, exports, module) {
                 var $settingPanel = $("#" + getTagId("setting_panel"));
                 if ($settingPanel.hasClass("open")) {
                     $settingPanel.removeClass("open");
-                } else {
-                    $settingPanel.addClass("open");
-                    var $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked');
-                    o._showColumns = [];
-                    $selectCheckBoxes.each(function () {
-                        o._showColumns.push($(this).val());
-                    });
-                    o.options.callbackOpen && o.options.callbackOpen();
+                    return;
                 }
+
+                $settingPanel.addClass("open");
+                var $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked');
+                o._showColumns = [];
+                $selectCheckBoxes.each(function () {
+                    o._showColumns.push($(this).val());
+                });
+                o.options.callbackOpen && o.options.callbackOpen();
+
+            }
+
+            /**
+             * 获取某一列的数据
+             * @param cName 列名
+             * @returns {{}} 该列的数据
+             */
+            function getColumnData(cName) {
+                var columnData = {};
+                for (var _i = 0; _i < o.allDatas.length; _i++) {
+                    if (cName === o.allDatas[_i][o.options.cName]) {
+                        columnData = o.allDatas[_i];
+                        break;
+                    }
+                }
+                return columnData;
+            }
+
+            /**
+             * 获取某一列的配置
+             * @param cName 列名
+             * @returns {{}} 该列的配置
+             */
+            function getColumnConfig(cName) {
+                var columnData = {};
+                for (var _i = 0; _i < _allColumns.length; _i++) {
+                    if (cName === _allColumns[_i][o.options.cName]) {
+                        columnData = _allColumns[_i];
+                        break;
+                    }
+                }
+                return columnData;
+            }
+
+            /**
+             * 获取某一行的配置
+             * @param _name 行name
+             * @returns {{}} 该行的配置
+             */
+            function getRowConfig(_name) {
+                var rowConfig = {};
+                for (var _i = 0; _i < _allRows.length; _i++) {
+                    if (_allRows[_i].dataName === _name) {
+                        rowConfig = _allRows[_i];
+                        break;
+                    }
+                }
+                return rowConfig;
             }
 
             /**
