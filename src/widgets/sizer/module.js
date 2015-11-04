@@ -19,7 +19,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.10.26.1643";
+            this.version = "2015.11.04.1040";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -394,6 +394,8 @@ define(function (require, exports, module) {
                 if (_isExpand) {
                     closePanel();
                 }
+
+                return this;
             };
 
             /**
@@ -412,6 +414,7 @@ define(function (require, exports, module) {
                     setData(_datas, chooseDatas);
                     o.needLoad = false;
                 });
+                return this;
             };
 
             /**
@@ -423,6 +426,7 @@ define(function (require, exports, module) {
                     singleSetText(o.promtText);
                 }
                 this.loadData();
+                return this;
             };
 
             init();

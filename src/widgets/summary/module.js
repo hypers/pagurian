@@ -9,7 +9,7 @@ define(function (require, exports, module) {
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
         /**
-         * [Sizer 筛选器类]
+         * [Summary 汇总面板类]
          * @param {[type]} selector [选择器]
          * @param {[type]} options [参数]
          */
@@ -43,7 +43,7 @@ define(function (require, exports, module) {
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
             //版本
-            this.version = "2015.11.03.1505";
+            this.version = "2015.11.04.1040";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -148,6 +148,7 @@ define(function (require, exports, module) {
              */
             this.update = function () {
                 drawData();
+                return this;
             };
 
             /**
@@ -155,6 +156,7 @@ define(function (require, exports, module) {
              */
             this.autoHeight = function () {
                 adjustHeight();
+                return this;
             }
 
             /**
