@@ -184,7 +184,7 @@ define(function(require, exports, module) {
         }
 
         return sidebarHeight;
-    }
+    };
 
 
 
@@ -214,7 +214,7 @@ define(function(require, exports, module) {
                     el.slideDown(200);
                 }
             });
-    }
+    };
 
     /**
      * 处理使用jQuery插件统一定制的复选框和收音机
@@ -279,7 +279,7 @@ define(function(require, exports, module) {
             $(this).parent('.alert').hide();
             e.preventDefault();
         });
-    }
+    };
 
 
     /**
@@ -430,7 +430,7 @@ define(function(require, exports, module) {
 
     var callbackQueue = [];
 
-    var loyout = {
+    var layout = {
         init: function() {
 
             doInit();
@@ -469,12 +469,7 @@ define(function(require, exports, module) {
         },
         initMenu: function() {
             if (window.CONFIG && CONFIG.appId) {
-                var a = CONFIG.appId.split("_");
-                if (a.length > 1) {
-                    var o = $(".page-sidebar-menu > li:eq(" + (a[0] - 1) + ")");
-                    o.addClass("open").find("li:eq(" + (a[1] - 1) + ")").addClass("active");
-                    o.find(".arrow").addClass("open");
-                }
+                $(".page-sidebar-menu li[data-id='"+CONFIG.appId+"']").addClass("active");
             }
         },
         custom: function() {
@@ -855,6 +850,6 @@ define(function(require, exports, module) {
         this.init();
     }
 
-    module.exports = loyout;
+    module.exports = layout;
 
 });

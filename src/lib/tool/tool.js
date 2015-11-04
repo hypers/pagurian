@@ -52,22 +52,6 @@ define(function(require, exports, module) {
             return /^[0-9]+$/.test(value);
         };
 
-        /**
-         * 数组去除重复项
-         */
-        this.unique = function(arr) {
-            var result = [],
-                hash = {},
-                i, elem;
-            for (i = 0; arr[i] !== null; i++) {
-                elem = arr[i];
-                if (!hash[elem]) {
-                    result.push(elem);
-                    hash[elem] = true;
-                }
-            }
-            return result;
-        };
 
         /**
          *加码
