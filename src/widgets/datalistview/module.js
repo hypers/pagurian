@@ -49,8 +49,8 @@ define(function (require, exports, module) {
                 "cls": "dataListView_Wrap"
             },
             "sDom": ["D", "<div style='display: block;' class='bottom'>", "S", "T", "P", "</div>"]
-        }
-        this.version = "0.2";
+        };
+        this.version = "2015.11.04.1039";
         this.dataListName = selector.substring(1);
         this.paginate = {};
         /**
@@ -94,7 +94,7 @@ define(function (require, exports, module) {
                 o.params.pagesize = $(this).val();
                 o.update();
             });
-        }
+        };
         /**
          * [initDom 初始化分页控件]
          * @param  {[type]} data [description]
@@ -153,7 +153,7 @@ define(function (require, exports, module) {
             }
 
             for (var j = iStart; j <= iEnd; j++) {
-                sClass = (j == oPaginate.page) ? 'class="active"' : '';
+                sClass = (j === oPaginate.page) ? 'class="active"' : '';
                 sPaginate += '<li ' + sClass + ' data-id=' + j + '><a href="javascript:;">' + j + '</a></li>';
             }
 
@@ -187,7 +187,7 @@ define(function (require, exports, module) {
             _sPageSelect = _sPageSelect.replace(" _MENU_ ", _menu_);
             sPageSelect += _sPageSelect;
             sPageSelect += '         </label>';
-            sPageSelect += '     </div>'
+            sPageSelect += '     </div>';
 
             //生成pageTotal
             if (oPaginate.total) {
@@ -203,7 +203,7 @@ define(function (require, exports, module) {
                 "S": sPageSelect,//select
                 "T": sPageTotal,//total
                 "P": sPaginate,//paginate
-            }
+            };
 
             for (var i = 0, l = options.sDom.length; i < l; i++) {
                 if (oDom[options.sDom[i]]) {
@@ -255,7 +255,7 @@ define(function (require, exports, module) {
             if (o.find('#' + this.dataListName + '_processing').length === 0) {
                 o.append(sProcessing);
             } else {
-                $('#' + this.dataListName + '_processing').css({"visibility": "visible"})
+                $('#' + this.dataListName + '_processing').css({"visibility": "visible"});
             }
         }
 
@@ -293,7 +293,7 @@ define(function (require, exports, module) {
             }
 
             options.fnCall && options.fnCall();
-        }
+        };
         /**
          * [loadData 载入数据]
          * @return {[type]} [description]
@@ -330,5 +330,5 @@ define(function (require, exports, module) {
         var view = new DataListView(seletor, options);
         view.init();
         return view;
-    }
+    };
 });
