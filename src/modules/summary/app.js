@@ -83,35 +83,12 @@ define(function (require, exports, module) {
         };
 
         var option = {
-            //最大列数
-            "maxNum": 5,
-            //最小列数
-            "minNum": 3,
-            //数据key
-            "cName": "cName",
             //列
             "allColumns": getColumns(),
             //行
             "allRows": getRows(),
-            //数据源的参数
-            "dataParams": {},
             //数据源
-            "dataSource": model.getSummaryData,
-            "callbackOpen": function () {
-                console.log("callbackOpen");
-            },
-            //确定按钮的回调
-            "callbackSubmit": function (showColumns, datas) {
-                console.log("callbackSubmit");
-            },
-            //取消按钮的回调
-            "callbackCancel": function () {
-                console.log("callbackCancel");
-            },
-            //加载完数据的回掉
-            "callBackGetData": function (allDatas) {
-                console.log(allDatas);
-            }
+            "dataSource": model.getSummaryData
         };
         var summary = $p.plugin.summary("#summaryTest", option);
     };
@@ -257,6 +234,8 @@ define(function (require, exports, module) {
             "minNum": 3,
             //可以切换
             "canChoose": true,
+            //显示setting按钮
+            "showSetting":true,
             //数据key
             "cName": "cName",
             //列
@@ -292,7 +271,7 @@ define(function (require, exports, module) {
             }
         };
 
-        var summary = $p.plugin.summary("#summaryTest", option);
+        var summary = $p.plugin.summary("#summaryProTest", option);
     };
 
     module.exports = app;

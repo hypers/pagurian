@@ -3,13 +3,13 @@
     "result": [
         {
             "cName": "clickCounts",
-            "value": 321321435,
+            "value": 3213214,
             "increase": 232134,
             "rate": 0.4324
         },
         {
             "cName": "viewCounts",
-            "value": 43124234,
+            "value": 4312423,
             "increase": 433213265,
             "rate": 0.1342
         },
@@ -27,13 +27,13 @@
         },
         {
             "cName": "showCounts",
-            "value": 65673734,
-            "increase": "213213",
+            "value": 6567373,
+            "increase": 213213,
             "rate": -0.43124213
         },
         {
             "cName": "avgDayView",
-            "value": 4312412354,
+            "value": 4312412,
             "increase": 43242134,
             "rate": 0.4132421
         },
