@@ -123,7 +123,11 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '.build/',
-                    src: ['**/modules/**/app.js'],
+                    src: [
+                        '**/modules/**/app.js',
+                        '**/echarts/loader.js',
+                        '**/echarts/loader-map.js'
+                    ],
                     dest: 'dist/',
                     ext: '.js'
                 }]
@@ -145,7 +149,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'dist/',
-                    src: ['modules/echarts/app.js'],
+                    src: ['**/*.js'],
                     dest: 'dist/',
                     ext: '.js'
                 }]
@@ -176,11 +180,11 @@ module.exports = function(grunt) {
 
     var task_default = [];
 
-    //task_default.push("clean:dist");
+    task_default.push("clean:dist");
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    //task_default.push("uglify:all");
+    task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 
