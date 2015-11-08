@@ -4,40 +4,19 @@
 
 一个管理系统的前端框架
 
+[Pagurian](http://pagurian.com)早期是[Hypers](http://www.hypers.com)前端团队为
+服务于公司的产品搭建的一套前端框架，
+已经在多个产品中使用，逐渐成熟，并开源出来。
+
+
+
 ## 开发及构建
-用户可以在 Pagrian 的基础上进行二次开发
+开发者可以在 Pagrian 的基础上进行二次开发,
+Pagurian由[Grunt](http://gruntjs.com/)构建及发布,
+你需要安装Grunt已经依赖的[Node.js](http://www.nodejs.org)环境。
 
-### 目录结构
 
-```
-Pagurian
-├── [.] .build
-├── dist/                   //发布目录
-│   ├── lib/
-│   ├── modules/
-│   ├── plugins/
-│   ├── resources/
-│   └── templates/
-├── docs/                   //开发文档
-│   ├── api-datatable.md
-│   └── api-*.md
-├── [.] node_modules/           //Grunt依赖的NodeJs 模块
-├── src/                    //开发目录
-│   ├── lib/                //框架依赖的基础库
-│   ├── modules/            //业务模块
-│   ├── plugins/            //插件模块
-│   ├── resources/          //css,images,fonts
-│   └── templates/          //handlebars 模版文件
-├── test/                   //测试
-├── Gruntfile.js
-├── package.json
-└── pagurian.js
-```
-
-### 构建工具
-Pagurian 使用 [Grunt](http://gruntjs.com/) 构建项目。
-
-首先全局安装 Grunt
+首先安装 Grunt
 
 ```
 npm install -g grunt-cli
@@ -61,6 +40,42 @@ npm install
 ```
 grunt
 ```
+
+
+### 目录结构
+
+```
+Pagurian
+├── [.] .build
+├── dist/                   //发布目录
+│   ├── lib/
+│   ├── modules/
+│   ├── plugins/
+│   ├── resources/
+│   └── templates/
+├── docs/                   //开发文档
+│   ├── api-datatable.md
+│   └── api-*.md
+├── [.] node_modules/           //Grunt依赖的NodeJs 模块
+├── src/                    //开发目录
+│   ├── lib/                //框架依赖的基础库
+│   ├── modules/            //业务模块
+│   ├── plugins/            //插件
+|   ├── widgets/            //组件
+│   ├── resources/          //css,images,fonts
+│   └── templates/          //handlebars 模版文件
+├── test/                   //测试
+├── Gruntfile.js
+├── package.json
+└── pagurian.js
+```
+
+
+
+## 谁在用？
+
+- [Hyper Analytics](https://analytics.hypers.com.cn)
+- [Hyper Adstracker](http://adstracker.hypers.com.cn/)
 
 ## 参考、使用的项目
 - [Sea.js v2.2.1](https://github.com/seajs/seajs) ([MIT License](https://github.com/seajs/seajs/blob/master/LICENSE.md))[V]
