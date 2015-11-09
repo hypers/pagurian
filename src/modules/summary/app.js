@@ -1,15 +1,22 @@
 /**
  * Created by yangguo on 2015/9/9 0009.
  */
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     var app = require('../../lib/app');
     var model = require('./model');
 
     require('../../widgets/summary/module');
     require('../../plugins/echarts/module');
 
-    app.page.summary = function () {
-        var getColumns = function () {
+    var summaryDemo;
+
+    app.events.resize = function() {
+        summaryDemo.autoHeight();
+    };
+
+    app.page.summary = function() {
+
+        var getColumns = function() {
             var columns = [];
 
             columns.push({
@@ -50,7 +57,7 @@ define(function (require, exports, module) {
             return columns;
         };
 
-        var getRows = function () {
+        var getRows = function() {
             var rows = [];
             rows.push({
                 "dataName": "title",
@@ -70,7 +77,7 @@ define(function (require, exports, module) {
 
             rows.push({
                 "dataName": "rate",
-                'render': function (data, full) {
+                'render': function(data, full) {
                     var num = (Math.round(data * 10000) / 100).toFixed(2),
                         _html = "";
                     _html = num >= 0 ? ('<span class="summary-span-rate add">+' + num + '%</span>') :
@@ -90,11 +97,12 @@ define(function (require, exports, module) {
             //数据源
             "dataSource": model.getSummaryData
         };
-        var summary = $p.plugin.summary("#summaryTest", option);
+
+        summaryDemo = $p.plugin.summary("#summaryTest", option);
     };
 
-    app.page.summaryPro = function () {
-        var getColumns = function () {
+    app.page.summaryPro = function() {
+        var getColumns = function() {
             var columns = [];
 
             columns.push({
@@ -135,7 +143,7 @@ define(function (require, exports, module) {
             return columns;
         };
 
-        var getRows = function () {
+        var getRows = function() {
             var rows = [];
             rows.push({
                 "dataName": "title",
@@ -155,7 +163,7 @@ define(function (require, exports, module) {
 
             rows.push({
                 "dataName": "rate",
-                'render': function (data, full) {
+                'render': function(data, full) {
                     var num = (Math.round(data * 10000) / 100).toFixed(2),
                         _html = "";
                     _html = num >= 0 ? ('<span class="summary-span-rate add">+' + num + '%</span>') :
@@ -235,7 +243,7 @@ define(function (require, exports, module) {
             //可以切换
             "canChoose": true,
             //显示setting按钮
-            "showSetting":true,
+            "showSetting": true,
             //数据key
             "cName": "cName",
             //列
@@ -246,19 +254,19 @@ define(function (require, exports, module) {
             "dataParams": {},
             //数据源
             "dataSource": model.getSummaryData,
-            "callbackOpen": function () {
+            "callbackOpen": function() {
                 console.log("callbackOpen");
             },
             //确定按钮的回调
-            "callbackSubmit": function (showColumns, datas) {
+            "callbackSubmit": function(showColumns, datas) {
                 console.log("callbackSubmit");
             },
             //取消按钮的回调
-            "callbackCancel": function () {
+            "callbackCancel": function() {
                 console.log("callbackCancel");
             },
             //点击面板的回调
-            "callBackPanel": function (columnName, columnData, allDatas) {
+            "callBackPanel": function(columnName, columnData, allDatas) {
                 $p.com.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
                 chart.load(chartData[columnName]);
                 console.log(columnName);
@@ -266,12 +274,12 @@ define(function (require, exports, module) {
                 console.log(allDatas);
             },
             //加载完数据的回调
-            "callBackGetData": function (chooseColumnsName, chooseColumnsData, allDatas) {
+            "callBackGetData": function(chooseColumnsName, chooseColumnsData, allDatas) {
                 chart.load(chartData[chooseColumnsName]);
             }
         };
 
-        var summary = $p.plugin.summary("#summaryProTest", option);
+        summary = $p.plugin.summary("#summaryProTest", option);
     };
 
     module.exports = app;
