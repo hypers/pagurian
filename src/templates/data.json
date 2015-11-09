@@ -135,31 +135,6 @@
                     "active": 0
                 }
             ]
-        },
-        {
-            "name": "styleguide",
-            "title": "规范",
-            "icon": "fa fa-book",
-            "items": [
-                {
-                    "name": "catalogue",
-                    "title": "目录设计",
-                    "url": "styleguide-catalogue.html",
-                    "active": 0
-                },
-                {
-                    "name": "css",
-                    "title": "CSS规范",
-                    "url": "styleguide-css.html",
-                    "active": 0
-                },
-                {
-                    "name": "javascript",
-                    "title": "Javascript规范",
-                    "url": "styleguide-js.html",
-                    "active": 0
-                }
-            ]
         }
     ]
 }

@@ -61,9 +61,9 @@ define(function(require, exports, module) {
 
                 var aData = oTable.fnGetData(nTr);
                 var sOut = '<table class="table"><tbody>';
-                sOut += '<tr><td></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
-                sOut += '<tr><td></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
-                sOut += '<tr><td></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w60"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w60"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
+                sOut += '<tr><td class="w60"></td><td >' + aData.keywords + '-细分</td><td class="w150">' + aData.searchEngine + '</td><td class="w150 t-a-r ">123</td><td class="w150 t-a-r ">456</td><td class="w150 t-a-r ">212</td></tr>';
                 sOut += '</tbody></table>';
 
                 fnCallback(sOut);

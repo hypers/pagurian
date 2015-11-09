@@ -1,0 +1,53 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'gitbook-cli', '-g' ]
+2 info using npm@2.11.2
+3 info using node@v0.12.5
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'gitbook-cli', null ]
+7 verbose cache add spec gitbook-cli
+8 silly cache add parsed spec { raw: 'gitbook-cli',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'gitbook-cli',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed gitbook-cli@*
+10 verbose addNamed "*" is a valid semver range for gitbook-cli
+11 silly addNameRange { name: 'gitbook-cli', range: '*', hasData: false }
+12 silly mapToRegistry name gitbook-cli
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/gitbook-cli
+16 verbose addNameRange registry:https://registry.npmjs.org/gitbook-cli not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/gitbook-cli
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 17:30:29
+20 verbose request id 20c59ff1be2e9081
+21 http request GET https://registry.npmjs.org/gitbook-cli
+22 info retry will retry, error on last attempt: Error: socket hang up
+23 info attempt registry request try #2 at 17:31:41
+24 http request GET https://registry.npmjs.org/gitbook-cli
+25 info retry will retry, error on last attempt: Error: connect ETIMEDOUT
+26 info attempt registry request try #3 at 17:33:57
+27 http request GET https://registry.npmjs.org/gitbook-cli
+28 verbose stack Error: socket hang up
+28 verbose stack     at createHangUpError (_http_client.js:215:15)
+28 verbose stack     at TLSSocket.socketOnEnd (_http_client.js:300:23)
+28 verbose stack     at TLSSocket.emit (events.js:129:20)
+28 verbose stack     at _stream_readable.js:908:16
+28 verbose stack     at process._tickCallback (node.js:355:11)
+29 verbose cwd /Users/leighton/Documents/pagurian_wiki
+30 error Darwin 13.4.0
+31 error argv "node" "/usr/local/bin/npm" "install" "gitbook-cli" "-g"
+32 error node v0.12.5
+33 error npm  v2.11.2
+34 error code ECONNRESET
+35 error network socket hang up
+35 error network This is most likely not a problem with npm itself
+35 error network and is related to network connectivity.
+35 error network In most cases you are behind a proxy or have bad network settings.
+35 error network
+35 error network If you are behind a proxy, please make sure that the
+35 error network 'proxy' config is set properly.  See: 'npm help config'
+36 verbose exit [ 1, true ]
