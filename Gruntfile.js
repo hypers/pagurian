@@ -46,7 +46,6 @@ module.exports = function(grunt) {
              */
             build: {
                 files: {
-                    "src/resources/css/themes-default.css": ["src/resources/less/themes/default.less"],
                     "src/resources/css/themes-green.css": ["src/resources/less/themes/green.less"],
                     "src/resources/css/themes-blue.css": ["src/resources/less/themes/blue.less"],
                     "src/resources/css/themes-purple.css": ["src/resources/less/themes/purple.less"],
