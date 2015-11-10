@@ -23,7 +23,8 @@
         "catalogue": "目录设计",
         "js": "Javascript规范",
         "css": "CSS规范",
-        "login": "Pagurian 单页-登录"
+        "login": "Pagurian 单页-登录",
+        "slider":"Range Slider"
     },
     "menu": [
         {
@@ -119,6 +120,12 @@
                     "name": "echarts",
                     "title": "Echarts",
                     "url": "echarts-line.html",
+                    "active": 0
+                },
+                {
+                    "name": "slider",
+                    "title": "Range Slider",
+                    "url": "slider.html",
                     "active": 0
                 }
             ]

@@ -1,0 +1,385 @@
+{{>fixtures/doctype}}
+
+<head>
+    <title>{{data.page.slider}}</title>
+    {{>fixtures/head}}
+    <style media="screen">
+        .table-custom td div{
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    {{>fixtures/header}}
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.slider}}
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- BEGIN PAGE CONTENT-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" id="range" value="20" name="example_name"/>
+                        <div class="markdown">
+                            <pre><code class="javascript">
+$p.plugin.slider("#range",{
+    from:10
+});
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" id="range2" value=""  />
+                        <div class="markdown">
+                            <pre><code class="javascript">
+$p.plugin.slider("#range2", {
+    type: "double",
+    grid: true,
+    min: 0,
+    max: 1000,
+    from: 200,
+    to: 800,
+    prefix: "$"
+});
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" id="range3" value=""  />
+                        <div class="markdown">
+                            <pre><code class="javascript">
+$p.plugin.slider("#range2",{
+    grid: true,
+    from: 3,
+    values: [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    ]
+});
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table-custom table table-hover table-fixed dataTable">
+                            <thead>
+                                <tr>
+                                    <th width="200">参数</th>
+                                    <th width="100">默认值</th>
+                                    <th width="100">数据类型</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="options__step">
+                                    <td>type<div>data-type</div></td>
+                                    <td>"single"</td>
+                                    <td>string</td>
+                                    <td>选择一种类型,  <code>single</code> 设置一个值,  <code>double</code> 设置一个范围</td>
+                                </tr>
+
+                                <tr>
+                                    <td>min<div>data-min</div></td>
+                                    <td>10</td>
+                                    <td>number</td>
+                                    <td>设置最小值</td>
+                                </tr>
+                                <tr>
+                                    <td>max<div>data-max</div></td>
+                                    <td>100</td>
+                                    <td>number</td>
+                                    <td>设置最大值</td>
+                                </tr>
+                                <tr>
+                                    <td>from<div>data-from</div></td>
+                                    <td>min</td>
+                                    <td>number</td>
+                                    <td>设置左手柄（或单柄）的起始位置</td>
+                                </tr>
+                                <tr>
+                                    <td>to<div>data-to</div></td>
+                                    <td>max</td>
+                                    <td>number</td>
+                                    <td>设置右手柄的起始位置</td>
+                                </tr>
+                                <tr class="options__step">
+                                    <td>step<div>data-step</div></td>
+                                    <td>1</td>
+                                    <td>number</td>
+                                    <td>Set sliders step. Always &gt; 0. Could be fractional.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>min_interval<div>data-min-interval</div></td>
+                                    <td>—</td>
+                                    <td>number</td>
+                                    <td>Set minimum diapason between sliders. Only in "double" type</td>
+                                </tr>
+                                <tr>
+                                    <td>max_interval<div>data-max-interval</div></td>
+                                    <td>—</td>
+                                    <td>number</td>
+                                    <td>Set maximum diapason between sliders. Only in "double" type</td>
+                                </tr>
+                                <tr class="options__step">
+                                    <td>drag_interval<div>data-drag-interval</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Allow user to drag whole range. Only in "double" type (beta)</td>
+                                </tr>
+
+                                <tr class="options__step">
+                                    <td>values<div>data-values</div></td>
+                                    <td>[]</td>
+                                    <td>array</td>
+                                    <td>Set up your own array of possible slider values. They could be numbers or strings. If the values array is set up, min, max and step param, are no longer can be changed.</td>
+                                </tr>
+
+                                <tr class="options__new">
+                                    <td>from_fixed<div>data-from-fixed</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Fix position of left (or single) handle.</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>from_min<div>data-from-min</div></td>
+                                    <td>min</td>
+                                    <td>number</td>
+                                    <td>Set minimum limit for left handle.</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>from_max<div>data-from-max</div></td>
+                                    <td>max</td>
+                                    <td>number</td>
+                                    <td>Set the maximum limit for left handle</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>from_shadow<div>data-from-shadow</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Highlight the limits for left handle</td>
+                                </tr>
+
+                                <tr class="options__new">
+                                    <td>to_fixed<div>data-to-fixed</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Fix position of right handle.</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>to_min<div>data-to-min</div></td>
+                                    <td>min</td>
+                                    <td>number</td>
+                                    <td>Set the minimum limit for right handle</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>to_max<div>data-to-max</div></td>
+                                    <td>max</td>
+                                    <td>number</td>
+                                    <td>Set the maximum limit for right handle</td>
+                                </tr>
+                                <tr class="options__new options__step">
+                                    <td>to_shadow<div>data-to-shadow</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Highlight the limits for right handle</td>
+                                </tr>
+
+                                <tr>
+                                    <td>prettify_enabled<div>data-prettify-enabled</div></td>
+                                    <td>true</td>
+                                    <td>boolean</td>
+                                    <td>Improve readability of long numbers. 10000000 → 10 000 000</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>prettify_separator<div>data-prettify-separator</div></td>
+                                    <td>" "</td>
+                                    <td>string</td>
+                                    <td>Set up your own separator for long numbers. 10 000, 10.000, 10-000 и т.п.</td>
+                                </tr>
+                                <tr class="options__new options__step">
+                                    <td>prettify<div>—</div></td>
+                                    <td>null</td>
+                                    <td>function</td>
+                                    <td>Set up your own prettify function. Can be anything. For example, you can set up unix time as slider values and than transform them to cool looking dates.</td>
+                                </tr>
+
+                                <tr class="options__new options__step">
+                                    <td>force_edges<div>data-force-edges</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Slider will be always inside it's container.</td>
+                                </tr>
+
+                                <tr class="options__new">
+                                    <td>keyboard<div>data-keyboard</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Activates keyboard controls. Move left: ←, ↓, A, S. Move right: →, ↑, W, D.</td>
+                                </tr>
+                                <tr class="options__new options__step">
+                                    <td>keyboard_step<div>data-keyboard-step</div></td>
+                                    <td>5</td>
+                                    <td>number</td>
+                                    <td>Movement step, than controling from keyboard. In percents.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>grid<div>data-grid</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Enables grid of values.</td>
+                                </tr>
+                                <tr>
+                                    <td>grid_margin<div>data-grid-margin</div></td>
+                                    <td>true</td>
+                                    <td>boolean</td>
+                                    <td>Set left and right grid borders.</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>grid_num<div>data-grid-num</div></td>
+                                    <td>4</td>
+                                    <td>number</td>
+                                    <td>Number of grid units.</td>
+                                </tr>
+                                <tr class="options__new options__step">
+                                    <td>grid_snap<div>data-grid-snap</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Snap grid to sliders step (step param). If activated, grid_num will not be used.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>hide_min_max<div>data-hide-min-max</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Hides min and max labels</td>
+                                </tr>
+                                <tr class="options__step">
+                                    <td>hide_from_to<div>data-hide-from-to</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Hide from and to lables</td>
+                                </tr>
+
+                                <tr>
+                                    <td>prefix<div>data-prefix</div></td>
+                                    <td>—</td>
+                                    <td>string</td>
+                                    <td>Set prefix for values. Will be set up right before the number: $100</td>
+                                </tr>
+                                <tr>
+                                    <td>postfix<div>data-postfix</div></td>
+                                    <td>—</td>
+                                    <td>string</td>
+                                    <td>Set postfix for values. Will be set up right after the number: 100k</td>
+                                </tr>
+                                <tr>
+                                    <td>max_postfix<div>data-max-postfix</div></td>
+                                    <td>—</td>
+                                    <td>string</td>
+                                    <td>Special postfix, used only for maximum value. Will be showed after handle will reach maximum right position. For example 0 — 100+</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>decorate_both<div>data-decorate-both</div></td>
+                                    <td>true</td>
+                                    <td>boolean</td>
+                                    <td>Used for "double" type and only if prefix or postfix was set up. Determine how to decorate close values. For example: $10k — $100k or $10 — 100k</td>
+                                </tr>
+                                <tr class="options__new options__step">
+                                    <td>values_separator<div>data-values-separator</div></td>
+                                    <td>" — "</td>
+                                    <td>string</td>
+                                    <td>Set your own separator for close values. Used for "double" type. Default: 10 — 100. Or you may set: 10 to 100, 10 + 100, 10 → 100 etc.</td>
+                                </tr>
+
+                                <tr class="options__step">
+                                    <td>input_values_separator<div><sup>data-input-values-separator</sup></div></td>
+                                    <td>" ; "</td>
+                                    <td>string</td>
+                                    <td>Separator for double values in input value property.</td>
+                                </tr>
+
+                                <tr class="options__step">
+                                    <td>disable<div>data-disable</div></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>Locks slider and makes it inactive.</td>
+                                </tr>
+
+                                <tr>
+                                    <td>onStart<div>—</div></td>
+                                    <td>null</td>
+                                    <td>function</td>
+                                    <td>Callback. Is called on slider start.</td>
+                                </tr>
+                                <tr>
+                                    <td>onChange<div>—</div></td>
+                                    <td>null</td>
+                                    <td>function</td>
+                                    <td>Callback. IS called on each values change.</td>
+                                </tr>
+                                <tr>
+                                    <td>onFinish<div>—</div></td>
+                                    <td>null</td>
+                                    <td>function</td>
+                                    <td>Callback. Is called than user releases handle.</td>
+                                </tr>
+                                <tr class="options__new">
+                                    <td>onUpdate<div>—</div></td>
+                                    <td>null</td>
+                                    <td>function</td>
+                                    <td>Callback. Is called than slider is modified by external methods <code>update</code> or <code>reset</code>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3>更多实例</h3>
+
+                        <a href="http://ionden.com/a/plugins/ion.rangeSlider/demo.html" target="_blank">
+                             http://ionden.com/a/plugins/ion.rangeSlider/demo.html
+                        </a>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+
+    {{>fixtures/footer}}
+    <script type="text/javascript">
+        pagurian.call("modules/slider/app", function(app) {
+            app.page.index();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+
+</body>
+
+</html>
