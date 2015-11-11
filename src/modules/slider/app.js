@@ -29,6 +29,7 @@ define(function(require, exports, module) {
         $p.plugin.slider("#range3",{
             grid: true,
             from: 3,
+            force_edges:true,
             values: [
                 "January", "February", "March",
                 "April", "May", "June",
