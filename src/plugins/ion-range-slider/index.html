@@ -26,16 +26,15 @@
     $(function () {
 
         $("#range").ionRangeSlider({
-            hide_min_max: false,
-            keyboard: true,
-            min: 0,
-            max: 5000,
-            from: 1000,
-            to: 4000,
-            step: 2,
-            prefix: "CM",
-            grid: false
+            type: "double",
+            min: 1000000,
+            max: 2000000,
+            grid: true,
+            onFinish:function(){
+                alert("ddd");
+            }
         });
+
 
     });
 </script>
