@@ -12,15 +12,19 @@ define(function(require, exports, module) {
         }, function(start, end) {
             $p.com.alert("开始时间：" + start + " , 结束时间：" + end);
         });
+
+
     };
 
 
     app.page.date = function() {
-        $p.plugin.datePicker('#my_picker', {
+        $p.plugin.datePicker('.date-picker', {
             defaultDate: moment(),
         }, function(date) {
             $p.com.alert(date);
         });
+
+        
     };
 
     module.exports = app;

@@ -54,16 +54,16 @@ define(function(require, exports, module) {
             return this;
         };
 
-        this.load = function(data) {
+        this.load = function(data, options) {
 
             $(".chart-message").remove();
 
             var type = this.options.type || "line";
-            var options = $.extend(true, {}, this.options, chartOptions[type](data));
+            var _options = $.extend(true, {}, this.options, chartOptions[type](data));
 
             this.chart.hideLoading();
             this.chart.clear();
-            this.chart.setOption(options);
+            this.chart.setOption($.extend(true, _options, options || {}));
 
             return this;
         };
@@ -73,10 +73,10 @@ define(function(require, exports, module) {
          * @param {Object} eventName 事件名称
          * @param {Object} eventListener 事件响应函数
          */
-        this.on = function(eventName,eventListener){
-            this.chart.on(eventName,eventListener);
+        this.on = function(eventName, eventListener) {
+            this.chart.on(eventName, eventListener);
             return this;
-        }
+        };
     }
 
     g[PagurianAlias].plugin.echarts = function(seletor, options) {

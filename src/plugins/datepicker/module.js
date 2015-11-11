@@ -10,14 +10,10 @@ define(function(require, exports, module) {
     function DatePicker(selector, options, callback) {
 
         var defaultDate;
-        var textFormat = "YYYY年MM月DD日";
+        var textFormat = "YYYY-MM-DD";
 
         if (options && options.defaultDate) {
             defaultDate = moment(options.defaultDate);
-        }
-
-        if (pagurian.language == "en_US") {
-            textFormat = "YYYY-MM-DD";
         }
 
         this.options = {
