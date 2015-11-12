@@ -1,5 +1,16 @@
 module.exports = function(grunt) {
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-cmd-transport');
+    grunt.loadNpmTasks('grunt-cmd-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-template-html');
+    grunt.loadNpmTasks('grunt-postcss');
+
     var transport = require('grunt-cmd-transport');
 
     var style = transport.style.init(grunt);
@@ -68,12 +79,10 @@ module.exports = function(grunt) {
                     'src/resources/css/public.css': [
                         'src/plugins/bootstrap/css/bootstrap.css',
                         'src/plugins/daterangepicker/bs3.css',
-                        'src/plugins/datepicker/datepicker.css',
                         'src/plugins/uniform/css/uniform.default.css',
                         'src/plugins/font-awesome/css/font-awesome.min.css',
                         'src/plugins/datatables/1.9.4/bs.css'
                     ],
-                    'src/resources/css/themes-default.css': ['src/resources/css/themes-default.css'],
                     'src/resources/css/themes-green.css': ['src/resources/css/themes-green.css'],
                     'src/resources/css/themes-blue.css': ['src/resources/css/themes-blue.css'],
                     'src/resources/css/themes-purple.css': ['src/resources/css/themes-purple.css'],
@@ -81,6 +90,20 @@ module.exports = function(grunt) {
                     'src/resources/css/themes-red.css': ['src/resources/css/themes-red.css'],
                     'src/resources/css/page-login.css': ['src/resources/css/page-login.css']
                 }
+            }
+        },
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    require('autoprefixer')({
+                        browsers: 'last 2 versions',
+                        remove:false
+                    })
+                ]
+            },
+            dist: {
+                src: 'src/resources/css/*.css'
             }
         },
         jshint: {
@@ -190,21 +213,11 @@ module.exports = function(grunt) {
 
     grunt.initConfig(option);
 
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-cmd-transport');
-    grunt.loadNpmTasks('grunt-cmd-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-template-html');
-
 
     grunt.registerTask('check', ['jshint']);
-    grunt.registerTask('css', ['less:build', 'cssmin:build','copy:all']);
+    grunt.registerTask('css', ['less:build','cssmin:build','postcss','copy:all']);
     grunt.registerTask('seajs', ['uglify:seajs']);
-    grunt.registerTask('tpl', ['template',"copy:all"]);
+    grunt.registerTask('tpl', ['template', "copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
     grunt.registerTask('default', task_default);
 

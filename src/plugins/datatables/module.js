@@ -402,10 +402,18 @@ define(function(require, exports, module) {
                     //排序字段
                     if (aoData[i].name === "iSortCol_0" && oSettings.aoColumns[aoData[i].value].mData) {
 
+                        column = oSettings.aoColumns[aoData[i].value];
                         apData.push({
                             "name": "orderColumn",
-                            "value": oSettings.aoColumns[aoData[i].value].mData
+                            "value": column.mData
                         });
+
+                        if (column.isPinyinSort) {
+                            apData.push({
+                                "name": "isDict",
+                                "value": true
+                            });
+                        }
 
                     }
 

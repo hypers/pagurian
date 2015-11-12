@@ -11,7 +11,6 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
 
-
    {{>fixtures/sidebar}}
 
 	<!-- BEGIN CONTENT -->
@@ -30,13 +29,13 @@
 
 			 <div class="tabs-wrap">
 			   <ul  class="nav nav-tabs">
-					<li class="active">
+					<li>
 						<a href="datepicker.html" >Date</a>
 					</li>
 					<li >
 						<a href="daterangepicker.html" >Date Range</a>
 					</li>
-					<li>
+					<li class="active">
                         <a href="datetimepicker.html" >Date Time</a>
                     </li>
 
@@ -54,37 +53,24 @@
 									<div class="form-group">
 										<label class="control-label col-md-3">默认</label>
 										<div class="col-md-3">
-											<input class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
-
+											<input id="picker1" class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-md-3">带图标</label>
 										<div class="col-md-3">
-											<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-												<input type="text" class="form-control" readonly>
+
+
+											<div id="picker2"  class="input-group date date-time-picker input-medium " >
+												<input type="text" class="form-control" readonly="" size="16">
 												<span class="input-group-btn">
-													<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+													<button type="button" class="btn default date-set"><i class="fa fa-calendar"></i></button>
 												</span>
 											</div>
 
 										</div>
 									</div>
 
-
-									<div class="form-group">
-										<label class="control-label col-md-3">日期范围</label>
-										<div class="col-md-4">
-											<div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-												<input type="text" class="form-control" name="from">
-												<span class="input-group-addon">
-													to
-												</span>
-												<input type="text" class="form-control" name="to">
-											</div>
-
-										</div>
-									</div>
 
 								</div>
 							</form>
@@ -128,20 +114,7 @@
     &lt;/div&gt;
 &lt;/div&gt;
 
-
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;control-label col-md-3&quot;&gt;日期范围&lt;/label&gt;
-    &lt;div class=&quot;col-md-4&quot;&gt;
-        &lt;div class=&quot;input-group input-large date-picker input-daterange&quot; data-date=&quot;10/11/2012&quot; data-date-format=&quot;mm/dd/yyyy&quot;&gt;
-            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;from&quot;&gt;
-            &lt;span class=&quot;input-group-addon&quot;&gt;
-                to
-            &lt;/span&gt;
-            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;to&quot;&gt;
-        &lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+</code></pre>
 						<h3>Javascript代码</h3>
 						<pre><code class="javascript">
 $p.plugin.datePicker('.date-picker', {
@@ -172,7 +145,7 @@ $p.plugin.datePicker('.date-picker', {
 {{>fixtures/footer}}
 <script type="text/javascript">
 	pagurian.call("modules/datepicker/app", function(app) {
-		app.page.date();
+		app.page.datetime();
 	});
 </script>
 

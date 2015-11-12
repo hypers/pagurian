@@ -4,19 +4,16 @@
     // IE8 filter
     @opacity-ie: (@opacity * 100);
 }
-
 .box-shadow(@x:0px, @y:2px, @blur:5px, @color:#999) {
     -moz-box-shadow: @arguments;
     -webkit-box-shadow: @arguments;
     box-shadow: @arguments;
 }
-
 .box-shadow-inset(@x:0px, @y:2px, @blur:5px, @color:#999) {
     -moz-box-shadow: @arguments inset;
     -webkit-box-shadow: @arguments inset;
     box-shadow: @arguments inset;
 }
-
 .placeholder(@color:#bcbec0) {
     &::-moz-placeholder {
         color: @color;
@@ -34,7 +31,6 @@
 
     // Safari and Chrome
 }
-
 .radius(@c:1) {
     -webkit-border-radius: @c !important;
     -moz-border-radius: @c !important;
@@ -46,7 +42,6 @@
     float: @f;
     display: inline;
 }
-
 .fr(@f:right) {
     float: @f;
     display: inline;
@@ -56,11 +51,9 @@
 .pos (r) {
     position: relative;
 }
-
 .pos (a) {
     position: absolute;
 }
-
 .pos (f) {
     position: fixed;
 }
@@ -70,12 +63,10 @@
     margin-left: auto;
     margin-right: auto;
 }
-
 .bc-d(@w:500px) {
     width: @w;
     .bc();
 }
-
 .wh(@w) {
     width: @w;
     height: @w;
@@ -91,25 +82,20 @@
 .d-b() {
     display: block;
 }
-
 .d-i() {
     display: inline;
 }
-
 .d-ib() {
     display: inline-block;
 }
-
 .d-ib7() {
     display: inline-block;
     *display: inline;
     *zoom: 1;
 }
-
 .d-t() {
     display: table;
 }
-
 .d-n() {
     display: none;
 }
@@ -118,15 +104,12 @@
 .font-w700() {
     font-weight: 700;
 }
-
 .font-wb() {
     font-weight: bold;
 }
-
 .font-w400() {
     font-weight: 400;
 }
-
 .font-wn() {
     font-weight: normal;
 }
@@ -140,31 +123,24 @@
 .tu() {
     text-decoration: underline;
 }
-
 .tn() {
     text-decoration: none;
 }
-
 .tl() {
     text-align: left;
 }
-
 .text-l() {
     text-align: left;
 }
-
 .tc() {
     text-align: center;
 }
-
 .text-c() {
     text-align: center;
 }
-
 .tr() {
     text-align: right;
 }
-
 .text-r() {
     text-align: right;
 }
@@ -177,28 +153,25 @@
 }
 
 //单独方向
-.triangle-b(@w:5px,@color:#ccc) {
+.triangle-b(@w:5px, @color:#ccc) {
     border-style: solid dashed dashed dashed;
     border-color: @color transparent transparent transparent;
     border-width: @w;
     .triangle-compatible();
 }
-
-.triangle-l(@w:5px,@color:#ccc) {
+.triangle-l(@w:5px, @color:#ccc) {
     border-style: dashed solid dashed dashed;
     border-color: transparent @color transparent transparent;
     border-width: @w;
     .triangle-compatible();
 }
-
-.triangle-t(@w:5px,@color:#ccc) {
+.triangle-t(@w:5px, @color:#ccc) {
     border-style: dashed dashed solid dashed;
     border-color: transparent transparent @color transparent;
     border-width: @w;
     .triangle-compatible();
 }
-
-.triangle-r(@w:5px,@color:#ccc) {
+.triangle-r(@w:5px, @color:#ccc) {
     border-style: dashed dashed dashed solid;
     border-color: transparent transparent transparent @color;
     border-width: @w;
@@ -208,9 +181,8 @@
 //透明度
 .opa(@opacity: 80) {
     opacity: @opacity / 100;
-    filter: ~"alpha(opacity=@{opacity})";
+    filter:~"alpha(opacity=@{opacity})";
 }
-
 .clearfix() {
     *zoom: 1;
     &:before,
@@ -232,9 +204,8 @@
     text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
-    -moz-binding: url("ellipsis.xml#ellipsis");
+    -moz-binding: url(ellipsis.xml#ellipsis);
 }
-
 .ellipsis(@substract:0) {
     .ellipsis-basic();
     width: 100% - @substract;

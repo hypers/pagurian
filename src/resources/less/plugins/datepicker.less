@@ -1,0 +1,232 @@
+/*!
+ * Datepicker for Bootstrap
+ *
+ * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+.datepicker {
+    padding: 4px;
+    direction: ltr;
+    /*.dow {
+		border-top: 1px solid #ddd !important;
+	}*/
+}
+.datepicker-inline {
+    width: 220px;
+}
+.datepicker.datepicker-rtl {
+    direction: rtl;
+}
+.datepicker.datepicker-rtl table tr td span {
+    float: right;
+}
+.datepicker-dropdown {
+    top: 0;
+    left: 0;
+    &:before {
+        content: '';
+        display: inline-block;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #ccc;
+        border-top: 0;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        position: absolute;
+    }
+    &:after {
+        content: '';
+        display: inline-block;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #ffffff;
+        border-top: 0;
+        position: absolute;
+    }
+    &.datepicker-orient-left,
+    &.datepicker-orient-right {
+        &:before {
+            left: -1px;
+        }
+         :after {
+            left: 7px;
+        }
+    }
+    &.datepicker-orient-top {
+        &:before {
+            top: -7px;
+        }
+        &:after {
+            top: -6px;
+        }
+    }
+    &.datepicker-orient-bottom {
+        &:before {
+            bottom: -7px;
+            border-bottom: 0;
+            border-top: 7px solid #999;
+        }
+        &:after {
+            bottom: -6px;
+            border-bottom: 0;
+            border-top: 6px solid #ffffff;
+        }
+    }
+}
+.datepicker {
+    > div {
+        display: none;
+    }
+    &.days div.datepicker-days,
+    &.months div.datepicker-months,
+    &.years div.datepicker-years {
+        display: block;
+    }
+    table {
+        margin: 0;
+        user-select: none;
+        td,
+        th {
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: none;
+            font-weight: 100;
+        }
+        td {
+            &.day:hover {
+                background: #eeeeee;
+                cursor: pointer;
+            }
+            &.old,
+            &.new {
+                color: #999999;
+            }
+            &.disabled,
+            &.disabled:hover {
+                background: none;
+                color: #999999;
+                cursor: default;
+            }
+            &.today,
+            &.today:hover,
+            &.today:disabled,
+            &.today:disabled:hover {
+                background: #fde19a;
+                color: #000;
+            }
+            &.selected {
+                background-color: @B400;
+            }
+            &.range {
+                background-color: @B100;
+            }
+            &.active {
+                background-color: @H500;
+                color: #fff;
+                &:hover {
+                    background-color: @H600;
+                }
+            }
+            span {
+                display: block;
+                width: 23%;
+                height: 54px;
+                line-height: 54px;
+                float: left;
+                margin: 1%;
+                cursor: pointer;
+                border-radius: 4px;
+                &:hover {
+                    background: #eeeeee;
+                }
+                &.disabled,
+                &.disabled:hover {
+                    background: none;
+                    color: #999999;
+                    cursor: default;
+                }
+            }
+        }
+        th.datepicker-switch {
+            width: 145px;
+        }
+        thead tr:first-child th,
+        tfoot tr th {
+            cursor: pointer;
+        }
+        thead tr:first-child th:hover,
+        tfoot tr th:hover {
+            background: #eeeeee;
+        }
+        thead tr:first-child th.cw {
+            cursor: default;
+            background-color: transparent;
+        }
+    }
+    .cw {
+        font-size: 10px;
+        width: 12px;
+        padding: 0 2px 0 5px;
+        vertical-align: middle;
+    }
+}
+.table-striped {
+    .datepicker table tr {
+        td,
+        th {
+            background-color: transparent;
+        }
+    }
+}
+.input-append.date .add-on i,
+.input-prepend.date .add-on i {
+    display: block;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+.input-daterange {
+    input {
+        text-align: center;
+        &:first-child {
+            border-radius: 3px 0 0 3px;
+        }
+        &:last-child {
+            border-radius: 0 3px 3px 0;
+        }
+    }
+    .add-on {
+        display: inline-block;
+        width: auto;
+        min-width: 16px;
+        height: 18px;
+        padding: 4px 5px;
+        font-weight: normal;
+        line-height: 18px;
+        text-align: center;
+        text-shadow: 0 1px 0 #ffffff;
+        vertical-align: middle;
+        background-color: #eeeeee;
+        border: 1px solid #ccc;
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+}
+.date-picker {
+    &.input-group {
+        border: 1px solid @B300;
+        .form-control {
+            border: none !important;
+        }
+        .btn{
+            background: #fff !important;
+            i{
+                color: #9f9f9f;
+            }
+        }
+    }
+}

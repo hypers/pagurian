@@ -10,12 +10,22 @@ define(function(require, exports, module) {
     var service = {
 
         get: function(url, params, callback) {
-            if ($.isArray(params)) {
 
-                params.push({
-                    name: "locale",
-                    value: $p.language
-                });
+            //设置语言
+            if ($.isArray(params)) {
+                var isSetLanguage = false;
+                for (var i = 0; i < params.length; i++) {
+                    if (params[i].name === "locale") {
+                        params[i].value = $p.language;
+                        isSetLanguage = true;
+                    }
+                }
+                if (!isSetLanguage) {
+                    params.push({
+                        name: "locale",
+                        value: $p.language
+                    });
+                }
             } else {
                 params.locale = $p.language;
             }
