@@ -3,9 +3,10 @@ define(function (require, exports, module) {
     var app = require('../../lib/app');
     require('../../plugins/echarts/module');
 
+    var chart = {};
     app.page.echarts_line = function () {
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -40,7 +41,7 @@ define(function (require, exports, module) {
     app.page.echarts_stack = function () {
 
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -102,7 +103,7 @@ define(function (require, exports, module) {
     app.page.echarts_pie = function () {
 
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "pie"
         });
 
@@ -136,7 +137,7 @@ define(function (require, exports, module) {
 
     app.page.echarts_bar = function () {
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "bar"
         });
         chart.load({
@@ -178,7 +179,7 @@ define(function (require, exports, module) {
 
     app.page.echarts_map = function () {
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图"
@@ -218,7 +219,7 @@ define(function (require, exports, module) {
 
     app.page.echarts_event = function () {
 
-        var chart = $p.plugin.echarts("my_chart", {
+        chart = $p.plugin.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -254,6 +255,12 @@ define(function (require, exports, module) {
         }
 
         chart.on(echarts.config.EVENT.CLICK, eConsole);
+    };
+
+    app.events.resize = function () {
+        if (chart.chart && "function" === typeof chart.chart.resize) {
+            chart.chart.resize();
+        }
     };
 
 
