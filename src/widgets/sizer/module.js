@@ -184,7 +184,7 @@ define(function (require, exports, module) {
                         singleSetText(_data[_dataName]);
                         o.selectDatas = _selectDatas;
                         o.options.callbackOption && o.options.callbackOption(_data, isSelect);
-                        closePanel();
+                        closePanel(true);
                     }
 
                     //多选
@@ -232,31 +232,11 @@ define(function (require, exports, module) {
 
                 //清除选择
                 $(document).delegate("#" + _nameStr + '_clean' + _id, 'click', function () {
-                    //多选
-                    if (o.options.isMultiple) {
-                        if (o.isFirstClick) {
-                            o.isFirstClick = false;
-                        }
-                        var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
-                        $dataLis.each(function () {
-                            if ($(this).hasClass("selected")) {
-                                $(this).click();
-                            }
-                        });
-                        o.options.callbackClean && o.options.callbackClean(o._tmpSelectDatas);
-                    }
-
-                    //单选
-                    if (!o.options.isMultiple) {
-                        $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
-                        o.selectDatas = [];
-                        singleSetText(o.promtText);
-                        closePanel();
-                    }
+                    cleanOption(true);
                 });
 
                 //搜索框事件
-                $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (e) {
+                $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (es) {
                     var word = $(this).val(),
                         $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
                         _datas = o.allDatas,
@@ -302,14 +282,14 @@ define(function (require, exports, module) {
                     $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
                         o.selectDatas = o._tmpSelectDatas;
                         o.options.callbackSubmit && o.options.callbackSubmit();
-                        closePanel();
+                        closePanel(true);
                     });
 
                     //取消
                     $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
                         //o.selectDatas = o._tmpSelectDatas;
                         o.options.callbackCancel && o.options.callbackCancel();
-                        closePanel();
+                        closePanel(true);
                     });
                 }
             };
@@ -317,7 +297,7 @@ define(function (require, exports, module) {
             /**
              * 关闭面板
              */
-            var closePanel = function () {
+            var closePanel = function (isCallBack) {
                 var $sizerWrap = $("#" + o.sizerName);
                 $sizerWrap.removeClass("sizer-open");
                 if (o.options.isMultiple) {
@@ -327,7 +307,9 @@ define(function (require, exports, module) {
                 }
                 $("#" + _nameStr + '_search' + _id).val("");
                 $("#" + _nameStr + '_search' + _id).keyup();
-                o.options.callbackClose && o.options.callbackClose(o.selectDatas);
+
+                isCallBack && o.options.callbackClose && o.options.callbackClose(o.selectDatas);
+
             };
 
             /**
@@ -392,7 +374,7 @@ define(function (require, exports, module) {
                 }
                 //关闭面板时执行的方法
                 if (_isExpand) {
-                    closePanel();
+                    closePanel(true);
                 }
 
                 return this;
@@ -421,13 +403,45 @@ define(function (require, exports, module) {
              * 重新拉取数据
              */
             this.update = function () {
-                $("#" + _nameStr + '_clean' + _id).click();
-                if (!o.isMultiple) {
-                    singleSetText(o.promtText);
-                }
+                cleanOption(false);
+                !o.options.isMultiple && singleSetText(o.promtText);
+                o.options.isMultiple && $("#" + o.sizerName).removeClass("sizer-open");
                 this.loadData();
                 return this;
             };
+
+            /**
+             * 清除选中选项
+             * @param isCallBackClose 是否执行关闭面板时的回调
+             */
+            function cleanOption(isCallBackClose) {
+                //多选
+                if (o.options.isMultiple) {
+                    if (o.isFirstClick) {
+                        o.isFirstClick = false;
+                    }
+                    var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
+                    $dataLis.each(function () {
+                        if ($(this).hasClass("selected")) {
+                            $(this).click();
+                        }
+                    });
+                    if (!isCallBackClose) {
+                        closePanel(isCallBackClose);
+                    } else {
+                        o.options.callbackClean && o.options.callbackClean(o._tmpSelectDatas);
+                    }
+
+                }
+
+                //单选
+                if (!o.options.isMultiple) {
+                    $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
+                    o.selectDatas = [];
+                    singleSetText(o.promtText);
+                    closePanel(isCallBackClose);
+                }
+            }
 
             init();
         }

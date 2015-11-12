@@ -22,6 +22,7 @@ define(function (require, exports, module) {
                 console.log("Expand");
             },
             callbackClose: function (datas) {//面板关闭时的回掉
+                console.log("Close");
                 console.log(datas);
             },
             callbackOption: function (data) {//点击选项的回调
@@ -45,7 +46,6 @@ define(function (require, exports, module) {
             }
         };
         var sizer = $p.plugin.sizer("#sizer-multiple", options, selectDatas);
-        //console.log(sizer);
     };
 
     app.page.single = function () {
@@ -63,12 +63,15 @@ define(function (require, exports, module) {
                 console.log("Expand");
             },
             callbackClose: function (datas) {//面板关闭时的回掉
+                console.log("Close");
                 console.log(datas);
             },
             callbackOption: function (data) {//点击选项的回调
+                console.log("Click Option");
                 console.log(data);
             },
             callbackSearch: function (data) {//搜索框录入回调
+                console.log("Search");
                 console.log(data);
             },
             callbackClean: function () {//点击清除/清楚选择的回调
