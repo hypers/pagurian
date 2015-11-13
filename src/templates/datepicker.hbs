@@ -54,14 +54,14 @@
 									<div class="form-group">
 										<label class="control-label col-md-3">默认</label>
 										<div class="col-md-3">
-											<input class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
+											<input id="picker1" class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
 
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-md-3">带图标</label>
 										<div class="col-md-3">
-											<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+											<div id="picker2" class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
 												<input type="text" class="form-control" readonly>
 												<span class="input-group-btn">
 													<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
@@ -75,7 +75,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-3">日期范围</label>
 										<div class="col-md-4">
-											<div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+											<div id="picker3" class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
 												<input type="text" class="form-control" name="from">
 												<span class="input-group-addon">
 													to
@@ -108,49 +108,44 @@
 
 					<h3>HTML代码</h3>
 						<pre><code class="html">
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;control-label col-md-3&quot;&gt;默认&lt;/label&gt;
-    &lt;div class=&quot;col-md-3&quot;&gt;
-        &lt;input class=&quot;form-control form-control-inline input-medium date-picker&quot; size=&quot;16&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
+&lt;!--默认--&gt;
+&lt;input id=&quot;picker1&quot; class=&quot;form-control form-control-inline input-medium date-picker&quot; size=&quot;16&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
 
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;control-label col-md-3&quot;&gt;带图标&lt;/label&gt;
-    &lt;div class=&quot;col-md-3&quot;&gt;
-        &lt;div class=&quot;input-group input-medium date date-picker&quot; data-date-format=&quot;dd-mm-yyyy&quot; data-date-start-date=&quot;+0d&quot;&gt;
-            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; readonly&gt;
-            &lt;span class=&quot;input-group-btn&quot;&gt;
-                &lt;button class=&quot;btn default&quot; type=&quot;button&quot;&gt;&lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
-            &lt;/span&gt;
-        &lt;/div&gt;
-
-    &lt;/div&gt;
+&lt;!--带图标--&gt;
+&lt;div id=&quot;picker2&quot; class=&quot;input-group input-medium date date-picker&quot; data-date-format=&quot;dd-mm-yyyy&quot; data-date-start-date=&quot;+0d&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; readonly&gt;
+    &lt;span class=&quot;input-group-btn&quot;&gt;
+        &lt;button class=&quot;btn default&quot; type=&quot;button&quot;&gt;&lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;/span&gt;
 &lt;/div&gt;
 
-
-&lt;div class=&quot;form-group&quot;&gt;
-    &lt;label class=&quot;control-label col-md-3&quot;&gt;日期范围&lt;/label&gt;
-    &lt;div class=&quot;col-md-4&quot;&gt;
-        &lt;div class=&quot;input-group input-large date-picker input-daterange&quot; data-date=&quot;10/11/2012&quot; data-date-format=&quot;mm/dd/yyyy&quot;&gt;
-            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;from&quot;&gt;
-            &lt;span class=&quot;input-group-addon&quot;&gt;
-                to
-            &lt;/span&gt;
-            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;to&quot;&gt;
-        &lt;/div&gt;
-
-    &lt;/div&gt;
+&lt;!--时间范围--&gt;
+&lt;div id=&quot;picker3&quot; class=&quot;input-group input-large date-picker input-daterange&quot;  data-date-format=&quot;mm/dd/yyyy&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;from&quot;&gt;
+    &lt;span class=&quot;input-group-addon&quot;&gt;to&lt;/span&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;to&quot;&gt;
 &lt;/div&gt;</code></pre>
 						<h3>Javascript代码</h3>
 						<pre><code class="javascript">
-$p.plugin.datePicker('.date-picker', {
+$p.plugin.datePicker('#picker1', {
 	defaultDate: moment(),
 }, function(date) {
 	$p.com.alert(date);
 });
 
-					</code></pre>
+$p.plugin.datePicker('#picker2', {
+	defaultDate: moment(),
+}, function(date) {
+	$p.com.alert(date);
+});
+
+$p.plugin.datePicker('#picker3', {
+	defaultDate: [moment().subtract('days', 6), moment()],
+}, function(date) {
+	$p.com.alert(date);
+});
+
+</code></pre>
 
 
 						<h3>更多实例</h3>

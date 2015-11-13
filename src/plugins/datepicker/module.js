@@ -9,12 +9,10 @@ define(function(require, exports, module) {
 
     function DatePicker(selector, options, callback) {
 
-        var defaultDate;
+
         var textFormat = "YYYY-MM-DD";
 
-        if (options && options.defaultDate) {
-            defaultDate = moment(options.defaultDate);
-        }
+
 
         this.options = {
             format: 'yyyy-mm-dd',
@@ -25,7 +23,8 @@ define(function(require, exports, module) {
 
         this.init = function() {
 
-            var o = this;
+            var that = this;
+            var defaultDate;
             if (!jQuery().datepicker) {
                 return;
             }
@@ -35,13 +34,42 @@ define(function(require, exports, module) {
 
             var picker = $(selector).datepicker(this.options);
 
-            if (defaultDate) {
-                $(selector).val(defaultDate.format(this.options.textFormat));
+
+            if (options && options.defaultDate) {
+                if ($.isArray(options.defaultDate)) {
+                    defaultDate = [];
+                    defaultDate.push(moment(options.defaultDate[0]));
+                    defaultDate.push(moment(options.defaultDate[1]));
+                } else {
+                    defaultDate = moment(options.defaultDate);
+                }
+
+                picker.each(function() {
+
+                    if ($(this).hasClass("input-daterange") && $.isArray(defaultDate)) {
+                        var $inputs = $(this).find("input[type='text']");
+                        $inputs.eq(0).val(defaultDate[0].format(that.options.textFormat));
+                        $inputs.eq(1).val(defaultDate[1].format(that.options.textFormat));
+                    } else {
+
+                        if ($(this).prop("tagName") === "INPUT") {
+                            $(this).val(defaultDate.format(that.options.textFormat));
+                        } else {
+                            $(this).find("input[type='text']").val(defaultDate.format(that.options.textFormat));
+                        }
+
+                    }
+
+                });
             }
+
+
+
+
 
             picker.on("changeDate", function(e) {
                 if (typeof callback === "function") {
-                    callback(moment(e.date).format(o.options.textFormat));
+                    callback(moment(e.date).format(that.options.textFormat));
                 }
             });
 

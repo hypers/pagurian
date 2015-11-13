@@ -7,8 +7,20 @@ define(function(require, exports, module) {
     require('../../plugins/datepicker/module');
 
     app.page.date = function() {
-        $p.plugin.datePicker('.date-picker', {
+        $p.plugin.datePicker('#picker1', {
             defaultDate: moment(),
+        }, function(date) {
+            $p.com.alert(date);
+        });
+
+        $p.plugin.datePicker('#picker2', {
+            defaultDate: moment(),
+        }, function(date) {
+            $p.com.alert(date);
+        });
+
+        $p.plugin.datePicker('#picker3', {
+            defaultDate: [moment().subtract('days', 6), moment()],
         }, function(date) {
             $p.com.alert(date);
         });
@@ -26,9 +38,8 @@ define(function(require, exports, module) {
 
 
     app.page.datetime = function() {
-        $p.plugin.dateTimePicker('#picker1', {
-            defaultDate: moment(),
-        }, function(date) {
+
+        $p.plugin.dateTimePicker('#picker1', {}, function(date) {
             $p.com.alert(date);
         });
 
@@ -37,15 +48,6 @@ define(function(require, exports, module) {
         }, function(date) {
             $p.com.alert(date);
         });
-
-        $p.plugin.dateTimePicker('#picker3', {
-            defaultDate: moment(),
-        }, function(date) {
-            $p.com.alert(date);
-        });
-
-        //$('#picker2').datetimepicker();
-
 
     };
 
