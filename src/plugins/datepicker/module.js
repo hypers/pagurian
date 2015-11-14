@@ -9,14 +9,9 @@ define(function(require, exports, module) {
 
     function DatePicker(selector, options, callback) {
 
-
-        var textFormat = "YYYY-MM-DD";
-
-
-
         this.options = {
             format: 'yyyy-mm-dd',
-            textFormat: textFormat,
+            textFormat: 'YYYY-MM-DD', //moment 的格式
             language: pagurian.language || 'zh_CN',
             autoclose: true
         };
@@ -34,6 +29,8 @@ define(function(require, exports, module) {
 
             var picker = $(selector).datepicker(this.options);
 
+
+            
 
             if (options && options.defaultDate) {
                 if ($.isArray(options.defaultDate)) {
@@ -62,10 +59,6 @@ define(function(require, exports, module) {
 
                 });
             }
-
-
-
-
 
             picker.on("changeDate", function(e) {
                 if (typeof callback === "function") {

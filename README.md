@@ -13,7 +13,7 @@
 ## 开发及构建
 开发者可以在 Pagrian 的基础上进行二次开发,
 Pagurian由[Grunt](http://gruntjs.com/)构建及发布,
-你需要安装Grunt已经依赖的[Node.js](http://www.nodejs.org)环境。
+你需要安装Grunt以及所依赖的[Node.js](http://www.nodejs.org)环境。
 
 
 首先安装 Grunt

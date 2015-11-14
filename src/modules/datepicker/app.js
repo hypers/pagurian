@@ -28,14 +28,13 @@ define(function(require, exports, module) {
 
     app.page.daterange = function() {
 
-        $p.plugin.dateRangePicker("#my_picker", {
+        $p.plugin.dateRangePicker("#picker", {
             defaultDate: [moment().subtract('days', 6), moment()], //默认最近一周
         }, function(start, end) {
-            $p.com.alert("开始时间：" + start + " , 结束时间：" + end);
+            $p.com.alert(start + " - " + end);
         });
 
     };
-
 
     app.page.datetime = function() {
 

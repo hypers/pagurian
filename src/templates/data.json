@@ -34,43 +34,43 @@
             "items": [
                 {
                     "name": "alerts",
-                    "title": "警告框 Alert",
+                    "title": "Alert",
                     "url": "com-alert.html",
                     "active": 0
                 },
                 {
                     "name": "buttons",
-                    "title": "按钮 Button",
+                    "title": "Button",
                     "url": "theme-buttons.html",
                     "active": 0
                 },
                 {
                     "name": "color",
-                    "title": "配色 Color",
+                    "title": "Color",
                     "url": "theme-color.html",
                     "active": 0
                 },
                 {
                     "name": "dialogs",
-                    "title": "对话框 Dialog",
+                    "title": "Dialog",
                     "url": "com-dialogs.html",
                     "active": 0
                 },
                 {
                     "name": "form",
-                    "title": "表单 Form",
+                    "title": "Form",
                     "url": "com-form.html",
                     "active": 0
                 },
                 {
                     "name": "Popover",
-                    "title": "弹出框 Popover",
+                    "title": "Popover",
                     "url": "com-popover.html",
                     "active": 0
                 },
                 {
                     "name": "Tooltip",
-                    "title": "提示框 Tooltip",
+                    "title": "Tooltip",
                     "url": "com-tooltip.html",
                     "active": 0
                 }
