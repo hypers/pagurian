@@ -179,8 +179,8 @@ define(function (require, exports, module) {
                         _selectDatas = [];
                         if (!_isSelected) {
                             $(this).addClass("selected");
-                            _selectDatas.push(_data);
                         }
+                        _selectDatas.push(_data);
                         singleSetText(_data[_dataName]);
                         o.selectDatas = _selectDatas;
                         o.options.callbackOption && o.options.callbackOption(_data, isSelect);
@@ -390,7 +390,7 @@ define(function (require, exports, module) {
                     if ($listWrap.hasClass("loading")) {
                         $listWrap.removeClass("loading");
                     }
-                    var _datas = resp.result;
+                    var _datas = resp.result || [];
                     o.allDatas = _datas;
                     chooseDatas = chooseDatas ? chooseDatas : [];
                     setData(_datas, chooseDatas);
