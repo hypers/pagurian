@@ -1,6 +1,6 @@
 # 概述
 
-![Alt text](./image/UI-Standar-LUXURY-01.jpg)
+
 
 ### 设计概述
 
@@ -13,7 +13,7 @@
 
 界面适应可变布局，页面最小显示宽度为1366px，最大宽度暂为1920px。
 
----
+--------
 
 ![mark logo](./image/UI-Standar-V.jpg)
 
