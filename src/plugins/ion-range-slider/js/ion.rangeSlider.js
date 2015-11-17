@@ -1,4 +1,4 @@
-//define(function(require, exports, module) {﻿
+define(function(require, exports, module) {﻿
 
     // Ion.RangeSlider
     // version 2.1.2 Build: 350
@@ -2309,4 +2309,4 @@
         }());
 
     }(jQuery, document, window, navigator));
-//});
+});
