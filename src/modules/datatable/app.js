@@ -9,7 +9,7 @@ define(function(require, exports, module) {
     app.page.dataTable = function() {
 
         $p.plugin.dataTable("#my_table", {
-            "dataSource": model.getDataList,
+            "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [
                 [2, "desc"]
@@ -48,9 +48,8 @@ define(function(require, exports, module) {
     app.page.dataTableExtend = function() {
 
         var oTable = $p.plugin.dataTable("#my_table", {
-            "dataSource": model.getDataList,
+            "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
-            "bExtendDetails": true,
             "aaSorting": [
                 [2, "desc"]
             ],
@@ -96,6 +95,43 @@ define(function(require, exports, module) {
         });
     };
 
+
+    app.page.dataTableSummary = function() {
+
+        $p.plugin.dataTable("#my_table", {
+            "fnDataSource": model.getDataList,
+            "sClass": "table-fixed",
+            "aaSorting": [
+                [2, "desc"]
+            ],
+            "fnParams": function() {
+                return {};
+            },
+            "aoColumns": [{
+                "bSortable": false,
+                "mData": "keywords",
+                "sTitle": "关键字"
+            }, {
+                "sTitle": "搜索引擎",
+                "mData": "searchEngine"
+            }, {
+                "bShowSummary":true,
+                "sClass": "t-a-r",
+                "sTitle": "浏览量(PV)",
+                "mData": "pageViews"
+            }, {
+                "sClass": "t-a-r",
+                "bShowSummary":true,
+                "sTitle": "独立访问者(UV)",
+                "mData": "uniqueVisitors"
+            }, {
+                "sClass": "t-a-r",
+                "bShowSummary":true,
+                "sTitle": "访问次数(VV)",
+                "mData": "visitViews"
+            }]
+        });
+    };
 
     module.exports = app;
 

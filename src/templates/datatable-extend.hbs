@@ -34,8 +34,14 @@
 						<a href="datatable.html" >基础 </a>
 					</li>
 					<li  class="active">
-						<a href="datatable-extend.html" >扩展</a>
+						<a href="datatable-extend.html" >细分</a>
 					</li>
+					<li>
+                        <a href="datatable-summary.html" >汇总</a>
+                    </li>
+					<li>
+                        <a href="datatable-options.html" >参数说明</a>
+                    </li>
 				</ul>
 			</div>
 
@@ -46,6 +52,14 @@
 
 			</div>
 
+			<div class="row">
+                <div class="col-md-12">
+                    <h3>说明</h3>
+                    <ol>
+                        <li>给fnExtendDetails参数设置回调方法，方法返回显示的内容</li>
+                    </ol>
+                </div>
+            </div>
 
 			<div class="row">
 				<div class="col-md-12">
@@ -64,10 +78,9 @@
 						<pre><code class="javascript">
 require('../../plugins/datatables/module');
 
- var oTable = $p.plugin.dataTable(&quot;#my_table&quot;, {
-    &quot;dataSource&quot;: model.getDataList,
+var oTable = $p.plugin.dataTable(&quot;#my_table&quot;, {
+    &quot;fnDataSource&quot;: model.getDataList,
     &quot;sClass&quot;: &quot;table-fixed&quot;,
-    &quot;bExtendDetails&quot;: true,
     &quot;aaSorting&quot;: [
         [2, &quot;desc&quot;]
     ],
