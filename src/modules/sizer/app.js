@@ -15,7 +15,7 @@ define(function (require, exports, module) {
             isMultiple: true,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
             dataSource: model.getSizerData,//数据源
-            class: "d-ib", //筛选器自定义class
+            style: "d-ib", //筛选器自定义class
             //processing: oLanguage.processing,//loading默认文字
             //search: oLanguage.search,//搜索框默认文字
             callbackExpand: function () {//面板展开时的回调
@@ -56,7 +56,7 @@ define(function (require, exports, module) {
             isMultiple: false,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
             dataSource: model.getSizerData,//数据源
-            class: "d-ib", //筛选器自定义class
+            style: "d-ib", //筛选器自定义class
             //processing: oLanguage.processing,//loading默认文字
             //search: oLanguage.search,//搜索框默认文字
             callbackExpand: function () {//面板展开时的回调
