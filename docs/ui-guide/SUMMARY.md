@@ -33,3 +33,5 @@
    * [工具栏](others/tool_bar.md)
    * [语言切换](others/langurage_switch.md)
    * [汇总看板与图表联动](others/billboard_link_charts.md)
+   * [邮件页面](email_page.md)
+
