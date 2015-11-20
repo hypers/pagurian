@@ -508,9 +508,6 @@ define(function(require, exports, module) {
                             var items = a.result.items || [];
                             var summary = a.result.summary || {};
 
-                            if (!items.length) {
-                                return;
-                            }
 
                             //设置默认值，如果返回的值为空默认为"--"
                             for (var i = 0; i < items.length; i++) {
@@ -522,7 +519,7 @@ define(function(require, exports, module) {
                             }
 
                             var data = {
-                                "aaData": items || [],
+                                "aaData": items,
                                 "iTotalDisplayRecords": total,
                                 "iTotalRecords": total,
                                 "sColumns": null
