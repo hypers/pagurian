@@ -36,10 +36,10 @@
                     <li>
                         <a href="datatable-extend.html" >细分</a>
                     </li>
-                    <li  class="active">
+                    <li>
                         <a href="datatable-summary.html" >汇总</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="datatable-search.html" >搜索</a>
                     </li>
                     <li>
@@ -48,9 +48,21 @@
                 </ul>
             </div>
 
+
+
+
             <div class="row">
                 <div class="col-md-12">
+
+                    <div class="tools-wrap">
+                        <div class="input-icon input-search">
+                            <i class="fa fa-search"></i>
+                            <input placeholder="查询关键字" id="txt_search" class="form-control" maxlength="1024" type="text">
+                        </div>
+                    </div>
+
                     <table id="my_table"></table>
+
                 </div>
             </div>
 
@@ -58,10 +70,8 @@
                 <div class="col-md-12">
                     <h3>说明</h3>
                     <ol>
-                        <li>在aoColumns中设置bShowSummary=true;</li>
-                        <li>在 <a target="_blank" href="/test/api/keywords.json">keywords.json</a>
-                            中返回summary信息;
-                        </li>
+                        <li>在oSearch中设置sInput,搜索文本框的选择器，例如：#txt_search</li>
+                        <li>在oSearch中设置sParamName,请求参数名称;</li>
                     </ol>
 
                 </div>
@@ -74,6 +84,8 @@
 
                     <h3>HTML代码</h3>
                         <pre><code class="html">
+&lt;input placeholder=&quot;查询关键字&quot; id=&quot;txt_search&quot; class=&quot;form-control&quot; maxlength=&quot;1024&quot; type=&quot;text&quot;&gt;
+
 &lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;
                         </code></pre>
                         <h3>Javascript代码</h3>
@@ -86,6 +98,10 @@ $p.plugin.dataTable("#my_table", {
     "aaSorting": [
         [2, "desc"]
     ],
+    "oSearch": {
+        "sInput": "#txt_search",
+        "sParamName": "word"
+    },
     "fnParams": function() {
         return {};
     },
@@ -147,7 +163,7 @@ $p.plugin.dataTable("#my_table", {
 {{>fixtures/footer}}
 <script type="text/javascript">
     pagurian.call("modules/datatable/app", function(app) {
-        app.page.dataTableSummary();
+        app.page.dataTableSearch();
     });
 </script>
 

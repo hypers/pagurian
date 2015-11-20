@@ -115,23 +115,69 @@ define(function(require, exports, module) {
                 "sTitle": "搜索引擎",
                 "mData": "searchEngine"
             }, {
-                "bShowSummary":true,
+                "bShowSummary": true,
                 "sClass": "t-a-r",
                 "sTitle": "浏览量(PV)",
                 "mData": "pageViews"
             }, {
                 "sClass": "t-a-r",
-                "bShowSummary":true,
+                "bShowSummary": true,
                 "sTitle": "独立访问者(UV)",
                 "mData": "uniqueVisitors"
             }, {
                 "sClass": "t-a-r",
-                "bShowSummary":true,
+                "bShowSummary": true,
                 "sTitle": "访问次数(VV)",
                 "mData": "visitViews"
             }]
         });
     };
+
+    app.page.dataTableSearch = function() {
+
+        $p.plugin.dataTable("#my_table", {
+            "fnDataSource": model.getDataList,
+            "sClass": "table-fixed",
+            "aaSorting": [
+                [2, "desc"]
+            ],
+            "fnParams": function() {
+                return {};
+            },
+            "oSearch": {
+                "sInput": "#txt_search",
+                "sParamName": "word",
+                "fnCallback":function(value){
+                    console.log(value);
+                }
+            },
+            "aoColumns": [{
+                "bSortable": false,
+                "mData": "keywords",
+                "sTitle": "关键字",
+                mRender: function(data, type, full) {
+                    return '<span title="' + full.keywords + '">' + full.keywords + '</span>';
+                }
+            }, {
+                "bSortable": false,
+                "sTitle": "搜索引擎",
+                "mData": "searchEngine"
+            }, {
+                "sClass": "t-a-r",
+                "sTitle": "浏览量(PV)",
+                "mData": "pageViews"
+            }, {
+                "sClass": "t-a-r",
+                "sTitle": "独立访问者(UV)",
+                "mData": "uniqueVisitors"
+            }, {
+                "sClass": "t-a-r",
+                "sTitle": "访问次数(VV)",
+                "mData": "visitViews"
+            }]
+        });
+    };
+
 
     module.exports = app;
 

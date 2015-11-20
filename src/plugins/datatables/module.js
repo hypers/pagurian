@@ -347,7 +347,10 @@ define(function(require, exports, module) {
 
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
         var that = this;
+
         this.id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+        this.bLoadFinish = false;
+        this.aApiParams = {};
         this.options = {
             "sForm": '#form',
             "bAutoload": true,
@@ -374,10 +377,11 @@ define(function(require, exports, module) {
             "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 
 
-
-                var apData = [];
                 var length = oSettings.oInit.iDisplayLength,
-                    opt = {};
+                    //aApiParams 用[] 不用{} 是有原因的，在某些情况下一个参数会传递多个值
+                    aApiParams = [],
+                    opt = {},
+                    key;
 
                 function getPageIndex(total) {
                     for (var i = 0; i < aoData.length; i++) {
@@ -396,7 +400,7 @@ define(function(require, exports, module) {
 
                     //页码
                     if (aoData[i].name === "iDisplayStart") {
-                        apData.push({
+                        aApiParams.push({
                             "name": "page",
                             "value": getPageIndex(aoData[i].value)
                         });
@@ -406,13 +410,13 @@ define(function(require, exports, module) {
                     if (aoData[i].name === "iSortCol_0" && oSettings.aoColumns[aoData[i].value].mData) {
 
                         column = oSettings.aoColumns[aoData[i].value];
-                        apData.push({
+                        aApiParams.push({
                             "name": "orderColumn",
                             "value": column.mData
                         });
 
                         if (column.isPinyinSort) {
-                            apData.push({
+                            aApiParams.push({
                                 "name": "isDict",
                                 "value": true
                             });
@@ -422,7 +426,7 @@ define(function(require, exports, module) {
 
                     //排序类型（升序/降序）
                     if (aoData[i].name === "sSortDir_0") {
-                        apData.push({
+                        aApiParams.push({
                             "name": "orderType",
                             "value": aoData[i].value
                         });
@@ -432,10 +436,20 @@ define(function(require, exports, module) {
                 }
 
                 //每页显示行数
-                apData.push({
+                aApiParams.push({
                     "name": "pagesize",
                     "value": length
                 });
+
+
+                for (key in that.aApiParams) {
+                    if (that.aApiParams[key] !== "") {
+                        aApiParams.push({
+                            name: key,
+                            value: that.aApiParams[key]
+                        });
+                    }
+                }
 
                 $.cookie("params.pagesize", length, {
                     expires: 60,
@@ -444,15 +458,15 @@ define(function(require, exports, module) {
 
                 //自定义的业务参数
                 if (typeof oSettings.oInit.fnParams === "function") {
-                    var params = oSettings.oInit.fnParams(apData) || {};
+                    var params = oSettings.oInit.fnParams(aApiParams) || {};
 
-                    for (var key in params) {
+                    for (key in params) {
                         if (typeof params[key] !== "function") {
 
                             //如果是一个数组的，就设置多个值
                             if (typeof params[key] === "object") {
                                 for (var j = 0; j < params[key].length; j++) {
-                                    apData.push({
+                                    aApiParams.push({
                                         "name": key,
                                         "value": params[key][j]
                                     });
@@ -460,7 +474,7 @@ define(function(require, exports, module) {
                                 continue;
                             }
 
-                            apData.push({
+                            aApiParams.push({
                                 "name": key,
                                 "value": params[key]
                             });
@@ -479,7 +493,8 @@ define(function(require, exports, module) {
 
                     if ("function" === typeof fnDataSource) {
 
-                        fnDataSource(apData, function(a, b, c) {
+                        fnDataSource(aApiParams, function(a, b, c) {
+
 
                             var total = a.page ? a.page.total : 0;
                             var items = a.result.items || [];
@@ -603,10 +618,13 @@ define(function(require, exports, module) {
                                 oSettings.oInit.callback(a);
                             }
 
+                            that.bLoadFinish = true;
+
                         }, opt);
                     }
 
                 } else {
+
                     fnCallback({
                         "aaData": [],
                         "iTotalDisplayRecords": 0,
@@ -614,6 +632,7 @@ define(function(require, exports, module) {
                         "sColumns": null,
                         "sEcho": "1"
                     });
+
                 }
             },
             "oLanguage": locale[pagurian.language || "zh_CN"]
@@ -622,6 +641,7 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var aoColumns;
+
             $.extend(true, this.options, options);
 
             //显示汇总信息
@@ -640,6 +660,29 @@ define(function(require, exports, module) {
             $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
             $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
 
+            if (this.options.oSearch) {
+                var searchId = this.options.oSearch.sInput;
+                var searchWord = this.options.oSearch.sParamName;
+                var search_keyword = "";
+
+                $(searchId).keyup(function(e) {
+
+                    var word = $.trim($(this).val()),
+                        isChange = search_keyword === word ? 0 : 1,
+                        isPush = false;
+                    if ((e.which == 13 || that.bLoadFinish) && isChange) {
+                        that.bLoadFinish = false;
+                        that.aApiParams[searchWord] = word;
+                        that.update();
+                        search_keyword = word;
+
+                        if (typeof that.options.oSearch.fnCallback == "function") {
+                            that.options.oSearch.fnCallback(word);
+                        }
+                        return;
+                    }
+                });
+            }
         };
 
         this.update = function() {
