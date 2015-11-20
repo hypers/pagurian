@@ -41,7 +41,7 @@ define(function (require, exports, module) {
              * dataParams: {}, //数据源的参数
              * dataMapping: {name: string, value: string}, //数据源的映射关系
              * position: { left: 0 }//设置面板的位置 与$.css()数据格式相同
-             * class: string,//custom类型
+             * style: string,//custom类型
              * processing: (*|function(event, Object, boolean)), //loading文字
              * search: (*|string|string|string|string),//搜索框内的placeholder
              * callbackExpand: function(){},//面板展开时的回调
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
                 position: { //设置面板的位置
                     left: 0
                 },
-                class: "", //筛选器自定义class
+                style: "", //筛选器自定义class
                 processing: oLanguage.processing,//loading默认文字
                 search: oLanguage.search,//搜索框默认文字
                 callbackExpand: null,//面板展开时的回调
@@ -104,7 +104,7 @@ define(function (require, exports, module) {
             var drawDom = function (selector) {
                 var _sizerWrap = '',
                     _sizerSelectPanel = '';
-                _sizerWrap += '<div id="' + o.sizerName + '"class="sizer-wrap ' + o.options.class;
+                _sizerWrap += '<div id="' + o.sizerName + '"class="sizer-wrap ' + o.options.style;
                 //_sizerWrap += o.options.isExpand ? " sizer-open" : "";
                 _sizerWrap += '"></div>';
 

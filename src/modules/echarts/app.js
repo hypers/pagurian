@@ -140,7 +140,8 @@ define(function (require, exports, module) {
         chart = $p.plugin.echarts("my_chart", {
             type: "bar"
         });
-        chart.load({
+
+        var data = {
             name: "PV",
             //是否为水平显示,默认为false
             //horizon:true,
@@ -173,6 +174,19 @@ define(function (require, exports, module) {
                     value: 114,
                     name: '网易有道'
                 }]
+        }
+        chart.load(data, function(option){
+            option.series[0].itemStyle.normal={
+                color: function (params) {
+                    var colorList = [
+                        '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                        '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                        '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                    ];
+                    return colorList[params.dataIndex];
+                }
+            };
+            return option;
         });
 
     };
