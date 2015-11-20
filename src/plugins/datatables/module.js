@@ -350,6 +350,7 @@ define(function(require, exports, module) {
 
         this.id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         this.bLoadFinish = false;
+        this.bShowSummary = false;
         this.aApiParams = {};
         this.options = {
             "sForm": '#form',
@@ -440,6 +441,13 @@ define(function(require, exports, module) {
                     "name": "pagesize",
                     "value": length
                 });
+
+                if (that.bShowSummary) {
+                    aApiParams.push({
+                        "name": "summary",
+                        "value": true
+                    });
+                }
 
 
                 for (key in that.aApiParams) {
@@ -649,6 +657,7 @@ define(function(require, exports, module) {
             for (var i = 0; i < aoColumns.length; i++) {
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
                     aoColumns[i].sTitle += "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                    that.bShowSummary = true;
                 }
             }
 

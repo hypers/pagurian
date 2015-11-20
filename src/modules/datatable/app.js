@@ -148,7 +148,7 @@ define(function(require, exports, module) {
                 "sInput": "#txt_search",
                 "sParamName": "word",
                 "fnCallback":function(value){
-                    console.log(value);
+                    $p.log(value);
                 }
             },
             "aoColumns": [{
