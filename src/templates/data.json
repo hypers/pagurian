@@ -1,0 +1,147 @@
+{
+    "user": {
+        "name": "系统管理员"
+    },
+    "version": "1.4.0",
+    "description": "一个管理系统的前端框架",
+    "update": "",
+    "page": {
+        "color": "配色 Color",
+        "button": "按钮 Button",
+        "form": "表单 Form",
+        "dialog": "对话框 Dialog",
+        "alert": "警告框 Alert",
+        "tooltip": "提示框 Tooltip",
+        "popover": "弹出框 Popover",
+        "datatables": "DataTables",
+        "datalistview": "数据列表 DataListView",
+        "datepicker": "Date Pickers",
+        "sizer": "筛选器 Sizer",
+        "summary": "汇总面板 Summary",
+        "echarts": "Echarts",
+        "ckeditor": "CKEditor",
+        "catalogue": "目录设计",
+        "js": "Javascript规范",
+        "css": "CSS规范",
+        "login": "Pagurian 单页-登录",
+        "slider":"Range Slider"
+    },
+    "menu": [
+        {
+            "name": "theme",
+            "title": "基础UI",
+            "icon": "fa fa-picture-o",
+            "items": [
+                {
+                    "name": "alerts",
+                    "title": "Alert",
+                    "url": "com-alert.html",
+                    "active": 0
+                },
+                {
+                    "name": "buttons",
+                    "title": "Button",
+                    "url": "theme-buttons.html",
+                    "active": 0
+                },
+                {
+                    "name": "color",
+                    "title": "Color",
+                    "url": "theme-color.html",
+                    "active": 0
+                },
+                {
+                    "name": "dialogs",
+                    "title": "Dialog",
+                    "url": "com-dialogs.html",
+                    "active": 0
+                },
+                {
+                    "name": "form",
+                    "title": "Form",
+                    "url": "com-form.html",
+                    "active": 0
+                },
+                {
+                    "name": "Popover",
+                    "title": "Popover",
+                    "url": "com-popover.html",
+                    "active": 0
+                },
+                {
+                    "name": "Tooltip",
+                    "title": "Tooltip",
+                    "url": "com-tooltip.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "com",
+            "title": "组件",
+            "icon": "fa fa-briefcase",
+            "items": [
+                {
+                    "name": "dataListView",
+                    "title": "DataListView",
+                    "url": "datalistview.html",
+                    "active": 0
+                },
+                {
+                    "name": "sizer",
+                    "title": "Sizer",
+                    "url": "sizer-single.html"
+                },
+                {
+                    "name": "summary",
+                    "title": "Summary",
+                    "url": "summary.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "plugin",
+            "title": "插件",
+            "icon": "fa fa-puzzle-piece",
+            "items": [
+                {
+                    "name": "dataTables",
+                    "title": "DataTables",
+                    "url": "datatable.html",
+                    "active": 0
+                },
+                {
+                    "name": "datepicker",
+                    "title": "Date Pickers",
+                    "url": "datepicker.html"
+                },
+                {
+                    "name": "echarts",
+                    "title": "Echarts",
+                    "url": "echarts-line.html",
+                    "active": 0
+                },
+                {
+                    "name": "slider",
+                    "title": "Range Slider",
+                    "url": "slider.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "page",
+            "title": "单页",
+            "icon": "fa fa-pagelines",
+            "items": [
+                {
+                    "name": "login",
+                    "title": "登录页面",
+                    "url": "page-login.html",
+                    "active": 0
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,243 @@
+{{>fixtures/doctype}}
+<head>
+    <title>{{data.page.form}}</title>
+    {{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+    {{>fixtures/sidebar}}
+
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+
+        <div class="page-content">
+
+
+            {{>fixtures/theme-panel}}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="page-title">
+                    {{data.page.form}}
+                    </h3>
+                </div>
+            </div>
+
+
+            <div class="tabs-wrap">
+               <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="com-form.html" >布局 </a>
+                    </li>
+                    <li  class="active">
+                        <a href="com-form-validation.html" >验证</a>
+                    </li>
+                    <li >
+                        <a href="com-form-other.html" >其他</a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-12 ">
+
+                    <div class="portlet box default ">
+
+                        <div class="portlet-body form">
+                            <form action="#" id="form_sample_1" class="form-horizontal">
+                                <div class="form-body">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Name
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input type="text" name="name" data-required="1" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Email
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input name="email" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">URL
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input name="url" type="text" class="form-control"/>
+                                            <span class="help-block">
+                                                e.g: http://www.demo.com or http://demo.com
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Number
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input name="number" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Digits
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input name="digits" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Credit Card
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <input name="creditcard" type="text" class="form-control"/>
+                                            <span class="help-block">
+                                                e.g: 5500 0000 0000 0004
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Occupation&nbsp;&nbsp;</label>
+                                        <div class="col-md-4">
+                                            <input name="occupation" type="text" class="form-control"/>
+                                            <span class="help-block">
+                                                optional field
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3">Category
+                                        <span class="required">
+                                            *
+                                        </span>
+                                        </label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="category" class="select2me">
+                                                <option value="">Select...</option>
+                                                <option value="Category 1">Category 1</option>
+                                                <option value="Category 2">Category 2</option>
+                                                <option value="Category 3">Category 5</option>
+                                                <option value="Category 4">Category 4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions fluid">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn green">Submit</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="markdown">
+                        <h3>Javascript代码</h3>
+                        <pre><code class="javascript">
+require('../../plugins/jquery.validate/module');
+
+$p.com.form("#form_sample_1", {
+    validate: {
+        rules: {
+            name: {
+                minlength: 2,
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            url: {
+                required: true,
+                url: true
+            },
+            number: {
+                required: true,
+                number: true
+            },
+            digits: {
+                required: true,
+                digits: true
+            },
+            creditcard: {
+                required: true,
+                creditcard: true
+            },
+            occupation: {
+                minlength: 5,
+            },
+            category: {
+                required: true
+            }
+        },
+        custom: function(form, data) {
+            return true;
+        }
+    },
+    submit: function(form, data) {
+        model.add(data, function(resp) {
+            $p.com.alert(resp.message);
+        })
+    }
+});
+
+                        </code></pre>
+
+                        <h3>更多实例</h3>
+                        <a href="http://jqueryvalidation.org/documentation/" target="_blank">http://jqueryvalidation.org/documentation/</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+    pagurian.call("modules/form/app", function(app) {
+        app.page.validation();
+    });
+</script>
+
+{{>fixtures/tracker}}
+</body>
+</html>

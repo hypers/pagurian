@@ -1,0 +1,113 @@
+@import "../colors/base.less";
+@import "../colors/green.less";
+@import "../colors/base.less";
+.login {
+    position: absolute;
+    width: 380px;
+    height: 450px;
+    left: 50%;
+    top: 50%;
+    margin-left: -190px;
+    margin-top: -225px;
+    background: none !important;
+    .input-icon input {
+        border: none;
+        height: 40px;
+    }
+    .input-icon i {
+        margin: 13px 2px 4px 12px;
+        font-size: 20px;
+    }
+    .content {
+        width: 100%;
+        padding: 40px 40px 30px;
+        position: relative;
+        background: @B050;
+        .input-icon {
+            position: relative;
+            border: 1px solid @B300 !important;
+        }
+        .input-icon a {
+            text-decoration: none;
+        }
+        .form-actions {
+            margin: 20px 0;
+            border-bottom: 0;
+            padding: 0;
+            .checkbox {
+                padding-left: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+                font-size: 18px;
+                display: inline-block;
+                input {
+                    margin-left: 0;
+                }
+            }
+        }
+        .captcha {
+            width: 150px;
+        }
+        .captcha-wrap {
+            width: 148px;
+            height: 40px;
+            background-color: @B200;
+            text-align: center;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-decoration: none;
+            img {
+                vertical-align: middle;
+            }
+        }
+        .forget-pwd {
+            font-size: 18px;
+            line-height: 35px;
+            text-decoration: underline;
+            color: @B600;
+            line-height: 25px;
+            &:hover {
+                color: @B600 !important;
+            }
+        }
+    }
+    span.help-block {
+        background: none;
+        min-height: 14px;
+    }
+    .has-error {
+        margin-bottom: 12px;
+        .help-block {
+            color: @M001;
+        }
+        span.help-block {
+            color: @M001;
+        }
+        .input-icon > i {
+            color: @B500;
+        }
+    }
+    .input-cut {
+        width: 2px;
+        height: 100%;
+        background-color: @H500;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .a-forgot {
+        color: #9f9f9f;
+        float: right;
+        font-size: 18px;
+    }
+    .form-control,
+    .btn {
+        font-size: 20px;
+    }
+    .btn {
+        padding: 5px 20px;
+        height: 40px;
+    }
+}

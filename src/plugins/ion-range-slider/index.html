@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Ion.RangeSlider - test</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
+</head>
+<body>
+
+<!-- Page contents -->
+<div style="position: relative; padding: 200px;">
+    <div>
+        <input type="text" id="range" value="" name="range" />
+    </div>
+</div>
+<!-- All JS -->
+<script src="../../lib/vendor/jquery-1.11.3.min.js"></script>
+<script src="js/ion.rangeSlider.js"></script>
+
+<script>
+
+    $(function () {
+
+        $("#range").ionRangeSlider({
+            type: "double",
+            min: 1000000,
+            max: 2000000,
+            grid: true,
+            onFinish:function(){
+                alert("ddd");
+            }
+        });
+
+
+    });
+</script>
+
+
+
+
+</body>
+</html>

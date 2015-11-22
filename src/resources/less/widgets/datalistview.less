@@ -1,0 +1,71 @@
+/*DATA LIST VIEW*/
+.dataListView {
+    position: relative;
+    .clearfix;
+
+    .dataListView_info {
+        top: 0px;
+        line-height: 34px;
+        margin: 10px;
+    }
+    .pagination {
+        margin: 10px;
+    }
+
+    .dataListView_paginate {
+        float: right;
+    }
+
+    .dataListView_length {
+        float: left;
+        margin: 10px;
+
+        select {
+            width: 80px !important;
+            display: inline;
+            height: 36px;
+        }
+
+        label {
+            line-height: 36px;
+        }
+    }
+
+    .pagination {
+        li {
+            display: inline;
+        }
+
+        .active {
+            a {
+                background: @B000 !important;
+                color: @B900 !important;
+                border-width: 1px 1px 2px 1px;
+                border-style: solid;
+                border-color: @B300 @B300 @H500 @B300 !important;
+            }
+        }
+        a:hover {
+            background: @B000 !important;
+            color: @B900 !important;
+            border-width: 1px 1px 2px 1px;
+            border-style: solid;
+            border-color: @B300 @B300 @H500 @B300 !important;
+        }
+    }
+
+    .table-scrollable {
+        margin: 0px !important;
+        border-width: 1px 1px 1px 1px;
+        border-color: @B100;
+    }
+
+    .dataListView_info {
+        .num {
+            color: @H500;
+            font-weight: 700;
+        }
+    }
+}
+
+/*DATA LIST VIEW END*/

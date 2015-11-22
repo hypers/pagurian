@@ -1,0 +1,166 @@
+{{>fixtures/doctype}}
+<head>
+<title>{{data.page.echarts}}</title>
+{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+   {{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+
+		<div class="page-content">
+
+			{{>fixtures/theme-panel}}
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.echarts}}
+					</h3>
+				</div>
+			</div>
+
+
+            <div class="tabs-wrap">
+                <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="echarts-line.html" >曲线图 </a>
+                    </li>
+                    <li class="active">
+                        <a href="echarts-stack.html" >堆积图</a>
+                    </li>
+                    <li >
+                        <a href="echarts-pie.html" >饼图</a>
+                    </li>
+                    <li >
+                        <a href="echarts-bar.html" >柱状图</a>
+                    </li>
+                    <li >
+                        <a href="echarts-map.html" >地图</a>
+                    </li>
+                    <li >
+                        <a href="echarts-event.html" >自定义事件</a>
+                    </li>
+                </ul>
+            </div>
+
+
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="portlet box default">
+
+						<div class="portlet-body">
+							<div  class="chart-default " >
+								<div class="chart-body" id="my_chart"></div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+                    <pre><code class="javascript">
+require('../../plugins/echarts/module');
+
+var chart = $p.plugin.echarts("my_chart", {
+    type: "line",
+    title: {
+        text: '来源分析',
+        subtext: '最近一周数据'
+    }
+});
+chart.load({
+    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+    rows: [{
+        name: "搜索引擎",
+        data: [120, 132, 101, 134, 90, 230, 210],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
+    }, {
+        name: "外部链接",
+        data: [220, 182, 191, 234, 290, 330, 310],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
+    }, {
+        name: "直接访问",
+        data: [150, 232, 201, 154, 190, 330, 410],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
+    }, {
+        name: "站内链接",
+        data: [320, 332, 301, 334, 390, 330, 320],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
+    }]
+});
+
+                </code></pre>
+
+                   {{>fixtures/echarts-footer}}
+
+                </div>
+                </div>
+            </div>
+			<!-- END PAGE CONTENT-->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+
+
+<script type="text/javascript">
+
+    pagurian.call(["modules/echarts/app","plugins/echarts/loader"], function(app) {
+		app.page.echarts_stack();
+	});
+
+</script>
+
+{{>fixtures/tracker}}
+</body>
+</html>

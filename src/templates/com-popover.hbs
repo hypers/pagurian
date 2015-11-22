@@ -1,0 +1,99 @@
+{{>fixtures/doctype}}
+<head>
+	<title>{{data.page.popover}}</title>
+	{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+	{{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+
+		<div class="page-content">
+
+			{{>fixtures/theme-panel}}
+
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.popover}}
+					</h3>
+				</div>
+			</div>
+
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+
+				<div class="col-md-12">
+
+
+					<div class="portlet box default">
+						<div class="portlet-title">
+							<div class="caption">
+								Buttons & Links
+							</div>
+						</div>
+						<div class="portlet-body">
+
+							<p>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="top" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in top">Top</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="left" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in left">Left</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="right" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in right">Right</button>
+								<button class="btn btn-default popovers" data-trigger="hover" data-placement="bottom" data-content="Popover body goes here! Popover body goes here!" data-original-title="Popover in bottom">Bottom</button>
+
+							<p>
+								 <a href="javascript:;" class="popovers" data-content="Popover body goes here! Popover body goes here!" data-original-title="Default Popover">click link</a>
+							</p>
+							<p>
+								 Tight pants next level keffiyeh <a href="javascript:;" class="popovers" data-content="Popover body goes here! Popover body goes here!" data-original-title="Default Popover">trigger me on click</a> haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel <a href="javascript:;" class="popovers" data-trigger="hover" data-content="Popover body goes here! Popover body goes here!" data-original-title="Another Popover">trigger me on hover</a> terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel williamsburg marfa.
+							</p>
+
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+			    <!--markdown-->
+			    <div class="markdown">
+			    <h3>HTML</h3>
+				<pre class="prettyprint"><code class="language-html hljs ">
+&lt;!--Button--&gt;
+&lt;button class=&quot;btn btn-default popovers&quot; data-trigger=&quot;hover&quot; data-placement=&quot;top&quot; data-content=&quot;Popover body goes here! Popover body goes here!&quot; data-original-title=&quot;Popover in top&quot;&gt;Top&lt;/button&gt;
+&lt;button class=&quot;btn btn-default popovers&quot; data-trigger=&quot;hover&quot; data-placement=&quot;left&quot; data-content=&quot;Popover body goes here! Popover body goes here!&quot; data-original-title=&quot;Popover in left&quot;&gt;Left&lt;/button&gt;
+&lt;button class=&quot;btn btn-default popovers&quot; data-trigger=&quot;hover&quot; data-placement=&quot;right&quot; data-content=&quot;Popover body goes here! Popover body goes here!&quot; data-original-title=&quot;Popover in right&quot;&gt;Right&lt;/button&gt;
+&lt;button class=&quot;btn btn-default popovers&quot; data-trigger=&quot;hover&quot; data-placement=&quot;bottom&quot; data-content=&quot;Popover body goes here! Popover body goes here!&quot; data-original-title=&quot;Popover in bottom&quot;&gt;Bottom&lt;/button&gt;
+
+&lt;!--A--&gt;
+&lt;a href=&quot;javascript:;&quot; class=&quot;popovers&quot; data-content=&quot;Popover body goes here! Popover body goes here!&quot; data-original-title=&quot;Default Popover&quot;&gt;click link&lt;/a&gt;
+				</code></pre>
+				</div>
+			 <!--end markdown-->
+				</div>
+			</div>
+
+			<!-- END PAGE CONTENT-->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+<script type="text/javascript">
+
+	pagurian.call("modules/com/app", function(app) {
+		app.page.popover();
+	});
+</script>
+
+{{>fixtures/tracker}}
+</body>
+</html>
