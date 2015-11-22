@@ -59,6 +59,8 @@
                     <h3>说明</h3>
                     <ol>
                         <li>在aoColumns中设置bShowSummary=true;</li>
+                        <li>在aoColumns中设置fnSummaryFormat,自定义一个函数，格式化显示的值，可选参数</li>
+
                         <li>在 <a target="_blank" href="/test/api/keywords.json">keywords.json</a>
                             中返回summary信息;
                         </li>
@@ -104,6 +106,9 @@ $p.plugin.dataTable("#my_table", {
     }, {
         "sClass": "t-a-r",
         "bShowSummary":true,
+        "fnSummaryFormat": function(value) {
+            return value + ".00";
+        },
         "sTitle": "独立访问者(UV)",
         "mData": "uniqueVisitors"
     }, {

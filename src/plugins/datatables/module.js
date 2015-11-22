@@ -536,7 +536,13 @@ define(function(require, exports, module) {
 
                             //汇总信息
                             for (var key in summary) {
-                                $("#" + that.id + "_" + key).html(summary[key]);
+                                var summary_value = summary[key];
+                                for (i = 0; i < oSettings.aoColumns.length; i++) {
+                                    if (oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
+                                        summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
+                                    }
+                                }
+                                $("#" + that.id + "_" + key).html(summary_value);
                             }
 
 

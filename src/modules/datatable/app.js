@@ -122,6 +122,9 @@ define(function(require, exports, module) {
             }, {
                 "sClass": "t-a-r",
                 "bShowSummary": true,
+                "fnSummaryFormat": function(value) {
+                    return value + ".00";
+                },
                 "sTitle": "独立访问者(UV)",
                 "mData": "uniqueVisitors"
             }, {
@@ -147,7 +150,7 @@ define(function(require, exports, module) {
             "oSearch": {
                 "sInput": "#txt_search",
                 "sParamName": "word",
-                "fnCallback":function(value){
+                "fnCallback": function(value) {
                     $p.log(value);
                 }
             },
