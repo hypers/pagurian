@@ -90,55 +90,45 @@
                                 </tr>
                                 <tr>
                                     <td>sProcessing</td>
-                                    <td><i class="fa fa-spinner fa-spin big"></i>&nbsp;&nbsp;加载中</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>&lt;i class="fa fa-spinner fa-spin big"&gt;&lt;/i&gt;&nbsp;&nbsp;加载中</td>
+                                    <td>string</td>
+                                    <td>文字加载中的提示文字</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>bInitLoad</td>
+                                    <td>true</td>
+                                    <td>boolean</td>
+                                    <td>是否初始化时载入数据</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>sTplHtml</td>
+                                    <td>--</td>
+                                    <td>string</td>
+                                    <td>数据模板</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>sDataBody</td>
+                                    <td>{<br/>
+                                        &nbsp;"ele": "div",<br/>
+                                        &nbsp;"cls": "dataListView_Wrap"<br/>
+                                        }</td>
+                                    <td>obejct</td>
+                                    <td>定义数据的显示节点及节点样式</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>sDom</td>
+                                    <td>["D", "&lt;div style='display: block;' class='bottom'&gt;", "S", "T", "P", "&lt;/div&gt;"]</td>
+                                    <td>array</td>
+                                    <td>数据的展示顺序及结构[D:data 数据,S:select 每页显示多少,T:total 共计,P:paginate 分页]</td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row  clear">
                     <div class="col-md-12">
-                        <h3>Options.aoColumns</h3>
+                        <h3>Options.sDataBody</h3>
                         <hr>
                         <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
                             <thead>
@@ -151,29 +141,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>bSortable</td>
-                                    <td>true</td>
-                                    <td>boolean</td>
-                                    <td>设置该字段可排序</td>
-                                </tr>
-                                <tr>
-                                    <td>mData</td>
-                                    <td>--</td>
+                                    <td>ele</td>
+                                    <td>div</td>
                                     <td>string</td>
-                                    <td>设置该字段也数据对象绑定的列名</td>
+                                    <td>数据填充的父节点</td>
                                 </tr>
                                 <tr>
-                                    <td>sClass</td>
-                                    <td>--</td>
+                                    <td>cls</td>
+                                    <td>dataListView_Wrap</td>
                                     <td>string</td>
-                                    <td>设置该列的样式，class名称</td>
-                                </tr>
-
-                                <tr>
-                                    <td>bShowSummary</td>
-                                    <td>false</td>
-                                    <td>boolean</td>
-                                    <td>设置该列显示汇总数据</td>
+                                    <td>数据填充父节点的class</td>
                                 </tr>
                             </tbody>
                         </table>
