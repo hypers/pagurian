@@ -4,16 +4,8 @@ define(function(require, exports, module) {
 
     require("../../plugins/ion-range-slider/module");
     app.page.index = function() {
-        $p.plugin.slider("#range");
-
-        $p.plugin.slider("#range2", {
-            type: "double",
-            grid: true,
-            min: 0,
-            max: 1000,
-            from: 200,
-            to: 800,
-            prefix: "$"
+        $p.plugin.slider("#range",{
+            from:10
         });
 
         $p.plugin.slider("#range2", {
