@@ -21,9 +21,10 @@ define(function (require, exports, module) {
             callbackExpand: function () {//面板展开时的回调
                 console.log("Expand");
             },
-            callbackClose: function (datas) {//面板关闭时的回掉
+            callbackClose: function (datas,allDatas) {//面板关闭时的回掉
                 console.log("Close");
                 console.log(datas);
+                console.log(allDatas);
             },
             callbackOption: function (data) {//点击选项的回调
                 console.log(data);
@@ -62,9 +63,10 @@ define(function (require, exports, module) {
             callbackExpand: function () {//面板展开时的回调
                 console.log("Expand");
             },
-            callbackClose: function (datas) {//面板关闭时的回掉
+            callbackClose: function (datas,allDatas) {//面板关闭时的回掉
                 console.log("Close");
                 console.log(datas);
+                console.log(allDatas);
             },
             callbackOption: function (data) {//点击选项的回调
                 console.log("Click Option");
