@@ -1,0 +1,240 @@
+{{>fixtures/doctype}}
+
+<head>
+    <title>{{data.page.summary}}</title>
+    {{>fixtures/head}}
+    <style media="screen">
+        .table-custom td div {
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+    {{>fixtures/header}}
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.summary}}
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                            <li>
+                                <a href="summary.html">基础</a>
+                            </li>
+                            <li>
+                                <a href="summary-pro.html">高级</a>
+                            </li>
+                            <li class="active">
+                                <a href="summary-options.html">参数说明</a>
+                            </li>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="markdown">
+                            <pre><code class="html">$p.plugin.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Options</h3>
+                        <hr>
+                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                            <thead>
+                                <tr>
+                                    <th width="200">参数</th>
+                                    <th width="150">默认值</th>
+                                    <th width="400">数据类型</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><mark>cName</mark></td>
+                                    <td>cName</td>
+                                    <td>string</td>
+                                    <td>数据源data cName的key</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>allColumns</mark></td>
+                                    <td>--</td>
+                                    <td>array</td>
+                                    <td>所有的列，数据格式:
+                                    <pre>
+{
+        //dataName
+        "dataName": "title",
+        //是否为Title字段 默认填充列名
+        "isTitle": true,
+        //自定义class
+        "klass": "summary-span-title",
+        "tpl": "增长数:{0}" //模板填充,
+        //key为datame的值 填充方法(优先级高于tpl)
+        'render': function (data, full) {}
+}
+                                    </pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><mark>allRows</mark></td>
+                                    <td>--</td>
+                                    <td>array</td>
+                                    <td>所有的行,数据格式:
+                                    <pre>
+{
+    //cName key默认为cName可在option中配置
+    "cName": "showCounts",
+    //title
+    "title": "展示次数"
+}
+                                    </pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[maxNum]</mark></td>
+                                    <td>最大列数</td>
+                                    <td>int</td>
+                                    <td>最大展示数</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[minNum]</mark></td>
+                                    <td>1</td>
+                                    <td>int</td>
+                                    <td>最小展示数</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[canChoose]</mark></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>是否可以切换面板，如果为true则点击后有选中效果</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[showSetting]</mark></td>
+                                    <td>false</td>
+                                    <td>boolean</td>
+                                    <td>是否显示设置按钮</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>dataSource</mark></td>
+                                    <td>--</td>
+                                    <td>function</td>
+                                    <td>一个方法，定义dataListview显示的数据源</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>dataParams</mark></td>
+                                    <td>{}</td>
+                                    <td>object</td>
+                                    <td>设置自定义请求参数</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[callBackPanel]</mark></td>
+                                    <td>--</td>
+                                    <td>function(<code>columnName</code>,<code>columnData</code>,<code>allDatas</code>){}</td>
+                                    <td>
+                                        点击面板的回调<br/>
+                                        <code>columnName</code>点击的列名<br/>
+                                        <code>columnData</code>当前列数据<br/>
+                                        <code>allDatas</code>所有数据
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[callBackGetData]</mark></td>
+                                    <td>--</td>
+                                    <td>function</td>
+                                    <td>数据渲染后的回调<br/>
+<pre>
+ [canChoose=true]
+"callBackGetData":function(_chooseColumnsName, _chooseColumnsData, _allDatas){}  //选中的列名,选中列的数据,所有数据
+ [canChoose=false]
+"callBackGetData":function( _allDatas){}  //所有数据
+</pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row  clear">
+                    <div class="col-md-12">
+                        <h3>Options(showSetting为true时有效)</h3>
+                        <hr>
+                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                            <thead>
+                                <tr>
+                                    <th width="200">参数</th>
+                                    <th>默认值</th>
+                                    <th width="400">数据类型</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><mark>[callbackOpen]</mark></td>
+                                    <td>--</td>
+                                    <td>function</td>
+                                    <td>展开面板的回调</td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[callbackSubmit]</mark></td>
+                                    <td>--</td>
+                                    <td>function(<code>showColumns</code>,<code>datas</code>){}</td>
+                                    <td>点击确定按钮的回调<br/>
+                                        <code>showColumns</code>:展示的列<br/>
+                                        <code>datas</code>:全部数据
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><mark>[callbackCancel]</mark></td>
+                                    <td>--</td>
+                                    <td>function</td>
+                                    <td>点击取消按钮的回调</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+
+    {{>fixtures/footer}}
+    <script type="text/javascript">
+        pagurian.call("modules/slider/app", function(app) {
+            app.page.index();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+
+</body>
+
+</html>
