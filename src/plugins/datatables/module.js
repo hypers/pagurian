@@ -658,8 +658,16 @@ define(function(require, exports, module) {
             //显示汇总信息
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
+
+                var p = "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
-                    aoColumns[i].sTitle += "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                    if (aoColumns[i].sTitle) {
+                        aoColumns[i].sTitle += p;
+                    } else {
+                        $(seletor + " thead th:eq(" + i + ")").append(p);
+                    }
+
                     that.bShowSummary = true;
                 }
             }
@@ -668,6 +676,10 @@ define(function(require, exports, module) {
             $(seletor).addClass("table-custom table  table-hover  " + options.sClass);
 
             this.table = oTable = $(seletor).dataTable(this.options);
+
+            if (that.bShowSummary) {
+                $(seletor + '_wrapper').addClass("table-summary-wrapper");
+            }
 
             $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
             $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
