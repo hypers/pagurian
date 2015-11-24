@@ -20,7 +20,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.11.04.1040";
+            this.version = "2015.11.23.1354";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -261,13 +261,12 @@ define(function (require, exports, module) {
                     //确定
                     $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
                         o.selectDatas = o._tmpSelectDatas;
-                        o.options.callbackSubmit && o.options.callbackSubmit();
+                        o.options.callbackSubmit && o.options.callbackSubmit(o.selectDatas, o.allDatas);
                         closePanel(true);
                     });
 
                     //取消
                     $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
-                        //o.selectDatas = o._tmpSelectDatas;
                         o.options.callbackCancel && o.options.callbackCancel();
                         closePanel(true);
                     });

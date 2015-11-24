@@ -32,15 +32,17 @@ define(function (require, exports, module) {
             callbackSearch: function (datas) {//搜索框录入回调
                 console.log(datas);
             },
-            //仅isMultiple为true时有效
-            callbackSelectAll: function () {//全选时的回调
-                console.log("SelectAll");
-            },
             callbackClean: function () {//点击清除/清楚选择的回调
                 console.log("Clean");
             },
-            callbackSubmit: function () {//确认按钮回调
+            //仅isMultiple为true时有效
+            callbackSelectAll: function (datas) {//全选时的回调
+                console.log("SelectAll");
+            },
+            callbackSubmit: function (selectDatas,allDatas) {//确认按钮回调
                 console.log("Submit");
+                console.log(selectDatas);
+                console.log(allDatas);
             },
             callbackCancel: function () {//取消按钮回调
                 console.log("Cancel");
