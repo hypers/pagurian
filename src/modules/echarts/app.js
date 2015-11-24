@@ -104,7 +104,11 @@ define(function (require, exports, module) {
 
 
         chart = $p.plugin.echarts("my_chart", {
-            type: "pie"
+            type: "pie",
+            title: {
+                text: '来源分析',
+                subtext: '最近一周数据'
+            }
         });
 
         chart.load({
