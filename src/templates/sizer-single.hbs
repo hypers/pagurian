@@ -36,6 +36,9 @@
                         <li>
                             <a href="sizer-multiple.html">多选 </a>
                         </li>
+                        <li>
+                            <a href="sizer-options.html">参数说明</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -69,9 +72,9 @@ var selectDatas = [{
     isExpand: true,//是否默认展开 默认为false
     dataSource: model.getSizerData,//数据源
     class: "d-ib", //筛选器自定义class
-    dataMapping: {//数据映射 name为text value 为value,默认为{name:"name",value:"id"}
-        "name": "name",
-        "value": "id"
+    dataMapping: {//数据映射 name为text value为value,默认为{name:"name",value:"id"}
+    "name": "name",
+    "value": "id"
     },
     callbackExpand: function () {//面板展开时的回调
         console.log("Expand");
@@ -90,8 +93,7 @@ var selectDatas = [{
     }
 };
 
-var sizer = $p.plugin.sizer("#sizer-multiple", options, selectDatas);
-                            </code></pre>
+var sizer = $p.plugin.sizer("#sizer-multiple", options,selectDatas);</code></pre>
                             <h3>JSON 数据</h3>
                             <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
                         </div>
