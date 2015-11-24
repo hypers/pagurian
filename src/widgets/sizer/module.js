@@ -1,5 +1,6 @@
 /**
  * Created by hypers-godfery on 2015/10/14.
+ * Update by hypers-godfery on 2015/11/23.
  */
 define(function (require, exports, module) {
         var g = window,
@@ -19,7 +20,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.11.04.1040";
+            this.version = "2015.11.23.1354";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -236,30 +237,9 @@ define(function (require, exports, module) {
                 });
 
                 //搜索框事件
-                $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (es) {
-                    var word = $(this).val(),
-                        $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
-                        _datas = o.allDatas,
-                        _tempDatas = [],
-                        _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
-                        _tempSelectDatas = [];
-                    if (o.isFirstSearch) {
-                        _selectDatas = _selectDatas.concat(o.selectDatas);
-                    }
-                    word = $.trim(word);
-                    for (var i = 0, len = _datas.length; i < len; i++) {
-                        if (_datas[i][o.options.dataMapping.name].indexOf(word) <= -1) {
-                            continue;
-                        }
-                        _tempDatas.push(_datas[i]);
-                        for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                            if (_datas[i][o.options.dataMapping.value] === _selectDatas[j][o.options.dataMapping.value]) {
-                                _tempSelectDatas.push(_datas[i]);
-                            }
-                        }
-                    }
-                    setData(_tempDatas, _tempSelectDatas);
-                    o.options.callbackSearch && o.options.callbackSearch(_tempDatas);
+                $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (e) {
+                    var resultDatas = searchData($(this).val());
+                    o.options.callbackSearch && o.options.callbackSearch(resultDatas);
                 });
 
                 //多选筛选器独有事件
@@ -281,13 +261,12 @@ define(function (require, exports, module) {
                     //确定
                     $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
                         o.selectDatas = o._tmpSelectDatas;
-                        o.options.callbackSubmit && o.options.callbackSubmit();
+                        o.options.callbackSubmit && o.options.callbackSubmit(o.selectDatas, o.allDatas);
                         closePanel(true);
                     });
 
                     //取消
                     $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
-                        //o.selectDatas = o._tmpSelectDatas;
                         o.options.callbackCancel && o.options.callbackCancel();
                         closePanel(true);
                     });
@@ -306,9 +285,9 @@ define(function (require, exports, module) {
                     o.isFirstSearch = true;
                 }
                 $("#" + _nameStr + '_search' + _id).val("");
-                $("#" + _nameStr + '_search' + _id).keyup();
+                searchData("");
 
-                isCallBack && o.options.callbackClose && o.options.callbackClose(o.selectDatas);
+                isCallBack && o.options.callbackClose && o.options.callbackClose(o.selectDatas, o.allDatas);
 
             };
 
@@ -441,6 +420,37 @@ define(function (require, exports, module) {
                     singleSetText(o.promtText);
                     closePanel(isCallBackClose);
                 }
+            }
+
+            /**
+             * 搜索数据
+             * @param text 关键字
+             * @returns {Array} 搜索到的数据
+             */
+            function searchData(text) {
+                var word = text,
+                    $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
+                    _datas = o.allDatas,
+                    _tempDatas = [],
+                    _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
+                    _tempSelectDatas = [];
+                if (o.isFirstSearch) {
+                    _selectDatas = _selectDatas.concat(o.selectDatas);
+                }
+                word = $.trim(word);
+                for (var i = 0, len = _datas.length; i < len; i++) {
+                    if (_datas[i][o.options.dataMapping.name].indexOf(word) <= -1) {
+                        continue;
+                    }
+                    _tempDatas.push(_datas[i]);
+                    for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
+                        if (_datas[i][o.options.dataMapping.value] === _selectDatas[j][o.options.dataMapping.value]) {
+                            _tempSelectDatas.push(_datas[i]);
+                        }
+                    }
+                }
+                setData(_tempDatas, _tempSelectDatas);
+                return _tempDatas;
             }
 
             init();

@@ -4,3 +4,4 @@ syntax: glob
 node_modules/
 dist/
 .idea/
+_site
