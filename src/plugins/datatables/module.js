@@ -459,6 +459,7 @@ define(function(require, exports, module) {
                     }
                 }
 
+
                 $.cookie("params.pagesize", length, {
                     expires: 60,
                     path: '/'
@@ -542,6 +543,11 @@ define(function(require, exports, module) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
+
+                                if (summary_value === null || summary_value === "") {
+                                    summary_value = "--";
+                                }
+
                                 $("#" + that.id + "_" + key).html(summary_value);
                             }
 
@@ -695,17 +701,25 @@ define(function(require, exports, module) {
                         isChange = search_keyword === word ? 0 : 1,
                         isPush = false;
                     if ((e.which == 13 || that.bLoadFinish) && isChange) {
+
                         that.bLoadFinish = false;
                         that.aApiParams[searchWord] = word;
-                        that.update();
                         search_keyword = word;
 
-                        if (typeof that.options.oSearch.fnCallback == "function") {
-                            that.options.oSearch.fnCallback(word);
+                        if (!$(seletor).is(":hidden")) {
+
+                            that.update();
+                            if (typeof that.options.oSearch.fnCallback == "function") {
+                                that.options.oSearch.fnCallback(word);
+                            }
                         }
+
                         return;
                     }
+
                 });
+
+
             }
         };
 
