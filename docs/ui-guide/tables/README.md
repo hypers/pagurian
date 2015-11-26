@@ -6,6 +6,12 @@
 ![Alt text](../image/UI-Standar-LUXURY-23-2.jpg)
  ![Alt text](../image/UI-Standar-LUXURY-23-3.jpg)
 ---
+####两行表头样式
+![Alt text](../image/UI-Standar-LUXURY-23-5.jpg)
+
+* 表格的表头，两行行内容，单行文字行高都为1.4，之间不再空行。
+* 表头文字：第一行 14px, #575757，第二行 20px, #575757。
+
 ####三行表头样式
 ![Alt text](../image/UI-Standar-LUXURY-23-4.jpg)
 
