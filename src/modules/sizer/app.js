@@ -15,15 +15,16 @@ define(function (require, exports, module) {
             isMultiple: true,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
             dataSource: model.getSizerData,//数据源
-            class: "d-ib", //筛选器自定义class
+            style: "d-ib", //筛选器自定义class
             //processing: oLanguage.processing,//loading默认文字
             //search: oLanguage.search,//搜索框默认文字
             callbackExpand: function () {//面板展开时的回调
                 console.log("Expand");
             },
-            callbackClose: function (datas) {//面板关闭时的回掉
+            callbackClose: function (datas,allDatas) {//面板关闭时的回掉
                 console.log("Close");
                 console.log(datas);
+                console.log(allDatas);
             },
             callbackOption: function (data) {//点击选项的回调
                 console.log(data);
@@ -31,15 +32,17 @@ define(function (require, exports, module) {
             callbackSearch: function (datas) {//搜索框录入回调
                 console.log(datas);
             },
-            //仅isMultiple为true时有效
-            callbackSelectAll: function () {//全选时的回调
-                console.log("SelectAll");
-            },
             callbackClean: function () {//点击清除/清楚选择的回调
                 console.log("Clean");
             },
-            callbackSubmit: function () {//确认按钮回调
+            //仅isMultiple为true时有效
+            callbackSelectAll: function (datas) {//全选时的回调
+                console.log("SelectAll");
+            },
+            callbackSubmit: function (selectDatas,allDatas) {//确认按钮回调
                 console.log("Submit");
+                console.log(selectDatas);
+                console.log(allDatas);
             },
             callbackCancel: function () {//取消按钮回调
                 console.log("Cancel");
@@ -56,15 +59,16 @@ define(function (require, exports, module) {
             isMultiple: false,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
             dataSource: model.getSizerData,//数据源
-            class: "d-ib", //筛选器自定义class
+            style: "d-ib", //筛选器自定义class
             //processing: oLanguage.processing,//loading默认文字
             //search: oLanguage.search,//搜索框默认文字
             callbackExpand: function () {//面板展开时的回调
                 console.log("Expand");
             },
-            callbackClose: function (datas) {//面板关闭时的回掉
+            callbackClose: function (datas,allDatas) {//面板关闭时的回掉
                 console.log("Close");
                 console.log(datas);
+                console.log(allDatas);
             },
             callbackOption: function (data) {//点击选项的回调
                 console.log("Click Option");

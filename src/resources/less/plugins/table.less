@@ -271,6 +271,16 @@ Bootstrap Tables
 }
 
 /***Table****/
+.table{
+    th{
+        line-height: 1.4;
+    }
+    .table-summary{
+        margin: 0;
+        font-size: 20px;
+    }
+}
+
 .table-bordered {
     border: none;
     tr {
@@ -386,5 +396,14 @@ Bootstrap Tables
         border-width: 1px 1px 2px 1px;
         border-style: solid;
         border-color: @B300 @B300 @H500 @B300 !important;
+    }
+}
+
+.table-summary-wrapper{
+    .table-scrollable{
+        min-height: 118px;
+    }
+    .dataTables_processing{
+        top:60%;
     }
 }

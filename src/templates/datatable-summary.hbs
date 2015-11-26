@@ -30,13 +30,13 @@
 
             <div class="tabs-wrap">
                <ul  class="nav nav-tabs">
-                    <li class="active">
+                    <li>
                         <a href="datatable.html" >基础 </a>
                     </li>
                     <li>
                         <a href="datatable-extend.html" >细分</a>
                     </li>
-                    <li>
+                    <li  class="active">
                         <a href="datatable-summary.html" >汇总</a>
                     </li>
                     <li>
@@ -52,18 +52,27 @@
                 <div class="col-md-12">
                     <table id="my_table"></table>
                 </div>
-
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>说明</h3>
+                    <ol>
+                        <li>在aoColumns中设置bShowSummary=true;</li>
+                        <li>在aoColumns中设置fnSummaryFormat,自定义一个函数，格式化显示的值，可选参数</li>
+
+                        <li>在 <a target="_blank" href="/test/api/keywords.json">keywords.json</a>
+                            中返回summary信息;
+                        </li>
+                    </ol>
+
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">
 
-
                     <div class="markdown">
-
-
-
 
                     <h3>HTML代码</h3>
                         <pre><code class="html">
@@ -85,24 +94,26 @@ $p.plugin.dataTable("#my_table", {
     "aoColumns": [{
         "bSortable": false,
         "mData": "keywords",
-        "sTitle": "关键字",
-        mRender: function(data, type, full) {
-            return &#39;&lt;span title=&quot;&#39; + full.keywords + &#39;&quot;&gt;&#39; + full.keywords + &#39;&lt;/span&gt;&#39;
-        }
+        "sTitle": "关键字"
     }, {
-        "bSortable": false,
         "sTitle": "搜索引擎",
         "mData": "searchEngine"
     }, {
+        "bShowSummary":true,
         "sClass": "t-a-r",
         "sTitle": "浏览量(PV)",
         "mData": "pageViews"
     }, {
         "sClass": "t-a-r",
+        "bShowSummary":true,
+        "fnSummaryFormat": function(value) {
+            return value + ".00";
+        },
         "sTitle": "独立访问者(UV)",
         "mData": "uniqueVisitors"
     }, {
         "sClass": "t-a-r",
+        "bShowSummary":true,
         "sTitle": "访问次数(VV)",
         "mData": "visitViews"
     }]
@@ -141,7 +152,7 @@ $p.plugin.dataTable("#my_table", {
 {{>fixtures/footer}}
 <script type="text/javascript">
     pagurian.call("modules/datatable/app", function(app) {
-        app.page.dataTable();
+        app.page.dataTableSummary();
     });
 </script>
 

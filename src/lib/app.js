@@ -38,6 +38,18 @@ define(function(require, exports, module) {
         api: api
     };
 
+    pagurian.log = function() {
+        if (!window.console) {
+            return;
+        }
+        if (arguments.length == 1) {
+            console.log(arguments[0]);
+        }
+        if (arguments.length == 2) {
+            console[arguments[1]](arguments[0]);
+        }
+    };
+
     var app = {
         page: {},
         events: {},

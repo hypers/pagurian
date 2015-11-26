@@ -36,6 +36,9 @@
                         <li class="active">
                             <a href="sizer-multiple.html">多选 </a>
                         </li>
+                        <li>
+                            <a href="sizer-options.html">参数说明</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -67,7 +70,7 @@ var selectDatas = [{
         isMultiple: true,//是否为多选 默认为false
         isExpand: true,//是否默认展开 默认为false
         dataSource: model.getSizerData,//数据源
-        class: "d-ib", //筛选器自定义class
+        style: "d-ib", //筛选器自定义class
         dataMapping: {//数据映射 name为text value 为value,默认为{name:"name",value:"id"}
             "name": "name",
             "value": "id"

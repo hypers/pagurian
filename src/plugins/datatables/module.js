@@ -31,7 +31,7 @@ define(function(require, exports, module) {
             "iEnd": oSettings.fnDisplayEnd(),
             "iLength": oSettings._iDisplayLength,
             "iTotal": oSettings.fnRecordsTotal(),
-            "iFilteredTa  otal": oSettings.fnRecordsDisplay(),
+            "iFilteredTotal": oSettings.fnRecordsDisplay(),
             "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
             "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
         };
@@ -346,6 +346,12 @@ define(function(require, exports, module) {
     function DataTables(seletor, options) {
 
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
+        var that = this;
+
+        this.id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+        this.bLoadFinish = false;
+        this.bShowSummary = false;
+        this.aApiParams = {};
         this.options = {
             "sForm": '#form',
             "bAutoload": true,
@@ -355,6 +361,7 @@ define(function(require, exports, module) {
             "bPaginate": true,
             "bSort": true,
             "bAutoWidth": false,
+            "bOrderNumbers": false,
             "fnRowCallback": function(row) {},
             "fnInitComplete": function() {},
             "bLengthChange": true,
@@ -371,10 +378,11 @@ define(function(require, exports, module) {
             "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 
 
-
-                var apData = [];
                 var length = oSettings.oInit.iDisplayLength,
-                    opt = {};
+                    //aApiParams 用[] 不用{} 是有原因的，在某些情况下一个参数会传递多个值
+                    aApiParams = [],
+                    opt = {},
+                    key;
 
                 function getPageIndex(total) {
                     for (var i = 0; i < aoData.length; i++) {
@@ -393,7 +401,7 @@ define(function(require, exports, module) {
 
                     //页码
                     if (aoData[i].name === "iDisplayStart") {
-                        apData.push({
+                        aApiParams.push({
                             "name": "page",
                             "value": getPageIndex(aoData[i].value)
                         });
@@ -403,13 +411,13 @@ define(function(require, exports, module) {
                     if (aoData[i].name === "iSortCol_0" && oSettings.aoColumns[aoData[i].value].mData) {
 
                         column = oSettings.aoColumns[aoData[i].value];
-                        apData.push({
+                        aApiParams.push({
                             "name": "orderColumn",
                             "value": column.mData
                         });
 
                         if (column.isPinyinSort) {
-                            apData.push({
+                            aApiParams.push({
                                 "name": "isDict",
                                 "value": true
                             });
@@ -419,7 +427,7 @@ define(function(require, exports, module) {
 
                     //排序类型（升序/降序）
                     if (aoData[i].name === "sSortDir_0") {
-                        apData.push({
+                        aApiParams.push({
                             "name": "orderType",
                             "value": aoData[i].value
                         });
@@ -429,10 +437,27 @@ define(function(require, exports, module) {
                 }
 
                 //每页显示行数
-                apData.push({
+                aApiParams.push({
                     "name": "pagesize",
                     "value": length
                 });
+
+                if (that.bShowSummary) {
+                    aApiParams.push({
+                        "name": "summary",
+                        "value": true
+                    });
+                }
+
+
+                for (key in that.aApiParams) {
+                    if (that.aApiParams[key] !== "") {
+                        aApiParams.push({
+                            name: key,
+                            value: that.aApiParams[key]
+                        });
+                    }
+                }
 
                 $.cookie("params.pagesize", length, {
                     expires: 60,
@@ -441,25 +466,25 @@ define(function(require, exports, module) {
 
                 //自定义的业务参数
                 if (typeof oSettings.oInit.fnParams === "function") {
-                    var params = oSettings.oInit.fnParams(apData) || {};
+                    var params = oSettings.oInit.fnParams(aApiParams) || {};
 
-                    for (var i in params) {
-                        if (typeof params[i] !== "function") {
+                    for (key in params) {
+                        if (typeof params[key] !== "function") {
 
                             //如果是一个数组的，就设置多个值
-                            if (typeof params[i] === "object") {
-                                for (var j = 0; j < params[i].length; j++) {
-                                    apData.push({
-                                        "name": i,
-                                        "value": params[i][j]
+                            if (typeof params[key] === "object") {
+                                for (var j = 0; j < params[key].length; j++) {
+                                    aApiParams.push({
+                                        "name": key,
+                                        "value": params[key][j]
                                     });
                                 }
                                 continue;
                             }
 
-                            apData.push({
-                                "name": i,
-                                "value": params[i]
+                            aApiParams.push({
+                                "name": key,
+                                "value": params[key]
                             });
                         }
                     }
@@ -470,45 +495,59 @@ define(function(require, exports, module) {
                     if ("function" === typeof oSettings.oInit.fnOptions) {
                         opt = oSettings.oInit.fnOptions();
                     }
-                    if ("function" === typeof oSettings.oInit.dataSource) {
 
-                        oSettings.oInit.dataSource(apData, function(a, b, c) {
+                    //兼容老的版本
+                    var fnDataSource = oSettings.oInit.fnDataSource || oSettings.oInit.dataSource;
+
+                    if ("function" === typeof fnDataSource) {
+
+                        fnDataSource(aApiParams, function(a, b, c) {
+
+
                             var total = a.page ? a.page.total : 0;
+                            var items = a.result.items || [];
+                            var summary = a.result.summary || {};
 
 
-                            if (!a.result) {
-                                return;
-                            }
                             //设置默认值，如果返回的值为空默认为"--"
-                            for (var i = 0; i < a.result.length; i++) {
-                                for (var o in a.result[i]) {
-                                    if (!a.result[i][o] && a.result[i][o] !== 0) {
-                                        a.result[i][o] = "--";
+                            for (var i = 0; i < items.length; i++) {
+                                for (var o in items[i]) {
+                                    if (!items[i][o] && items[i][o] !== 0) {
+                                        items[i][o] = "--";
                                     }
                                 }
                             }
 
                             var data = {
-                                "aaData": a.result || [],
+                                "aaData": items,
                                 "iTotalDisplayRecords": total,
                                 "iTotalRecords": total,
                                 "sColumns": null
                             };
 
-
-
+                            //初始化Table
                             fnCallback(data, b, c);
 
-
                             //生成序号
-                            if (oSettings.oInit.isCreateOrder && a.result.length) {
+                            var bOrderNumbers = oSettings.oInit.bOrderNumbers || oSettings.oInit.isCreateOrder;
+                            if (bOrderNumbers && items.length) {
                                 createNumber(a.page.current, a.page.pagesize);
                             }
 
+                            //汇总信息
+                            for (var key in summary) {
+                                var summary_value = summary[key];
+                                for (i = 0; i < oSettings.aoColumns.length; i++) {
+                                    if (oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
+                                        summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
+                                    }
+                                }
+                                $("#" + that.id + "_" + key).html(summary_value);
+                            }
 
 
-                            if (oSettings.oInit.fnExtendDetails && a.result && a.result.length) {
-
+                            //显示细分信息
+                            if (oSettings.oInit.fnExtendDetails && items && items.length) {
 
                                 var nCloneTh = document.createElement('th');
                                 var nCloneTd = document.createElement('td');
@@ -561,6 +600,8 @@ define(function(require, exports, module) {
                                 });
                             }
 
+
+                            //判断请求状态
                             if (a.code === 0 && a.result) {
                                 var status_text = "";
 
@@ -575,20 +616,26 @@ define(function(require, exports, module) {
                                 $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i> " + a.message);
                             }
 
+
+                            //如果数据为空就不显示底部的分页条
                             if (a && a.page && a.page.total > 0) {
                                 $(seletor + "_wrapper .bottom").show();
                             } else {
                                 $(seletor + "_wrapper .bottom").hide();
                             }
 
+                            //初始化回调
                             if (typeof oSettings.oInit.callback === "function") {
                                 oSettings.oInit.callback(a);
                             }
+
+                            that.bLoadFinish = true;
 
                         }, opt);
                     }
 
                 } else {
+
                     fnCallback({
                         "aaData": [],
                         "iTotalDisplayRecords": 0,
@@ -596,18 +643,70 @@ define(function(require, exports, module) {
                         "sColumns": null,
                         "sEcho": "1"
                     });
+
                 }
             },
             "oLanguage": locale[pagurian.language || "zh_CN"]
         };
 
         this.init = function() {
+
+            var aoColumns;
+
             $.extend(true, this.options, options);
 
+            //显示汇总信息
+            aoColumns = this.options.aoColumns;
+            for (var i = 0; i < aoColumns.length; i++) {
+
+                var p = "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+
+                if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
+                    if (aoColumns[i].sTitle) {
+                        aoColumns[i].sTitle += p;
+                    } else {
+                        $(seletor + " thead th:eq(" + i + ")").append(p);
+                    }
+
+                    that.bShowSummary = true;
+                }
+            }
+
+
             $(seletor).addClass("table-custom table  table-hover  " + options.sClass);
+
             this.table = oTable = $(seletor).dataTable(this.options);
+
+            if (that.bShowSummary) {
+                $(seletor + '_wrapper').addClass("table-summary-wrapper");
+            }
+
             $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
             $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
+
+            if (this.options.oSearch) {
+                var searchId = this.options.oSearch.sInput;
+                var searchWord = this.options.oSearch.sParamName;
+                var search_keyword = "";
+
+                $(searchId).keyup(function(e) {
+
+                    var word = $.trim($(this).val()),
+                        isChange = search_keyword === word ? 0 : 1,
+                        isPush = false;
+                    if ((e.which == 13 || that.bLoadFinish) && isChange) {
+                        that.bLoadFinish = false;
+                        that.aApiParams[searchWord] = word;
+                        that.update();
+                        search_keyword = word;
+
+                        if (typeof that.options.oSearch.fnCallback == "function") {
+                            that.options.oSearch.fnCallback(word);
+                        }
+                        return;
+                    }
+                });
+            }
         };
 
         this.update = function() {

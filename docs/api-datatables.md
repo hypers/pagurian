@@ -7,7 +7,7 @@
     +   orderColumn     //排序字段
     +   orderType       //排序类型（desc/asc）
 -   业务参数
-    +   begin (YYYY-MM-DD) 
+    +   begin (YYYY-MM-DD)
     +   end (YYYY-MM-DD)
     +   dateType：HOUR,DAY,WEEK,MONTH    
     +   ...
@@ -17,7 +17,12 @@
     {
         "code":"200",                 //HTTP状态  
         "message":"......",           //服务器返回消息
-        "result":[{...},{...},{...}], //数据列表
+        "result":{
+            "summary":{}
+            "items":[
+                {...},{...},{...}
+            ]
+        },
         "page":{
             "current":1,     //分页信息-当前页
             "pagesize":10,   //分页信息-每页数目
@@ -26,6 +31,6 @@
         "fields":{          //错误信息（字段）列表
                 "field1":[{"code":"","message":""}]
                 "field2":[{"code":"","message":""}]
-         }
+        }
     }
 </blockquote>

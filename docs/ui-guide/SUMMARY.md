@@ -34,4 +34,6 @@
    * [语言切换](others/langurage_switch.md)
    * [汇总看板与图表联动](others/billboard_link_charts.md)
    * [邮件页面](email_page.md)
+   * [说明标注文本](description.md)
+   * [于Tab中显示过滤标签](filtered_data_name_in_tab.md)
 

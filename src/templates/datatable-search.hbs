@@ -30,7 +30,7 @@
 
             <div class="tabs-wrap">
                <ul  class="nav nav-tabs">
-                    <li class="active">
+                    <li>
                         <a href="datatable.html" >基础 </a>
                     </li>
                     <li>
@@ -39,7 +39,7 @@
                     <li>
                         <a href="datatable-summary.html" >汇总</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="datatable-search.html" >搜索</a>
                     </li>
                     <li>
@@ -48,25 +48,44 @@
                 </ul>
             </div>
 
+
+
+
             <div class="row">
                 <div class="col-md-12">
-                    <table id="my_table"></table>
-                </div>
 
+                    <div class="tools-wrap">
+                        <div class="input-icon input-search">
+                            <i class="fa fa-search"></i>
+                            <input placeholder="查询关键字" id="txt_search" class="form-control" maxlength="1024" type="text">
+                        </div>
+                    </div>
+
+                    <table id="my_table"></table>
+
+                </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>说明</h3>
+                    <ol>
+                        <li>在oSearch中设置sInput,搜索文本框的选择器，例如：#txt_search</li>
+                        <li>在oSearch中设置sParamName,请求参数名称;</li>
+                    </ol>
+
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">
-
 
                     <div class="markdown">
 
-
-
-
                     <h3>HTML代码</h3>
                         <pre><code class="html">
+&lt;input placeholder=&quot;查询关键字&quot; id=&quot;txt_search&quot; class=&quot;form-control&quot; maxlength=&quot;1024&quot; type=&quot;text&quot;&gt;
+
 &lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;
                         </code></pre>
                         <h3>Javascript代码</h3>
@@ -79,30 +98,33 @@ $p.plugin.dataTable("#my_table", {
     "aaSorting": [
         [2, "desc"]
     ],
+    "oSearch": {
+        "sInput": "#txt_search",
+        "sParamName": "word"
+    },
     "fnParams": function() {
         return {};
     },
     "aoColumns": [{
         "bSortable": false,
         "mData": "keywords",
-        "sTitle": "关键字",
-        mRender: function(data, type, full) {
-            return &#39;&lt;span title=&quot;&#39; + full.keywords + &#39;&quot;&gt;&#39; + full.keywords + &#39;&lt;/span&gt;&#39;
-        }
+        "sTitle": "关键字"
     }, {
-        "bSortable": false,
         "sTitle": "搜索引擎",
         "mData": "searchEngine"
     }, {
+        "bShowSummary":true,
         "sClass": "t-a-r",
         "sTitle": "浏览量(PV)",
         "mData": "pageViews"
     }, {
         "sClass": "t-a-r",
+        "bShowSummary":true,
         "sTitle": "独立访问者(UV)",
         "mData": "uniqueVisitors"
     }, {
         "sClass": "t-a-r",
+        "bShowSummary":true,
         "sTitle": "访问次数(VV)",
         "mData": "visitViews"
     }]
@@ -141,7 +163,7 @@ $p.plugin.dataTable("#my_table", {
 {{>fixtures/footer}}
 <script type="text/javascript">
     pagurian.call("modules/datatable/app", function(app) {
-        app.page.dataTable();
+        app.page.dataTableSearch();
     });
 </script>
 
