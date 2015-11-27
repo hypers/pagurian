@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-<title>{{data.page.echarts_map}}</title>
+<title>{{data.page.echarts_bar}}</title>
 {{>fixtures/head}}
 </head>
 <body>
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.echarts_map}}
+					{{data.page.echarts_bar}}
 					</h3>
 				</div>
 			</div>
@@ -32,8 +32,11 @@
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
 
+                    <li>
+                        <a href="echarts-bar.html" >标准柱状图</a>
+                    </li>
                     <li class="active">
-                        <a href="echarts-map.html" >标准地图-中国</a>
+                        <a href="echarts-bar-horizon.html" >横向柱状图</a>
                     </li>
 
                 </ul>
@@ -67,39 +70,56 @@
                     <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
-var chart = $p.plugin.echarts("my_chart", {
-    type: "map",
-    title: {
-        text: "浏览量（PV）地域分布图"
-    }
+chart = $p.plugin.echarts("my_chart", {
+    type: "bar"
 });
-chart.load({
-    name:"pv",
-    data: [{
+
+var data = {
+    name: "PV",
+    //是否为水平显示,默认为false
+    //horizon:true,
+    data: [
+    {
         value: 735,
-        name: '上海'
-    }, {
+        name: '百度'
+    },
+    {
         value: 310,
-        name: '北京'
-    }, {
+        name: '谷歌'
+    },
+    {
         value: 234,
-        name: '四川'
-    }, {
+        name: '360搜索'
+    },
+    {
         value: 135,
-        name: '天津'
-    }, {
+        name: '搜狗'
+    },
+    {
         value: 548,
-        name: '云南'
-    }, {
+        name: '必应'
+    },
+    {
         value: 148,
-        name: '河南'
-    }, {
+        name: '雅虎'
+    },
+    {
         value: 114,
-        name: '香港'
-    }],
-    options: {
-        mapType: "china"
-    }
+        name: '网易有道'
+    }]
+}
+chart.load(data, function(option){
+    option.series[0].itemStyle.normal={
+        color: function (params) {
+            var colorList = [
+                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+            ];
+            return colorList[params.dataIndex];
+        }
+    };
+    return option;
 });
 
                 </code></pre>
@@ -120,14 +140,12 @@ chart.load({
 
 
 <script type="text/javascript">
-
     pagurian.call([
-        "modules/echarts-map/app",
-        "plugins/echarts/loader-map"
+        "modules/echarts-bar/app",
+        "plugins/echarts/loader"
     ], function(app) {
-		app.page.map();
+		app.page.horizon();
 	});
-
 </script>
 
 {{>fixtures/tracker}}
