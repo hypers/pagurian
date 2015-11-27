@@ -5,20 +5,26 @@ define(function(require, exports, module) {
     //require("plugins/echarts/loader-map"); //完整包
 
     var g = window;
-    var locale = {},
-        activeLocale;
-    var chartOptions = require('./options');
+    var locale = {
+        zh_CN: require('./locale/zh_CN'),
+        en_US: require('./locale/en_US')
+    };
+    var activeLocale = locale[pagurian.language || "zh_CN"];
 
-    locale.zh_CN = require('./locale/zh_CN');
-    locale.en_US = require('./locale/en_US');
-
-    activeLocale = locale[pagurian.language || "zh_CN"];
-
+    var chartOptions = {
+        line: require('./chart/line'),
+        pie: require('./chart/pie'),
+        bar: require('./chart/bar'),
+        map: require('./chart/map'),
+    };
+    
     function Echarts(seletor, options) {
+
         this.options = {
             backgroundColor: '#f5f5f5',
             color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
         };
+
         this.init = function() {
             this.id = seletor;
             $.extend(true, this.options, options);
