@@ -1,11 +1,11 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     //直接在页面中引入,因为Grunt uglify 执行太慢了
     //require("plugins/echarts/loader"); //基础包（不含map）
     //require("plugins/echarts/loader-map"); //完整包
 
-    var g = window;
-    var locale = {
+    var g            = window;
+    var locale       = {
         zh_CN: require('./locale/zh_CN'),
         en_US: require('./locale/en_US')
     };
@@ -13,19 +13,19 @@ define(function(require, exports, module) {
 
     var chartOptions = {
         line: require('./chart/line'),
-        pie: require('./chart/pie'),
-        bar: require('./chart/bar'),
-        map: require('./chart/map'),
+        pie:  require('./chart/pie'),
+        bar:  require('./chart/bar'),
+        map:  require('./chart/map'),
     };
 
     function Echarts(seletor, options) {
 
         this.options = {
             backgroundColor: '#f5f5f5',
-            color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
+            color:           ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
         };
 
-        this.init = function() {
+        this.init = function () {
 
             this.id = seletor;
             $.extend(true, this.options, options);
@@ -36,12 +36,12 @@ define(function(require, exports, module) {
 
         };
 
-        this.message = function(status, message) {
+        this.message = function (status, message) {
 
             this.chart.hideLoading();
             this.chart.clear();
             var icon = "fa-info-circle";
-            var msg = message || activeLocale.empty;
+            var msg  = message || activeLocale.empty;
 
             if (status === "timeout") {
                 icon = "fa-exclamation-circle fa-red";
@@ -57,31 +57,32 @@ define(function(require, exports, module) {
                 $(".chart-message").html("<h3><i class='fa " + icon + "' ></i> " + msg + "</h3>");
                 return;
             }
-            $("#" + this.id).append("<div class='chart-message'><h3><i class='fa " + icon + "' ></i> " + msg + "</h3></div>");
+            $("#" + this.id)
+                .append("<div class='chart-message'><h3><i class='fa " + icon + "' ></i> " + msg + "</h3></div>");
 
             return this;
         };
 
 
-        this.load = function(data, options) {
-
+        this.load = function (data, options) {
             $("#" + seletor + " .chart-message").remove();
 
-            //如果没有 columns,rows,data 这些自定义参数 ，
+            //如果没有 type 参数，
             //则直接setOption 采用Echart自己的参数
-            if (!data.columns && !data.rows && !data.data) {
+            if (!this.options.type) {
                 this.chart.hideLoading();
                 this.chart.clear();
-                this.chart.setOption(data);
+                var _options = $.extend(true, {}, this.options, data);
+                this.chart.setOption(_options);
                 return;
             }
 
-            var type = this.options.type || "line";
+            var type     = this.options.type;
             var _options = $.extend(true, {}, this.options, chartOptions[type](data));
             var _options_all;
 
 
-            if (typeof options == "function") {
+            if (typeof options === "function") {
                 _options_all = options(_options);
             } else {
                 _options_all = $.extend(true, _options, options || {});
@@ -100,14 +101,14 @@ define(function(require, exports, module) {
          * @param {Object} eventName 事件名称
          * @param {Object} eventListener 事件响应函数
          */
-        this.on = function(eventName, eventListener) {
+        this.on = function (eventName, eventListener) {
             this.chart.on(eventName, eventListener);
             return this;
         };
 
     }
 
-    g[PagurianAlias].plugin.echarts = function(seletor, options) {
+    g[PagurianAlias].plugin.echarts = function (seletor, options) {
         var chart = new Echarts(seletor, options);
         chart.init();
         return chart;
