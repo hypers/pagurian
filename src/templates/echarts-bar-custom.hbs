@@ -32,7 +32,7 @@
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
 
-                    <li class="active">
+                    <li>
                         <a href="echarts-bar.html" >标准柱状图</a>
                     </li>
                     <li>
@@ -41,11 +41,12 @@
                     <li>
                         <a href="echarts-bar-stack.html" >堆积柱状图</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="echarts-bar-custom.html" >彩虹柱状图</a>
                     </li>
                 </ul>
             </div>
+
 
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
@@ -78,18 +79,26 @@ var chart = $p.plugin.echarts("my_chart", {
     type: "bar"
 });
 
+
 chart.load({
+    name: "PV",
     columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
     rows: [{
         name: "浏览量(PV)",
         value: [735, 310, 234, 135, 548, 148, 114]
-    }, {
-        name: "独立访客者(UV)",
-        value: [435, 110, 84, 95, 108, 98, 74]
-    }, {
-        name: "访问总次数(VV)",
-        value: [255, 120, 184, 195, 208, 198, 174]
     }]
+}, function(option) {
+    option.series[0].itemStyle.normal = {
+        color: function(params) {
+            var colorList = [
+                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
+                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+            ];
+            return colorList[params.dataIndex];
+        }
+    };
+    return option;
 });
 
                 </code></pre>
@@ -113,7 +122,7 @@ chart.load({
     pagurian.call([
         "modules/echarts-bar/app",
         "plugins/echarts/loader"], function(app) {
-		app.page.bar();
+		app.page.custom();
 	});
 </script>
 
