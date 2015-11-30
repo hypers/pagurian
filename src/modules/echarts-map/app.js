@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     require('../../plugins/echarts/module');
     var chart = {};
 
-    app.page.map = function () {
+    app.page.china = function () {
 
         chart = $p.plugin.echarts("my_chart", {
             type: "map",
@@ -13,9 +13,9 @@ define(function (require, exports, module) {
             }
         });
 
-
         chart.load({
             name: "pv",
+            mapType: "china",
             data: [{
                 value: 735,
                 name: '上海'
@@ -37,10 +37,35 @@ define(function (require, exports, module) {
             }, {
                 value: 114,
                 name: '香港'
-            }],
-            options: {
-                mapType: "china"
+            }]
+        });
+    };
+
+    app.page.world = function () {
+
+        chart = $p.plugin.echarts("my_chart", {
+            type: "map",
+            title: {
+                text: "浏览量（PV）地域分布图"
             }
+        });
+
+        chart.load({
+            name: "pv",
+            mapType: "world",
+            data: [{
+                value: 735,
+                name: '中国'
+            }, {
+                value: 310,
+                name: '意大利'
+            }, {
+                value: 300,
+                name: '俄罗斯'
+            }, {
+                value: 423,
+                name: '美国'
+            }]
         });
     };
 

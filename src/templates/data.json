@@ -18,11 +18,12 @@
         "datepicker": "Date Pickers",
         "sizer": "筛选器 Sizer",
         "summary": "汇总面板 Summary",
-        "echarts_line": "Echarts Line",
-        "echarts_map": "Echarts Map",
-        "echarts_bar": "Echarts Bar",
-        "echarts_pie": "Echarts Pie",
-        "echarts_event": "Echarts Event",
+        "echarts_line": "Echarts 折线图",
+        "echarts_map": "Echarts 地图",
+        "echarts_bar": "Echarts 柱状图",
+        "echarts_pie": "Echarts 饼图",
+        "echarts_mashup": "Echarts 混搭",
+        "echarts_custom": "Echarts 自定义",
         "ckeditor": "CKEditor",
         "catalogue": "目录设计",
         "js": "Javascript规范",
@@ -114,28 +115,33 @@
         "icon": "fa fa-bar-chart-o",
         "items": [{
             "name": "echartsLine",
-            "title": "Echarts Line",
+            "title": "Echarts 折线图",
             "url": "echarts-line.html",
             "active": 0
         }, {
             "name": "echartsBar",
-            "title": "Echarts Bar",
+            "title": "Echarts 柱状图",
             "url": "echarts-bar.html",
             "active": 0
         }, {
             "name": "echartsPie",
-            "title": "Echarts Pie",
+            "title": "Echarts 饼图",
             "url": "echarts-pie.html",
             "active": 0
         }, {
             "name": "echartsMap",
-            "title": "Echarts Map",
-            "url": "echarts-map.html",
+            "title": "Echarts 地图",
+            "url": "echarts-map-china.html",
             "active": 0
         }, {
-            "name": "echartsEvent",
-            "title": "Echarts Event",
-            "url": "echarts-event.html",
+            "name": "echartsMsahup",
+            "title": "Echarts 混搭",
+            "url": "echarts-mashup-linebar.html",
+            "active": 0
+        }, {
+            "name": "echartsCustom",
+            "title": "Echarts 自定义",
+            "url": "echarts-custom-event.html",
             "active": 0
         }]
     }, {

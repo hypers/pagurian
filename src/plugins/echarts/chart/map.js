@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 
     module.exports = function(options) {
 
-        var mapType = options.options.mapType || "china";
+        var mapType = options.mapType || "china";
         var chinaProvince = $p.locale.echartsChinaProvince || {};
         var country = $p.locale.echartCountry || {};
 
@@ -120,7 +120,6 @@ define(function(require, exports, module) {
         $.extend(true, option, options.options);
 
         this.option = option;
-
         return option;
     };
 

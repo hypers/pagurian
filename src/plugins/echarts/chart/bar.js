@@ -43,6 +43,7 @@ define(function(require, exports, module) {
             toolbox: {
                 show: false
             },
+
             calculable: false,
             series: []
         };
@@ -100,6 +101,8 @@ define(function(require, exports, module) {
             //初始化数据
             if (rows.length > 1) {
                 option.legend = {
+                    x: 'center',
+                    y: "bottom",
                     data: []
                 };
 
