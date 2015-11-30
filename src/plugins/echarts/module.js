@@ -17,7 +17,7 @@ define(function(require, exports, module) {
         bar: require('./chart/bar'),
         map: require('./chart/map'),
     };
-    
+
     function Echarts(seletor, options) {
 
         this.options = {
@@ -26,12 +26,14 @@ define(function(require, exports, module) {
         };
 
         this.init = function() {
+
             this.id = seletor;
             $.extend(true, this.options, options);
             this.chart = echarts.init(document.getElementById(seletor));
             this.chart.showLoading({
                 text: activeLocale.loading
             });
+
         };
 
         this.message = function(status, message) {
@@ -65,6 +67,15 @@ define(function(require, exports, module) {
 
             $("#" + seletor + " .chart-message").remove();
 
+            //如果没有 columns,rows,data 这些自定义参数 ，
+            //则直接setOption 采用Echart自己的参数
+            if (!data.columns && !data.rows && !data.data) {
+                this.chart.hideLoading();
+                this.chart.clear();
+                this.chart.setOption(data);
+                return;
+            }
+
             var type = this.options.type || "line";
             var _options = $.extend(true, {}, this.options, chartOptions[type](data));
             var _options_all;
@@ -93,6 +104,7 @@ define(function(require, exports, module) {
             this.chart.on(eventName, eventListener);
             return this;
         };
+
     }
 
     g[PagurianAlias].plugin.echarts = function(seletor, options) {
