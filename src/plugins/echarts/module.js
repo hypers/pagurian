@@ -40,18 +40,18 @@ define(function (require, exports, module) {
 
             this.chart.hideLoading();
             this.chart.clear();
-            var icon = "icon-info";
+            var icon = "icon-info icon-big";
             var msg  = message || activeLocale.empty;
 
             if (status === "timeout") {
-                icon = "icon-exclamation-circle red";
+                icon = "icon-exclamation-circle icon-big red";
                 msg += "<br/><a class='btn btn-default' id='btn_reload'>" + activeLocale.search_reset + "</a>";
             }
             if (status === "empty") {
 
             }
             if (status === "error") {
-                icon = "icon-exclamation-circle red";
+                icon = "icon-exclamation-circle icon-big red";
             }
             if ($("#" + seletor + ".chart-message").length > 0) {
                 $(".chart-message").html("<h3><i class='icon " + icon + "' ></i> " + msg + "</h3>");
