@@ -506,7 +506,7 @@ define(function(require, exports, module) {
 
 
                             var total = a.page ? a.page.total : 0;
-                            var items = a.result.items || [];
+                            var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
 
 
