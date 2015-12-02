@@ -8,9 +8,6 @@
     "type": "git",
     "url": "https://github.com/hypers/pagurian.git"
   },
-  "scripts":{
-    "test":"grunt"
-  },
   "devDependencies": {
     "autoprefixer": "^6.1.0",
     "grunt": "~0.4.5",
