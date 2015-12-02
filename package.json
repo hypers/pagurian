@@ -1,7 +1,8 @@
 {
   "family": "hypers",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "name": "pagurian",
+  "description": "一个管理系统的前端框架",
   "spm": {},
   "license": "MIT",
   "repository": {
