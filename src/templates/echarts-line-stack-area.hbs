@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-<title>{{data.page.echarts}}</title>
+<title>{{data.page.echarts_line}}</title>
 {{>fixtures/head}}
 </head>
 <body>
@@ -23,32 +23,23 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.echarts}}
+					{{data.page.echarts_line}}
 					</h3>
 				</div>
 			</div>
 
 
             <div class="tabs-wrap">
-               <ul  class="nav nav-tabs">
-                    <li>
-                        <a href="echarts-line.html" >曲线图 </a>
+                <ul  class="nav nav-tabs">
+                    <li >
+                        <a href="echarts-line.html" >标准折线图 </a>
                     </li>
                     <li >
-                        <a href="echarts-stack.html" >堆积图</a>
+                        <a href="echarts-line-stack.html" >堆积折线图</a>
                     </li>
-                    <li >
-                        <a href="echarts-pie.html" >饼图</a>
+                    <li class="active">
+                        <a href="echarts-line-stack-area.html" >堆积面积图</a>
                     </li>
-                    <li >
-                        <a href="echarts-bar.html" >柱状图</a>
-                    </li>
-                    <li >
-                        <a href="echarts-map.html" >地图</a>
-                    </li>
-                   <li class="active">
-                       <a href="echarts-event.html" >自定义事件</a>
-                   </li>
                 </ul>
             </div>
 
@@ -75,9 +66,9 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="markdown">
-                        <h3>Javascript</h3>
-                        <pre><code class="javascript">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+                    <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
 var chart = $p.plugin.echarts("my_chart", {
@@ -87,41 +78,60 @@ var chart = $p.plugin.echarts("my_chart", {
         subtext: '最近一周数据'
     }
 });
-
-var option = {
+chart.load({
     columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
     rows: [{
         name: "搜索引擎",
-        value: [120, 132, 101, 134, 90, 230, 210]
+        data: [120, 132, 101, 134, 90, 230, 210],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
     }, {
         name: "外部链接",
-        value: [220, 182, 191, 234, 290, 330, 310],
+        data: [220, 182, 191, 234, 290, 330, 310],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
     }, {
         name: "直接访问",
-        value: [150, 232, 201, 154, 190, 330, 410]
+        data: [150, 232, 201, 154, 190, 330, 410],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
     }, {
         name: "站内链接",
-        value: [320, 332, 301, 334, 390, 330, 320]
+        data: [320, 332, 301, 334, 390, 330, 320],
+        stack: "总浏览量",
+        itemStyle: {
+            normal: {
+                areaStyle: {
+                    type: 'macarons'
+                }
+            }
+        }
     }]
-};
+});
 
-function eConsole(param) {
-    var mes = '【' + param.type + '】';
-    if (typeof param.seriesIndex != 'undefined') {
-        mes += '  seriesIndex : ' + param.seriesIndex;
-        mes += '  dataIndex : ' + param.dataIndex;
-    }
-    console.log(param);
-    $p.com.alert(mes, "success");
-}
+                </code></pre>
 
-chart.on(echarts.config.EVENT.CLICK, eConsole);
+                   {{>fixtures/echarts-footer}}
 
-                    </code></pre>
-
-                    {{>fixtures/echarts-footer}}
-
-                    </div>
+                </div>
                 </div>
             </div>
 			<!-- END PAGE CONTENT-->
@@ -136,9 +146,13 @@ chart.on(echarts.config.EVENT.CLICK, eConsole);
 
 <script type="text/javascript">
 
-    pagurian.call(["modules/echarts/app","plugins/echarts/loader"], function(app) {
-		app.page.echarts_event();
+    pagurian.call([
+        "modules/echarts-line/app",
+        "plugins/echarts/loader"
+    ], function(app) {
+		app.page.areaStack();
 	});
+
 </script>
 
 {{>fixtures/tracker}}

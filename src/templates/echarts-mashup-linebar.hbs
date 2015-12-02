@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-<title>{{data.page.echarts_bar}}</title>
+<title>{{data.page.echarts_mashup}}</title>
 {{>fixtures/head}}
 </head>
 <body>
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.echarts_bar}}
+					{{data.page.echarts_mashup}}
 					</h3>
 				</div>
 			</div>
@@ -32,20 +32,13 @@
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
 
-                    <li class="active">
-                        <a href="echarts-bar.html" >标准柱状图</a>
+                    <li  class="active">
+                        <a href="echarts-mashup-linebar.html" >折柱混搭</a>
                     </li>
-                    <li>
-                        <a href="echarts-bar-horizon.html" >横向柱状图</a>
-                    </li>
-                    <li>
-                        <a href="echarts-bar-stack.html" >堆积柱状图</a>
-                    </li>
-                    <li>
-                        <a href="echarts-bar-custom.html" >彩虹柱状图</a>
-                    </li>
+
                 </ul>
             </div>
+
 
 			<!-- BEGIN PAGE CONTENT-->
 			<div class="row">
@@ -74,22 +67,33 @@
                     <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
-var chart = $p.plugin.echarts("my_chart", {
-    type: "bar"
+var chart = chart = $p.plugin.echarts("my_chart", {
+    type:"bar",
+    title: {
+        text: '来源分析'
+    }
 });
 
 chart.load({
-    columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
-    rows: [{
-        name: "浏览量(PV)",
-        value: [735, 310, 234, 135, 548, 148, 114]
-    }, {
-        name: "独立访客者(UV)",
-        value: [435, 110, 84, 95, 108, 98, 74]
-    }, {
-        name: "访问总次数(VV)",
-        value: [255, 120, 184, 195, 208, 198, 174]
-    }]
+    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11', '2014-07-12', '2014-07-13', '2014-07-15', '2014-07-15', '2014-07-16', '2014-07-17', '2014-07-18', '2014-07-19', '2014-07-20', '2014-07-21', '2014-07-22', '2014-07-23', '2014-07-24'],
+    rows: [
+        {
+            name: "搜索引擎",
+            data: [120, 132, 101, 134, 90, 230, 210, 120, 132, 101, 134, 90, 230, 210, 150, 232, 201, 154, 190, 330]
+        },
+        {
+            name: "外部链接",
+            data: [220, 182, 191, 234, 290, 330, 310, 320, 332, 301, 334, 390, 330, 320, 132, 101, 134, 90, 230, 210],
+        },
+        {
+            name: "直接访问",
+            data: [150, 232, 201, 154, 190, 330, 410, 220, 182, 191, 234, 290, 330, 310, 290, 330, 310, 320, 332, 301]
+        },
+        {
+            type: "line",
+            name: "站内链接",
+            data: [320, 332, 301, 334, 390, 330, 320, 150, 232, 201, 154, 190, 330, 410, 182, 191, 234, 290, 330, 310]
+        }]
 });
 
                 </code></pre>
@@ -110,11 +114,14 @@ chart.load({
 
 
 <script type="text/javascript">
+
     pagurian.call([
-        "modules/echarts-bar/app",
-        "plugins/echarts/loader"], function(app) {
-		app.page.bar();
+        "modules/echarts-mashup/app",
+        "plugins/echarts/loader"
+    ], function(app) {
+		app.page.linebar();
 	});
+
 </script>
 
 {{>fixtures/tracker}}

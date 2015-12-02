@@ -9,8 +9,8 @@ define({
     },
     "sInfo": "Total <span class='num'>_TOTAL_</span> found",
     "sInfoEmpty": "",
-    "sEmptyTable": "<i class='fa fa-info-circle  big'></i>  No data found",
-    "sZeroRecords": "<i class='fa fa-info-circle  big'></i>  No data found",
+    "sEmptyTable": "<i class='icon icon-info  icon-big'></i>  No data found",
+    "sZeroRecords": "<i class='icon icon-info  icon-big'></i>  No data found",
     "sLoadingRecords": "loading”",
     "sTimeout": "Request timed out"
 });

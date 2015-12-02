@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-<title>{{data.page.echarts}}</title>
+<title>{{data.page.echarts_line}}</title>
 {{>fixtures/head}}
 </head>
 <body>
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.echarts}}
+					{{data.page.echarts_line}}
 					</h3>
 				</div>
 			</div>
@@ -32,22 +32,13 @@
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
                     <li>
-                        <a href="echarts-line.html" >曲线图 </a>
+                        <a href="echarts-line.html" >标准折线图 </a>
                     </li>
                     <li class="active">
-                        <a href="echarts-stack.html" >堆积图</a>
+                        <a href="echarts-line-stack.html" >堆积折线图</a>
                     </li>
                     <li >
-                        <a href="echarts-pie.html" >饼图</a>
-                    </li>
-                    <li >
-                        <a href="echarts-bar.html" >柱状图</a>
-                    </li>
-                    <li >
-                        <a href="echarts-map.html" >地图</a>
-                    </li>
-                    <li >
-                        <a href="echarts-event.html" >自定义事件</a>
+                        <a href="echarts-line-stack-area.html" >堆积面积图</a>
                     </li>
                 </ul>
             </div>
@@ -155,8 +146,11 @@ chart.load({
 
 <script type="text/javascript">
 
-    pagurian.call(["modules/echarts/app","plugins/echarts/loader"], function(app) {
-		app.page.echarts_stack();
+    pagurian.call([
+        "modules/echarts-line/app",
+        "plugins/echarts/loader"
+    ], function(app) {
+		app.page.stack();
 	});
 
 </script>

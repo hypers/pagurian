@@ -1,20 +1,31 @@
 # Pagurian
-[![tag-1.5.0](https://img.shields.io/badge/tag-v1.5.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.5.0)
+[![npm version](https://img.shields.io/npm/v/pagurian.svg) ](https://www.npmjs.com/package/pagurian)
+[![Build Status](https://travis-ci.org/hypers/pagurian.svg?branch=dev) ](https://travis-ci.org/hypers/pagurian)
+[![devDependency Status](https://david-dm.org/hypers/pagurian/dev-status.svg) ](https://david-dm.org/hypers/pagurian#info=devDependencies)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
+
+
 
 一个管理系统的前端框架
 
-[Pagurian](http://pagurian.com)早期是[Hypers](http://www.hypers.com)前端团队为
-服务于公司的产品搭建的一套前端框架，
-已经在多个产品中使用，逐渐成熟，并开源出来。
+[Pagurian](http://pagurian.com)早期是[Hypers](http://www.hypers.com)前端团队为 服务于公司的产品搭建的一套前端框架， 已经在多个产品中使用，逐渐成熟，并开源出来。
 
 ![Pagurian](/src/resources/img/demo.png)
 
-## 开发及构建
-开发者可以在 Pagrian 的基础上进行二次开发,
-Pagurian由[Grunt](http://gruntjs.com/)构建及发布,
-你需要安装Grunt以及所依赖的[Node.js](http://www.nodejs.org)环境。
+## 快速开始
+以下是一段演示代码，页面引入一个 `pagurian.js` 文件，然后载入 `modules/user/app` 模块, 最后初始化改模块下 `index` 页面的内容。
 
+```html
+<script src="pagurian.js" ></script>
+<script type="text/javascript">
+    pagurian.call("modules/user/app",function(app) {
+        app.page.index();
+    });
+</script>
+```
+
+## 开发及构建
+开发者可以在 Pagrian 的基础上进行二次开发, Pagurian由[Grunt](http://gruntjs.com/)构建及发布, 你需要安装Grunt以及所依赖的[Node.js](http://www.nodejs.org)环境。
 
 首先安装 Grunt
 
@@ -40,7 +51,6 @@ npm install
 ```
 grunt
 ```
-
 
 ### 目录结构
 
@@ -70,10 +80,7 @@ Pagurian
 └── pagurian.js
 ```
 
-
-
 ## 谁在用？
-
 - [Hyper Analytics](https://analytics.hypers.com.cn)
 - [Hyper Adstracker](http://adstracker.hypers.com.cn/)
 

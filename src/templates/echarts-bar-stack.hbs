@@ -1,6 +1,6 @@
 {{>fixtures/doctype}}
 <head>
-<title>{{data.page.echarts_line}}</title>
+<title>{{data.page.echarts_bar}}</title>
 {{>fixtures/head}}
 </head>
 <body>
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="page-title">
-					{{data.page.echarts_line}}
+					{{data.page.echarts_bar}}
 					</h3>
 				</div>
 			</div>
@@ -31,14 +31,17 @@
 
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="echarts-bar.html" >标准柱状图</a>
+                    </li>
+                    <li>
+                        <a href="echarts-bar-horizon.html" >横向柱状图</a>
+                    </li>
                     <li class="active">
-                        <a href="echarts-line.html" >标准折线图 </a>
+                        <a href="echarts-bar-stack.html" >堆积柱状图</a>
                     </li>
-                    <li >
-                        <a href="echarts-line-stack.html" >堆积折线图</a>
-                    </li>
-                    <li >
-                        <a href="echarts-line-stack-area.html" >堆积面积图</a>
+                    <li>
+                        <a href="echarts-bar-custom.html" >彩虹柱状图</a>
                     </li>
                 </ul>
             </div>
@@ -66,42 +69,39 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="markdown">
-                        <h3>Javascript</h3>
-                        <pre><code class="javascript">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+                    <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
 var chart = $p.plugin.echarts("my_chart", {
-    type: "line",
-    title: {
-        text: '来源分析',
-        subtext: '最近一周数据'
-    }
+    type: "bar"
 });
 
 chart.load({
-    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+    name: "PV",
+    horizon: true,
+    columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
     rows: [{
-        name: "搜索引擎",
-        value: [120, 132, 101, 134, 90, 230, 210]
+        name: "上海",
+        value: [735, 310, 234, 135, 548, 148, 114],
+        stack: "浏览量(PV)"
     }, {
-        name: "外部链接",
-        value: [220, 182, 191, 234, 290, 330, 310],
+        name: "北京",
+        value: [435, 110, 84, 95, 108, 98, 74],
+        stack: "浏览量(PV)"
     }, {
-        name: "直接访问",
-        value: [150, 232, 201, 154, 190, 330, 410]
-    }, {
-        name: "站内链接",
-        value: [320, 332, 301, 334, 390, 330, 320]
+        name: "广州",
+        value: [255, 120, 184, 195, 208, 198, 174],
+        stack: "浏览量(PV)"
     }]
 });
 
+                </code></pre>
 
-                    </code></pre>
+                {{>fixtures/echarts-footer}}
 
-                    {{>fixtures/echarts-footer}}
-
-                    </div>
+                </div>
                 </div>
             </div>
 			<!-- END PAGE CONTENT-->
@@ -115,14 +115,11 @@ chart.load({
 
 
 <script type="text/javascript">
-
     pagurian.call([
-        "modules/echarts-line/app",
-        "plugins/echarts/loader"
-    ], function(app) {
-		app.page.line();
+        "modules/echarts-bar/app",
+        "plugins/echarts/loader"], function(app) {
+		app.page.horizonStack();
 	});
-
 </script>
 
 {{>fixtures/tracker}}

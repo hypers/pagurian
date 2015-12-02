@@ -506,7 +506,7 @@ define(function(require, exports, module) {
 
 
                             var total = a.page ? a.page.total : 0;
-                            var items = a.result.items || [];
+                            var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
 
 
@@ -596,7 +596,7 @@ define(function(require, exports, module) {
                                         row_details.addClass("row-details-open disabled").removeClass("row-details-close");
                                         oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
 
-                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='fa fa-info-circle  big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
+                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='icon icon-info icon-big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
                                             var ndetails = row_details.parents("tr").next().find(".details");
                                             row_details.removeClass("disabled");
                                             ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
@@ -617,9 +617,9 @@ define(function(require, exports, module) {
                                     status_text = a.message;
                                 }
 
-                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i>  " + status_text);
+                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
                             } else if (a.code == 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i> " + a.message);
+                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
 
 

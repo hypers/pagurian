@@ -20,12 +20,12 @@ define(function(require, exports, module) {
             //在Modal中显示消息
             var visibleModal = false;
             $(".modal").each(function() {
-                if ($(this).is(":visible") && (type === "error" || type === "warning")) {
-                    var _message = $(this).find(".modal-message");
-                    _message.html('<div class="global-message ' + type + '">' + info + '</div>');
+                if ($(this).hasClass("in")) {
+                    $(this).find(".modal-message").html('<div class="global-message ' + type + '">' + info + '</div>');
                     visibleModal = true;
                 }
             });
+
             if (visibleModal) {
                 return this;
             }
