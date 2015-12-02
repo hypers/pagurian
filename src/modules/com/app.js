@@ -42,8 +42,9 @@ define(function(require, exports, module) {
                 return true;
             },
             submit: function(modal, data, params, callback) {
-                $p.com.alert("你点击了确定");
+
                 modal.hide();
+                $p.com.alert("你点击了确定");
             }
         });
 
