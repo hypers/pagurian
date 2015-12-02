@@ -8,7 +8,7 @@
 ![Pagurian](/src/resources/img/demo.png)
 
 ## 快速开始
-以下是一段演示代码，页面引入一个 `pagurian.js` 文件，然后载入 `modules/user/app` 模块, 然后初始化改模块下 `index` 页面的内容。
+以下是一段演示代码，页面引入一个 `pagurian.js` 文件，然后载入 `modules/user/app` 模块, 最后初始化改模块下 `index` 页面的内容。
 
 ```html
 <script src="pagurian.js" ></script>
