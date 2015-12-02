@@ -1,6 +1,7 @@
 # Pagurian
 [![tag-1.5.0](https://img.shields.io/badge/tag-v1.5.0-orange.svg) ](https://github.com/hypers/pagurian/tree/v1.5.0)
-[!travis-ci](https://travis-ci.org/hypers/pagurian.svg?branch=dev) [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
+[![Build Status](https://travis-ci.org/hypers/pagurian.svg?branch=dev) ](https://travis-ci.org/hypers/pagurian)
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
 
 
 
