@@ -49,8 +49,8 @@ $p.com.dialog("#btn_remove", {
     title: "提示",
     body: "你确定要删除吗？",
     submit: function(modal, data, params, callback) {
-        $p.com.alert("你点击了确定");
         modal.hide();
+		$p.com.alert("你点击了确定");
     }
 });
                                 </code></pre>
@@ -80,8 +80,8 @@ $p.com.dialog("#btn_add", {
         return true;
     },
     submit: function(modal, data, params, callback) {
-        $p.com.alert("你点击了确定");
         modal.hide();
+		$p.com.alert("你点击了确定");
     }
 });
                                 </code></pre>
@@ -128,8 +128,8 @@ $p.com.dialog("#btn_update", {
     submit: function(modal, data, params, callback) {
         //更新用户信息
         model.update(params.id, data, function(resp) {
-            $p.com.alert(resp.message);
             modal.hide();
+			$p.com.alert(resp.message);
         });
     }
 });

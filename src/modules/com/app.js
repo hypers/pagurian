@@ -30,8 +30,8 @@ define(function(require, exports, module) {
             title: "提示",
             body: "你确定要删除吗？",
             submit: function(modal, data, params, callback) {
-                $p.com.alert("你点击了确定");
                 modal.hide();
+                $p.com.alert("你点击了确定");
             }
         });
 
@@ -42,9 +42,8 @@ define(function(require, exports, module) {
                 return true;
             },
             submit: function(modal, data, params, callback) {
-
-                modal.hide();
                 $p.com.alert("你点击了确定");
+                modal.hide();
             }
         });
 
@@ -55,8 +54,8 @@ define(function(require, exports, module) {
                 return true;
             },
             submit: function(modal, data, params, callback) {
-                $p.com.alert("你点击了确定");
                 modal.hide();
+                $p.com.alert("你点击了确定");
             }
         });
 
@@ -84,8 +83,8 @@ define(function(require, exports, module) {
                     modal.complete(resp, valid);
 
                     if (valid) {
-                        modal.hide();
                         $p.com.alert(resp.message);
+                        modal.hide();
                     }
                 });
             }
