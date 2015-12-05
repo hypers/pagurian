@@ -1,5 +1,8 @@
 /**
  * Created by hypers-godfery on 2015-10-28.
+ * Updated by hypers-godfery on 2015-12-06.
+ * 1.增加了summar组件对新数据的支持,(同时支持老数据)
+ * 2.增加了summary对无请求数据时的当作普通tab的支持
  */
 define(function (require, exports, module) {
         var g = window,
@@ -15,15 +18,15 @@ define(function (require, exports, module) {
          */
         function Summary(selector, options) {
             var o = this,
-            //前缀名
+                //前缀名
                 _nameStr = options.name ? options.name : "summary",
-            //随机id
+                //随机id
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
-            //cookieName
+                //cookieName
                 _cookieName,
-            //全部列、行
+                //全部列、行
                 _allColumns, _allRows,
-            //临时变量
+                //临时变量
                 $div_ul, $setting_ul, i, l, j;
             //最小列数
             var MIN_COLUMN_NUM = 1;
@@ -33,7 +36,7 @@ define(function (require, exports, module) {
                     this[key] = value;
                     $.cookie('params.' + key, value, {
                         expires: 7,
-                        path: '/'
+                        path:    '/'
                     });
                 },
                 get: function (key) {
@@ -45,7 +48,7 @@ define(function (require, exports, module) {
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
             //版本
-            this.version = "2015.11.04.1040";
+            this.version = "2015.12.06.0028";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -110,37 +113,37 @@ define(function (require, exports, module) {
              */
             this.options = {
                 //数据源data cName的key
-                "cName": "cName",
+                "cName":           "cName",
                 //所有的列
-                "allColumns": [],
+                "allColumns":      [],
                 //所有的行
-                "allRows": [],
+                "allRows":         [],
                 //最大展示数
                 //"maxNum": <int>,
                 //最小展示数
                 //"minNum": <int>,
                 //可以切换
-                "canChoose": false,
+                "canChoose":       false,
                 //是否显示setting按钮
-                "showSetting": false,
+                "showSetting":     false,
                 //数据源
-                "dataSource": null,
+                "dataSource":      null,
                 //数据源的params
-                "dataParams": {},
+                "dataParams":      {},
                 //展开面板的回调
-                "callbackOpen": null,
+                "callbackOpen":    null,
                 /**
                  * 确定按钮的回调
                  * "callbackSubmit": function (showColumns, datas) {} //展示的列 全部数据
                  */
-                "callbackSubmit": null,
+                "callbackSubmit":  null,
                 //取消按钮的回调
-                "callbackCancel": null,
+                "callbackCancel":  null,
                 /**
                  * 点击面板的回调
                  * "callBackPanel"：function(_columnName, _columnData, _allDatas){}//点击的列名，当前列数据，所有数据
                  */
-                "callBackPanel": null,
+                "callBackPanel":   null,
                 /**
                  * 数据渲染后的回调
                  * [canChoose=true]
@@ -285,6 +288,12 @@ define(function (require, exports, module) {
                      * setting cancel按钮
                      */
                     $(document).delegate("#" + getTagId("btn_cancel"), 'click', function () {
+                        var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]');
+                        $allCheckBoxes.removeAttr("checked");
+                        for(var _i = 0;_i < o.showColumns.length;_i++){
+                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="'+ o.showColumns[_i]+'"]').prop("checked","checked");
+                        }
+                        updateCheckbox();
                         expandSettingPanel();
                         o.options.callbackCancel && o.options.callbackCancel();
                     });
@@ -293,32 +302,42 @@ define(function (require, exports, module) {
                      * setting 中的checkbox
                      */
                     $(document).delegate('#' + getTagId("setting_ul") + ' [type="checkbox"]', 'click', function () {
-                        var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
-                            $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
-                            $unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
-                        var checkNum = $selectCheckBoxes.length;
-                        if (checkNum >= o.maxNum) {
-                            $unselectCheckBoxes.attr("disabled", "disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        } else {
-                            $allCheckBoxes.removeAttr("disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        }
-                        if (checkNum === o.minNum) {
-                            $selectCheckBoxes.attr("disabled", "disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        }
+                        var $selectCheckBoxes =updateCheckbox();
                         o._showColumns = [];
                         $selectCheckBoxes.each(function () {
                             o._showColumns.push($(this).val());
                         });
                     });
+
+                    /**
+                     * 更新checkbox样式
+                     * @returns {jQuery|HTMLElement} 已选中的checkboxes
+                     */
+                    var updateCheckbox = function(){
+                        var _$allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
+                            _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
+                            _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
+                        var checkNum = _$selectCheckBoxes.length;
+                        if (checkNum >= o.maxNum) {
+                            _$unselectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        } else {
+                            _$allCheckBoxes.removeAttr("disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        }
+                        if (checkNum === o.minNum) {
+                            _$selectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        }
+
+                        return _$selectCheckBoxes;
+                    };
                 }
 
 
@@ -432,12 +451,33 @@ define(function (require, exports, module) {
              * 绘制数据
              */
             function drawData() {
+                var _datas = [];
                 if (!o.options.dataSource) {
-                    alert('Summary:[' + selector + '] dataSource is undefined');
+                    var _allColumns = o.options.allColumns;
+                    for (i = 0; i < _allColumns.length; i++) {
+                        var _dataName = _allColumns[i][o.options.cName],
+                            _columnConfig = getColumnConfig(_dataName),
+                            _o = {
+                                "cName": _dataName
+                            };
+                        _o[o.options.cName + "Title"] = _columnConfig.title;
+                        _datas.push(_o);
+                    }
+                    o.allDatas = _datas;
+                    setData(_datas);
+                    adjustHeight();
+                    if (o.canChoose) {
+                        var _chooseColumnsData = getColumnData(o.chooseColumns);
+                        o.options.callBackGetData && o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                        return;
+                    }
+                    o.options.callBackGetData && o.options.callBackGetData(o.allDatas);
                     return;
                 }
+
                 o.options.dataSource(o.options.dataParams, function (resp) {
-                    var _datas = resp.result ? resp.result : [];
+                    var _result = resp.result || {};
+                    _datas =$.isArray(_result) ? _result : _result.items || [];
                     for (i = 0; i < _datas.length; i++) {
                         var _dataName = _datas[i][o.options.cName],
                             _columnConfig = getColumnConfig(_dataName);

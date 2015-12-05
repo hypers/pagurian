@@ -9,8 +9,9 @@ define(function (require, exports, module) {
 
     app.page.multiple = function () {
         var selectDatas = [{
-            "id": 4,
-            "name": "2.1.4"
+            "id": 4
+        },{
+            "id": 5
         }], options = {
             isMultiple: true,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
@@ -53,8 +54,8 @@ define(function (require, exports, module) {
 
     app.page.single = function () {
         var selectDatas = [{
-            "id": 4,
-            "name": "2.1.4"
+            "id": 4
+            //"name": "2.1.4" //此数据用于设置默认的选中文字，如需提示文字，则不需要此设置 仅在
         }], options = {
             isMultiple: false,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false

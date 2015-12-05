@@ -2,6 +2,7 @@
  * Created by hypers-godfery on 2015/7/24.
  * Updated by hypers-godfery on 2015/9/10 fixbug.
  * Updated by hypers-godfery on 2015/10/12 添加国际化.
+ * Updated by hypers-godfery on 2015/12/6 添加对新数据格式的支持.
  */
 define(function (require, exports, module) {
     var g = window,
@@ -50,7 +51,7 @@ define(function (require, exports, module) {
             },
             "sDom": ["D", "<div style='display: block;' class='bottom'>", "S", "T", "P", "</div>"]
         };
-        this.version = "2015.11.04.1039";
+        this.version = "2015.12.06.0028";
         this.dataListName = selector.substring(1);
         this.paginate = {};
         /**
@@ -268,7 +269,9 @@ define(function (require, exports, module) {
             var o = this,
                 oData = $('#' + this.dataListName + '_data_body');
             oData.empty();
-            if (!data.result || data.result.length === 0) {
+            var _result = data.result || {};
+            var _datas = $.isArray(_result) ? _result : _result.items || [];
+            if (_datas.length === 0) {
                 var _empty_tml = ['<table class="col-md-12">',
                     '            <tbody>',
                     '            <tr class="odd">',
@@ -285,7 +288,7 @@ define(function (require, exports, module) {
                 options.fnCall && options.fnCall();
                 return;
             }
-            var result = data.result;
+            var result = _datas;
             o.options.bEmptyData = false;
             $('#' + this.dataListName + '_processing').css({"visibility": "hidden"});
             for (var i = 0; i < result.length; i++) {
