@@ -121,7 +121,7 @@ define(function(require, exports, module) {
                 if (typeof options.submit === "function") {
                     $(this).addClass("disabled").prop("disabled", true);
                     $("#modal" + _id + " .submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
-                    options.submit(modal, data, modal.params);
+                    options.submit(modal, form.serializeArray() || [], modal.params);
                 }
 
             });

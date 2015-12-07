@@ -941,4 +941,13 @@ define(function(require, exports, module) {
     }, "该字段包含非法字符");
 
 
+    /**
+     * 自定义字符集
+     * 有效字符 ："数字 字母 - _ , "
+     */
+    $.validator.addMethod("validString2", function(value, element) {
+        return this.optional(element) || /^[0-9A-Za-z\-\_\,]+$/.test(value);
+    }, $.validator.locale.special_char);
+
+
 });
