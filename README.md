@@ -71,7 +71,7 @@ Pagurian
 │   ├── lib/                //框架依赖的基础库
 │   ├── modules/            //业务模块
 │   ├── plugins/            //插件
-|   ├── widgets/            //组件
+│   ├── widgets/            //组件
 │   ├── resources/          //css,images,fonts
 │   └── templates/          //handlebars 模版文件
 ├── test/                   //测试
@@ -92,3 +92,4 @@ Pagurian
 - [Datatabls v1.9.4](http://www.datatables.net/)([MIT License](http://www.datatables.net/license/mit))
 - [Echarts v2.0](http://echarts.baidu.com/)([MIT License](https://github.com/ecomfe/echarts/blob/master/LICENSE.txt))
 - [jQuery v1.9.1](http://jquery.com/)([MIT License](https://jquery.org/license/))
+- [ion.rangeSlider](https://github.com/IonDen/ion.rangeSlider)

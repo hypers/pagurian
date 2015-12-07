@@ -279,7 +279,7 @@ define(function(require, exports, module) {
             }
         };
 
-        summary = $p.plugin.summary("#summaryProTest", option);
+        summaryDemo = $p.plugin.summary("#summaryProTest", option);
     };
 
     module.exports = app;

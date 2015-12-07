@@ -1,6 +1,9 @@
 /**
  * Created by hypers-godfery on 2015/10/14.
  * Update by hypers-godfery on 2015/11/23.
+ * Update by hypers-godfery on 2015/12/5.
+ * 1.增加了sizer组件对新数据的支持,(同时支持老数据)
+ * 2.修复了sizer组件单选情况下默认选中有选项，而按钮中的文字没有被选项name所覆盖的bug
  */
 define(function (require, exports, module) {
         var g = window,
@@ -20,7 +23,7 @@ define(function (require, exports, module) {
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.11.23.1354";
+            this.version = "2015.12.05.23.01";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -57,29 +60,29 @@ define(function (require, exports, module) {
              * }
              */
             this.options = {
-                isMultiple: false,//是否为多选 默认为false
-                isExpand: false,//是否展开 默认为false
-                dataSource: null,//数据源
-                dataParams: {},//数据源的params
-                dataMapping: {
-                    "name": "name",
+                isMultiple:        false,//是否为多选 默认为false
+                isExpand:          false,//是否展开 默认为false
+                dataSource:        null,//数据源
+                dataParams:        {},//数据源的params
+                dataMapping:       {
+                    "name":  "name",
                     "value": "id"
                 },
-                position: { //设置面板的位置
+                position:          { //设置面板的位置
                     left: 0
                 },
-                style: "", //筛选器自定义class
-                processing: oLanguage.processing,//loading默认文字
-                search: oLanguage.search,//搜索框默认文字
-                callbackExpand: null,//面板展开时的回调
-                callbackClose: null,//面板关闭时的回调
-                callbackOption: null, //点击选项的回调
-                callbackSearch: null,//搜索框录入回调
-                callbackClean: null,//点击清除/清楚选择的回调
+                style:             "", //筛选器自定义class
+                processing:        oLanguage.processing,//loading默认文字
+                search:            oLanguage.search,//搜索框默认文字
+                callbackExpand:    null,//面板展开时的回调
+                callbackClose:     null,//面板关闭时的回调
+                callbackOption:    null, //点击选项的回调
+                callbackSearch:    null,//搜索框录入回调
+                callbackClean:     null,//点击清除/清楚选择的回调
                 //仅isMultiple为true时有效
                 callbackSelectAll: null,//全选时的回调
-                callbackSubmit: null,//确认按钮回调
-                callbackCancel: null, //取消按钮回调
+                callbackSubmit:    null,//确认按钮回调
+                callbackCancel:    null //取消按钮回调
             };
 
             //初始化组件
@@ -97,6 +100,9 @@ define(function (require, exports, module) {
                     o.expandPanel();
                 }
                 if (chooseDatas) {
+                    if(!o.options.isMultiple && chooseDatas[0][o.options.dataMapping.name]){
+                        singleSetText(chooseDatas[0][o.options.dataMapping.name]);
+                    }
                     o.selectDatas = chooseDatas;
                 }
             };
@@ -261,12 +267,13 @@ define(function (require, exports, module) {
                     //确定
                     $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
                         o.selectDatas = o._tmpSelectDatas;
-                        o.options.callbackSubmit && o.options.callbackSubmit(o.selectDatas, o.allDatas);
+                        o.options.callbackSubmit && o.options.callbackSubmit();
                         closePanel(true);
                     });
 
                     //取消
                     $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
+                        //o.selectDatas = o._tmpSelectDatas;
                         o.options.callbackCancel && o.options.callbackCancel();
                         closePanel(true);
                     });
@@ -293,7 +300,7 @@ define(function (require, exports, module) {
 
             /**
              * 为单选按钮设置文字
-             * @param text
+             * @param text 需要设置的文字
              */
             var singleSetText = function (text) {
                 $("#" + o.sizerName).find("span.sizer-btn-text").empty().append(text);
@@ -320,6 +327,9 @@ define(function (require, exports, module) {
                         for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
                             if (allDatas[i][o.options.dataMapping.value] === chooseDatas[j][o.options.dataMapping.value]) {
                                 _tpl += 'selected ';
+                                /*if(!o.options.isMultiple){
+                                    singleSetText(allDatas[i][o.options.dataMapping.name]);
+                                }*/
                             }
                         }
                     }
@@ -369,7 +379,8 @@ define(function (require, exports, module) {
                     if ($listWrap.hasClass("loading")) {
                         $listWrap.removeClass("loading");
                     }
-                    var _datas = resp.result || [];
+                    var _result = resp.result || {};
+                    var _datas = $.isArray(_result) ? _result : _result.items || [];
                     o.allDatas = _datas;
                     chooseDatas = chooseDatas ? chooseDatas : [];
                     setData(_datas, chooseDatas);
