@@ -131,7 +131,7 @@
         }, {
             "name": "echartsMap",
             "title": "Echarts 地图",
-            "url": "echarts-map-china.html",
+            "url": "echarts-map-world.html",
             "active": 0
         }, {
             "name": "echartsMsahup",

@@ -31,16 +31,16 @@
 
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
-                    <li  class="active">
+
+                    <li>
                         <a href="echarts-map-world.html" >世界</a>
                     </li>
-                    <li>
+                    <li >
                         <a href="echarts-map-china.html" >中国</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="echarts-map-china-city.html" >中国-城市</a>
                     </li>
-
                 </ul>
             </div>
 
@@ -75,26 +75,34 @@ require('../../plugins/echarts/module');
 var chart = $p.plugin.echarts("my_chart", {
     type: "map",
     title: {
-        text: "浏览量（PV）地域分布图"
+        text: "浏览量（PV）地域分布图 - 中国"
     }
 });
 
 chart.load({
     name: "pv",
-    mapType: "world",
+    mapType: "china",
     data: [{
-        value: 735,
-        name: 'China'
+        value: 234,
+        name: 'Sichuan'
     }, {
-        value: 423,
-        name: 'United States of America'
+        value: 400,
+        name: 'Chengdu'
     }, {
-        value: 310,
-        name: '意大利'
+        value: 500,
+        name: '浙江'
     }, {
         value: 300,
-        name: '俄罗斯'
+        name: '杭州市'
+    }, {
+        value: 200,
+        name: '宁波市'
     }]
+});
+
+//添加地图的选择事件
+chart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+    chart.onMapSelectedByChina(param);
 });
 
                 </code></pre>
@@ -120,7 +128,7 @@ chart.load({
         "modules/echarts-map/app",
         "plugins/echarts/loader-map"
     ], function(app) {
-		app.page.world();
+		app.page.city();
 	});
 
 </script>
