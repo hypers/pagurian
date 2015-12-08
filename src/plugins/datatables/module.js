@@ -352,7 +352,7 @@ define(function(require, exports, module) {
         this.bLoadFinish = false;
         this.bShowSummary = false;
         this.aApiParams = {};
-        this.version="0.1.1208";
+        this.version = "0.1.1208";
         this.options = {
             "sForm": '#form',
             "bAutoload": true,
@@ -537,20 +537,22 @@ define(function(require, exports, module) {
                             }
 
                             //汇总信息
-                            for (var key in summary) {
+                            $(seletor + " thead .table-summary").each(function() {
+
+                                var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
+                                    if (summary_value && oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
-
-                                if (summary_value === null || summary_value === "") {
+                                if (!summary_value) {
                                     summary_value = "--";
                                 }
 
-                                $("#" + that.id + "_" + key).html(summary_value);
-                            }
+                                $(this).html(summary_value);
+
+                            });
 
 
                             //显示细分信息
@@ -666,7 +668,7 @@ define(function(require, exports, module) {
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var p = "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var p = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
 
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
                     if (aoColumns[i].sTitle) {
