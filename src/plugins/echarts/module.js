@@ -23,6 +23,7 @@ define(function(require, exports, module) {
 
     function Echarts(seletor, options) {
 
+        this.version = "0.1.1208";
         this.options = {
             backgroundColor: '#f5f5f5',
             color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
@@ -33,6 +34,7 @@ define(function(require, exports, module) {
         var cities = $p.locale.echartsChinaCity;
         var nameMapCity = {};
         var nameMapProvince = provinces;
+        var options_all;
 
         this.init = function() {
 
@@ -101,20 +103,18 @@ define(function(require, exports, module) {
 
             var type = this.options.type;
             var _options = $.extend(true, {}, chartOptions[type](data), this.options);
-            var _options_all;
+
 
 
             if (typeof options === "function") {
-                _options_all = options(_options);
+                options_all = options(_options);
             } else {
-                _options_all = $.extend(true, _options, options || {});
+                options_all = $.extend(true, _options, options || {});
             }
 
             this.chart.hideLoading();
             this.chart.clear();
-            this.chart.setOption(_options_all);
-            this.options = _options_all;
-
+            this.chart.setOption(options_all);
 
             return this;
         };
@@ -135,7 +135,7 @@ define(function(require, exports, module) {
          * @param {Object} options
          */
         this.set = function(options) {
-            this.chart.setOption($.extend(true, this.options, options), true);
+            this.chart.setOption($.extend(true, options_all, options), true);
         };
 
 
