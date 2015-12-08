@@ -352,6 +352,7 @@ define(function(require, exports, module) {
         this.bLoadFinish = false;
         this.bShowSummary = false;
         this.aApiParams = {};
+        this.version="0.1.1208";
         this.options = {
             "sForm": '#form',
             "bAutoload": true,

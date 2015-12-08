@@ -21,7 +21,6 @@ define(function(require, exports, module) {
         $("#btn_alert_4").click(function() {
             $p.com.alert("找不到您筛选的数据,请尝试刷新页面!", "error");
         });
-
     };
 
     app.page.dialogs = function() {
