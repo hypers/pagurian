@@ -363,15 +363,12 @@ Bootstrap Tables
 .table-toolbar {
     background: #f5f5f5;
     padding: 18px;
-    border-width: 1px 1px 0 1px;
-    border-color: #eee;
-    border-style: solid;
     .btn {
         background: none;
         border: 1px solid #f5f5f5;
     }
     .open {
-        .dropdown-toggle{
+        .dropdown-toggle {
             border-color: #9f9f9f !important;
             border-bottom: none !important;
         }
@@ -379,13 +376,34 @@ Bootstrap Tables
     .btn-default:hover {
         border: 1px solid #ddd;
     }
-    .right{
+    .right {
         float: right;
     }
-    .input-search{
-        input{
+    .input-search {
+        input {
             height: auto;
             padding: 6px 12px;
+        }
+    }
+    .label {
+        color: #575757;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 100;
+        padding: 11px 4px;
+        vertical-align: middle;
+    }
+}
+
+
+.table-form {
+    th,
+    td {
+        border: none !important;
+    }
+    tbody {
+        th {
+            text-align: right;
         }
     }
 }

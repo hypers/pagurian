@@ -428,20 +428,44 @@ Buttons & Dropdown Buttons
     height: 36px;
     padding: 5px;
     .icon{
+        vertical-align: middle;
         font-size: 14px;
     }
     .fa{
+        vertical-align: bottom;
         font-size: 16px;
+    }
+    &.btn-lg{
+        width: 39px;
+        height: 39px;
+        padding: 5px;
+    }
+    &.btn-sm{
+        width: 31px;
+        height: 31px;
+        padding: 0;
+    }
+}
+button{
+    &.btn-icon{
+        .fa{
+            vertical-align: unset;
+        }
+        &.btn-lg{
+            padding: 9px;
+        }
+        &.btn-sm{
+            padding: 4px;
+
+        }
     }
 }
 .btn-highlight{
     color: @H500;
-    &:hover{
+    &:hover,&:active,&:focus{
         color: @H600;
     }
-
 }
-
 .btn-lg {
     font-size: 15px;
     padding: 9px 16px;
