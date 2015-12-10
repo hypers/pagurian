@@ -139,11 +139,12 @@ define(function(require, exports, module) {
         };
 
 
-
+        this.selected = "china";
         this.onMapSelectedByChina = function(params) {
 
             var mapType = "china";
-            if (nameMapProvince[params.target]) {
+
+            if (nameMapProvince[params.target] && nameMapProvince[params.target] != this.selected) {
                 mapType = nameMapProvince[params.target];
             }
 
@@ -153,6 +154,9 @@ define(function(require, exports, module) {
                     nameMap: nameMapCity,
                 }]
             });
+
+            this.selected = mapType;
+
 
         };
 
