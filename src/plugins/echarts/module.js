@@ -62,11 +62,11 @@ define(function(require, exports, module) {
         this.showLoading = function(effect) {
             this.chart.showLoading({
                 effect: effect || "spin",
-                textStyle:{
-                    color:"#fff"
+                textStyle: {
+                    color: "#fff"
                 },
-                effectOption:{
-                    backgroundColor:"rgba(0, 0, 0, 0.5)",
+                effectOption: {
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
                 },
                 text: activeLocale.loading
             });
@@ -154,12 +154,18 @@ define(function(require, exports, module) {
         };
 
 
-        this.selected = "china";
+
         this.onMapSelectedByChina = function(params) {
 
             var mapType = "china";
+            var count = 0;
+            for (var k in params.selected) {
+                count++;
+            }
 
-            if (nameMapProvince[params.target] && nameMapProvince[params.target] != this.selected) {
+            if (count == 1) {
+                mapType = "china";
+            } else if (nameMapProvince[params.target]) {
                 mapType = nameMapProvince[params.target];
             }
 
@@ -171,7 +177,6 @@ define(function(require, exports, module) {
             });
 
             this.selected = mapType;
-
 
         };
 
