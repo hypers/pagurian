@@ -41,9 +41,7 @@ define(function(require, exports, module) {
             this.id = seletor;
             $.extend(true, this.options, options);
             this.chart = echarts.init(document.getElementById(seletor));
-            this.chart.showLoading({
-                text: activeLocale.loading
-            });
+            this.showLoading();
 
             var key;
 
@@ -61,9 +59,26 @@ define(function(require, exports, module) {
             }
         };
 
+        this.showLoading = function(effect) {
+            this.chart.showLoading({
+                effect: effect || "spin",
+                textStyle:{
+                    color:"#fff"
+                },
+                effectOption:{
+                    backgroundColor:"rgba(0, 0, 0, 0.5)",
+                },
+                text: activeLocale.loading
+            });
+        };
+
+        this.hideLoading = function() {
+            this.chart.hideLoading();
+        };
+
         this.message = function(status, message) {
 
-            this.chart.hideLoading();
+            this.hideLoading();
             this.chart.clear();
             var icon = "icon-info icon-big";
             var msg = message || activeLocale.empty;
@@ -112,7 +127,7 @@ define(function(require, exports, module) {
                 options_all = $.extend(true, _options, options || {});
             }
 
-            this.chart.hideLoading();
+            this.hideLoading();
             this.chart.clear();
             this.chart.setOption(options_all);
 
