@@ -15,5 +15,6 @@ define({
     rangelength: "{0}-character minimum; {1}-character maximum",
     range: "{0}-character minimum; {1}-character maximum",
     max: "{0} maximum",
-    min: "{0} manimum"
+    min: "{0} manimum",
+    special_char:"Special characters not allowed"
 });

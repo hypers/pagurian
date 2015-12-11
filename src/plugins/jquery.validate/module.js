@@ -55,15 +55,18 @@ define(function(require, exports, module) {
      * @see metadata()
      */
 
-
-    require('./jquery.validate');
-    require('./additional-methods');
-    var locale = {};
+    var locale = {},
+        active_locale;
 
     locale.zh_CN = require('./locale/zh_CN');
     locale.en_US = require('./locale/en_US');
+    active_locale = locale[pagurian.language || "zh_CN"];
+    require('./jquery.validate');
 
-    var active_locale = locale[pagurian.language || "zh_CN"];
+    jQuery.validator.locale = active_locale;
+
+    require('./additional-methods');
+
 
     (function($) {
 
@@ -149,7 +152,7 @@ define(function(require, exports, module) {
             rangelength: jQuery.validator.format(active_locale.rangelength),
             range: jQuery.validator.format(active_locale.range),
             max: jQuery.validator.format(active_locale.max),
-            min: jQuery.validator.format(active_locale.min)
+            min: jQuery.validator.format(active_locale.min),
         });
 
 
