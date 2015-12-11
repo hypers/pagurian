@@ -24,9 +24,6 @@ define(function(require, exports, module) {
     require('./tool/str');
 
     var layout = require('./core/layout');
-    var service = require('./service');
-
-    var api = require('../conf/api');
 
     var locale = {};
     locale.zh_CN = require('../conf/locale.zh_CN');
@@ -34,8 +31,9 @@ define(function(require, exports, module) {
 
     pagurian.locale = locale[pagurian.language];
     pagurian.lib = {
-        service: service,
-        api: api
+        service: require('./service'),
+        api: require('../conf/api'),
+        route: require('../conf/route')
     };
 
     pagurian.log = function() {

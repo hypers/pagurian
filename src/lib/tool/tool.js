@@ -51,7 +51,13 @@ define(function(require, exports, module) {
         this.isNumber = function(value) {
             return /^[0-9]+$/.test(value);
         };
+        this.isNull = function(o) {
+            return Object.prototype.toString.call(o) === '[object Null]';
+        };
 
+        this.isFunction = function(o) {
+            return typeof o === "function";
+        };
 
         /**
          *加码

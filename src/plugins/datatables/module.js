@@ -546,9 +546,11 @@ define(function(require, exports, module) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
-                                if (!summary_value) {
+                                
+                                if ($p.tool.isNull(summary_value)) {
                                     summary_value = "--";
                                 }
+
 
                                 $(this).html(summary_value);
 
