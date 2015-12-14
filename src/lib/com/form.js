@@ -50,13 +50,8 @@ define(function(require, exports, module) {
          */
         this.reset = function() {
 
-            var elements = this.element.find("input,textarea");
-            elements.each(function() {
-                if ($(this).attr('type') === "text" || $(this).attr('type') === "hidden" || $(this).get(0).tagName === "TEXTAREA") {
-                    $(this).val("");
-                }
-            });
-            form.find(".help-block").each(function() {
+            this.element.find("input[type='text'],input[type='hidden'],input[type='file'],textarea").val("");
+            this.element.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
                     $(this).text(tip).addClass("tip");
@@ -75,55 +70,70 @@ define(function(require, exports, module) {
          */
         this.val = function(data) {
 
-            var elements = this.element.find("input,textarea,select");
-            elements.each(function() {
+            /**
+             * input-text, input-hidden ,input-file ,
+             * input-checkbox, input-radio ,
+             * textarea ,select
+             */
+            var $elements;
 
-                var $that = $(this);
-                for (var key in data) {
-
-                    var name = $that.attr("name");
-                    var sub_key = "";
-                    if (!name) {
-                        continue;
-                    }
-                    var a = name.split(".");
-                    if (a.length > 1) {
-                        name = a[0];
-                        sub_key = a[1];
-                    }
-
-                    if (name === key && data[key]) {
-
-                        if ($that.attr("type") == "checkbox" || $that.attr("type") == "radio") {
-
-                            if ($that.val() == data[key]) {
-
-                                $that.prop("checked", true);
-                            } else {
-                                $that.prop("checked", false);
-                            }
-
-                            $.uniform.update(o);
-                            continue;
-                        }
-
-                        if ($that.is("select")) {
-                            var v = data[key];
-                            //如果取到的值是一个对象，则使用这个对象的ID作为key
-                            if (typeof data[key] == "object") {
-                                v = v[sub_key];
-                            }
-                            $that.find("option[value='" + v + "']").prop("selected", true);
-                            continue;
-                        }
-
-                        if (sub_key) {
-                            $that.val(data[key][sub_key]);
-                            return;
-                        }
-                        $that.val(data[key]);
-                    }
+            function getValue(name) {
+                if (data[name]) {
+                    return data[name];
                 }
+
+                //兼容老版本中的 parent.id 这种
+                var name_split = name.split(".");
+                if ($p.tool.isObject(data[name_split[0]])) {
+                    return data[name_split[0]][name_split[1]];
+                }
+
+                return null;
+            }
+
+
+            $elements = this.element.find("input,textarea,select");
+            $elements.each(function(index) {
+                var $that = $(this);
+                var name = $that.attr("name");
+                var value = getValue(name);
+
+                if ($that.is("select")) {
+                    //select
+
+                    $that.find("option[value='" + value + "']").prop("selected", true);
+
+                } else if ($that.attr("type") === "radio") {
+                    //input radio
+
+                    $that.prop("checked", ($that.val() == value));
+                    $.uniform.update($that);
+
+
+                } else if ($that.attr("type") === "checkbox") {
+                    //input checkbox
+
+                    var checked = false;
+                    //如果值是数组，在配置数组中的每个值 [xxx,yyy,zzz]
+                    if ($.isArray(value)) {
+                        for (var i = 0; i < value.length; i++) {
+                            if ($that.val() == value[i]) {
+                                checked = true;
+                            }
+                        }
+                    } else {
+                        checked = ($that.val() == value);
+                    }
+
+                    $that.prop("checked", checked);
+                    $.uniform.update($that);
+
+                } else {
+                    //input-text input-hidden input-file textarea
+
+                    $that.val(value);
+                }
+
             });
 
         };
@@ -226,7 +236,7 @@ define(function(require, exports, module) {
 
             //提交表单
             if (!$p.tool.isFunction(handleSubmit)) {
-                p.log("submitModelEvent is undefined");
+                $p.log("submitModelEvent is undefined");
                 return false;
             }
 
@@ -256,5 +266,7 @@ define(function(require, exports, module) {
     g[PagurianAlias].com.form = function(seletor, options) {
         return new Form(seletor, options).init();
     };
+
+
 
 });
