@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
     app.page.bar = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "bar"
         });
 
@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 
     app.page.horizon = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "bar"
         });
 
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 
     app.page.horizon = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "bar"
         });
 
@@ -78,7 +78,7 @@ define(function(require, exports, module) {
 
     app.page.horizonStack = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "bar"
         });
 
@@ -106,7 +106,7 @@ define(function(require, exports, module) {
 
     app.page.custom = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "bar"
         });
 

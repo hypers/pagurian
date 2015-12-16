@@ -9,7 +9,7 @@ define(function (require, exports, module) {
 
     app.page.dataListView = function () {
         var tpl = $("#dataListViewTpl").html();
-        var oDataListView = $p.plugin.dataListView("#dataListView", {
+        var oDataListView = $p.dataListView("#dataListView", {
             "dataSource": model.getDataList,
             "tplHtml": tpl,
             "sDom": ["T", "D", "S", "P"],

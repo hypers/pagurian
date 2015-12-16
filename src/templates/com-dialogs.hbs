@@ -45,12 +45,12 @@
 
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.com.dialog("#btn_remove", {
+$p.dialog("#btn_remove", {
     title: "提示",
     body: "你确定要删除吗？",
     submit: function(modal, data, params, callback) {
         modal.hide();
-		$p.com.alert("你点击了确定");
+		$p.alert("你点击了确定");
     }
 });
                                 </code></pre>
@@ -73,7 +73,7 @@ $p.com.dialog("#btn_remove", {
                             <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.com.dialog("#btn_add", {
+$p.dialog("#btn_add", {
     title: "添加用户",
     body: $("#tpl_user").html(),
     validate: function(modal, data, params) {
@@ -81,7 +81,7 @@ $p.com.dialog("#btn_add", {
     },
     submit: function(modal, data, params, callback) {
         modal.hide();
-		$p.com.alert("你点击了确定");
+		$p.alert("你点击了确定");
     }
 });
                                 </code></pre>
@@ -111,14 +111,14 @@ $p.com.dialog("#btn_add", {
 
                             <div class="markdown inner">
                                 <pre><code class="javascript">
-$p.com.dialog("#btn_update", {
+$p.dialog("#btn_update", {
     title: "编辑用户",
     body: $("#tpl_user").html(),
     initForm: function(modal, form, params) {
 
         //获取用户信息
         model.getUser(params.id, params, function(data) {
-            $p.com.form(form).val(data);
+            $p.form(form).val(data);
         });
 
     },
@@ -129,7 +129,7 @@ $p.com.dialog("#btn_update", {
         //更新用户信息
         model.update(params.id, data, function(resp) {
             modal.hide();
-			$p.com.alert(resp.message);
+			$p.alert(resp.message);
         });
     }
 });

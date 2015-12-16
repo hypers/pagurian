@@ -21,11 +21,10 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].com.select = function(seletor, options) {
+    g[PagurianAlias].select = function(seletor, options) {
 
-        var obj = new Select();
-        obj.init(seletor, options);
-        return obj;
+        return new Select().init(seletor, options);
+
 
     };
 });

@@ -546,7 +546,7 @@ define(function(require, exports, module) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
-                                
+
                                 if ($p.tool.isNull(summary_value)) {
                                     summary_value = "--";
                                 }
@@ -742,7 +742,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].plugin.dataTable = function(seletor, options) {
+    g[PagurianAlias].dataTable = function(seletor, options) {
         var table = new DataTables(seletor, options);
         table.init();
         return table;

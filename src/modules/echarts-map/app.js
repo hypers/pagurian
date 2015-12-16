@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 
     app.page.world = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图"
@@ -36,7 +36,7 @@ define(function(require, exports, module) {
 
     app.page.china = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图"
@@ -73,7 +73,7 @@ define(function(require, exports, module) {
 
     app.page.city = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图 - 中国"

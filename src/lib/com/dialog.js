@@ -175,10 +175,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].com.dialog = function(seletor, options) {
-        var dialog = new Dialog();
-        dialog.init(seletor, options);
-        return dialog;
+    g[PagurianAlias].dialog = function(seletor, options) {
+        return new Dialog().init(seletor, options);
     };
 
 });

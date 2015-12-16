@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 
     app.page.validation = function() {
 
-        $p.com.form("#form_sample_1", {
+        $p.form("#form_sample_1", {
             validate: {
                 rules: {
                     name: {
@@ -53,7 +53,7 @@ define(function(require, exports, module) {
             },
             submit: function(form, data) {
                 model.add(data, function(resp) {
-                    $p.plugin.alert(resp.message);
+                    $p.alert(resp.message);
                 });
             }
         });
@@ -61,7 +61,7 @@ define(function(require, exports, module) {
     };
 
     app.page.other = function() {
-        var my_form = $p.com.form("#form_sample_1");
+        var my_form = $p.form("#form_sample_1");
 
         my_form.val({
             text: "This is text",

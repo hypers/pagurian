@@ -55,11 +55,8 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].com.checkboxs = function(seletor, options) {
-        var obj = new Checkboxs();
-        obj.init(seletor, options);
-
-        return obj;
+    g[PagurianAlias].checkboxs = function(seletor, options) {
+        return new Checkboxs().init(seletor, options);
     };
 
 });

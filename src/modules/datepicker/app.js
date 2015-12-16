@@ -7,45 +7,45 @@ define(function(require, exports, module) {
     require('../../plugins/datepicker/module');
 
     app.page.date = function() {
-        $p.plugin.datePicker('#picker1', {
+        $p.datePicker('#picker1', {
             defaultDate: moment(),
         }, function(date) {
-            $p.com.alert(date);
+            $p.alert(date);
         });
 
-        $p.plugin.datePicker('#picker2', {
+        $p.datePicker('#picker2', {
             defaultDate: moment(),
         }, function(date) {
-            $p.com.alert(date);
+            $p.alert(date);
         });
 
-        $p.plugin.datePicker('#picker3', {
+        $p.datePicker('#picker3', {
             defaultDate: [moment().subtract('days', 6), moment()],
         }, function(date) {
-            $p.com.alert(date);
+            $p.alert(date);
         });
     };
 
     app.page.daterange = function() {
 
-        $p.plugin.dateRangePicker("#picker", {
+        $p.dateRangePicker("#picker", {
             defaultDate: [moment().subtract('days', 6), moment()], //默认最近一周
         }, function(start, end) {
-            $p.com.alert(start + " - " + end);
+            $p.alert(start + " - " + end);
         });
 
     };
 
     app.page.datetime = function() {
 
-        $p.plugin.dateTimePicker('#picker1', {}, function(date) {
-            $p.com.alert(date);
+        $p.dateTimePicker('#picker1', {}, function(date) {
+            $p.alert(date);
         });
 
-        $p.plugin.dateTimePicker('#picker2', {
+        $p.dateTimePicker('#picker2', {
             defaultDate: moment(),
         }, function(date) {
-            $p.com.alert(date);
+            $p.alert(date);
         });
 
     };

@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
     app.page.event = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -38,13 +38,13 @@ define(function(require, exports, module) {
                 mes += '  dataIndex : ' + param.dataIndex;
             }
             console.log(param);
-            $p.com.alert(mes, "success");
+            $p.alert(mes, "success");
         });
     };
 
     app.page.options = function() {
 
-        chart = $p.plugin.echarts("my_chart");
+        chart = $p.echarts("my_chart");
 
         chart.load({
             title: {

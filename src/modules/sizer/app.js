@@ -49,7 +49,7 @@ define(function (require, exports, module) {
                 console.log("Cancel");
             }
         };
-        var sizer = $p.plugin.sizer("#sizer-multiple", options, selectDatas);
+        var sizer = $p.sizer("#sizer-multiple", options, selectDatas);
     };
 
     app.page.single = function () {
@@ -84,7 +84,7 @@ define(function (require, exports, module) {
             }
         };
 
-        var sizer = $p.plugin.sizer("#sizer-multiple", options, selectDatas);
+        var sizer = $p.sizer("#sizer-multiple", options, selectDatas);
     };
 
     module.exports = app;

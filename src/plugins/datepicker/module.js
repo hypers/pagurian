@@ -30,7 +30,7 @@ define(function(require, exports, module) {
             var picker = $(selector).datepicker(this.options);
 
 
-            
+
 
             if (options && options.defaultDate) {
                 if ($.isArray(options.defaultDate)) {
@@ -71,7 +71,7 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].plugin.datePicker = function(seletor, options, callback) {
+    g[PagurianAlias].datePicker = function(seletor, options, callback) {
         var picker = new DatePicker(seletor, options, callback);
         return picker.init();
     };

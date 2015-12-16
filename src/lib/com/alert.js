@@ -44,10 +44,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].com.alert = function(info, type) {
-        var obj = new Alert();
-        obj.show(info, type);
-        return obj;
+    g[PagurianAlias].alert = function(info, type) {
+        return new Alert().show(info, type);
     };
 
 });

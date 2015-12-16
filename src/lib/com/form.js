@@ -263,7 +263,7 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].com.form = function(seletor, options) {
+    g[PagurianAlias].form = function(seletor, options) {
         return new Form(seletor, options).init();
     };
 

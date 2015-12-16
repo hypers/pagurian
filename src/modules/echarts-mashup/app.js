@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     var chart = {};
     app.page.linebar = function () {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type:"bar",
             title: {
                 text: '来源分析'

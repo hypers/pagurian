@@ -97,7 +97,7 @@
                             <h3>Javascript代码</h3>
                             <pre>
                                 <code class="javascript">
-                                    require('../../plugins/datatables/module'); $p.plugin.dataTable("#my_table", { "fnDataSource": model.getDataList, "sClass": "table-fixed", "aaSorting": [ [2, "desc"] ], "fnParams": function() { return {}; }, "aoColumns": [{ "bSortable": false, "mData":
+                                    require('../../plugins/datatables/module'); $p.dataTable("#my_table", { "fnDataSource": model.getDataList, "sClass": "table-fixed", "aaSorting": [ [2, "desc"] ], "fnParams": function() { return {}; }, "aoColumns": [{ "bSortable": false, "mData":
                                     "keywords", "sTitle": "关键字", mRender: function(data, type, full) { return &#39;&lt;span title=&quot;&#39; + full.keywords + &#39;&quot;&gt;&#39; + full.keywords + &#39;&lt;/span&gt;&#39; } }, { "bSortable": false, "sTitle":
                                     "搜索引擎", "mData": "searchEngine" }, { "sClass": "t-a-r", "sTitle": "浏览量(PV)", "mData": "pageViews" }, { "sClass": "t-a-r", "sTitle": "独立访问者(UV)", "mData": "uniqueVisitors" }, { "sClass": "t-a-r", "sTitle": "访问次数(VV)",
                                     "mData": "visitViews" }] });

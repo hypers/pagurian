@@ -170,7 +170,7 @@
                         <pre><code class="javascript">
 require('../../plugins/jquery.validate/module');
 
-$p.com.form("#form_sample_1", {
+$p.form("#form_sample_1", {
     validate: {
         rules: {
             name: {
@@ -210,7 +210,7 @@ $p.com.form("#form_sample_1", {
     },
     submit: function(form, data) {
         model.add(data, function(resp) {
-            $p.com.alert(resp.message);
+            $p.alert(resp.message);
         })
     }
 });

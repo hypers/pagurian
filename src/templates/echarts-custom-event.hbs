@@ -70,7 +70,7 @@
                             <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
-var chart = $p.plugin.echarts("my_chart", {
+var chart = $p.echarts("my_chart", {
     type: "line",
     title: {
         text: '来源分析',
@@ -102,7 +102,7 @@ chart.on(echarts.config.EVENT.CLICK, function(param) {
         mes += '  dataIndex : ' + param.dataIndex;
     }
     console.log(param);
-    $p.com.alert(mes, "success");
+    $p.alert(mes, "success");
 });
                                 </code></pre>
 
