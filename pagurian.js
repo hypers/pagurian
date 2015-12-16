@@ -52,7 +52,18 @@
     pagurian.call("config", {
         base: pagurian.path.app,
         alias: {
+            "app": "lib/app",
             "jquery": "lib/vendor/jquery.1.9.1.min",
+            "echarts": "plugins/echarts/module",
+            "datatables": "plugins/datatables/module",
+            "datepicker": "plugins/datepicker/module",
+            "daterangepicker": "plugins/daterangepicker/module",
+            "datetimepicker": "plugins/datetimepicker/module",
+            "slider": "plugins/ion-range-slider/module",
+            "uploadify": "plugins/uploadify/module",
+            "datalistview": "widgets/datalistview/module",
+            "sizer": "widgets/sizer/module",
+            "summary": "widgets/summary/module",
         },
         //对dist/modules目录下的文件添加版本号
         map: [
@@ -86,4 +97,4 @@
 
     global[name] = global.pagurian = pagurian;
 
-})(this, "$p", false);
+})(this, "$p", true);

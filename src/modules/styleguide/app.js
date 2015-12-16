@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-    var app = require('../../lib/app');
+    var app = require("app");
 
     
 
