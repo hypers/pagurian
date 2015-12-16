@@ -75,9 +75,10 @@ define(function(require, exports, module) {
             datePicker: pagurian.datePicker,
             dateRangePicker: pagurian.datePicker,
             dateTimePicker: pagurian.datePicker,
-            echarts: pagurian.datePicker
+            echarts: pagurian.datePicker,
+            slider: pagurian.slider
         };
-        
+
     }
 
 
