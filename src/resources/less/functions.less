@@ -184,7 +184,7 @@
     filter:~"alpha(opacity=@{opacity})";
 }
 .clearfix() {
-    *zoom: 1;
+    zoom: 1;
     &:before,
     &:after {
         display: table;
@@ -193,8 +193,23 @@
     }
     &:after {
         clear: both;
+        visibility: hidden;
+        height: 0;
     }
 }
+
+//老的clearfix方法
+//.clear() {
+//    zoom: 1;
+//    clear: both;
+//    &:after {
+//        display: block;
+//        clear: both;
+//        content: "";
+//        visibility: hidden;
+//        height: 0;
+//    }
+//}
 
 //文字省略号
 // @substract单位为%
@@ -209,4 +224,109 @@
 .ellipsis(@substract:0) {
     .ellipsis-basic();
     width: 100% - @substract;
+}
+
+/*************
+生成各种常量class所用的mixin
+*************/
+//生成宽度
+.generate-w(@n, @i: 1) when (@i <= @n) {
+    @wi: @i*10;
+    @j: @i+1;
+    .w@{wi} {
+        width: @wi*1px;
+    }
+    .generate-w(@n, @j);
+}
+
+//生成padding-right
+.generate-pr(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .pr@{pi} {
+        padding-right: @pi*1px;
+    }
+    .generate-pr(@n, @j);
+}
+//生成padding-left
+.generate-pl(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .pl@{pi} {
+        padding-left: @pi*1px;
+    }
+    .generate-pl(@n, @j);
+}
+//生成padding-bottom
+.generate-pb(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .pb@{pi} {
+        padding-bottom: @pi*1px;
+    }
+    .generate-pb(@n, @j);
+}
+//生成padding-top
+.generate-pt(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .pt@{pi} {
+        padding-top: @pi*1px;
+    }
+    .generate-pt(@n, @j);
+}
+//生成padding
+.generate-p(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .p@{pi} {
+        padding: @pi*1px;
+    }
+    .generate-p(@n, @j);
+}
+
+//生成margin-right
+.generate-mr(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .mr@{pi} {
+        padding-right: @pi*1px;
+    }
+    .generate-mr(@n, @j);
+}
+//生成margin-left
+.generate-ml(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .ml@{pi} {
+        margin-left: @pi*1px;
+    }
+    .generate-ml(@n, @j);
+}
+//生成margin-top
+.generate-mt(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .mt@{pi} {
+        margin-top: @pi*1px;
+    }
+    .generate-mt(@n, @j);
+}
+//生成margin-bottom
+.generate-mb(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .mb@{pi} {
+        margin-bottom: @pi*1px;
+    }
+    .generate-mb(@n, @j);
+}
+//生成margin
+.generate-m(@n,@i:0) when (@i <= @n) {
+    @pi: @i*5;
+    @j: @i+1;
+    .m@{pi} {
+        margin: @pi*1px;
+    }
+    .generate-m(@n, @j);
 }
