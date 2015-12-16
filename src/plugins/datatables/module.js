@@ -743,9 +743,7 @@ define(function(require, exports, module) {
     }
 
     g[PagurianAlias].dataTable = function(seletor, options) {
-        var table = new DataTables(seletor, options);
-        table.init();
-        return table;
+        return new DataTables(seletor, options).init();
     };
 
 });

@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 
-    var app = require('../../lib/app');
-    require('../../plugins/echarts/module');
-    var chart = {};
+    var app = require("app");
+    require("echarts");
 
+    var chart = {};
     app.page.bar = function() {
 
         chart = $p.echarts("my_chart", {
