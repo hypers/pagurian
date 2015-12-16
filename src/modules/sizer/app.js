@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     var app = require("app");
     var model = require('./model');
 
-    require('../../widgets/sizer/module');
+    require('sizer');
 
     app.page.multiple = function () {
         var selectDatas = [{

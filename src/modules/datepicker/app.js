@@ -2,9 +2,9 @@ define(function(require, exports, module) {
 
     var app = require("app");
 
-    require('../../plugins/daterangepicker/module');
-    require('../../plugins/datetimepicker/module');
-    require('../../plugins/datepicker/module');
+    require('daterangepicker');
+    require('datetimepicker');
+    require('datepicker');
 
     app.page.date = function() {
         $p.datePicker('#picker1', {

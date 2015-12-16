@@ -61,9 +61,13 @@
             "datetimepicker": "plugins/datetimepicker/module",
             "slider": "plugins/ion-range-slider/module",
             "uploadify": "plugins/uploadify/module",
+            "validate": "plugins/jquery.validate/module",
+            "colorpicker": "plugins/colorpicker/js/colorpicker",
+
             "datalistview": "widgets/datalistview/module",
             "sizer": "widgets/sizer/module",
             "summary": "widgets/summary/module",
+
         },
         //对dist/modules目录下的文件添加版本号
         map: [

@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var model = require('./model');
 
 
-    require('../../plugins/datatables/module');
+    require('datatables');
 
     app.page.dataTable = function() {
 

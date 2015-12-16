@@ -5,8 +5,8 @@ define(function(require, exports, module) {
     var app = require("app");
     var model = require('./model');
 
-    require('../../widgets/summary/module');
-    require('../../plugins/echarts/module');
+    require('summary');
+    require("echarts");
 
     var summaryDemo;
 

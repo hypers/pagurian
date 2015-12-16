@@ -4,7 +4,7 @@ define(function(require, exports, module) {
     var model = require('./model');
 
 
-    require('../../plugins/jquery.validate/module');
+    require('validate');
 
 
     app.page.index = function() {

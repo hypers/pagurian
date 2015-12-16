@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
     var app = require("app");
 
-    require("../../plugins/ion-range-slider/module");
+    require("slider");
     app.page.index = function() {
         $p.slider("#range",{
             from:10
