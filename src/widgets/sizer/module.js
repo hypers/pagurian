@@ -473,7 +473,7 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          * @param {[type]} chooseDatas [选中的选项]
          */
-        g[PagurianAlias].plugin.sizer = function (seletor, options, chooseDatas) {
+        g[PagurianAlias].sizer =  function (seletor, options, chooseDatas) {
             var sizer = new Sizer(seletor, options, chooseDatas);
             return sizer;
         };
