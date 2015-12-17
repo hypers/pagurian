@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 
-    var app = require("app");
+    var app = require("../../lib/app");
     var model = require('./model');
 
-    require('colorpicker');
+    require('../../plugins/colorpicker/js/colorpicker');
 
     app.page.color = function() {
 

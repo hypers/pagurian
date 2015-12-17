@@ -119,8 +119,8 @@ module.exports = function(grunt) {
                 alias: '<%= pkg.spm.alias %>',
                 parsers: {
                     '.js': [script.jsParser],
-                    '.css': [style.css2jsParser],
-                    '.html': [text.html2jsParser]
+                    //'.css': [style.css2jsParser],
+                    //'.html': [text.html2jsParser]
                 }
             },
             all: {
@@ -206,7 +206,7 @@ module.exports = function(grunt) {
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("uglify:all");
+    //task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 

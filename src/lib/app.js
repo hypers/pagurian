@@ -29,9 +29,11 @@ define(function(require, exports, module) {
 
 
     //载入国际化语言
-    var locale = {};
-    locale.zh_CN = require('../conf/locale.zh_CN');
-    locale.en_US = require('../conf/locale.en_US');
+    var locale = {
+        zh_CN: require('../conf/locale.zh_CN'),
+        en_US: require('../conf/locale.en_US')
+    };
+
     pagurian.locale = locale[pagurian.language];
 
     pagurian.lib = {

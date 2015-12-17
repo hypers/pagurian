@@ -2,10 +2,10 @@
  * Created by yangguo on 2015/10/13 0013.
  */
 define(function (require, exports, module) {
-    var app = require("app");
+    var app = require("../../lib/app");
     var model = require('./model');
 
-    require('sizer');
+    require('../../widgets/sizer/module');
 
     app.page.multiple = function () {
         var selectDatas = [{

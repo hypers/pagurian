@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
-    var app = require("app");
-    require("echarts");
+    var app = require("../../lib/app");
+    require("../../plugins/echarts/module");
 
     var chart = {};
     app.page.bar = function() {

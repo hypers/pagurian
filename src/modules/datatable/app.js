@@ -1,10 +1,10 @@
 define(function(require, exports, module) {
 
-    var app = require("app");
+    var app = require("../../lib/app");
     var model = require('./model');
 
 
-    require('datatables');
+    require('../../plugins/datatables/module');
 
     app.page.dataTable = function() {
 

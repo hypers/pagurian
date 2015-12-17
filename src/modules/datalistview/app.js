@@ -2,10 +2,10 @@
  * Created by yangguo on 2015/9/9 0009.
  */
 define(function (require, exports, module) {
-    var app = require("app");
+    var app = require("../../lib/app");
     var model = require('./model');
 
-    require('datalistview');
+    require('../../widgets/datalistview/module');
 
     app.page.dataListView = function () {
         var tpl = $("#dataListViewTpl").html();

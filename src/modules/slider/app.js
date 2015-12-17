@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
 
-    var app = require("app");
+    var app = require("../../lib/app");
 
-    require("slider");
+    require("../../plugins/ion-range-slider/module");
     app.page.index = function() {
         $p.slider("#range",{
             from:10

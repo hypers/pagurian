@@ -2,11 +2,11 @@
  * Created by yangguo on 2015/9/9 0009.
  */
 define(function(require, exports, module) {
-    var app = require("app");
+    var app = require("../../lib/app");
     var model = require('./model');
 
-    require('summary');
-    require("echarts");
+    require('../../widgets/summary/module');
+    require("../../plugins/echarts/module");
 
     var summaryDemo;
 
