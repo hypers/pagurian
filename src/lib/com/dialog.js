@@ -6,9 +6,9 @@ define(function(require, exports, module) {
     function Dialog() {
 
         var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+        var timer;
 
         this.id = _id;
-
         var template = [
             '<div class="modal fade" id="modal' + _id + '" >',
             '  <div class="modal-dialog ">',
@@ -169,7 +169,9 @@ define(function(require, exports, module) {
                 error: "whisper-error"
             };
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
-            setTimeout(function() {
+
+            clearTimeout(timer);
+            timer = setTimeout(function() {
                 $whisper.html("").hide();
             }, 3000);
             return this;
