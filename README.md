@@ -93,3 +93,4 @@ Pagurian
 - [Echarts v2.0](http://echarts.baidu.com/)([MIT License](https://github.com/ecomfe/echarts/blob/master/LICENSE.txt))
 - [jQuery v1.9.1](http://jquery.com/)([MIT License](https://jquery.org/license/))
 - [ion.rangeSlider](https://github.com/IonDen/ion.rangeSlider)
+- [ZeroClipboard](https://github.com/zeroclipboard/zeroclipboard)(MIT License)
