@@ -60,29 +60,29 @@ define(function (require, exports, module) {
              * }
              */
             this.options = {
-                isMultiple:        false,//是否为多选 默认为false
-                isExpand:          false,//是否展开 默认为false
-                dataSource:        null,//数据源
-                dataParams:        {},//数据源的params
-                dataMapping:       {
-                    "name":  "name",
+                isMultiple: false,//是否为多选 默认为false
+                isExpand: false,//是否展开 默认为false
+                dataSource: null,//数据源
+                dataParams: {},//数据源的params
+                dataMapping: {
+                    "name": "name",
                     "value": "id"
                 },
-                position:          { //设置面板的位置
+                position: { //设置面板的位置
                     left: 0
                 },
-                style:             "", //筛选器自定义class
-                processing:        oLanguage.processing,//loading默认文字
-                search:            oLanguage.search,//搜索框默认文字
-                callbackExpand:    null,//面板展开时的回调
-                callbackClose:     null,//面板关闭时的回调
-                callbackOption:    null, //点击选项的回调
-                callbackSearch:    null,//搜索框录入回调
-                callbackClean:     null,//点击清除/清楚选择的回调
+                style: "", //筛选器自定义class
+                processing: oLanguage.processing,//loading默认文字
+                search: oLanguage.search,//搜索框默认文字
+                callbackExpand: null,//面板展开时的回调
+                callbackClose: null,//面板关闭时的回调
+                callbackOption: null, //点击选项的回调
+                callbackSearch: null,//搜索框录入回调
+                callbackClean: null,//点击清除/清楚选择的回调
                 //仅isMultiple为true时有效
                 callbackSelectAll: null,//全选时的回调
-                callbackSubmit:    null,//确认按钮回调
-                callbackCancel:    null //取消按钮回调
+                callbackSubmit: null,//确认按钮回调
+                callbackCancel: null //取消按钮回调
             };
 
             //初始化组件
@@ -100,7 +100,7 @@ define(function (require, exports, module) {
                     o.expandPanel();
                 }
                 if (chooseDatas) {
-                    if(!o.options.isMultiple && chooseDatas[0][o.options.dataMapping.name]){
+                    if (!o.options.isMultiple && chooseDatas[0][o.options.dataMapping.name]) {
                         singleSetText(chooseDatas[0][o.options.dataMapping.name]);
                     }
                     o.selectDatas = chooseDatas;
@@ -328,8 +328,8 @@ define(function (require, exports, module) {
                             if (allDatas[i][o.options.dataMapping.value] === chooseDatas[j][o.options.dataMapping.value]) {
                                 _tpl += 'selected ';
                                 /*if(!o.options.isMultiple){
-                                    singleSetText(allDatas[i][o.options.dataMapping.name]);
-                                }*/
+                                 singleSetText(allDatas[i][o.options.dataMapping.name]);
+                                 }*/
                             }
                         }
                     }
@@ -429,6 +429,7 @@ define(function (require, exports, module) {
                     $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
                     o.selectDatas = [];
                     singleSetText(o.promtText);
+                    o.options.callbackClean && o.options.callbackClean(o._tmpSelectDatas);
                     closePanel(isCallBackClose);
                 }
             }
@@ -473,7 +474,7 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          * @param {[type]} chooseDatas [选中的选项]
          */
-        g[PagurianAlias].sizer =  function (seletor, options, chooseDatas) {
+        g[PagurianAlias].sizer = function (seletor, options, chooseDatas) {
             var sizer = new Sizer(seletor, options, chooseDatas);
             return sizer;
         };
