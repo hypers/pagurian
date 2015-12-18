@@ -44,7 +44,7 @@ define(function(require, exports, module) {
 
     //日志
     pagurian.log = function() {
-        if (!window.console) {
+        if (!window.console || !pagurian.debug) {
             return;
         }
         if (arguments.length == 1) {

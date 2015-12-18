@@ -34,6 +34,7 @@
         util: {},
         com: {},
         plugin: {},
+        debug: debug,
         path: {
             api: url + "/test/api/",
             app: url + "/" + (debug ? "src" : "dist") + "/"
@@ -102,4 +103,5 @@
     })("seajs");
 
     global[name] = global.pagurian = pagurian;
-})(this, "$p", false);
+
+})(this, "$p", true);
