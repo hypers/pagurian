@@ -7,20 +7,21 @@ define(function(require, exports, module) {
     app.page.alert = function() {
 
         $("#btn_alert_1").click(function() {
-            $p.alert("报表保持成功", "success");
+            $p.alert.success("报表保持成功");
         });
 
         $("#btn_alert_2").click(function() {
-            $p.alert("您有5条系统提醒未读", "info");
+            $p.alert.info("您有5条系统提醒未读");
         });
 
         $("#btn_alert_3").click(function() {
-            $p.alert("您将要删除该项目", "warning");
+            $p.alert.warn("您将要删除该项目");
         });
 
         $("#btn_alert_4").click(function() {
-            $p.alert("找不到您筛选的数据,请尝试刷新页面!", "error");
+            $p.alert.error("找不到您筛选的数据,请尝试刷新页面!");
         });
+
     };
 
     app.page.dialogs = function() {
