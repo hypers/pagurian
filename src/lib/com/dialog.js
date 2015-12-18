@@ -1,42 +1,35 @@
-/**
- * [demo]
- * $p.ui.dialog({
- *     id:"#btn_"
- *     onClickSubmit:function(){
- *
- *     }
- * });
- */
 define(function(require, exports, module) {
 
     var g = window;
-
 
 
     function Dialog() {
 
         var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
 
-        var template = "";
+        this.id = _id;
 
-        template += '<div class="modal fade" id="modal' + _id + '" >';
-        template += '  <div class="modal-dialog ">';
-        template += '        <div class="modal-content">';
-        template += '            <div class="modal-header">';
-        template += '                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>';
-        template += '                <h4 class="modal-title">{title}</h4>';
-        template += '            </div>';
-        template += '            <div class="modal-body">';
-        template += '            <div class="modal-message"></div>';
-        template += '            {body} </div>';
-        template += '            <div class="modal-footer">';
-        template += '                <span class="submit-waiting"></span>';
-        template += '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>';
-        template += '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>';
-        template += '            </div>';
-        template += '        </div>';
-        template += '    </div>';
-        template += '</div>';
+        var template = [
+            '<div class="modal fade" id="modal' + _id + '" >',
+            '  <div class="modal-dialog ">',
+            '        <div class="modal-content">',
+            '            <div class="modal-header">',
+            '                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>',
+            '                <h4 class="modal-title">{title}</h4>',
+            '            </div>',
+            '            <div class="modal-body">',
+            '            <div class="modal-message"></div>',
+            '            {body} </div>',
+            '            <div class="modal-footer">',
+            '                <div id="whisper' + _id + '"class="whisper whisper-success"></div>',
+            '                <span class="submit-waiting"></span>',
+            '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>',
+            '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>',
+            '            </div>',
+            '        </div>',
+            '    </div>',
+            '</div>'
+        ].join("");
 
 
         function resetForm(form) {
@@ -76,12 +69,8 @@ define(function(require, exports, module) {
 
             var modal = this;
 
-
-
             //初始化模版
             this.tpl = $p.tpl(template, $.extend(this.language[$p.language || "zh_CN"], options));
-
-
 
             $("body").append(this.tpl);
             var form = $("#modal" + _id + " form");
@@ -102,11 +91,9 @@ define(function(require, exports, module) {
             this.element = $("#modal" + _id);
 
             //提交按钮绑定事件
-            $("#btn_submit" + _id).click(function() {
-
+            this.submitButton = $("#btn_submit" + _id).click(function() {
 
                 var data = form.serializeArray() || [];
-
                 //jquery.validate 验证表单
                 if (form.length && typeof form.valid === "function" && !form.valid()) {
                     return false;
@@ -125,7 +112,6 @@ define(function(require, exports, module) {
                 }
 
             });
-
             return this;
         };
 
@@ -143,6 +129,7 @@ define(function(require, exports, module) {
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
             $('#modal' + _id + " .form-group").removeClass("has-error");
             $('#modal' + _id).modal('show');
+            $("#whisper" + _id).html("").show();
 
             setTimeout(function() {
 
@@ -173,9 +160,24 @@ define(function(require, exports, module) {
             $('#modal' + _id).modal('hide');
             return this;
         };
+
+        this.showWhisper = function(message, type) {
+
+            var $whisper = $("#whisper" + _id).html(message).show();
+            var className = {
+                info: "whisper-success",
+                error: "whisper-error"
+            };
+            $whisper.removeClass().addClass("whisper " + className[type || "info"]);
+            setTimeout(function() {
+                $whisper.html("").hide();
+            }, 3000);
+            return this;
+        };
+
     }
 
-    g[PagurianAlias].dialog = function(seletor, options) {
+    g[PagurianAlias].com.dialog = function(seletor, options) {
         return new Dialog().init(seletor, options);
     };
 
