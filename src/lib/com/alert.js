@@ -2,7 +2,7 @@
  * [demo]
  * $p.alert.success("报表保持成功");
  * $p.alert.info("您有5条系统提醒未读");
- * $p.alert.warning("您将要删除该项目");
+ * $p.alert.warn("您将要删除该项目");
  * $p.alert.error("找不到您筛选的数据,请尝试刷新页面!");
  */
 define(function(require, exports, module) {
