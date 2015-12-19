@@ -55,7 +55,7 @@ define(function(require, exports, module) {
                 hex: shadeColor(color, -0.5),
                 name: '@H900'
             }];
-        };
+        }
 
         function ColorPanel() {
 
@@ -78,14 +78,14 @@ define(function(require, exports, module) {
                     }
 
                     if (i >= 5) {
-                        font_color = "color:#fff"
-                    };
+                        font_color = "color:#fff";
+                    }
                     var item = $("<li style='display:none;background:" + colors[i].hex + ";" + font_color + "'>" + colors[i].name + ":" + colors[i].hex + ";</li>");
                     element.append(item);
                     i++;
                     item.slideDown();
                 }, 100);
-            }
+            };
         }
 
         $("#btn_add_color").click(function() {

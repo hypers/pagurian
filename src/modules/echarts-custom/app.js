@@ -33,7 +33,7 @@ define(function(require, exports, module) {
 
         chart.on(echarts.config.EVENT.CLICK, function(param) {
             var mes = '【' + param.type + '】';
-            if (typeof param.seriesIndex != 'undefined') {
+            if (typeof param.seriesIndex !== 'undefined') {
                 mes += '  seriesIndex : ' + param.seriesIndex;
                 mes += '  dataIndex : ' + param.dataIndex;
             }
