@@ -111,16 +111,19 @@ module.exports = function(grunt) {
                 eqeqeq: true,
                 trailing: true
             },
-            files: ['src/modules/**/*.js']
+            files: [
+                'src/modules/**/*.js'
+            ]
         },
         transport: {
             options: {
+                debug:false,
                 paths: ['src'],
                 alias: '<%= pkg.spm.alias %>',
                 parsers: {
                     '.js': [script.jsParser],
                     //'.css': [style.css2jsParser],
-                    //'.html': [text.html2jsParser]
+                    '.tpl': [text.html2jsParser]
                 }
             },
             all: {

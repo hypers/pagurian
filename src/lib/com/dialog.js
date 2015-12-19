@@ -1,36 +1,14 @@
 define(function(require, exports, module) {
 
     var g = window;
-
+    var template = require("../tpl/dialog.tpl");
 
     function Dialog() {
 
-        var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+
         var timer;
-
+        var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         this.id = _id;
-        var template = [
-            '<div class="modal fade" id="modal' + _id + '" >',
-            '  <div class="modal-dialog ">',
-            '        <div class="modal-content">',
-            '            <div class="modal-header">',
-            '                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>',
-            '                <h4 class="modal-title">{title}</h4>',
-            '            </div>',
-            '            <div class="modal-body">',
-            '            <div class="modal-message"></div>',
-            '            {body} </div>',
-            '            <div class="modal-footer">',
-            '                <div id="whisper' + _id + '"class="whisper whisper-success"></div>',
-            '                <span class="submit-waiting"></span>',
-            '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>',
-            '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>',
-            '            </div>',
-            '        </div>',
-            '    </div>',
-            '</div>'
-        ].join("");
-
 
         function resetForm(form) {
 
@@ -68,14 +46,15 @@ define(function(require, exports, module) {
         this.init = function(seletor, options) {
 
             var modal = this;
-
+            options.id = _id;
             //初始化模版
             this.tpl = $p.tpl(template, $.extend(this.language[$p.language || "zh_CN"], options));
 
             $("body").append(this.tpl);
-            var form = $("#modal" + _id + " form");
 
+            var form = $("#modal" + _id + " form");
             if (seletor) {
+
                 //给按钮绑定事件
                 $(document).delegate(seletor, 'click', function() {
 
@@ -168,6 +147,7 @@ define(function(require, exports, module) {
                 info: "whisper-success",
                 error: "whisper-error"
             };
+            
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
 
             clearTimeout(timer);
@@ -179,7 +159,7 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].com.dialog = function(seletor, options) {
+    g[PagurianAlias].dialog = function(seletor, options) {
         return new Dialog().init(seletor, options);
     };
 
