@@ -1,11 +1,8 @@
 define(function(require, exports, module) {
 
-
     var g = window;
 
     function Form(seletor, options) {
-
-
 
         this.element = (seletor instanceof jQuery) ? seletor : $(seletor);
         this.options = {
@@ -16,20 +13,20 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var that = this;
-            //自定义submit 按钮
-            if (options.submitButton && !(options.submitButton instanceof jQuery)) {
-                options.submitButton = $(seletor + " " + options.submitButton);
-            }
+            var $btn_submit;
 
             $.extend(true, this.options, options);
 
-            var $btn_submit = this.options.submitButton;
+            //自定义submit 按钮
+            if (!(this.options.submitButton instanceof jQuery)) {
+                this.options.submitButton = $(seletor + " " + this.options.submitButton);
+            }
+
+            $btn_submit = this.options.submitButton;
             $btn_submit.data("text", $btn_submit.text());
             $btn_submit.click(function() {
 
                 $(this).addClass("disabled");
-                //$(this).text($p.locale.loading);
-
                 if (!that.element.valid()) {
                     that.complete();
                     return;
@@ -100,16 +97,11 @@ define(function(require, exports, module) {
 
                 if ($that.is("select")) {
                     //select
-
                     $that.find("option[value='" + value + "']").prop("selected", true);
-
                 } else if ($that.attr("type") === "radio") {
                     //input radio
-
                     $that.prop("checked", ($that.val() == value));
                     $.uniform.update($that);
-
-
                 } else if ($that.attr("type") === "checkbox") {
                     //input checkbox
 
@@ -130,10 +122,8 @@ define(function(require, exports, module) {
 
                 } else {
                     //input-text input-hidden input-file textarea
-
                     $that.val(value);
                 }
-
             });
 
         };
@@ -170,15 +160,14 @@ define(function(require, exports, module) {
                 },
                 //表单提交处理
                 submitHandler: function(form) {
-
                     that.submit();
                     return false;
                 }
             };
 
             $.extend(_options, this.options.validate);
-            this.element.validate(_options);
 
+            this.element.validate(_options);
             return this;
         };
 
@@ -206,8 +195,6 @@ define(function(require, exports, module) {
             var handleSubmitError = this.options.submitError;
             //处理提交成功
             var handleSubmitSuccess = this.options.submitSuccess;
-
-
 
             /**
              * 表单提交的参数
@@ -241,9 +228,11 @@ define(function(require, exports, module) {
             }
 
             if (valid) {
+
                 if (handleSubmitParams) {
                     submitParams = handleSubmitParams.apply(this, submitParams);
                 }
+
                 handleSubmit.apply(this, submitParams);
             }
 
@@ -257,8 +246,11 @@ define(function(require, exports, module) {
         this.complete = function(data, valid) {
 
             var $btn_submit = this.options.submitButton;
-            $btn_submit.removeClass("disabled").removeAttr("disabled").data("disabled", false);
-            //$btn_submit.text($btn_submit.data("text"));
+
+            $btn_submit.removeClass("disabled");
+            $btn_submit.removeAttr("disabled");
+            $btn_submit.data("disabled", false);
+
         };
 
     }
@@ -266,7 +258,5 @@ define(function(require, exports, module) {
     g[PagurianAlias].form = function(seletor, options) {
         return new Form(seletor, options).init();
     };
-
-
 
 });
