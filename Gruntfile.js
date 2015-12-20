@@ -122,7 +122,7 @@ module.exports = function(grunt) {
                 alias: '<%= pkg.spm.alias %>',
                 parsers: {
                     '.js': [script.jsParser],
-                    //'.css': [style.css2jsParser],
+                    '.css': [style.css2jsParser],
                     '.tpl': [text.html2jsParser]
                 }
             },

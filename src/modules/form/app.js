@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 
 
     require('../../plugins/jquery.validate/module');
+    require('../../plugins/uploadify/module');
 
 
     app.page.index = function() {
@@ -60,16 +61,29 @@ define(function(require, exports, module) {
 
     };
 
-    app.page.other = function() {
-        var my_form = $p.form("#form_sample_1");
+    app.page.val = function() {
 
-        my_form.val({
+        $p.form("#form_sample_1").val({
             text: "This is text",
             textarea: "This is Textarea",
             select: 2,
             radio: 2,
             checkbox: 2
         });
+
+    };
+
+    app.page.fileUpload=function(){
+        $p.upload("#file", {
+            formData: {
+                "token": "abc"
+            },
+            uploader: '/src/plugins/uploadify/3.2.1/uploadify.php',
+            onUploadSuccess: function(file, data, response) {
+                console.log(file, data, response);
+            }
+        });
+
     };
 
     module.exports = app;

@@ -874,7 +874,10 @@ define(function(require, exports, module) {
         }
         if (!this.settings.preserve_relative_urls) {
             this.settings.upload_url = SWFUpload.completeURL(this.settings.upload_url);
-            this.settings.button_image_url = SWFUpload.completeURL(this.settings.button_image_url)
+            if (this.settings.button_image_url != "") {
+                this.settings.button_image_url = SWFUpload.completeURL(this.settings.button_image_url)
+            }
+
         }
         delete this.ensureDefault
     };
@@ -1485,6 +1488,7 @@ define(function(require, exports, module) {
                             'z-index': 1
                         });
 
+
                         // Create the file queue
                         if (!settings.queueID) {
                             var $queue = $('<div />', {
@@ -1494,6 +1498,10 @@ define(function(require, exports, module) {
                             $wrapper.after($queue);
                             swfuploadify.settings.queueID = settings.id + '-queue';
                             swfuploadify.settings.defaultQueue = true;
+                        }
+
+                        if (settings.helpBlock && !$wrapper.parent().find(".help-block").length) {
+                            $wrapper.after('<span class="help-block" for="' + settings.id + '"></span>');
                         }
 
                         // Create some queue related objects and variables
@@ -1890,7 +1898,7 @@ define(function(require, exports, module) {
                 if (settings.itemTemplate == false) {
                     settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">\
 					<div class="cancel">\
-						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
+						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')"></a>\
 					</div>\
 					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
 					<div class="uploadify-progress">\
@@ -2217,6 +2225,7 @@ define(function(require, exports, module) {
             }
 
         }
+        window.SWFUpload = SWFUpload;
 
     })($);
 
