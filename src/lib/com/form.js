@@ -7,7 +7,7 @@ define(function(require, exports, module) {
         this.element = (seletor instanceof jQuery) ? seletor : $(seletor);
         this.options = {
             isAjaxRequest: true, //是否ajax请求 默认true
-            submitButton: $(seletor + " .btn[type='submit']") //默认submit按钮
+            submitButton: this.element.find(".btn[type='submit']") //默认submit按钮
         };
 
         this.init = function() {
