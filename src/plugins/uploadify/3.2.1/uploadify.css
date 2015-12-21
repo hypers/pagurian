@@ -28,7 +28,6 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	font: 11px Verdana, Geneva, sans-serif;
 	margin-top: 5px;
 	max-width: 350px;
-	padding: 10px;
 }
 .uploadify-error {
 	background-color: #FDE5DD !important;
@@ -43,17 +42,22 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	float: right;
 	height:	14px;
 	width: 14px;
+	color: #9f9f9f;
 }
 
 .uploadify-queue-item .cancel a:before {
 	content: "\e603";
 }
 .uploadify-queue-item.completed {
-	background-color: #E5E5E5;
+
 }
+
+.uploadify-queue-info{
+	padding: 10px;
+}
+
 .uploadify-progress {
 	background-color: #E5E5E5;
-	margin-top: 10px;
 	width: 100%;
 }
 .uploadify-progress-bar {

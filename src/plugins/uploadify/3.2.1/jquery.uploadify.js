@@ -1,10 +1,16 @@
 define(function(require, exports, module) {
 
+    var languages = {
+        zh_CN: require('../locale/zh_CN'),
+        en_US: require('../locale/en_US')
+    };
+
+    var locale = languages[$p.language || "zh_CN"];
+
     /*
     SWFObject v2.2 <http://code.google.com/p/swfobject/>
     is released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
     */
-    ;
     var swfobject = function() {
         var D = "undefined",
             r = "object",
@@ -1897,11 +1903,13 @@ define(function(require, exports, module) {
                 // Create the file item template
                 if (settings.itemTemplate == false) {
                     settings.itemTemplate = '<div id="${fileID}" class="uploadify-queue-item">\
-					<div class="cancel">\
-						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')"></a>\
-					</div>\
-					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
-					<div class="uploadify-progress">\
+                    <div class="uploadify-queue-info" >\
+                        <div class="cancel">\
+    						<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')"></a>\
+    					</div>\
+    					<span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
+                    </div>\
+                    <div class="uploadify-progress">\
 						<div class="uploadify-progress-bar"><!--Progress Bar--></div>\
 					</div>\
 				</div>';
@@ -1925,6 +1933,7 @@ define(function(require, exports, module) {
 
                 // Call the user-defined event handler
                 if (settings.onSelect) settings.onSelect.apply(this, arguments);
+                if (settings.onSet) settings.onSet.apply(this, [itemData]);
             },
 
             // Triggered when a file is not added to the queue
@@ -2075,7 +2084,10 @@ define(function(require, exports, module) {
                             this.queueData.uploadSize -= file.size;
                         }
                         // Trigger the onCancel event
-                        if (settings.onCancel) settings.onCancel.call(this, file);
+                        if (settings.onCancel) {
+                            settings.onCancel.call(this, file);
+                        }
+
                         delete this.queueData.files[file.id];
                         break;
                     case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
@@ -2205,7 +2217,9 @@ define(function(require, exports, module) {
 
                 // Call the default event handler
                 if ($.inArray('onUploadSuccess', settings.overrideEvents) < 0) {
-                    $('#' + file.id).find('.data').html(' - Complete');
+                    $('#' + file.id).find('.data').html(' - ' + locale.complete);
+                    $('#' + file.id).addClass("completed");
+                    $('#' + file.id).data("stats", stats);
                 }
 
                 // Call the user-defined event handler
