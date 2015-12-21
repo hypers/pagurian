@@ -98,7 +98,7 @@ module.exports = function(grunt) {
                 processors: [
                     require('autoprefixer')({
                         browsers: 'last 2 versions',
-                        remove:false
+                        remove: false
                     })
                 ]
             },
@@ -112,12 +112,16 @@ module.exports = function(grunt) {
                 trailing: true
             },
             files: [
-                'src/modules/**/*.js'
+                'src/modules/**/*.js',
+                'src/widgets/**/*.js',
+                'src/plugins/**/module.js',
+                //'src/lib/**/*.js',
+                //'!src/lib/vendor/**/*.js'
             ]
         },
         transport: {
             options: {
-                debug:false,
+                debug: false,
                 paths: ['src'],
                 alias: '<%= pkg.spm.alias %>',
                 parsers: {
@@ -218,7 +222,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('check', ['jshint']);
-    grunt.registerTask('css', ['less:build','cssmin:build','postcss','copy:all']);
+    grunt.registerTask('css', ['less:build', 'cssmin:build', 'postcss', 'copy:all']);
     grunt.registerTask('seajs', ['uglify:seajs']);
     grunt.registerTask('tpl', ['template', "copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
