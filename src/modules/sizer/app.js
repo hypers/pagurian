@@ -2,6 +2,9 @@
  * Created by yangguo on 2015/10/13 0013.
  */
 define(function (require, exports, module) {
+    window.CONFIG={
+        appId:"Sizer"
+    };
     var app = require("../../lib/app");
     var model = require('./model');
 

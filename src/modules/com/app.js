@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 
 
     app.page.alert = function() {
+        _setMenuActive("Alert");
 
         $("#btn_alert_1").click(function() {
             $p.alert.success("报表保持成功");
@@ -21,11 +22,10 @@ define(function(require, exports, module) {
         $("#btn_alert_4").click(function() {
             $p.alert.error("找不到您筛选的数据,请尝试刷新页面!");
         });
-
     };
 
     app.page.dialogs = function() {
-
+        _setMenuActive("Dialog");
         $p.dialog("#btn_remove", {
             title: "提示",
             body: "你确定要删除吗？",
@@ -59,9 +59,6 @@ define(function(require, exports, module) {
             }
         });
 
-
-
-
         $p.dialog("#btn_update", {
             title: "编辑用户",
             body: $("#tpl_user").html(),
@@ -93,12 +90,24 @@ define(function(require, exports, module) {
     };
 
     app.page.popover = function() {
-
+        _setMenuActive("Popover");
     };
 
     app.page.tooltip = function() {
-
+        _setMenuActive("Tooltip");
     };
+
+    /**
+     * 设置菜单选中
+     * @param menuName 菜单的data-id
+     * @private
+     */
+    var _setMenuActive = function(menuName){
+        window.CONFIG = {
+            appId: menuName
+        };
+        app.init();
+    }
 
     module.exports = app;
 
