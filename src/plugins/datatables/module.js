@@ -1,12 +1,13 @@
 define(function(require, exports, module) {
 
     var g = window;
-    var locale = {};
+    var languages = {
+        zh_CN: require('./locale/zh_CN'),
+        en_US: require('./locale/en_US')
+    };
+    var locale = languages[$p.language || "zh_CN"];
 
     require('./1.9.4/jquery.dataTables');
-
-    locale.zh_CN = require('./locale/zh_CN');
-    locale.en_US = require('./locale/en_US');
 
     /* Set the defaults for DataTables initialisation */
     $.extend(true, $.fn.dataTable.defaults, {
@@ -622,7 +623,7 @@ define(function(require, exports, module) {
                                 var status_text = "";
 
                                 if (a.result.statusText === "timeout") {
-                                    status_text = locale[pagurian.language || "zh_CN"].timeout;
+                                    status_text = locale.timeout;
                                 } else {
                                     status_text = a.message;
                                 }
@@ -662,7 +663,7 @@ define(function(require, exports, module) {
 
                 }
             },
-            "oLanguage": locale[pagurian.language || "zh_CN"]
+            "oLanguage": locale
         };
 
         this.init = function() {
