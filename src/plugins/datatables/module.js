@@ -97,7 +97,7 @@ define(function(require, exports, module) {
 
             that.oApi._fnProcessingDisplay(oSettings, false);
 
-            if (typeof fnCallback == 'function' && fnCallback !== null) {
+            if (typeof fnCallback === 'function') {
                 fnCallback(oSettings);
             }
         }, oSettings);
@@ -108,14 +108,14 @@ define(function(require, exports, module) {
         oSettings.oApi._fnCalculateEnd(oSettings);
 
         /* If we have space to show extra rows (backing up from the end point - then do so */
-        if (oSettings._iDisplayEnd == oSettings.aiDisplay.length) {
+        if (oSettings._iDisplayEnd === oSettings.aiDisplay.length) {
             oSettings._iDisplayStart = oSettings._iDisplayEnd - oSettings._iDisplayLength;
             if (oSettings._iDisplayStart < 0) {
                 oSettings._iDisplayStart = 0;
             }
         }
 
-        if (oSettings._iDisplayLength == -1) {
+        if (oSettings._iDisplayLength === -1) {
             oSettings._iDisplayStart = 0;
         }
 
@@ -181,13 +181,18 @@ define(function(require, exports, module) {
                     $('.pagination', an[i]).css('visibility', 'visible');
                 }
 
+
+
+
                 for (i = 0, iLen = an.length; i < iLen; i++) {
                     // Remove the middle elements
                     $('li:gt(0)', an[i]).filter(':not(:last)').remove();
 
                     // Add the new list items and their event handlers
                     for (j = iStart; j <= iEnd; j++) {
-                        sClass = (j == oPaging.iPage + 1) ? 'class="active"' : '';
+
+                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
+
                         $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
                             .insertBefore($('li:last', an[i])[0])
                             .bind('click', function(e) {
@@ -195,6 +200,7 @@ define(function(require, exports, module) {
                                 e.preventDefault();
                                 oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
                                 fnDraw(oSettings);
+
                             });
                     }
 
@@ -284,7 +290,7 @@ define(function(require, exports, module) {
 
                     // Add the new list items and their event handlers
                     for (j = iStart; j <= iEnd; j++) {
-                        sClass = (j == oPaging.iPage + 1) ? 'class="active"' : '';
+                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
                         $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
                             .insertBefore($('li.next:first', an[i])[0])
                             .bind('click', function(e) {
@@ -387,7 +393,7 @@ define(function(require, exports, module) {
 
                 function getPageIndex(total) {
                     for (var i = 0; i < aoData.length; i++) {
-                        if (aoData[i].name == "iDisplayLength") {
+                        if (aoData[i].name === "iDisplayLength") {
                             length = aoData[i].value;
                         }
                     }
@@ -467,11 +473,11 @@ define(function(require, exports, module) {
                 });
 
                 //自定义的业务参数
-                if (typeof oSettings.oInit.fnParams === "function") {
+                if ($.isFunction(oSettings.oInit.fnParams)) {
                     var params = oSettings.oInit.fnParams(aApiParams) || {};
 
                     for (key in params) {
-                        if (typeof params[key] !== "function") {
+                        if (!$.isFunction(params[key])) {
 
                             //如果是一个数组的，就设置多个值
                             if (typeof params[key] === "object") {
@@ -494,14 +500,14 @@ define(function(require, exports, module) {
 
                 if (oSettings.oInit.bAutoload) {
 
-                    if ("function" === typeof oSettings.oInit.fnOptions) {
+                    if ($.isFunction(oSettings.oInit.fnOptions)) {
                         opt = oSettings.oInit.fnOptions();
                     }
 
                     //兼容老的版本
                     var fnDataSource = oSettings.oInit.fnDataSource || oSettings.oInit.dataSource;
 
-                    if ("function" === typeof fnDataSource) {
+                    if ($.isFunction(fnDataSource)) {
 
                         fnDataSource(aApiParams, function(a, b, c) {
 
@@ -542,7 +548,7 @@ define(function(require, exports, module) {
                                 var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (summary_value && oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
+                                    if (summary_value && oSettings.aoColumns[i].mData === key && typeof $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
@@ -550,7 +556,6 @@ define(function(require, exports, module) {
                                 if ($p.tool.isNull(summary_value)) {
                                     summary_value = "--";
                                 }
-
 
                                 $(this).html(summary_value);
 
@@ -623,7 +628,7 @@ define(function(require, exports, module) {
                                 }
 
                                 $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
-                            } else if (a.code == 500) {
+                            } else if (a.code === 500) {
                                 $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
 
@@ -636,7 +641,7 @@ define(function(require, exports, module) {
                             }
 
                             //初始化回调
-                            if (typeof oSettings.oInit.callback === "function") {
+                            if ($.isFunction(oSettings.oInit.callback)) {
                                 oSettings.oInit.callback(a);
                             }
 
@@ -705,7 +710,7 @@ define(function(require, exports, module) {
                     var word = $.trim($(this).val()),
                         isChange = search_keyword === word ? 0 : 1,
                         isPush = false;
-                    if ((e.which == 13 || that.bLoadFinish) && isChange) {
+                    if ((e.which === 13 || that.bLoadFinish) && isChange) {
 
                         that.bLoadFinish = false;
                         that.aApiParams[searchWord] = word;
@@ -714,7 +719,7 @@ define(function(require, exports, module) {
                         if (!$(seletor).is(":hidden")) {
 
                             that.update();
-                            if (typeof that.options.oSearch.fnCallback == "function") {
+                            if ($.isFunction(that.options.oSearch.fnCallback)) {
                                 that.options.oSearch.fnCallback(word);
                             }
                         }

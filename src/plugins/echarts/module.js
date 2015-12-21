@@ -45,14 +45,14 @@ define(function(require, exports, module) {
 
             var key;
 
-            if (pagurian.language == "en_US") {
+            if (pagurian.language === "en_US") {
                 for (key in cities) {
                     nameMapCity[cities[key]] = key;
                 }
 
             }
 
-            if (pagurian.language == "zh_CN") {
+            if (pagurian.language === "zh_CN") {
                 for (key in provinces) {
                     nameMapProvince[provinces[key]] = provinces[key];
                 }
@@ -163,7 +163,7 @@ define(function(require, exports, module) {
                 count++;
             }
 
-            if (count == 1) {
+            if (count === 1) {
                 mapType = "china";
             } else if (nameMapProvince[params.target]) {
                 mapType = nameMapProvince[params.target];

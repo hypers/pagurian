@@ -2,7 +2,7 @@ define(function(require, exports, module) {
     /*
      * Metadata - jQuery plugin for parsing metadata from elements
      *
-     * Copyright (c) 2006 John Resig, Yehuda Katz, J�örn Zaefferer, Paul McLanahan
+     * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
      *
      * Dual licensed under the MIT and GPL licenses:
      *   http://www.opensource.org/licenses/mit-license.php
@@ -93,11 +93,11 @@ define(function(require, exports, module) {
 
                     data = "{}";
 
-                    if (settings.type == "class") {
+                    if (settings.type === "class") {
                         var m = settings.cre.exec(elem.className);
                         if (m)
                             data = m[1];
-                    } else if (settings.type == "elem") {
+                    } else if (settings.type === "elem") {
                         if (!elem.getElementsByTagName)
                             return undefined;
                         var e = elem.getElementsByTagName(settings.name);
