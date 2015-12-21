@@ -107,7 +107,7 @@ define(function(require, exports, module) {
             appId: menuName
         };
         app.init();
-    }
+    };
 
     module.exports = app;
 
