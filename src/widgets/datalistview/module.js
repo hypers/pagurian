@@ -258,7 +258,7 @@ define(function (require, exports, module) {
             } else {
                 $('#' + this.dataListName + '_processing').css({"visibility": "visible"});
             }
-        }
+        };
 
         /**
          * [initDataView 初始化数据]
@@ -285,7 +285,9 @@ define(function (require, exports, module) {
                 $('#' + this.dataListName + '_processing').css({"visibility": "hidden"});
                 oData.append(_empty_tml);
                 $("#" + this.dataListName + "_paginate").empty();
-                options.fnCall && options.fnCall();
+                if (options.fnCall) {
+                    options.fnCall();
+                }
                 return;
             }
             var result = _datas;
@@ -294,8 +296,10 @@ define(function (require, exports, module) {
             for (var i = 0; i < result.length; i++) {
                 oData.append(options.fnFormat(result[i]));
             }
+            if ($.isFunction(options.fnCall)) {
+                options.fnCall();
+            }
 
-            options.fnCall && options.fnCall();
         };
         /**
          * [loadData 载入数据]
@@ -329,7 +333,7 @@ define(function (require, exports, module) {
      * @param  {[type]} options [选项]
      * @return {[type]}         [dataListView]
      */
-    g[PagurianAlias].dataListView  = function (seletor, options) {
+    g[PagurianAlias].dataListView = function (seletor, options) {
         var view = new DataListView(seletor, options);
         view.init();
         return view;
