@@ -19,7 +19,7 @@
         //端口
         port = location.port ? ":" + location.port : "",
         //路径
-        path = CONFIG.rootPath || "/pagurian",
+        path = CONFIG.rootPath || "",
         //完整URL
         url = protocol + domain + port + path;
 
