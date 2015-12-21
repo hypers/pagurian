@@ -43,6 +43,9 @@
                         <a href="datatable-search.html" >搜索</a>
                     </li>
                     <li>
+                        <a href="datatable-toolbar.html">工具栏</a>
+                    </li>
+                    <li>
                         <a href="datatable-options.html" >参数说明</a>
                     </li>
                 </ul>
@@ -54,7 +57,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="tools-wrap">
+                    <div class="table-toolbar">
                         <div class="input-icon input-search">
                             <i class="fa fa-search"></i>
                             <input placeholder="查询关键字" id="txt_search" class="form-control" maxlength="1024" type="text">
@@ -92,7 +95,7 @@
                         <pre><code class="javascript">
 require('../../plugins/datatables/module');
 
-$p.plugin.dataTable("#my_table", {
+$p.dataTable("#my_table", {
     "fnDataSource": model.getDataList,
     "sClass": "table-fixed",
     "aaSorting": [

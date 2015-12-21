@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 
             for (var i = 0; i < dataList.length; i++) {
                 selected = "";
-                if (options.active == dataList[i].id) {
+                if (options.active === dataList[i].id) {
                     selected = 'selected="selected"';
                 }
                 elements.append("<option value='" + dataList[i].id + "' " + selected + ">" + dataList[i].name + "</option>");
@@ -21,11 +21,10 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].com.select = function(seletor, options) {
+    g[PagurianAlias].select = function(seletor, options) {
 
-        var obj = new Select();
-        obj.init(seletor, options);
-        return obj;
+        return new Select().init(seletor, options);
+
 
     };
 });

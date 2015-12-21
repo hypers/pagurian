@@ -1,43 +1,14 @@
-/**
- * [demo]
- * $p.ui.dialog({
- *     id:"#btn_"
- *     onClickSubmit:function(){
- *
- *     }
- * });
- */
 define(function(require, exports, module) {
 
     var g = window;
-
-
+    var template = require("../tpl/dialog.tpl");
 
     function Dialog() {
 
+
+        var timer;
         var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
-
-        var template = "";
-
-        template += '<div class="modal fade" id="modal' + _id + '" >';
-        template += '  <div class="modal-dialog ">';
-        template += '        <div class="modal-content">';
-        template += '            <div class="modal-header">';
-        template += '                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>';
-        template += '                <h4 class="modal-title">{title}</h4>';
-        template += '            </div>';
-        template += '            <div class="modal-body">';
-        template += '            <div class="modal-message"></div>';
-        template += '            {body} </div>';
-        template += '            <div class="modal-footer">';
-        template += '                <span class="submit-waiting"></span>';
-        template += '                <button id="btn_submit' + _id + '" class="btn btn-primary" type="button">{btn_submit}</button>';
-        template += '                <button data-dismiss="modal" class="btn btn-default" type="button">{btn_cancel}</button>';
-        template += '            </div>';
-        template += '        </div>';
-        template += '    </div>';
-        template += '</div>';
-
+        this.id = _id;
 
         function resetForm(form) {
 
@@ -75,18 +46,15 @@ define(function(require, exports, module) {
         this.init = function(seletor, options) {
 
             var modal = this;
-
-
-
+            options.id = _id;
             //初始化模版
             this.tpl = $p.tpl(template, $.extend(this.language[$p.language || "zh_CN"], options));
 
-
-
             $("body").append(this.tpl);
-            var form = $("#modal" + _id + " form");
 
+            var form = $("#modal" + _id + " form");
             if (seletor) {
+
                 //给按钮绑定事件
                 $(document).delegate(seletor, 'click', function() {
 
@@ -102,11 +70,9 @@ define(function(require, exports, module) {
             this.element = $("#modal" + _id);
 
             //提交按钮绑定事件
-            $("#btn_submit" + _id).click(function() {
-
+            this.submitButton = $("#btn_submit" + _id).click(function() {
 
                 var data = form.serializeArray() || [];
-
                 //jquery.validate 验证表单
                 if (form.length && typeof form.valid === "function" && !form.valid()) {
                     return false;
@@ -121,11 +87,10 @@ define(function(require, exports, module) {
                 if (typeof options.submit === "function") {
                     $(this).addClass("disabled").prop("disabled", true);
                     $("#modal" + _id + " .submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
-                    options.submit(modal, data, modal.params);
+                    options.submit(modal, form.serializeArray() || [], modal.params);
                 }
 
             });
-
             return this;
         };
 
@@ -143,6 +108,7 @@ define(function(require, exports, module) {
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
             $('#modal' + _id + " .form-group").removeClass("has-error");
             $('#modal' + _id).modal('show');
+            $("#whisper" + _id).html("").show();
 
             setTimeout(function() {
 
@@ -173,12 +139,28 @@ define(function(require, exports, module) {
             $('#modal' + _id).modal('hide');
             return this;
         };
+
+        this.showWhisper = function(message, type) {
+
+            var $whisper = $("#whisper" + _id).html(message).show();
+            var className = {
+                info: "whisper-success",
+                error: "whisper-error"
+            };
+            
+            $whisper.removeClass().addClass("whisper " + className[type || "info"]);
+
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                $whisper.html("").hide();
+            }, 3000);
+            return this;
+        };
+
     }
 
-    g[PagurianAlias].com.dialog = function(seletor, options) {
-        var dialog = new Dialog();
-        dialog.init(seletor, options);
-        return dialog;
+    g[PagurianAlias].dialog = function(seletor, options) {
+        return new Dialog().init(seletor, options);
     };
 
 });

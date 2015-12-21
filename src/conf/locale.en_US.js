@@ -6,5 +6,8 @@ define({
     error: "Operation failure",
     undefine: "Exception, object is undefined",
     exception: "Exception",
-    timeout: "Timeout"
+    timeout: "Timeout",
+    disable: "Disable",
+    enable: "Enable",
+    loading: "Loading"
 });

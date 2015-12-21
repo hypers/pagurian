@@ -1,12 +1,12 @@
 define(function(require, exports, module) {
 
-    var app = require('../../lib/app');
-    require('../../plugins/echarts/module');
+    var app = require("../../lib/app");
+    require("../../plugins/echarts/module");
     var chart = {};
 
     app.page.event = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -33,18 +33,18 @@ define(function(require, exports, module) {
 
         chart.on(echarts.config.EVENT.CLICK, function(param) {
             var mes = '【' + param.type + '】';
-            if (typeof param.seriesIndex != 'undefined') {
+            if (typeof param.seriesIndex !== 'undefined') {
                 mes += '  seriesIndex : ' + param.seriesIndex;
                 mes += '  dataIndex : ' + param.dataIndex;
             }
             console.log(param);
-            $p.com.alert(mes, "success");
+            $p.alert(mes, "success");
         });
     };
 
     app.page.options = function() {
 
-        chart = $p.plugin.echarts("my_chart");
+        chart = $p.echarts("my_chart");
 
         chart.load({
             title: {

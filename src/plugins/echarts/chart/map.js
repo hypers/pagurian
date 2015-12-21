@@ -10,13 +10,14 @@ define(function(require, exports, module) {
 
         var mapType = options.mapType || "china";
         var chinaProvince = $p.locale.echartsChinaProvince || {};
+        var chinaCity = $p.locale.echartsChinaCity || {};
         var country = $p.locale.echartCountry || {};
 
         var nameMap = {
             china: function(locale) {
                 var list = {};
                 if (locale === "zh_CN") {
-                    //暂时不处理
+                    list = chinaProvince;
                 } else if (locale === "en_US") {
                     for (var key in chinaProvince) {
                         list[chinaProvince[key]] = key;
@@ -30,7 +31,7 @@ define(function(require, exports, module) {
                     list = country;
                 } else if (locale === "en_US") {
                     for (var key in country) {
-                        list[key] = key;
+                        list[country[key]] = key;
                     }
                 }
                 return list;
@@ -39,8 +40,10 @@ define(function(require, exports, module) {
 
 
         var getProvinceName = function(name) {
+
             if (name) {
                 for (var key in chinaProvince) {
+
                     if (name.indexOf(chinaProvince[key]) >= 0) {
                         return chinaProvince[key];
                     }
@@ -78,6 +81,7 @@ define(function(require, exports, module) {
                 name: '',
                 type: 'map',
                 mapType: mapType,
+                selectedMode: 'single',
                 nameMap: nameMap[mapType](pagurian.language || "zh_CN"),
                 calculable: false,
                 mapLocation: {
@@ -87,7 +91,11 @@ define(function(require, exports, module) {
                 itemStyle: {
                     normal: {
                         label: {
-                            show: mapType === "china" ? true : false
+                            show: mapType === "china" ? true : false,
+
+                            textStyle: {
+                                fontSize: pagurian.language === "en_US" ? "10" : "12"
+                            }
                         }
                     },
                     emphasis: {
@@ -114,8 +122,8 @@ define(function(require, exports, module) {
             if (dataList[i].value > option.dataRange.max) {
                 option.dataRange.max = dataList[i].value;
             }
-
         }
+
         option.series[0].name = options.name;
         $.extend(true, option, options.options);
 

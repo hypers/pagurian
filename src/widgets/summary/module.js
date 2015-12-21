@@ -1,5 +1,8 @@
 /**
  * Created by hypers-godfery on 2015-10-28.
+ * Updated by hypers-godfery on 2015-12-06.
+ * 1.增加了summar组件对新数据的支持,(同时支持老数据)
+ * 2.增加了summary对无请求数据时的当作普通tab的支持
  */
 define(function (require, exports, module) {
         var g = window,
@@ -45,7 +48,7 @@ define(function (require, exports, module) {
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
             //版本
-            this.version = "2015.11.04.1040";
+            this.version = "2015.12.06.0028";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -165,7 +168,7 @@ define(function (require, exports, module) {
             this.autoHeight = function () {
                 adjustHeight();
                 return this;
-            }
+            };
 
             /**
              * 初始化组件
@@ -179,14 +182,12 @@ define(function (require, exports, module) {
                 o.canChoose = o.options.canChoose;
                 o.showSetting = o.options.showSetting;
                 if (!isArray(_allColumns)) {
-                    alert('Summary:[' + selector + '] allColumns不为正确的类型:[Array],请正确设置allColumns');
+                    console.log('Summary:[' + selector + '] allColumns不为[Array]类型:,请正确设置allColumns');
                     return;
                 }
                 //判断并设置最大展示数和展示数
-                if (o.maxNum <= _allColumns.length) {
-                    _showNum = o.maxNum;
-                } else if (o.maxNum > _allColumns.length) {
-                    o.maxNum = _allColumns.length;
+                o.maxNum = o.maxNum <= _allColumns.length ? o.maxNum : _allColumns.length;
+                if (o.maxNum > _allColumns.length) {
                     _showNum = _allColumns.length;
                 }
                 //设置展示的列
@@ -278,47 +279,68 @@ define(function (require, exports, module) {
                         drawPanel($div_ul);
                         setData(o.allDatas);
                         adjustHeight();
-                        o.options.callbackSubmit && o.options.callbackSubmit(o.showColumns, o.allDatas);
+                        if ($.isFunction(o.options.callbackSubmit)) {
+                            o.options.callbackSubmit(o.showColumns, o.allDatas);
+                        }
                     });
 
                     /**
                      * setting cancel按钮
                      */
                     $(document).delegate("#" + getTagId("btn_cancel"), 'click', function () {
+                        var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]');
+                        $allCheckBoxes.removeAttr("checked");
+                        for (var _i = 0; _i < o.showColumns.length; _i++) {
+                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="' + o.showColumns[_i] + '"]')
+                                .prop("checked", "checked");
+                        }
+                        updateCheckbox();
                         expandSettingPanel();
-                        o.options.callbackCancel && o.options.callbackCancel();
+                        if (o.options.callbackCancel) {
+                            o.options.callbackCancel();
+                        }
                     });
 
                     /**
                      * setting 中的checkbox
                      */
                     $(document).delegate('#' + getTagId("setting_ul") + ' [type="checkbox"]', 'click', function () {
-                        var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
-                            $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
-                            $unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
-                        var checkNum = $selectCheckBoxes.length;
-                        if (checkNum >= o.maxNum) {
-                            $unselectCheckBoxes.attr("disabled", "disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        } else {
-                            $allCheckBoxes.removeAttr("disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        }
-                        if (checkNum === o.minNum) {
-                            $selectCheckBoxes.attr("disabled", "disabled");
-                            if ($.uniform) {
-                                $allCheckBoxes.uniform.update();
-                            }
-                        }
+                        var $selectCheckBoxes = updateCheckbox();
                         o._showColumns = [];
                         $selectCheckBoxes.each(function () {
                             o._showColumns.push($(this).val());
                         });
                     });
+
+                    /**
+                     * 更新checkbox样式
+                     * @returns {jQuery|HTMLElement} 已选中的checkboxes
+                     */
+                    var updateCheckbox = function () {
+                        var _$allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
+                            _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
+                            _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
+                        var checkNum = _$selectCheckBoxes.length;
+                        if (checkNum >= o.maxNum) {
+                            _$unselectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        } else {
+                            _$allCheckBoxes.removeAttr("disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        }
+                        if (checkNum === o.minNum) {
+                            _$selectCheckBoxes.attr("disabled", "disabled");
+                            if ($.uniform) {
+                                _$allCheckBoxes.uniform.update();
+                            }
+                        }
+
+                        return _$selectCheckBoxes;
+                    };
                 }
 
 
@@ -337,7 +359,9 @@ define(function (require, exports, module) {
                             $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
                             $(this).parent().addClass("choose");
                         }
-                        o.options.callBackPanel && o.options.callBackPanel(_columnName, _columnData, _columnsData);
+                        if (o.options.callBackPanel) {
+                            o.options.callBackPanel(_columnName, _columnData, _columnsData);
+                        }
                     });
                 }
 
@@ -402,7 +426,7 @@ define(function (require, exports, module) {
                 for (i = 0, l = _allColumns.length; i < l; i++) {
                     var _setting_option_tpl = '',
                         _mr = i % 2 === 0 ? 'mr' : '';
-                    _setting_option_tpl += ' <li class="summary-setting-li ' + _mr + '">';
+                    _setting_option_tpl += ' <li class="summary-setting-li ' + _mr + '"><label>';
                     _setting_option_tpl += '      <input type="checkbox" value="' + _allColumns[i][o.options.cName] + '"';
                     for (var j = 0; j < o.showColumns.length; j++) {
                         if (_allColumns[i][o.options.cName] === o.showColumns[j]) {
@@ -410,7 +434,7 @@ define(function (require, exports, module) {
                         }
                     }
                     _setting_option_tpl += '/>' + _allColumns[i].title;
-                    _setting_option_tpl += '</li>';
+                    _setting_option_tpl += '</label></li>';
 
                     obj.append(_setting_option_tpl);
                 }
@@ -432,12 +456,37 @@ define(function (require, exports, module) {
              * 绘制数据
              */
             function drawData() {
+                var _datas = [];
                 if (!o.options.dataSource) {
-                    alert('Summary:[' + selector + '] dataSource is undefined');
+                    var _allColumns = o.options.allColumns;
+                    for (i = 0; i < _allColumns.length; i++) {
+                        var _dataName = _allColumns[i][o.options.cName],
+                            _columnConfig = getColumnConfig(_dataName),
+                            _o = {
+                                "cName": _dataName
+                            };
+                        _o[o.options.cName + "Title"] = _columnConfig.title;
+                        _datas.push(_o);
+                    }
+                    o.allDatas = _datas;
+                    setData(_datas);
+                    adjustHeight();
+                    if (o.canChoose) {
+                        var _chooseColumnsData = getColumnData(o.chooseColumns);
+                        if ($.isFunction(o.options.callBackGetData)) {
+                            o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                        }
+                        return;
+                    }
+                    if ($.isFunction(o.options.callBackGetData)) {
+                        o.options.callBackGetData(o.allDatas);
+                    }
                     return;
                 }
+
                 o.options.dataSource(o.options.dataParams, function (resp) {
-                    var _datas = resp.result ? resp.result : [];
+                    var _result = resp.result || {};
+                    _datas = $.isArray(_result) ? _result : _result.items || [];
                     for (i = 0; i < _datas.length; i++) {
                         var _dataName = _datas[i][o.options.cName],
                             _columnConfig = getColumnConfig(_dataName);
@@ -448,10 +497,14 @@ define(function (require, exports, module) {
                     adjustHeight();
                     if (o.canChoose) {
                         var _chooseColumnsData = getColumnData(o.chooseColumns);
-                        o.options.callBackGetData && o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                        if($.isFunction(o.options.callBackGetData)){
+                            o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                        }
                         return;
                     }
-                    o.options.callBackGetData && o.options.callBackGetData(o.allDatas);
+                    if($.isFunction(o.options.callBackGetData)){
+                        o.options.callBackGetData(o.allDatas);
+                    }
                 });
             }
 
@@ -486,11 +539,23 @@ define(function (require, exports, module) {
                 for (i in _allRows) {
                     var heights = [],
                         $lis = $('.jsSummary' + _id + '_content').find('li[data-name="' + _allRows[i].dataName + '"]');
-                    $lis.each(function () {
-                        heights.push($(this).height());
-                    });
+                    heights = getAllHeight($lis);
                     var _maxHeight = Math.max.apply(null, heights);
                     $lis.css({"height": _maxHeight + "px"});
+                }
+
+                /**
+                 * 获取所有li的高度
+                 * @param $lis 需要获取高度的li的集合
+                 * @returns {Array} 所有的高度
+                 */
+                function getAllHeight($lis){
+                    var _heights = [];
+                    $lis.each(function () {
+                        _heights.push($(this).height());
+                    });
+
+                    return _heights;
                 }
             }
 
@@ -511,8 +576,9 @@ define(function (require, exports, module) {
                 $selectCheckBoxes.each(function () {
                     o._showColumns.push($(this).val());
                 });
-                o.options.callbackOpen && o.options.callbackOpen();
-
+                if($.isFunction(o.options.callbackOpen)){
+                    o.options.callbackOpen();
+                }
             }
 
             /**
@@ -589,7 +655,7 @@ define(function (require, exports, module) {
          * @param {[type]} selector [选择器]
          * @param {[type]} options [参数]
          */
-        g[PagurianAlias].plugin.summary = function (seletor, options) {
+        g[PagurianAlias].summary = function (seletor, options) {
             var summary = new Summary(seletor, options);
             return summary;
         };

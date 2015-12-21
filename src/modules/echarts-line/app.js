@@ -1,11 +1,11 @@
 define(function (require, exports, module) {
 
-    var app = require('../../lib/app');
-    require('../../plugins/echarts/module');
+    var app = require("../../lib/app");
+    require("../../plugins/echarts/module");
     var chart = {};
     app.page.line = function () {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -40,7 +40,7 @@ define(function (require, exports, module) {
     app.page.stack = function () {
 
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
     app.page.areaStack = function () {
 
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '来源分析',

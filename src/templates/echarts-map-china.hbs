@@ -31,12 +31,15 @@
 
             <div class="tabs-wrap">
                 <ul  class="nav nav-tabs">
-
-                    <li class="active">
-                        <a href="echarts-map-china.html" >中国地图</a>
-                    </li>
                     <li>
-                        <a href="echarts-map-world.html" >世界地图</a>
+                        <a href="echarts-map-world.html" >世界</a>
+                    </li>
+                    <li class="active">
+                        <a href="echarts-map-china.html" >中国</a>
+                    </li>
+
+                    <li>
+                        <a href="echarts-map-china-city.html" >中国-城市</a>
                     </li>
 
                 </ul>
@@ -51,7 +54,7 @@
 
 						<div class="portlet-body">
 							<div  class="chart-default " >
-								<div class="chart-body" id="my_chart"></div>
+								<div class="chart-body chart-map" id="my_chart"></div>
 							</div>
 
 						</div>
@@ -70,7 +73,7 @@
                     <pre><code class="javascript">
 require('../../plugins/echarts/module');
 
-var chart = $p.plugin.echarts("my_chart", {
+var chart = $p.echarts("my_chart", {
     type: "map",
     title: {
         text: "浏览量（PV）地域分布图"

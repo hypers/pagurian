@@ -7,11 +7,13 @@ Dropdown
 .dropdown-backdrop {
     position: static;
 }
+
 .dropdown:hover .caret,
 .open.dropdown .caret {
     opacity: 1;
-    filter:alpha(opacity=100);
+    filter: alpha(opacity=100);
 }
+
 .dropdown.open .dropdown-toggle {
     color: #08c;
     background: #ccc;
@@ -44,18 +46,22 @@ Dropdown Menu
 .dropdown-content {
     padding: 5px;
 }
+
 .dropdown-content form {
     margin: 0;
 }
+
 .dropdown.inline .dropdown-menu {
     display: inline-block;
     position: relative;
 }
+
 .dropdown-menu.bottom-up {
     top: auto;
     bottom: 100%;
     margin-bottom: 2px;
 }
+
 .dropdown-menu li > a {
     padding: 6px 0 6px 18px;
     color: @B900;
@@ -68,6 +74,7 @@ Dropdown Menu
     margin: 0;
     font-size: 14px;
 }
+
 .dropdown-menu li > a:hover,
 .dropdown-menu .active > a,
 .dropdown-menu .active > a:hover {
@@ -75,22 +82,25 @@ Dropdown Menu
     background-image: none;
     background-color: @H050;
     color: @B900;
-    filter:none;
+    filter: none;
 }
 
 /* dropdown sub menu support for Bootsrap 3 */
 .dropdown-submenu {
     position: relative;
 }
+
 .dropdown-submenu > .dropdown-menu {
     top: 5px;
     left: 100%;
     margin-top: -6px;
     margin-left: -1px;
 }
+
 .dropdown-submenu:hover > .dropdown-menu {
     display: block;
 }
+
 .dropup {
     .dropdown-submenu > .dropdown-menu {
         top: auto;
@@ -98,8 +108,8 @@ Dropdown Menu
         margin-top: 0;
         margin-bottom: -2px;
     }
-    .dropdown-menu{
-        margin-bottom:-1px;
+    .dropdown-menu {
+        margin-bottom: -1px;
         min-width: inherit;
         width: 100%;
         border-bottom: none;
@@ -136,12 +146,15 @@ Dropdown Menu
     content: "\f105";
     font-weight: 300;
 }
+
 .dropdown-submenu:hover > a:after {
     border-left-color: #fff;
 }
+
 .dropdown-submenu.pull-left {
     float: none;
 }
+
 .dropdown-submenu.pull-left > .dropdown-menu {
     left: -100%;
     margin-left: 10px;
@@ -153,6 +166,7 @@ Dropdown Checkboxes (in v1.3)
 .dropdown-checkboxes {
     padding: 5px;
 }
+
 .dropdown-checkboxes label {
     display: block;
     font-weight: 300;
@@ -180,6 +194,7 @@ Dropdown Menu Badges
     -moz-border-radius: 12px !important;
     border-radius: 12px !important;
 }
+
 .dropdown-menu > li > a > .badge.badge-roundless {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
@@ -193,11 +208,13 @@ Dropdown
 .dropdown-backdrop {
     position: static;
 }
+
 .dropdown:hover .caret,
 .open.dropdown .caret {
     opacity: 1;
-    filter:alpha(opacity=100);
+    filter: alpha(opacity=100);
 }
+
 .dropdown.open .dropdown-toggle {
     color: #08c;
     background: #ccc;
@@ -225,6 +242,7 @@ Dropdown Menu
     font-size: 14px;
     border: 1px solid #ddd;
 }
+
 .header .dropdown-menu {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -232,6 +250,7 @@ Dropdown Menu
     border: 1px solid @H500;
     overflow: hidden;
 }
+
 ._dropdown-scroll {
     background: #fff;
     height: 20px;
@@ -244,12 +263,15 @@ Dropdown Menu
         color: #ddd;
     }
 }
+
 .open .dropdown-container > .dropdown-menu {
     display: block;
 }
+
 .open .dropdown-container > .dropdown-wrap {
     display: block;
 }
+
 .dropdown-container {
     .dropdown-wrap {
         height: 300px;
@@ -311,33 +333,40 @@ Dropdown Menu
 .dropdown-content {
     padding: 5px;
 }
+
 .dropdown-content form {
     margin: 0;
 }
+
 .dropdown.inline .dropdown-menu {
     display: inline-block;
     position: relative;
 }
+
 .dropdown-menu.bottom-up {
     top: auto;
     bottom: 100%;
     margin-bottom: 2px;
 }
+
 .nav.pull-right > li > .dropdown-menu,
 .nav > li > .dropdown-menu.pull-right {
     right: 0;
     left: auto;
 }
+
 .nav.pull-right > li > .dropdown-menu:before,
 .nav > li > .dropdown-menu.pull-right:before {
     right: 12px;
     left: auto;
 }
+
 .nav.pull-right > li > .dropdown-menu:after,
 .nav > li > .dropdown-menu.pull-right:after {
     right: 13px;
     left: auto;
 }
+
 .nav.pull-right > li > .dropdown-menu .dropdown-menu,
 .nav > li > .dropdown-menu.pull-right .dropdown-menu {
     right: 100%;
@@ -348,6 +377,7 @@ Dropdown Menu
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
 }
+
 @media (max-width: 767px) {
     .navbar-nav .open .dropdown-menu {
         position: absolute;
@@ -360,10 +390,12 @@ Dropdown Menu
         -moz-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
         box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
     }
+
     .navbar-nav .open .dropdown-menu > li > a {
         padding: 6px 0 6px 13px;
         color: #333 !important;
     }
+
     .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-nav .open .dropdown-menu > li > a:focus {
         background-color: #eee !important;
@@ -377,6 +409,7 @@ Dropdown Checkboxes (in v1.3)
 .dropdown-checkboxes {
     padding: 5px;
 }
+
 .dropdown-checkboxes label {
     display: block;
     font-weight: 300;
@@ -404,12 +437,29 @@ Dropdown Menu Badges
     -moz-border-radius: 12px !important;
     border-radius: 12px !important;
 }
+
 .dropdown-menu > li > a > .badge.badge-roundless {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
 }
-
+/***
+修复点击按钮后小三角抖动的问题
+***/
 .dropdown.open .dropdown-toggle {
     color: @B000;
+}
+
+.btn-dropdown.open .dropdown-toggle i {
+    top: 9px;
+}
+.btn-dropdown.btn-lg .dropdown-toggle{
+    .pos(r);
+}
+.btn-dropdown.btn-lg.open .dropdown-toggle i {
+    top: 12px;
+}
+
+.btn-dropdown.btn-sm.open .dropdown-toggle i {
+    top: 7px;
 }

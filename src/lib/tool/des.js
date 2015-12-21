@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
     var g = window;
-    
+
     /**
      * DES加密/解密
      * @Copyright Copyright (c) 2006
@@ -17,16 +17,22 @@ define(function(require, exports, module) {
 
         var leng = data.length;
         var encData = "";
+        var tempBt;
+        var encByte;
+        var tempByte;
+        var tempData;
+        var x, y, z;
+
         var firstKeyBt, secondKeyBt, thirdKeyBt, firstLength, secondLength, thirdLength;
-        if (firstKey != null && firstKey != "") {
+        if (firstKey !== null && firstKey !== "") {
             firstKeyBt = getKeyBytes(firstKey);
             firstLength = firstKeyBt.length;
         }
-        if (secondKey != null && secondKey != "") {
+        if (secondKey !== null && secondKey !== "") {
             secondKeyBt = getKeyBytes(secondKey);
             secondLength = secondKeyBt.length;
         }
-        if (thirdKey != null && thirdKey != "") {
+        if (thirdKey !== null && thirdKey !== "") {
             thirdKeyBt = getKeyBytes(thirdKey);
             thirdLength = thirdKeyBt.length;
         }
@@ -34,10 +40,9 @@ define(function(require, exports, module) {
         if (leng > 0) {
             if (leng < 4) {
                 var bt = strToBt(data);
-                var encByte;
-                if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "" && thirdKey != null && thirdKey != "") {
-                    var tempBt;
-                    var x, y, z;
+
+                if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "" && thirdKey !== null && thirdKey !== "") {
+
                     tempBt = bt;
                     for (x = 0; x < firstLength; x++) {
                         tempBt = enc(tempBt, firstKeyBt[x]);
@@ -50,9 +55,8 @@ define(function(require, exports, module) {
                     }
                     encByte = tempBt;
                 } else {
-                    if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "") {
-                        var tempBt;
-                        var x, y;
+                    if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "") {
+
                         tempBt = bt;
                         for (x = 0; x < firstLength; x++) {
                             tempBt = enc(tempBt, firstKeyBt[x]);
@@ -62,9 +66,9 @@ define(function(require, exports, module) {
                         }
                         encByte = tempBt;
                     } else {
-                        if (firstKey != null && firstKey != "") {
-                            var tempBt;
-                            var x = 0;
+                        if (firstKey !== null && firstKey !== "") {
+
+                            x = 0;
                             tempBt = bt;
                             for (x = 0; x < firstLength; x++) {
                                 tempBt = enc(tempBt, firstKeyBt[x]);
@@ -79,12 +83,11 @@ define(function(require, exports, module) {
                 var remainder = leng % 4;
                 var i = 0;
                 for (i = 0; i < iterator; i++) {
-                    var tempData = data.substring(i * 4 + 0, i * 4 + 4);
-                    var tempByte = strToBt(tempData);
-                    var encByte;
-                    if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "" && thirdKey != null && thirdKey != "") {
-                        var tempBt;
-                        var x, y, z;
+                    tempData = data.substring(i * 4 + 0, i * 4 + 4);
+                    tempByte = strToBt(tempData);
+
+                    if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "" && thirdKey !== null && thirdKey !== "") {
+
                         tempBt = tempByte;
                         for (x = 0; x < firstLength; x++) {
                             tempBt = enc(tempBt, firstKeyBt[x]);
@@ -97,9 +100,8 @@ define(function(require, exports, module) {
                         }
                         encByte = tempBt;
                     } else {
-                        if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "") {
-                            var tempBt;
-                            var x, y;
+                        if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "") {
+
                             tempBt = tempByte;
                             for (x = 0; x < firstLength; x++) {
                                 tempBt = enc(tempBt, firstKeyBt[x]);
@@ -109,9 +111,8 @@ define(function(require, exports, module) {
                             }
                             encByte = tempBt;
                         } else {
-                            if (firstKey != null && firstKey != "") {
-                                var tempBt;
-                                var x;
+                            if (firstKey !== null && firstKey !== "") {
+
                                 tempBt = tempByte;
                                 for (x = 0; x < firstLength; x++) {
                                     tempBt = enc(tempBt, firstKeyBt[x]);
@@ -124,11 +125,10 @@ define(function(require, exports, module) {
                 }
                 if (remainder > 0) {
                     var remainderData = data.substring(iterator * 4 + 0, leng);
-                    var tempByte = strToBt(remainderData);
-                    var encByte;
-                    if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "" && thirdKey != null && thirdKey != "") {
-                        var tempBt;
-                        var x, y, z;
+                    tempByte = strToBt(remainderData);
+
+                    if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "" && thirdKey !== null && thirdKey !== "") {
+
                         tempBt = tempByte;
                         for (x = 0; x < firstLength; x++) {
                             tempBt = enc(tempBt, firstKeyBt[x]);
@@ -141,9 +141,8 @@ define(function(require, exports, module) {
                         }
                         encByte = tempBt;
                     } else {
-                        if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "") {
-                            var tempBt;
-                            var x, y;
+                        if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "") {
+
                             tempBt = tempByte;
                             for (x = 0; x < firstLength; x++) {
                                 tempBt = enc(tempBt, firstKeyBt[x]);
@@ -153,9 +152,8 @@ define(function(require, exports, module) {
                             }
                             encByte = tempBt;
                         } else {
-                            if (firstKey != null && firstKey != "") {
-                                var tempBt;
-                                var x;
+                            if (firstKey !== null && firstKey !== "") {
+
                                 tempBt = tempByte;
                                 for (x = 0; x < firstLength; x++) {
                                     tempBt = enc(tempBt, firstKeyBt[x]);
@@ -179,16 +177,18 @@ define(function(require, exports, module) {
     function strDec(data, firstKey, secondKey, thirdKey) {
         var leng = data.length;
         var decStr = "";
+        var tempBt;
+        var x, y, z;
         var firstKeyBt, secondKeyBt, thirdKeyBt, firstLength, secondLength, thirdLength;
-        if (firstKey != null && firstKey != "") {
+        if (firstKey !== null && firstKey !== "") {
             firstKeyBt = getKeyBytes(firstKey);
             firstLength = firstKeyBt.length;
         }
-        if (secondKey != null && secondKey != "") {
+        if (secondKey !== null && secondKey !== "") {
             secondKeyBt = getKeyBytes(secondKey);
             secondLength = secondKeyBt.length;
         }
-        if (thirdKey != null && thirdKey != "") {
+        if (thirdKey !== null && thirdKey !== "") {
             thirdKeyBt = getKeyBytes(thirdKey);
             thirdLength = thirdKeyBt.length;
         }
@@ -204,9 +204,8 @@ define(function(require, exports, module) {
                 intByte[j] = parseInt(strByte.substring(j, j + 1));
             }
             var decByte;
-            if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "" && thirdKey != null && thirdKey != "") {
-                var tempBt;
-                var x, y, z;
+            if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "" && thirdKey !== null && thirdKey !== "") {
+
                 tempBt = intByte;
                 for (x = thirdLength - 1; x >= 0; x--) {
                     tempBt = dec(tempBt, thirdKeyBt[x]);
@@ -219,9 +218,8 @@ define(function(require, exports, module) {
                 }
                 decByte = tempBt;
             } else {
-                if (firstKey != null && firstKey != "" && secondKey != null && secondKey != "") {
-                    var tempBt;
-                    var x, y, z;
+                if (firstKey !== null && firstKey !== "" && secondKey !== null && secondKey !== "") {
+
                     tempBt = intByte;
                     for (x = secondLength - 1; x >= 0; x--) {
                         tempBt = dec(tempBt, secondKeyBt[x]);
@@ -231,9 +229,8 @@ define(function(require, exports, module) {
                     }
                     decByte = tempBt;
                 } else {
-                    if (firstKey != null && firstKey != "") {
-                        var tempBt;
-                        var x, y, z;
+                    if (firstKey !== null && firstKey !== "") {
+
                         tempBt = intByte;
                         for (x = firstLength - 1; x >= 0; x--) {
                             tempBt = dec(tempBt, firstKeyBt[x]);
@@ -252,7 +249,7 @@ define(function(require, exports, module) {
      * return bit array(it's length % 64 = 0)
      */
     function getKeyBytes(key) {
-        var keyBytes = new Array();
+        var keyBytes = [];
         var leng = key.length;
         var iterator = parseInt(leng / 4);
         var remainder = leng % 4;
@@ -274,16 +271,19 @@ define(function(require, exports, module) {
     function strToBt(str) {
         var leng = str.length;
         var bt = new Array(64);
+        var pow, m;
+        var i = 0,
+            j = 0,
+            p = 0,
+            k = 0,
+            q = 0;
+
         if (leng < 4) {
-            var i = 0,
-                j = 0,
-                p = 0,
-                q = 0;
             for (i = 0; i < leng; i++) {
-                var k = str.charCodeAt(i);
+                k = str.charCodeAt(i);
                 for (j = 0; j < 16; j++) {
-                    var pow = 1,
-                        m = 0;
+                    pow = 1;
+                    m = 0;
                     for (m = 15; m > j; m--) {
                         pow *= 2;
                     }
@@ -291,10 +291,10 @@ define(function(require, exports, module) {
                 }
             }
             for (p = leng; p < 4; p++) {
-                var k = 0;
+                k = 0;
                 for (q = 0; q < 16; q++) {
-                    var pow = 1,
-                        m = 0;
+                    pow = 1;
+                    m = 0;
                     for (m = 15; m > q; m--) {
                         pow *= 2;
                     }
@@ -303,9 +303,9 @@ define(function(require, exports, module) {
             }
         } else {
             for (i = 0; i < 4; i++) {
-                var k = str.charCodeAt(i);
+                k = str.charCodeAt(i);
                 for (j = 0; j < 16; j++) {
-                    var pow = 1;
+                    pow = 1;
                     for (m = 15; m > j; m--) {
                         pow *= 2;
                     }
@@ -452,7 +452,7 @@ define(function(require, exports, module) {
                 }
                 count += byteData[16 * i + j] * pow;
             }
-            if (count != 0) {
+            if (count !== 0) {
                 str += String.fromCharCode(count);
             }
         }
@@ -577,7 +577,7 @@ define(function(require, exports, module) {
     function expandPermute(rightData) {
         var epByte = new Array(48);
         for (i = 0; i < 8; i++) {
-            if (i == 0) {
+            if (i === 0) {
                 epByte[i * 6 + 0] = rightData[31];
             } else {
                 epByte[i * 6 + 0] = rightData[i * 4 - 1];
@@ -586,7 +586,7 @@ define(function(require, exports, module) {
             epByte[i * 6 + 2] = rightData[i * 4 + 1];
             epByte[i * 6 + 3] = rightData[i * 4 + 2];
             epByte[i * 6 + 4] = rightData[i * 4 + 3];
-            if (i == 7) {
+            if (i === 7) {
                 epByte[i * 6 + 5] = rightData[0];
             } else {
                 epByte[i * 6 + 5] = rightData[i * 4 + 4];
@@ -874,24 +874,24 @@ define(function(require, exports, module) {
      */
     function generateKeys(keyByte) {
         var key = new Array(56);
-        var keys = new Array();
+        var keys = [];
 
-        keys[0] = new Array();
-        keys[1] = new Array();
-        keys[2] = new Array();
-        keys[3] = new Array();
-        keys[4] = new Array();
-        keys[5] = new Array();
-        keys[6] = new Array();
-        keys[7] = new Array();
-        keys[8] = new Array();
-        keys[9] = new Array();
-        keys[10] = new Array();
-        keys[11] = new Array();
-        keys[12] = new Array();
-        keys[13] = new Array();
-        keys[14] = new Array();
-        keys[15] = new Array();
+        keys[0] = [];
+        keys[1] = [];
+        keys[2] = [];
+        keys[3] = [];
+        keys[4] = [];
+        keys[5] = [];
+        keys[6] = [];
+        keys[7] = [];
+        keys[8] = [];
+        keys[9] = [];
+        keys[10] = [];
+        keys[11] = [];
+        keys[12] = [];
+        keys[13] = [];
+        keys[14] = [];
+        keys[15] = [];
         var loop = [1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1];
 
         for (i = 0; i < 7; i++) {

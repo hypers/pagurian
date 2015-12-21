@@ -1,12 +1,42 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
-    var app = require('../../lib/app');
-    require('../../plugins/echarts/module');
+    var app = require("../../lib/app");
+    require("../../plugins/echarts/module");
     var chart = {};
 
-    app.page.china = function () {
 
-        chart = $p.plugin.echarts("my_chart", {
+
+    app.page.world = function() {
+
+        chart = $p.echarts("my_chart", {
+            type: "map",
+            title: {
+                text: "浏览量（PV）地域分布图"
+            }
+        });
+
+        chart.load({
+            name: "pv",
+            mapType: "world",
+            data: [{
+                value: 735,
+                name: 'China'
+            }, {
+                value: 423,
+                name: 'United States of America'
+            }, {
+                value: 310,
+                name: '意大利'
+            }, {
+                value: 300,
+                name: '俄罗斯'
+            }]
+        });
+    };
+
+    app.page.china = function() {
+
+        chart = $p.echarts("my_chart", {
             type: "map",
             title: {
                 text: "浏览量（PV）地域分布图"
@@ -41,35 +71,43 @@ define(function (require, exports, module) {
         });
     };
 
-    app.page.world = function () {
+    app.page.city = function() {
 
-        chart = $p.plugin.echarts("my_chart", {
+        chart = $p.echarts("my_chart", {
             type: "map",
             title: {
-                text: "浏览量（PV）地域分布图"
+                text: "浏览量（PV）地域分布图 - 中国"
             }
         });
 
         chart.load({
             name: "pv",
-            mapType: "world",
+            mapType: "china",
             data: [{
-                value: 735,
-                name: '中国'
+                value: 234,
+                name: 'Sichuan'
             }, {
-                value: 310,
-                name: '意大利'
+                value: 400,
+                name: 'Chengdu'
+            }, {
+                value: 500,
+                name: '浙江'
             }, {
                 value: 300,
-                name: '俄罗斯'
+                name: '杭州市'
             }, {
-                value: 423,
-                name: '美国'
+                value: 200,
+                name: '宁波市'
             }]
         });
+
+        chart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+            chart.onMapSelectedByChina(param);
+        });
+
     };
 
-    app.events.resize = function () {
+    app.events.resize = function() {
         if (chart.chart && "function" === typeof chart.chart.resize) {
             chart.chart.resize();
         }

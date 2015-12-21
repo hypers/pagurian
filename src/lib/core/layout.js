@@ -76,7 +76,7 @@ define(function(require, exports, module) {
         if (isIE8) {
             var currheight;
             $(window).resize(function() {
-                if (currheight == document.documentElement.clientHeight) {
+                if (currheight === document.documentElement.clientHeight) {
                     return; //quite event since only body resized not window.
                 }
                 if (resize) {
@@ -288,7 +288,7 @@ define(function(require, exports, module) {
     var doPopovers = function() {
         jQuery('.popovers').popover();
 
-    }
+    };
 
     /**
      * 处理 Tabs
@@ -307,7 +307,7 @@ define(function(require, exports, module) {
             });
             $('a[href="#' + tabid + '"]').click();
         }
-    }
+    };
 
 
     /**
@@ -321,21 +321,19 @@ define(function(require, exports, module) {
 
                 var input = jQuery(this);
 
-                if (input.val() == '' && input.attr(
-                        "placeholder") != '') {
+                if (input.val() === '' && input.attr("placeholder") !== '') {
                     input.addClass("placeholder").val(input
                         .attr('placeholder'));
                 }
 
                 input.focus(function() {
-                    if (input.val() == input.attr(
-                            'placeholder')) {
+                    if (input.val() === input.attr('placeholder')) {
                         input.val('');
                     }
                 });
 
                 input.blur(function() {
-                    if (input.val() === '' || input.val() == input.attr('placeholder')) {
+                    if (input.val() === '' || input.val() === input.attr('placeholder')) {
                         input.val(input.attr(
                             'placeholder'));
                     }
@@ -371,7 +369,7 @@ define(function(require, exports, module) {
                 "resources/css/themes-" + (color ||
                     "default") + ".css");
             $.cookie('style_color', color);
-        }
+        };
 
         $('.toggler', panel).click(function() {
             $('.toggler').hide();
@@ -393,8 +391,7 @@ define(function(require, exports, module) {
             $(this).addClass("current");
         });
 
-
-    }
+    };
 
     var doHLJS = function() {
         if (!window.hljs) {
@@ -417,7 +414,7 @@ define(function(require, exports, module) {
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-    }
+    };
 
     //处理APP回调事件
     var doAppResizeEvent = function() {
@@ -469,7 +466,7 @@ define(function(require, exports, module) {
         },
         initMenu: function() {
             if (window.CONFIG && CONFIG.appId) {
-                $(".page-sidebar-menu li[data-id='"+CONFIG.appId+"']").addClass("active");
+                $(".page-sidebar-menu li[data-id='" + CONFIG.appId + "']").addClass("active");
             }
         },
         custom: function() {
@@ -540,30 +537,22 @@ define(function(require, exports, module) {
             dom.hover(function() {
                 dropdown.level_base = 1;
                 first.show();
-                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
             }, function() {
                 first.hide();
                 dropdown.level_base = 0;
-                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
-                if (dropdown.level_in == 1 && dropdown.level_out ==
-                    1) {
+                if (dropdown.level_in === 1 && dropdown.level_out === 1) {
                     second.hide();
                     third.hide();
                 }
             });
 
             $(".dropdown-wrap").mouseenter(function() {
-                //console.log(dropdown.level_in + "========" + dropdown.level_out+"--------"+dropdown.level_base);
                 dropdown.level_in = $(this).data("level");
-
-
                 $(".dropdown-wrap").each(function() {
                     var o = $(this);
                     var level = o.data("level");
-                    if (dropdown.isExpandSubMenu ==
-                        1 && (level - dropdown.level_in ==
-                            1)) {
-
+                    if (dropdown.isExpandSubMenu === 1 && (level - dropdown.level_in === 1)) {
+                        //...
                     } else if (level > dropdown.level_in) {
                         o.hide();
                     }
@@ -575,14 +564,11 @@ define(function(require, exports, module) {
                 var o = $(this);
 
                 var k = setTimeout(function() {
-
-                    //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base);
-
                     if (dropdown.level_base) {
                         return;
                     }
-                    if (dropdown.level_in ==
-                        dropdown.level_out) {
+
+                    if (dropdown.level_in === dropdown.level_out) {
                         first.hide();
                         second.hide();
                         third.hide();
@@ -590,14 +576,9 @@ define(function(require, exports, module) {
                             "active");
                     }
 
-
-
                     clearTimeout(k);
-
                 }, 100);
             });
-
-
 
             $(".dropdown-wrap").click(function() {
                 second.hide();
@@ -689,8 +670,8 @@ define(function(require, exports, module) {
 
                 hideChild(scroll);
 
-                var o = $(this).next();
-                var t = parseInt(o.css("top"));
+                var that = $(this).next();
+                var t = parseInt(that.css("top"));
                 timer = setInterval(function() {
                     if (t >= 20) {
                         scroll.addClass("disabled");
@@ -698,7 +679,7 @@ define(function(require, exports, module) {
                         return;
                     }
                     t += 10;
-                    o.css("top", t);
+                    that.css("top", t);
                 }, 30);
 
             }, function() {
@@ -707,7 +688,6 @@ define(function(require, exports, module) {
 
             obj.find(".dropdown-scroll-bottom").unbind();
             obj.find(".dropdown-scroll-bottom").hover(function() {
-
 
                 obj.find(".dropdown-scroll-top").removeClass(
                     "disabled");
@@ -739,11 +719,11 @@ define(function(require, exports, module) {
                 var obj_dropdown = activeObj.parents(
                     ".dropdown-wrap");
                 var level = obj_dropdown.data("level");
-                if (level == 1) {
+                if (level === 1) {
                     second.hide();
                     third.hide();
                 }
-                if (level == 2) {
+                if (level === 2) {
                     third.hide();
                 }
 
@@ -827,15 +807,12 @@ define(function(require, exports, module) {
                 dropdown.isExpandSubMenu = 0;
                 timer = setTimeout(function() {
 
-                    if (level_active == 2) {
+                    if (level_active === 2) {
                         subObj.hide();
                         return;
                     }
 
-                    if (dropdown.level_in >
-                        dropdown.level_out ||
-                        dropdown.isExpandSubMenu ==
-                        1) {
+                    if (dropdown.level_in > dropdown.level_out || dropdown.isExpandSubMenu === 1) {
                         return;
                     }
 

@@ -2,25 +2,16 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function Tool() {
-
-        this.getQueryString = function(name) {
+    g[PagurianAlias].tool = {
+        getQueryString: function(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"),
                 r = window.location.search.substr(1).match(reg);
             if (r !== null) {
                 return unescape(r[2]);
             }
             return null;
-        };
-
-        this.log = function(info, type) {
-            type = type || "log";
-            if (G.console && G.console[type] && DEBUG) {
-                G.console[type]('t : ' + info);
-            }
-        };
-
-        this.getReferrer = function() {
+        },
+        getReferrer: function() {
             var ref;
             try {
                 ref = G.top.document.referrer;
@@ -35,39 +26,45 @@ define(function(require, exports, module) {
                 }
             }
             return ref;
-        };
-        this.newId = function() {
+        },
+        newId: function() {
             return '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
-        };
+        },
 
-        this.isArray = function(o) {
-            return Object.prototype.toString.call(o) == "[object Array]";
-        };
+        isArray: function(o) {
+            return Object.prototype.toString.call(o) === "[object Array]";
+        },
 
-        this.isObject = function(o) {
-            return Object.prototype.toString.call(o) == "[object Object]";
-        };
+        isObject: function(o) {
+            return Object.prototype.toString.call(o) === "[object Object]";
+        },
 
-        this.isNumber = function(value) {
+        isNumber: function(value) {
             return /^[0-9]+$/.test(value);
-        };
+        },
+        isNull: function(o) {
+            return Object.prototype.toString.call(o) === '[object Null]';
+        },
 
+        isFunction: function(o) {
+            return typeof o === "function";
+        },
 
         /**
          *加码
          */
-        this.encode = function(value) {
+        encode: function(value) {
             return encodeURIComponent(value);
-        };
+        },
 
         /**
          * 解码
          */
-        this.decode = function(value) {
+        decode: function(value) {
             return decodeURIComponent(value);
-        };
+        },
 
-        this.encodeHtml=function(str) {
+        encodeHtml: function(str) {
             var s = "";
             if (str.length === 0) return "";
             s = str.replace(/&/g, "&amp;");
@@ -78,9 +75,9 @@ define(function(require, exports, module) {
             s = s.replace(/\"/g, "&quot;");
             s = s.replace(/\n/g, "<br>");
             return s;
-        };
+        },
 
-        this.decodeHtml=function(str) {
+        decodeHtml: function(str) {
             var s = "";
             if (!str || str.length === 0) return "";
             str += "";
@@ -92,9 +89,9 @@ define(function(require, exports, module) {
             s = s.replace(/&quot;/g, "\"");
             s = s.replace(/<br>/g, "\n");
             return s;
-        };
+        },
 
-        this.objectToUrlParams=function(params) {
+        objectToUrlParams: function(params) {
 
             var str_params = "",
                 url_split = "";
@@ -114,29 +111,29 @@ define(function(require, exports, module) {
                 }
             }
             return str_params;
-        };
+        },
 
         /**
          * 转Decimal格式
          **/
-        this.toDecimal=function(arg,num) {
+        toDecimal: function(arg, num) {
             if (!arg || arg === "--") {
                 return "0.00";
             }
 
             try {
-                return arg.toFixed(num||2);
+                return arg.toFixed(num || 2);
             } catch (e) {
                 return arg;
             }
 
             return arg;
-        };
+        },
 
         /**
          *浮点数相乘
          **/
-        this.floatMul=function(arg1, arg2) {
+        floatMul: function(arg1, arg2) {
 
             if (!arg1 || !arg2) {
                 return "0.00";
@@ -158,10 +155,7 @@ define(function(require, exports, module) {
             var n = Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
             return this.toDecimal(n);
 
-        };
-
-    }
-
-    g[PagurianAlias].tool = new Tool();
+        }
+    };
 
 });

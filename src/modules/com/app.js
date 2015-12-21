@@ -1,76 +1,75 @@
 define(function(require, exports, module) {
 
-    var app = require('../../lib/app');
+    var app = require("../../lib/app");
     var model = require('./model');
 
 
     app.page.alert = function() {
 
         $("#btn_alert_1").click(function() {
-            $p.com.alert("报表保持成功", "success");
+            $p.alert.success("报表保持成功");
         });
 
         $("#btn_alert_2").click(function() {
-            $p.com.alert("您有5条系统提醒未读", "info");
+            $p.alert.info("您有5条系统提醒未读");
         });
 
         $("#btn_alert_3").click(function() {
-            $p.com.alert("您将要删除该项目", "warning");
+            $p.alert.warn("您将要删除该项目");
         });
 
         $("#btn_alert_4").click(function() {
-            $p.com.alert("找不到您筛选的数据,请尝试刷新页面!", "error");
+            $p.alert.error("找不到您筛选的数据,请尝试刷新页面!");
         });
 
     };
 
     app.page.dialogs = function() {
 
-        $p.com.dialog("#btn_remove", {
+        $p.dialog("#btn_remove", {
             title: "提示",
             body: "你确定要删除吗？",
             submit: function(modal, data, params, callback) {
-                $p.com.alert("你点击了确定");
                 modal.hide();
+                $p.alert("你点击了确定");
             }
         });
 
-        $p.com.dialog("#btn_add", {
+        $p.dialog("#btn_add", {
             title: "添加用户",
             body: $("#tpl_user").html(),
             validate: function(modal, data, params) {
                 return true;
             },
             submit: function(modal, data, params, callback) {
-
+                $p.alert("你点击了确定");
                 modal.hide();
-                $p.com.alert("你点击了确定");
             }
         });
 
-        $p.com.dialog("#btn_form_lang", {
+        $p.dialog("#btn_form_lang", {
             title: "长表单",
             body: $("#tpl_user_lang").html(),
             validate: function(modal, data, params) {
                 return true;
             },
             submit: function(modal, data, params, callback) {
-                $p.com.alert("你点击了确定");
                 modal.hide();
+                $p.alert("你点击了确定");
             }
         });
 
 
 
 
-        $p.com.dialog("#btn_update", {
+        $p.dialog("#btn_update", {
             title: "编辑用户",
             body: $("#tpl_user").html(),
             initForm: function(modal, form, params) {
 
                 //获取用户信息
                 model.getUser(params.id, params, function(data) {
-                    $p.com.form(form).val(data);
+                    $p.form(form).val(data);
                 });
 
             },
@@ -84,8 +83,8 @@ define(function(require, exports, module) {
                     modal.complete(resp, valid);
 
                     if (valid) {
+                        $p.alert(resp.message);
                         modal.hide();
-                        $p.com.alert(resp.message);
                     }
                 });
             }
