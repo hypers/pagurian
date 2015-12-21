@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 
             for (var i = 0; i < dataList.length; i++) {
                 selected = "";
-                if (options.active == dataList[i].id) {
+                if (options.active === dataList[i].id) {
                     selected = 'selected="selected"';
                 }
                 elements.append("<option value='" + dataList[i].id + "' " + selected + ">" + dataList[i].name + "</option>");

@@ -17,12 +17,12 @@ define(function(require, exports, module) {
 
             //复制的执行的方法，把复制内容存储到剪切板
             that.client.on('copy', function(event) {
-                event.clipboardData.setData('text/plain', $p.tool.isFunction(options.copy) ? options.copy(event) : function() {});
+                event.clipboardData.setData('text/plain', $.isFunction(options.copy) ? options.copy(event) : function() {});
             });
 
             //复制完成执行的回调方法
             that.client.on('aftercopy', function(event) {
-                if ($p.tool.isFunction(options.afterCopy)) {
+                if ($.isFunction(options.afterCopy)) {
                     options.afterCopy(event);
                 }
             });
@@ -31,7 +31,7 @@ define(function(require, exports, module) {
 
         //复制错误执行的回调方法
         this.client.on('error', function(event) {
-            if ($p.tool.isFunction(options.error)) {
+            if ($.isFunction(options.error)) {
                 options.error(event);
             }
             ZeroClipboard.destroy();

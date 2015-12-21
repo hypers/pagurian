@@ -100,7 +100,7 @@ define(function(require, exports, module) {
                     $that.find("option[value='" + value + "']").prop("selected", true);
                 } else if ($that.attr("type") === "radio") {
                     //input radio
-                    $that.prop("checked", ($that.val() == value));
+                    $that.prop("checked", ($that.val() === value));
                     $.uniform.update($that);
                 } else if ($that.attr("type") === "checkbox") {
                     //input checkbox
@@ -109,12 +109,12 @@ define(function(require, exports, module) {
                     //如果值是数组，在配置数组中的每个值 [xxx,yyy,zzz]
                     if ($.isArray(value)) {
                         for (var i = 0; i < value.length; i++) {
-                            if ($that.val() == value[i]) {
+                            if ($that.val() === value[i]) {
                                 checked = true;
                             }
                         }
                     } else {
-                        checked = ($that.val() == value);
+                        checked = ($that.val() === value);
                     }
 
                     $that.prop("checked", checked);
@@ -188,7 +188,7 @@ define(function(require, exports, module) {
             var handleSubmitParams = this.options.submitModelParams;
             //格式化表单提交数据
             var handleDataFormat = this.options.submitDataFormat;
-            if ($p.tool.isFunction(handleDataFormat)) {
+            if ($.isFunction(handleDataFormat)) {
                 data = handleDataFormat(data, that.element);
             }
             //处理提交失败
@@ -205,24 +205,24 @@ define(function(require, exports, module) {
                 that.complete();
                 if (!valid) {
                     //表单提交成功处理
-                    if ($p.tool.isFunction(handleSubmitError)) {
+                    if ($.isFunction(handleSubmitError)) {
                         handleSubmitError(resp, valid);
                     }
                     return;
                 }
                 //提交失败处理
-                if ($p.tool.isFunction(handleSubmitSuccess)) {
+                if ($.isFunction(handleSubmitSuccess)) {
                     handleSubmitSuccess(resp, valid);
                 }
             }];
 
             //触发自定义表单验证
-            if ($p.tool.isFunction(that.options.validate.custom)) {
+            if ($.isFunction(that.options.validate.custom)) {
                 valid = that.options.validate.custom(data, that.element);
             }
 
             //提交表单
-            if (!$p.tool.isFunction(handleSubmit)) {
+            if (!$.isFunction(handleSubmit)) {
                 $p.log("submitModelEvent is undefined");
                 return false;
             }

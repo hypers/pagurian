@@ -47,10 +47,10 @@ define(function(require, exports, module) {
         if (!window.console || !pagurian.debug) {
             return;
         }
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             console.log(arguments[0]);
         }
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             console[arguments[1]](arguments[0]);
         }
     };

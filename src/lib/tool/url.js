@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 
             for (i = 0; i < params.length; i++) {
                 val = params[i].split("=");
-                if (val[0] == paramName) {
+                if (val[0] === paramName) {
                     return unescape(val[1]);
                 }
             }

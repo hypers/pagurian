@@ -22,7 +22,7 @@ define(function(require, exports, module) {
                 var checked = "";
 
                 for (var j = 0; j < current_list.length; j++) {
-                    if (current_list[j].value == all_list[i].value) {
+                    if (current_list[j].value === all_list[i].value) {
                         checked = "checked=checked";
                     }
                 }

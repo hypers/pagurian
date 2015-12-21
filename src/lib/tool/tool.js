@@ -32,11 +32,11 @@ define(function(require, exports, module) {
         },
 
         isArray: function(o) {
-            return Object.prototype.toString.call(o) == "[object Array]";
+            return Object.prototype.toString.call(o) === "[object Array]";
         },
 
         isObject: function(o) {
-            return Object.prototype.toString.call(o) == "[object Object]";
+            return Object.prototype.toString.call(o) === "[object Object]";
         },
 
         isNumber: function(value) {

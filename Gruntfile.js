@@ -117,8 +117,8 @@ module.exports = function(grunt) {
                 'src/modules/**/*.js',
                 'src/widgets/**/*.js',
                 'src/plugins/**/module.js',
-                //'src/lib/**/*.js',
-                //'!src/lib/vendor/**/*.js'
+                'src/lib/**/*.js',
+                '!src/lib/vendor/**/*.js'
             ]
         },
         transport: {
