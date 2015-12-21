@@ -1,4 +1,5 @@
 define({
     "complete": 'Complete',
-    "buttonText":"Select files"
+    "cancelled": "Cancelled",
+    "buttonText": "Select files"
 });

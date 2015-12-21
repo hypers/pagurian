@@ -5,11 +5,11 @@ define(function(require, exports, module) {
     //require("plugins/echarts/loader-map"); //完整包
 
     var g = window;
-    var locale = {
+    var languages = {
         zh_CN: require('./locale/zh_CN'),
         en_US: require('./locale/en_US')
     };
-    var activeLocale = locale[pagurian.language || "zh_CN"];
+    var locale = languages[pagurian.language || "zh_CN"];
 
     var cities;
 
@@ -68,7 +68,7 @@ define(function(require, exports, module) {
                 effectOption: {
                     backgroundColor: "rgba(0, 0, 0, 0.5)",
                 },
-                text: activeLocale.loading
+                text: locale.loading
             });
         };
 
@@ -81,11 +81,11 @@ define(function(require, exports, module) {
             this.hideLoading();
             this.chart.clear();
             var icon = "icon-info icon-big";
-            var msg = message || activeLocale.empty;
+            var msg = message || locale.empty;
 
             if (status === "timeout") {
                 icon = "icon-exclamation-circle icon-big red";
-                msg += "<br/><a class='btn btn-default' id='btn_reload'>" + activeLocale.search_reset + "</a>";
+                msg += "<br/><a class='btn btn-default' id='btn_reload'>" + locale.search_reset + "</a>";
             }
             if (status === "empty") {
 
