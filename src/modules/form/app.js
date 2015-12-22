@@ -1,4 +1,7 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
+    window.CONFIG = {
+        appId: "Form"
+    };
 
     var app = require("../../lib/app");
     var model = require('./model');
@@ -8,12 +11,11 @@ define(function(require, exports, module) {
     require('../../plugins/uploadify/module');
 
 
-    app.page.index = function() {
+    app.page.index = function () {
 
     };
 
-    app.page.validation = function() {
-
+    app.page.validation = function () {
         $p.form("#form_sample_1", {
             validate: {
                 rules: {
@@ -48,12 +50,12 @@ define(function(require, exports, module) {
                         required: true
                     }
                 },
-                custom: function(form, data) {
+                custom: function (form, data) {
                     return true;
                 }
             },
-            submit: function(form, data) {
-                model.add(data, function(resp) {
+            submit: function (form, data) {
+                model.add(data, function (resp) {
                     $p.alert(resp.message);
                 });
             }
@@ -61,7 +63,7 @@ define(function(require, exports, module) {
 
     };
 
-    app.page.val = function() {
+    app.page.val = function () {
 
         $p.form("#form_sample_1").val({
             text: "This is text",
@@ -73,19 +75,18 @@ define(function(require, exports, module) {
 
     };
 
-    app.page.fileUpload=function(){
+    app.page.fileUpload = function () {
         $p.upload("#file", {
             formData: {
                 "token": "abc"
             },
             uploader: '/src/plugins/uploadify/3.2.1/uploadify.php',
-            onUploadSuccess: function(file, data, response) {
+            onUploadSuccess: function (file, data, response) {
                 console.log(file, data, response);
             }
         });
 
     };
-
     module.exports = app;
 
 });

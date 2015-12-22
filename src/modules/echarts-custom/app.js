@@ -1,5 +1,7 @@
 define(function(require, exports, module) {
-
+    window.CONFIG = {
+        appId: "Echarts 自定义"
+    };
     var app = require("../../lib/app");
     require("../../plugins/echarts/module");
     var chart = {};
