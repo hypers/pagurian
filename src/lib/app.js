@@ -97,6 +97,7 @@ define(function(require, exports, module) {
             //初始化页面布局
             layout.init();
             layout.custom();
+            layout.initMenu();
             layout.resize(function() {
                 if (app.events.resize && "function" === typeof app.events.resize) {
                     app.events.resize();

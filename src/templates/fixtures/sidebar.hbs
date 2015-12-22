@@ -3,17 +3,17 @@
         <!-- BEGIN SIDEBAR MENU -->
         <ul class="page-sidebar-menu">
             {{#each data.menu}}
-                <li  class="open">
+                <li class="open">
                     <a href="javascript:;">
                         <i class="{{icon}}"></i>
                         <span class="title">{{title}}</span>
                         <span class="arrow open"></span>
                     </a>
-                     <ul class="sub-menu">
-                         {{#each items}}
-                        <li>
-                            <a href="{{url}}">{{title}}</a>
-                        </li>
+                    <ul class="sub-menu">
+                        {{#each items}}
+                            <li data-id="{{title}}">
+                                <a href="{{url}}">{{title}}</a>
+                            </li>
                         {{/each}}
                     </ul>
                 </li>
