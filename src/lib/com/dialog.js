@@ -97,7 +97,7 @@ define(function(require, exports, module) {
         this.complete = function(data, valid) {
             $("#modal" + _id + " .submit-waiting").html('');
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
-            return this
+            return this;
         };
 
         this.show = function() {
