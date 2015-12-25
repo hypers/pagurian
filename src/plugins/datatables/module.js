@@ -732,6 +732,8 @@ define(function(require, exports, module) {
 
 
             }
+
+            return this;
         };
 
         this.update = function() {
