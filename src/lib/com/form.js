@@ -81,7 +81,7 @@ define(function(require, exports, module) {
 
                 //兼容老版本中的 parent.id 这种
                 var name_split = name.split(".");
-                if ($p.tool.isObject(data[name_split[0]])) {
+                if ($.isPlainObject(data[name_split[0]])) {
                     return data[name_split[0]][name_split[1]];
                 }
 

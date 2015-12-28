@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
     function arrayToObject(arr) {
 
-        if ($p.tool.isObject(arr)) {
+        if ($.isPlainObject(arr)) {
             return arr;
         }
 
