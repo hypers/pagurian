@@ -549,7 +549,7 @@ define(function(require, exports, module) {
                                 var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (summary_value && oSettings.aoColumns[i].mData === key && typeof $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
+                                    if (summary_value && oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
@@ -732,10 +732,13 @@ define(function(require, exports, module) {
 
 
             }
+
+            return this;
         };
 
         this.update = function() {
             this.table.fnPageChange(0);
+            return this;
         };
 
         function createNumber(current, pagesize) {
