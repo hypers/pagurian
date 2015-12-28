@@ -1,56 +1,39 @@
 define(function(require, exports, module) {
 
-    var locale = {
+    var languages = {
         zh_CN: require('../locale/zh_CN'),
         en_US: require('../locale/en_US')
     };
-    var activeLocale = locale[pagurian.language || "zh_CN"];
+    var lang = pagurian.language || "zh_CN";
+    var locale = languages[lang];
 
     module.exports = function(options) {
 
         var mapType = options.mapType || "china";
-        var chinaProvince = $p.locale.echartsChinaProvince || {};
-        var chinaCity = $p.locale.echartsChinaCity || {};
-        var country = $p.locale.echartCountry || {};
+
+        var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
+        var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
+        var countryLocale = $p.locale.echarts[lang].country;
+        var country_en_US = $p.locale.echarts.en_US.country;
 
         var nameMap = {
             china: function(locale) {
                 var list = {};
-                if (locale === "zh_CN") {
-                    list = chinaProvince;
-                } else if (locale === "en_US") {
-                    for (var key in chinaProvince) {
-                        list[chinaProvince[key]] = key;
-                    }
+                for (var key in chinaProvince_zh_CN) {
+                    list[chinaProvince_zh_CN[key]] = chinaProvinceLocale[key];
                 }
                 return list;
             },
             world: function(locale) {
                 var list = {};
-                if (locale === "zh_CN") {
-                    list = country;
-                } else if (locale === "en_US") {
-                    for (var key in country) {
-                        list[country[key]] = key;
-                    }
+                for (var key in country_en_US) {
+                    list[country_en_US[key]] = countryLocale[key];
                 }
                 return list;
             }
         };
 
 
-        var getProvinceName = function(name) {
-
-            if (name) {
-                for (var key in chinaProvince) {
-
-                    if (name.indexOf(chinaProvince[key]) >= 0) {
-                        return chinaProvince[key];
-                    }
-                }
-            }
-            return name;
-        };
 
         var dataList = options.data || [];
         var option = {
@@ -71,7 +54,7 @@ define(function(require, exports, module) {
                 orient: 'horizontal',
                 min: 0,
                 max: 0,
-                text: [activeLocale.high, activeLocale.low],
+                text: [locale.high, locale.low],
                 calculable: false,
                 color: ['#fe8463', '#ffede8'],
                 x: "18",
@@ -116,8 +99,6 @@ define(function(require, exports, module) {
 
         //初始化数据
         for (var i = 0; i < dataList.length; i++) {
-
-            dataList[i].name = getProvinceName(dataList[i].name);
             option.series[0].data.push(dataList[i]);
             if (dataList[i].value > option.dataRange.max) {
                 option.dataRange.max = dataList[i].value;

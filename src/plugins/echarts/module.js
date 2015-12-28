@@ -9,10 +9,10 @@ define(function(require, exports, module) {
         zh_CN: require('./locale/zh_CN'),
         en_US: require('./locale/en_US')
     };
-    var locale = languages[pagurian.language || "zh_CN"];
+    var lang = pagurian.language || "zh_CN";
+    var locale = languages[lang];
 
     var cities;
-
 
     var chartOptions = {
         line: require('./chart/line'),
@@ -30,10 +30,13 @@ define(function(require, exports, module) {
         };
 
 
-        var provinces = $p.locale.echartsChinaProvince;
-        var cities = $p.locale.echartsChinaCity;
+        var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
+        var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
+        var chinaCityLocale = $p.locale.echarts[lang].china_city;
+        var chinaCity_zh_CN = $p.locale.echarts.zh_CN.china_city;
+
         var nameMapCity = {};
-        var nameMapProvince = provinces;
+        var nameMapProvince = {};
         var options_all;
 
         this.init = function() {
@@ -42,21 +45,14 @@ define(function(require, exports, module) {
             $.extend(true, this.options, options);
             this.chart = echarts.init(document.getElementById(seletor));
             this.showLoading();
-
-            var key;
-
-            if (pagurian.language === "en_US") {
-                for (key in cities) {
-                    nameMapCity[cities[key]] = key;
-                }
-
+            for (var key in chinaCity_zh_CN) {
+                nameMapCity[chinaCity_zh_CN[key]] = chinaCityLocale[key];
+            }
+            for (key in chinaProvinceLocale) {
+                nameMapProvince[chinaProvinceLocale[key]] = chinaProvince_zh_CN[key];
             }
 
-            if (pagurian.language === "zh_CN") {
-                for (key in provinces) {
-                    nameMapProvince[provinces[key]] = provinces[key];
-                }
-            }
+            return this;
         };
 
         this.showLoading = function(effect) {
@@ -70,10 +66,12 @@ define(function(require, exports, module) {
                 },
                 text: locale.loading
             });
+            return this;
         };
 
         this.hideLoading = function() {
             this.chart.hideLoading();
+            return this;
         };
 
         this.message = function(status, message) {
@@ -86,17 +84,15 @@ define(function(require, exports, module) {
             if (status === "timeout") {
                 icon = "icon-exclamation-circle icon-big red";
                 msg += "<br/><a class='btn btn-default' id='btn_reload'>" + locale.search_reset + "</a>";
-            }
-            if (status === "empty") {
-
-            }
-            if (status === "error") {
+            } else if (status === "error") {
                 icon = "icon-exclamation-circle icon-big red";
             }
+
             if ($("#" + seletor + ".chart-message").length > 0) {
                 $(".chart-message").html("<h3><i class='icon " + icon + "' ></i> " + msg + "</h3>");
                 return;
             }
+
             $("#" + this.id).append("<div class='chart-message'><h3><i class='icon " + icon + "' ></i> " + msg + "</h3></div>");
 
             return this;
@@ -120,8 +116,7 @@ define(function(require, exports, module) {
             var _options = $.extend(true, {}, chartOptions[type](data), this.options);
 
 
-
-            if (typeof options === "function") {
+            if ($.isFunction(options)) {
                 options_all = options(_options);
             } else {
                 options_all = $.extend(true, _options, options || {});
@@ -157,11 +152,15 @@ define(function(require, exports, module) {
 
         this.onMapSelectedByChina = function(params) {
 
+            console.log(params);
+
             var mapType = "china";
             var count = 0;
             for (var k in params.selected) {
                 count++;
             }
+
+
 
             if (count === 1) {
                 mapType = "china";
@@ -176,6 +175,7 @@ define(function(require, exports, module) {
                 }]
             });
 
+
             this.selected = mapType;
 
         };
@@ -183,9 +183,7 @@ define(function(require, exports, module) {
     }
 
     g[PagurianAlias].echarts = function(seletor, options) {
-        var chart = new Echarts(seletor, options);
-        chart.init();
-        return chart;
+        return new Echarts(seletor, options).init();
     };
 
 });
