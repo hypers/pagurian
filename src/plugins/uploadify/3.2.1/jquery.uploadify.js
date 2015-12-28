@@ -1605,6 +1605,8 @@ define(function(require, exports, module) {
                     if ($.isFunction(settings.onRemove)) {
                         settings.onRemove.call($this, swfuploadify.queueData.files[fileID]);
                     }
+
+                    delete swfuploadify.queueData.files[fileID];
                 });
 
 
@@ -1860,12 +1862,14 @@ define(function(require, exports, module) {
             onSelect: function(file) {
                 // Load the swfupload settings
                 var settings = this.settings;
+                var that = this;
 
                 // Check if a file with the same name exists in the queue
                 var queuedFile = {};
                 for (var n in this.queueData.files) {
                     queuedFile = this.queueData.files[n];
                     if (queuedFile.uploaded != true && queuedFile.name == file.name) {
+
                         var replaceQueueItem = confirm($p.str.format(locale.update_queue_confirm, file.name));
                         if (!replaceQueueItem) {
                             this.cancelUpload(file.id);
@@ -1875,7 +1879,9 @@ define(function(require, exports, module) {
                             $('#' + queuedFile.id).remove();
                             this.cancelUpload(queuedFile.id);
                             this.queueData.filesReplaced++;
+                            delete this.queueData.files[queuedFile.id];
                         }
+
                     }
                 }
 
@@ -1941,6 +1947,7 @@ define(function(require, exports, module) {
                 // Call the user-defined event handler
                 if (settings.onSelect) settings.onSelect.apply(this, arguments);
                 if (settings.onSet) settings.onSet.apply(this, [itemData]);
+
             },
 
             // Triggered when a file is not added to the queue
@@ -2229,6 +2236,9 @@ define(function(require, exports, module) {
                     $('#' + file.id).addClass("completed");
                     $('#' + file.id).data("stats", stats);
                 }
+
+                //上传完成以后把进度更新为100%
+                $('#' + file.id).find('.uploadify-progress-bar').css('width', '100%');
 
                 // Call the user-defined event handler
                 if (settings.onUploadSuccess) settings.onUploadSuccess.call(this, file, data, response);
