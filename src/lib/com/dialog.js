@@ -120,6 +120,7 @@ define(function (require, exports, module) {
         this.complete = function () {
             $("#modal" + _id + " .submit-waiting").html('');
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
+
             return this;
         };
 
@@ -185,7 +186,7 @@ define(function (require, exports, module) {
                 info: "whisper-success",
                 error: "whisper-error"
             };
-            
+
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
             clearTimeout(timer);
             timer = setTimeout(function () {
