@@ -254,7 +254,7 @@ define(function(require, exports, module) {
             e.stopPropagation();
         });
 
-        $("[data-type='select'] .dropdown-menu a").click(function() {
+        $("[data-type='select']").on("click"," .dropdown-menu a",function(){
             var text = $(this).text();
             var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
             $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
