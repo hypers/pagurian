@@ -1,4 +1,4 @@
-# 搜索引擎(视频)
+# 搜索栏(视频)
 
 ![Alt text](../image/UI-Standar-LUXURY-30-1.jpg)
 ![Alt text](../image/UI-Standar-LUXURY-30-2.jpg)
@@ -11,8 +11,6 @@
 6. 搜索工具栏可应用与所有系统。
 7. 搜索结果根据实际需求可定制。
 
-<br>
-<br>
----
+
 ![mark logo](../image/UI-Standar-V.jpg)
 

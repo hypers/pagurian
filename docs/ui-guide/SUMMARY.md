@@ -25,13 +25,15 @@
 * [表格](tables/README.md)
 * [图表用色规范](charts/README.md)
 * 其他
-   * [看板](others/billboard.md)
+   * [汇总面板](others/billboard.md)
    * [多系统切换](others/system_switch.md)
    * [导航栏/顶部菜单展开](others/navigation_bar_menu.md)
-   * [搜索引擎](others/search_engine.md)
+   * [搜索栏](others/search_engine.md)
    * [筛选器](others/filter.md)
    * [工具栏](others/tool_bar.md)
    * [语言切换](others/langurage_switch.md)
-   * [汇总看板与图表联动](others/billboard_link_charts.md)
+   * [汇总面板与图表联动](others/billboard_link_charts.md)
    * [邮件页面](email_page.md)
+   * [说明标注文本](description.md)
+   * [于Tab中显示过滤标签](filtered_data_name_in_tab.md)
 
