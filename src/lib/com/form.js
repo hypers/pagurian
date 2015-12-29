@@ -8,6 +8,12 @@ define(function(require, exports, module) {
         this.options = {
             isAjaxRequest: true, //是否ajax请求 默认true
             submitButton: this.element.find(".btn[type='submit']") //默认submit按钮
+
+            //submitModelEvent  处理表单提交的API方法
+            //submitModelParams 处理表单提交的参数
+            //submitDataFormat 格式化表单提交数据
+            //submitError 提交失败
+            //submitSuccess 提交成功
         };
 
         this.init = function() {
@@ -100,7 +106,8 @@ define(function(require, exports, module) {
                     $that.find("option[value='" + value + "']").prop("selected", true);
                 } else if ($that.attr("type") === "radio") {
                     //input radio
-                    $that.prop("checked", ($that.val() === value));
+                    $that.prop("checked", ($that.val() === value.toString()));
+
                     $.uniform.update($that);
                 } else if ($that.attr("type") === "checkbox") {
                     //input checkbox
@@ -109,12 +116,12 @@ define(function(require, exports, module) {
                     //如果值是数组，在配置数组中的每个值 [xxx,yyy,zzz]
                     if ($.isArray(value)) {
                         for (var i = 0; i < value.length; i++) {
-                            if ($that.val() === value[i]) {
+                            if ($that.val() == value[i].toString()) {
                                 checked = true;
                             }
                         }
                     } else {
-                        checked = ($that.val() === value);
+                        checked = ($that.val() === value.toString());
                     }
 
                     $that.prop("checked", checked);
@@ -243,6 +250,7 @@ define(function(require, exports, module) {
             return this;
         };
 
+        //表单处理完成
         this.complete = function(data, valid) {
 
             var $btn_submit = this.options.submitButton;
@@ -251,6 +259,7 @@ define(function(require, exports, module) {
             $btn_submit.removeAttr("disabled");
             $btn_submit.data("disabled", false);
 
+            return this;
         };
 
     }
