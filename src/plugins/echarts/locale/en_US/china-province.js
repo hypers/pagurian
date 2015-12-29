@@ -31,7 +31,7 @@ define({
     "geo.china.ningxia": "Ningxia",
     "geo.china.xinjiang": "Xinjiang",
     "geo.china.tibet": "Tibet",
-    "geo.china.hongkong": "Hongkong",
+    "geo.china.hongkong": "Hong Kong",
     "geo.china.macao": "Macao",
     "geo.china.south_china_sea_islands": "South China Sea Islands"
 });
