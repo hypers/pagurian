@@ -19,7 +19,6 @@ define({
     "geo.china.shanxi": "山西",
     "geo.china.shaanxi": "陕西",
     "geo.china.jilins": "吉林",
-    "geo.china.jilin": "吉林",
     "geo.china.fujian": "福建",
     "geo.china.guizhou": "贵州",
     "geo.china.guangdong": "广东",
@@ -34,5 +33,5 @@ define({
     "geo.china.tibet": "西藏",
     "geo.china.hongkong": "香港",
     "geo.china.macao": "澳门",
-    "geo.china_south _china _sea _islands": "南海诸岛"
+    "geo.china.south_china_sea_islands": "南海诸岛"
 });

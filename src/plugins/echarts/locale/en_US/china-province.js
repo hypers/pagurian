@@ -19,7 +19,6 @@ define({
     "geo.china.shanxi": "Shanxi",
     "geo.china.shaanxi": "Shaanxi",
     "geo.china.jilins": "Jilin",
-    "geo.china.jilin": "Jilin",
     "geo.china.fujian": "Fujian",
     "geo.china.guizhou": "Guizhou",
     "geo.china.guangdong": "Guangdong",
@@ -34,5 +33,5 @@ define({
     "geo.china.tibet": "Tibet",
     "geo.china.hongkong": "Hongkong",
     "geo.china.macao": "Macao",
-    "geo.china_south _china _sea _islands": "South China Sea Islands"
+    "geo.china.south_china_sea_islands": "South China Sea Islands"
 });

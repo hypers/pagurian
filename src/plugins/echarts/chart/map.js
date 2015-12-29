@@ -33,7 +33,13 @@ define(function(require, exports, module) {
             }
         };
 
-
+        //通过Key获取本地语言的名称
+        function getName(key) {
+            if (mapType === "world") {
+                return countryLocale[key] || key;
+            }
+            return chinaProvinceLocale[key] || key;
+        }
 
         var dataList = options.data || [];
         var option = {
@@ -99,6 +105,8 @@ define(function(require, exports, module) {
 
         //初始化数据
         for (var i = 0; i < dataList.length; i++) {
+
+            dataList[i].name = getName(dataList[i].name);
             option.series[0].data.push(dataList[i]);
             if (dataList[i].value > option.dataRange.max) {
                 option.dataRange.max = dataList[i].value;
@@ -106,6 +114,7 @@ define(function(require, exports, module) {
         }
 
         option.series[0].name = options.name;
+
         $.extend(true, option, options.options);
 
         this.option = option;

@@ -22,13 +22,13 @@ define(function(require, exports, module) {
             mapType: "world",
             data: [{
                 value: 735,
-                name: 'China'
+                name: 'geo.country.china'
             }, {
                 value: 423,
                 name: 'United States of America'
             }, {
                 value: 310,
-                name: '意大利'
+                name: 'geo.country.italy'
             }, {
                 value: 300,
                 name: '俄罗斯'
