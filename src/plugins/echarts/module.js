@@ -29,28 +29,33 @@ define(function(require, exports, module) {
             color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
         };
 
-
-        var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
-        var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
-        var chinaCityLocale = $p.locale.echarts[lang].china_city;
-        var chinaCity_zh_CN = $p.locale.echarts.zh_CN.china_city;
-
         var nameMapCity = {};
         var nameMapProvince = {};
         var options_all;
 
         this.init = function() {
 
-            this.id = seletor;
+            //当地域信息不为空,初始化nameMap;
+            if ($p.locale.echarts) {
+
+                var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
+                var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
+                var chinaCityLocale = $p.locale.echarts[lang].china_city;
+                var chinaCity_zh_CN = $p.locale.echarts.zh_CN.china_city;
+
+                for (var key in chinaCity_zh_CN) {
+                    nameMapCity[chinaCity_zh_CN[key]] = chinaCityLocale[key];
+                }
+
+                for (key in chinaProvinceLocale) {
+                    nameMapProvince[chinaProvinceLocale[key]] = chinaProvince_zh_CN[key];
+                }
+            }
+
             $.extend(true, this.options, options);
+            this.id = seletor;
             this.chart = echarts.init(document.getElementById(seletor));
             this.showLoading();
-            for (var key in chinaCity_zh_CN) {
-                nameMapCity[chinaCity_zh_CN[key]] = chinaCityLocale[key];
-            }
-            for (key in chinaProvinceLocale) {
-                nameMapProvince[chinaProvinceLocale[key]] = chinaProvince_zh_CN[key];
-            }
 
             return this;
         };
@@ -148,19 +153,17 @@ define(function(require, exports, module) {
             this.chart.setOption($.extend(true, options_all, options), true);
         };
 
-
-
+        /**
+         * 点击中国全国地图-进入省市地图
+         */
         this.onMapSelectedByChina = function(params) {
 
-            console.log(params);
 
             var mapType = "china";
             var count = 0;
             for (var k in params.selected) {
                 count++;
             }
-
-
 
             if (count === 1) {
                 mapType = "china";
@@ -175,12 +178,11 @@ define(function(require, exports, module) {
                 }]
             });
 
-
             this.selected = mapType;
-
         };
 
     }
+
 
     g[PagurianAlias].echarts = function(seletor, options) {
         return new Echarts(seletor, options).init();
