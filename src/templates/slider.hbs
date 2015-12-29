@@ -32,19 +32,22 @@
                         <h3 class="page-title">
                             {{data.page.slider}}
                         </h3>
+
+                        <div class="tabs-wrap">
+            			   <ul  class="nav nav-tabs">
+            					<li class="active">
+            						<a href="slider.html" >基础</a>
+            					</li>
+            					<li>
+            						<a href="slider-options.html" >参数说明</a>
+            					</li>
+            				</ul>
+            			</div>
+                        
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-    			   <ul  class="nav nav-tabs">
-    					<li class="active">
-    						<a href="slider.html" >基础</a>
-    					</li>
-    					<li>
-    						<a href="slider-options.html" >参数说明</a>
-    					</li>
-    				</ul>
-    			</div>
+
 
                 <!-- BEGIN PAGE CONTENT-->
                 <div class="row">
@@ -52,7 +55,7 @@
                         <input type="text" id="range" value="20" name="example_name"/>
                         <div class="markdown">
                             <pre><code class="javascript">
-$p.plugin.slider("#range",{
+$p.slider("#range",{
     from:10
 });
                             </code></pre>
@@ -62,7 +65,7 @@ $p.plugin.slider("#range",{
                         <input type="text" id="range2" value=""  />
                         <div class="markdown">
                             <pre><code class="javascript">
-$p.plugin.slider("#range2", {
+$p.slider("#range2", {
     type: "double",
     grid: true,
     min: 0,
@@ -78,7 +81,7 @@ $p.plugin.slider("#range2", {
                         <input type="text" id="range3" value=""  />
                         <div class="markdown">
                             <pre><code class="javascript">
-$p.plugin.slider("#range2",{
+$p.slider("#range2",{
     grid: true,
     from: 3,
     force_edges:true,

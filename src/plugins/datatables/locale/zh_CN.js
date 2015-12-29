@@ -9,8 +9,8 @@ define({
     },
     "sInfo": "共 <span class='num'>_TOTAL_</span> 条数据",
     "sInfoEmpty": "",
-    "sEmptyTable": "<i class='fa fa-info-circle  big'></i>  查询结果为空",
-    "sZeroRecords": "<i class='fa fa-info-circle  big'></i>  查询结果为空",
+    "sEmptyTable": "<i class='icon icon-info  icon-big'></i>  查询结果为空",
+    "sZeroRecords": "<i class='icon icon-info  icon-big'></i>  查询结果为空",
     "sLoadingRecords": "加载中...",
     "sTimeout":"请求超时"
 });

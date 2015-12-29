@@ -25,22 +25,23 @@
                         <h3 class="page-title">
                             {{data.page.summary}}
                         </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="summary.html">基础</a>
+                                </li>
+                                <li class="active">
+                                    <a href="summary-pro.html">高级</a>
+                                </li>
+                                <li>
+                                    <a href="summary-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="summary.html">基础</a>
-                        </li>
-                        <li class="active">
-                            <a href="summary-pro.html">高级</a>
-                        </li>
-                        <li>
-                            <a href="summary-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
+
 
                 <div class="row clearfix">
                     <div class="col-md-12">
@@ -189,7 +190,7 @@ var chartData = {
     }
 };
 
-var chart = $p.plugin.echarts("my_chart", {
+var chart = $p.echarts("my_chart", {
     type: "line",
     title: {
         text: '数据分析',
@@ -229,7 +230,7 @@ var option = {
     },
     //点击面板的回调
     "callBackPanel": function (columnName, columnData, allDatas) {
-        $p.com.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
+        $p.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
         chart.load(chartData[columnName]);
         console.log(columnName);
         console.log(columnData);
@@ -240,7 +241,7 @@ var option = {
         chart.load(chartData[chooseColumnsName]);
     }
 };
-var summary = $p.plugin.summary("#summaryTest", option);</code></pre>
+var summary = $p.summary("#summaryTest", option);</code></pre>
                             <h3>JSON 数据</h3>
                             <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
                         </div>

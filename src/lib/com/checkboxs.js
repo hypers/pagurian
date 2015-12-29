@@ -22,7 +22,7 @@ define(function(require, exports, module) {
                 var checked = "";
 
                 for (var j = 0; j < current_list.length; j++) {
-                    if (current_list[j].value == all_list[i].value) {
+                    if (current_list[j].value === all_list[i].value) {
                         checked = "checked=checked";
                     }
                 }
@@ -55,11 +55,8 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].com.checkboxs = function(seletor, options) {
-        var obj = new Checkboxs();
-        obj.init(seletor, options);
-
-        return obj;
+    g[PagurianAlias].checkboxs = function(seletor, options) {
+        return new Checkboxs().init(seletor, options);
     };
 
 });

@@ -6,26 +6,22 @@
  */
 define(function(require, exports, module) {
 
-    function isArray(o) {
-        return Object.prototype.toString.call(o) == "[object Array]";
-    }
 
-    function isObject(o) {
-        return Object.prototype.toString.call(o) == "[object Object]";
-    }
+
 
     function arrayToObject(arr) {
 
-        if (isObject(arr)) {
+        if ($.isPlainObject(arr)) {
             return arr;
         }
+
         var obj = {},
             format_obj = {};
 
         for (var i = 0; i < arr.length; i++) {
             if (obj[arr[i].name]) {
                 var _t = obj[arr[i].name];
-                if (!isArray(obj[arr[i].name])) {
+                if (!$.isArray(obj[arr[i].name])) {
                     obj[arr[i].name] = [_t];
                 }
                 obj[arr[i].name].push(arr[i].value);
@@ -49,7 +45,7 @@ define(function(require, exports, module) {
 
             if (a.length > 1) {
 
-                if (isArray(_value)) {
+                if ($.isArray(_value)) {
 
                     format_obj[a[0]] = format_obj[a[0]] || [];
 
@@ -86,10 +82,10 @@ define(function(require, exports, module) {
             var i;
             this.options.data = [];
 
-            if (isArray(params)) {
+            if ($.isArray(params)) {
 
                 for (i = 0; i < params.length; i++) {
-                    if (type == "get") {
+                    if (type === "get") {
                         params[i].value = encodeURIComponent(params[i].value);
                     }
                     this.options.data.push(params[i]);
@@ -104,7 +100,7 @@ define(function(require, exports, module) {
                     }
 
                     //如果是一个数组的，就设置多个值
-                    if (isArray(params[i])) {
+                    if ($.isArray(params[i])) {
                         for (var j = 0; j < params[i].length; j++) {
                             this.options.data.push({
                                 "name": i,
@@ -143,7 +139,7 @@ define(function(require, exports, module) {
                 data: data,
                 timeout: 30000,
                 success: function(data, textStatus, jqXHR) {
-                    if ("function" == typeof callback) {
+                    if ($.isFunction(callback)) {
                         callback(data, textStatus, jqXHR);
                     }
                 },
@@ -158,12 +154,12 @@ define(function(require, exports, module) {
                         error: true
                     };
                     for (var v in jqXHR) {
-                        if (typeof jqXHR[v] !== "function") {
+                        if (!$.isFunction(jqXHR[v])) {
                             data[v] = jqXHR[v];
                         }
                     }
 
-                    if ("function" == typeof callback) {
+                    if ($.isFunction(callback)) {
                         callback({
                             code: jqXHR.status,
                             result: data
@@ -175,7 +171,7 @@ define(function(require, exports, module) {
             if (this.bundle) {
 
                 options.contentType = "application/json";
-                if (type == "post" || type == "put" || type == "patch") {
+                if (type === "post" || type === "put" || type === "patch") {
                     data = $.toJSON({
                         data: arrayToObject(data)
                     });
@@ -183,7 +179,7 @@ define(function(require, exports, module) {
 
             }
 
-            if (type == "delete") {
+            if (type === "delete") {
                 var split = "?",
                     p = "";
                 for (var i = 0; i < data.length; i++) {

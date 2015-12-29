@@ -25,24 +25,27 @@
 					<h3 class="page-title">
 					{{data.page.datepicker}}
 					</h3>
+
+					<div class="tabs-wrap">
+					  <ul  class="nav nav-tabs">
+						   <li>
+							   <a href="datepicker.html" >日期</a>
+						   </li>
+						   <li  class="active" >
+							   <a href="daterangepicker.html" >日期范围</a>
+						   </li>
+
+						   <li>
+							   <a href="datetimepicker.html" >时间</a>
+						   </li>
+
+					   </ul>
+				   </div>
+				   
 				</div>
 			</div>
 
-			 <div class="tabs-wrap">
-               <ul  class="nav nav-tabs">
-                    <li>
-                        <a href="datepicker.html" >日期</a>
-                    </li>
-                    <li  class="active" >
-                        <a href="daterangepicker.html" >日期范围</a>
-                    </li>
 
-					<li>
-                        <a href="datetimepicker.html" >时间</a>
-                    </li>
-
-                </ul>
-            </div>
 
 
 			<div class="row">
@@ -95,10 +98,10 @@
 						</code></pre>
 						<h3>Javascript代码</h3>
 						<pre><code class="javascript">
-$p.plugin.dateRangePicker("#picker", {
+$p.dateRangePicker("#picker", {
     defaultDate:[moment().subtract('days', 6),moment()],  //默认最近一周
 }, function(start, end) {
-    $p.com.alert("开始时间：" + start + " , 结束时间：" + end);
+    $p.alert("开始时间：" + start + " , 结束时间：" + end);
 });
 					</code></pre>
 

@@ -1,14 +1,16 @@
 define(function(require, exports, module) {
-
-    var app = require('../../lib/app');
+    window.CONFIG = {
+        appId: "Range Slider"
+    };
+    var app = require("../../lib/app");
 
     require("../../plugins/ion-range-slider/module");
     app.page.index = function() {
-        $p.plugin.slider("#range",{
+        $p.slider("#range",{
             from:10
         });
 
-        $p.plugin.slider("#range2", {
+        $p.slider("#range2", {
             type: "double",
             grid: true,
             min: 0,
@@ -18,7 +20,7 @@ define(function(require, exports, module) {
             prefix: "$"
         });
 
-        $p.plugin.slider("#range3",{
+        $p.slider("#range3",{
             grid: true,
             from: 3,
             force_edges:true,

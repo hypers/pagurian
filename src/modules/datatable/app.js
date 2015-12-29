@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
-
-    var app = require('../../lib/app');
+    window.CONFIG = {
+        appId: "DataTables"
+    };
+    var app = require("../../lib/app");
     var model = require('./model');
 
 
@@ -8,7 +10,7 @@ define(function(require, exports, module) {
 
     app.page.dataTable = function() {
 
-        $p.plugin.dataTable("#my_table", {
+        $p.dataTable("#my_table", {
             "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [
@@ -47,7 +49,7 @@ define(function(require, exports, module) {
 
     app.page.dataTableExtend = function() {
 
-        var oTable = $p.plugin.dataTable("#my_table", {
+        var oTable = $p.dataTable("#my_table", {
             "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [
@@ -98,7 +100,7 @@ define(function(require, exports, module) {
 
     app.page.dataTableSummary = function() {
 
-        $p.plugin.dataTable("#my_table", {
+        $p.dataTable("#my_table", {
             "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [
@@ -138,7 +140,7 @@ define(function(require, exports, module) {
 
     app.page.dataTableSearch = function() {
 
-        $p.plugin.dataTable("#my_table", {
+        $p.dataTable("#my_table", {
             "fnDataSource": model.getDataList,
             "sClass": "table-fixed",
             "aaSorting": [

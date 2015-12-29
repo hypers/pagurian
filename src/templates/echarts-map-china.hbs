@@ -1,0 +1,141 @@
+{{>fixtures/doctype}}
+<head>
+<title>{{data.page.echarts_map}}</title>
+{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+   {{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+
+		<div class="page-content">
+
+			{{>fixtures/theme-panel}}
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="page-title">
+					{{data.page.echarts_map}}
+					</h3>
+                    <div class="tabs-wrap">
+                        <ul  class="nav nav-tabs">
+                            <li>
+                                <a href="echarts-map-world.html" >世界</a>
+                            </li>
+                            <li class="active">
+                                <a href="echarts-map-china.html" >中国</a>
+                            </li>
+
+                            <li>
+                                <a href="echarts-map-china-city.html" >中国-城市</a>
+                            </li>
+
+                        </ul>
+                    </div>
+				</div>
+			</div>
+
+
+
+
+
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="portlet box default">
+
+						<div class="portlet-body">
+							<div  class="chart-default " >
+								<div class="chart-body chart-map" id="my_chart"></div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+                    <pre><code class="javascript">
+require('../../plugins/echarts/module');
+
+var chart = $p.echarts("my_chart", {
+    type: "map",
+    title: {
+        text: "浏览量（PV）地域分布图"
+    }
+});
+
+chart.load({
+    name: "pv",
+    mapType: "china",
+    data: [{
+        value: 735,
+        name: '上海'
+    }, {
+        value: 310,
+        name: '北京'
+    }, {
+        value: 234,
+        name: '四川'
+    }, {
+        value: 135,
+        name: '天津'
+    }, {
+        value: 548,
+        name: '云南'
+    }, {
+        value: 148,
+        name: '河南'
+    }, {
+        value: 114,
+        name: '香港'
+    }]
+});
+
+                </code></pre>
+
+                {{>fixtures/echarts-footer}}
+
+                </div>
+                </div>
+            </div>
+			<!-- END PAGE CONTENT-->
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{{>fixtures/footer}}
+
+
+<script type="text/javascript">
+
+    pagurian.call([
+        "modules/echarts-map/app",
+        "plugins/echarts/loader-map"
+    ], function(app) {
+		app.page.china();
+	});
+
+</script>
+
+{{>fixtures/tracker}}
+</body>
+</html>

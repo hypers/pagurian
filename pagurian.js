@@ -13,7 +13,7 @@
     var CONFIG = global.CONFIG || {},
         location = global.location,
         //协议
-        protocol = ("https:" == location.protocol) ? "https://" : "http://",
+        protocol = ("https:" === location.protocol) ? "https://" : "http://",
         //域名
         domain = location.hostname || "/",
         //端口
@@ -29,11 +29,12 @@
      * @type {Object}
      */
     var pagurian = {
-        version: CONFIG.version || "1.4.10101147",
+        version: CONFIG.version || "1.5.3",
         language: CONFIG.language || "zh_CN", //简体中文:zh_CN , 英文:en_US
         util: {},
         com: {},
         plugin: {},
+        debug: debug,
         path: {
             api: url + "/test/api/",
             app: url + "/" + (debug ? "src" : "dist") + "/"
@@ -52,7 +53,22 @@
     pagurian.call("config", {
         base: pagurian.path.app,
         alias: {
+            "app": "lib/app",
             "jquery": "lib/vendor/jquery.1.9.1.min",
+            "echarts": "plugins/echarts/module",
+            "datatables": "plugins/datatables/module",
+            "datepicker": "plugins/datepicker/module",
+            "daterangepicker": "plugins/daterangepicker/module",
+            "datetimepicker": "plugins/datetimepicker/module",
+            "slider": "plugins/ion-range-slider/module",
+            "uploadify": "plugins/uploadify/module",
+            "validate": "plugins/jquery.validate/module",
+            "colorpicker": "plugins/colorpicker/js/colorpicker",
+
+            "datalistview": "widgets/datalistview/module",
+            "sizer": "widgets/sizer/module",
+            "summary": "widgets/summary/module",
+
         },
         //对dist/modules目录下的文件添加版本号
         map: [
@@ -73,7 +89,9 @@
      */
     (function callSeajs(o, s, f) {
 
-        if (global[o]) return;
+        if (global[o]) {
+            return;
+        }
         s = document.createElement("script");
         s.src = pagurian.path.app + "lib/vendor/sea.js";
         s.charset = "utf-8";

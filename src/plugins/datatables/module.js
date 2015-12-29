@@ -1,12 +1,13 @@
 define(function(require, exports, module) {
 
     var g = window;
-    var locale = {};
+    var languages = {
+        zh_CN: require('./locale/zh_CN'),
+        en_US: require('./locale/en_US')
+    };
+    var locale = languages[$p.language || "zh_CN"];
 
     require('./1.9.4/jquery.dataTables');
-
-    locale.zh_CN = require('./locale/zh_CN');
-    locale.en_US = require('./locale/en_US');
 
     /* Set the defaults for DataTables initialisation */
     $.extend(true, $.fn.dataTable.defaults, {
@@ -97,7 +98,7 @@ define(function(require, exports, module) {
 
             that.oApi._fnProcessingDisplay(oSettings, false);
 
-            if (typeof fnCallback == 'function' && fnCallback !== null) {
+            if (typeof fnCallback === 'function') {
                 fnCallback(oSettings);
             }
         }, oSettings);
@@ -108,14 +109,14 @@ define(function(require, exports, module) {
         oSettings.oApi._fnCalculateEnd(oSettings);
 
         /* If we have space to show extra rows (backing up from the end point - then do so */
-        if (oSettings._iDisplayEnd == oSettings.aiDisplay.length) {
+        if (oSettings._iDisplayEnd === oSettings.aiDisplay.length) {
             oSettings._iDisplayStart = oSettings._iDisplayEnd - oSettings._iDisplayLength;
             if (oSettings._iDisplayStart < 0) {
                 oSettings._iDisplayStart = 0;
             }
         }
 
-        if (oSettings._iDisplayLength == -1) {
+        if (oSettings._iDisplayLength === -1) {
             oSettings._iDisplayStart = 0;
         }
 
@@ -181,13 +182,18 @@ define(function(require, exports, module) {
                     $('.pagination', an[i]).css('visibility', 'visible');
                 }
 
+
+
+
                 for (i = 0, iLen = an.length; i < iLen; i++) {
                     // Remove the middle elements
                     $('li:gt(0)', an[i]).filter(':not(:last)').remove();
 
                     // Add the new list items and their event handlers
                     for (j = iStart; j <= iEnd; j++) {
-                        sClass = (j == oPaging.iPage + 1) ? 'class="active"' : '';
+
+                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
+
                         $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
                             .insertBefore($('li:last', an[i])[0])
                             .bind('click', function(e) {
@@ -195,6 +201,7 @@ define(function(require, exports, module) {
                                 e.preventDefault();
                                 oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
                                 fnDraw(oSettings);
+
                             });
                     }
 
@@ -284,7 +291,7 @@ define(function(require, exports, module) {
 
                     // Add the new list items and their event handlers
                     for (j = iStart; j <= iEnd; j++) {
-                        sClass = (j == oPaging.iPage + 1) ? 'class="active"' : '';
+                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
                         $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
                             .insertBefore($('li.next:first', an[i])[0])
                             .bind('click', function(e) {
@@ -352,6 +359,7 @@ define(function(require, exports, module) {
         this.bLoadFinish = false;
         this.bShowSummary = false;
         this.aApiParams = {};
+        this.version = "0.1.1208";
         this.options = {
             "sForm": '#form',
             "bAutoload": true,
@@ -386,7 +394,7 @@ define(function(require, exports, module) {
 
                 function getPageIndex(total) {
                     for (var i = 0; i < aoData.length; i++) {
-                        if (aoData[i].name == "iDisplayLength") {
+                        if (aoData[i].name === "iDisplayLength") {
                             length = aoData[i].value;
                         }
                     }
@@ -459,17 +467,18 @@ define(function(require, exports, module) {
                     }
                 }
 
+
                 $.cookie("params.pagesize", length, {
                     expires: 60,
                     path: '/'
                 });
 
                 //自定义的业务参数
-                if (typeof oSettings.oInit.fnParams === "function") {
+                if ($.isFunction(oSettings.oInit.fnParams)) {
                     var params = oSettings.oInit.fnParams(aApiParams) || {};
 
                     for (key in params) {
-                        if (typeof params[key] !== "function") {
+                        if (!$.isFunction(params[key])) {
 
                             //如果是一个数组的，就设置多个值
                             if (typeof params[key] === "object") {
@@ -492,20 +501,20 @@ define(function(require, exports, module) {
 
                 if (oSettings.oInit.bAutoload) {
 
-                    if ("function" === typeof oSettings.oInit.fnOptions) {
+                    if ($.isFunction(oSettings.oInit.fnOptions)) {
                         opt = oSettings.oInit.fnOptions();
                     }
 
                     //兼容老的版本
                     var fnDataSource = oSettings.oInit.fnDataSource || oSettings.oInit.dataSource;
 
-                    if ("function" === typeof fnDataSource) {
+                    if ($.isFunction(fnDataSource)) {
 
                         fnDataSource(aApiParams, function(a, b, c) {
 
 
                             var total = a.page ? a.page.total : 0;
-                            var items = a.result.items || [];
+                            var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
 
 
@@ -535,15 +544,23 @@ define(function(require, exports, module) {
                             }
 
                             //汇总信息
-                            for (var key in summary) {
+                            $(seletor + " thead .table-summary").each(function() {
+
+                                var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (oSettings.aoColumns[i].mData == key && typeof oSettings.aoColumns[i].fnSummaryFormat == "function") {
+                                    if (summary_value && oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
-                                $("#" + that.id + "_" + key).html(summary_value);
-                            }
+
+                                if ($p.tool.isNull(summary_value)) {
+                                    summary_value = "--";
+                                }
+
+                                $(this).html(summary_value);
+
+                            });
 
 
                             //显示细分信息
@@ -590,7 +607,7 @@ define(function(require, exports, module) {
                                         row_details.addClass("row-details-open disabled").removeClass("row-details-close");
                                         oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
 
-                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='fa fa-info-circle  big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
+                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='icon icon-info icon-big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
                                             var ndetails = row_details.parents("tr").next().find(".details");
                                             row_details.removeClass("disabled");
                                             ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
@@ -606,14 +623,14 @@ define(function(require, exports, module) {
                                 var status_text = "";
 
                                 if (a.result.statusText === "timeout") {
-                                    status_text = locale[pagurian.language || "zh_CN"].timeout;
+                                    status_text = locale.timeout;
                                 } else {
                                     status_text = a.message;
                                 }
 
-                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i>  " + status_text);
-                            } else if (a.code == 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='fa fa-info-circle fa-red fa-big'></i> " + a.message);
+                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
+                            } else if (a.code === 500) {
+                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
 
 
@@ -625,7 +642,7 @@ define(function(require, exports, module) {
                             }
 
                             //初始化回调
-                            if (typeof oSettings.oInit.callback === "function") {
+                            if ($.isFunction(oSettings.oInit.callback)) {
                                 oSettings.oInit.callback(a);
                             }
 
@@ -646,7 +663,7 @@ define(function(require, exports, module) {
 
                 }
             },
-            "oLanguage": locale[pagurian.language || "zh_CN"]
+            "oLanguage": locale
         };
 
         this.init = function() {
@@ -659,7 +676,7 @@ define(function(require, exports, module) {
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var p = "<p class='table-summary' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var p = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
 
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
                     if (aoColumns[i].sTitle) {
@@ -694,23 +711,34 @@ define(function(require, exports, module) {
                     var word = $.trim($(this).val()),
                         isChange = search_keyword === word ? 0 : 1,
                         isPush = false;
-                    if ((e.which == 13 || that.bLoadFinish) && isChange) {
+                    if ((e.which === 13 || that.bLoadFinish) && isChange) {
+
                         that.bLoadFinish = false;
                         that.aApiParams[searchWord] = word;
-                        that.update();
                         search_keyword = word;
 
-                        if (typeof that.options.oSearch.fnCallback == "function") {
-                            that.options.oSearch.fnCallback(word);
+                        if (!$(seletor).is(":hidden")) {
+
+                            that.update();
+                            if ($.isFunction(that.options.oSearch.fnCallback)) {
+                                that.options.oSearch.fnCallback(word);
+                            }
                         }
+
                         return;
                     }
+
                 });
+
+
             }
+
+            return this;
         };
 
         this.update = function() {
             this.table.fnPageChange(0);
+            return this;
         };
 
         function createNumber(current, pagesize) {
@@ -723,10 +751,8 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].plugin.dataTable = function(seletor, options) {
-        var table = new DataTables(seletor, options);
-        table.init();
-        return table;
+    g[PagurianAlias].dataTable = function(seletor, options) {
+        return new DataTables(seletor, options).init();
     };
 
 });

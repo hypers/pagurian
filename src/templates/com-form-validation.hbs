@@ -25,24 +25,27 @@
                     <h3 class="page-title">
                     {{data.page.form}}
                     </h3>
+                    <div class="tabs-wrap">
+                       <ul  class="nav nav-tabs">
+                           <li>
+                               <a href="com-form.html" >样式</a>
+                           </li>
+                           <li class="active">
+                               <a href="com-form-validation.html" >验证</a>
+                           </li>
+                           <li >
+                               <a href="com-form-val.html" >赋值</a>
+                           </li>
+                           <li >
+                               <a href="com-form-fileupload.html" >文件上传</a>
+                           </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
 
-            <div class="tabs-wrap">
-               <ul  class="nav nav-tabs">
-                    <li>
-                        <a href="com-form.html" >布局 </a>
-                    </li>
-                    <li  class="active">
-                        <a href="com-form-validation.html" >验证</a>
-                    </li>
-                    <li >
-                        <a href="com-form-other.html" >其他</a>
-                    </li>
 
-                </ul>
-            </div>
 
 
             <div class="row">
@@ -170,7 +173,7 @@
                         <pre><code class="javascript">
 require('../../plugins/jquery.validate/module');
 
-$p.com.form("#form_sample_1", {
+$p.form("#form_sample_1", {
     validate: {
         rules: {
             name: {
@@ -210,7 +213,7 @@ $p.com.form("#form_sample_1", {
     },
     submit: function(form, data) {
         model.add(data, function(resp) {
-            $p.com.alert(resp.message);
+            $p.alert(resp.message);
         })
     }
 });

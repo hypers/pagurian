@@ -5,74 +5,126 @@ define(function(require, exports, module) {
     //require("plugins/echarts/loader-map"); //完整包
 
     var g = window;
-    var locale = {},
-        activeLocale;
-    var chartOptions = require('./options');
+    var languages = {
+        zh_CN: require('./locale/zh_CN'),
+        en_US: require('./locale/en_US')
+    };
+    var lang = pagurian.language || "zh_CN";
+    var locale = languages[lang];
 
-    locale.zh_CN = require('./locale/zh_CN');
-    locale.en_US = require('./locale/en_US');
+    var cities;
 
-    activeLocale = locale[pagurian.language || "zh_CN"];
+    var chartOptions = {
+        line: require('./chart/line'),
+        pie: require('./chart/pie'),
+        bar: require('./chart/bar'),
+        map: require('./chart/map'),
+    };
 
     function Echarts(seletor, options) {
+
+        this.version = "0.1.1208";
         this.options = {
             backgroundColor: '#f5f5f5',
             color: ['#fe8463', '#9bca63', '#fad860', '#60c0dd', '#0084c6', '#d7504b', '#c6e579', '#26c0c0', '#f0805a', '#f4e001', '#b5c334'],
         };
+
+
+        var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
+        var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
+        var chinaCityLocale = $p.locale.echarts[lang].china_city;
+        var chinaCity_zh_CN = $p.locale.echarts.zh_CN.china_city;
+
+        var nameMapCity = {};
+        var nameMapProvince = {};
+        var options_all;
+
         this.init = function() {
+
             this.id = seletor;
             $.extend(true, this.options, options);
             this.chart = echarts.init(document.getElementById(seletor));
+            this.showLoading();
+            for (var key in chinaCity_zh_CN) {
+                nameMapCity[chinaCity_zh_CN[key]] = chinaCityLocale[key];
+            }
+            for (key in chinaProvinceLocale) {
+                nameMapProvince[chinaProvinceLocale[key]] = chinaProvince_zh_CN[key];
+            }
+
+            return this;
+        };
+
+        this.showLoading = function(effect) {
             this.chart.showLoading({
-                text: activeLocale.loading
+                effect: effect || "spin",
+                textStyle: {
+                    color: "#fff"
+                },
+                effectOption: {
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                },
+                text: locale.loading
             });
+            return this;
+        };
+
+        this.hideLoading = function() {
+            this.chart.hideLoading();
+            return this;
         };
 
         this.message = function(status, message) {
 
-            this.chart.hideLoading();
+            this.hideLoading();
             this.chart.clear();
-            var icon = "fa-info-circle";
-            var msg = message || activeLocale.empty;
+            var icon = "icon-info icon-big";
+            var msg = message || locale.empty;
 
             if (status === "timeout") {
-                icon = "fa-exclamation-circle fa-red";
-                msg += "<br/><a class='btn btn-default' id='btn_reload'>" + activeLocale.search_reset + "</a>";
+                icon = "icon-exclamation-circle icon-big red";
+                msg += "<br/><a class='btn btn-default' id='btn_reload'>" + locale.search_reset + "</a>";
+            } else if (status === "error") {
+                icon = "icon-exclamation-circle icon-big red";
             }
-            if (status === "empty") {
 
-            }
-            if (status === "error") {
-                icon = "fa-exclamation-circle fa-red";
-            }
             if ($("#" + seletor + ".chart-message").length > 0) {
-                $(".chart-message").html("<h3><i class='fa " + icon + "' ></i> " + msg + "</h3>");
+                $(".chart-message").html("<h3><i class='icon " + icon + "' ></i> " + msg + "</h3>");
                 return;
             }
-            $("#" + this.id).append("<div class='chart-message'><h3><i class='fa " + icon + "' ></i> " + msg + "</h3></div>");
+
+            $("#" + this.id).append("<div class='chart-message'><h3><i class='icon " + icon + "' ></i> " + msg + "</h3></div>");
 
             return this;
         };
 
 
         this.load = function(data, options) {
-
             $("#" + seletor + " .chart-message").remove();
 
-            var type = this.options.type || "line";
-            var _options = $.extend(true, {}, this.options, chartOptions[type](data));
-            var _options_all;
-
-
-            if (typeof options == "function") {
-                _options_all = options(_options);
-            } else {
-                _options_all = $.extend(true, _options, options || {});
+            //如果没有 type 参数，
+            //则直接setOption 采用Echart自己的参数
+            if (!this.options.type) {
+                this.chart.hideLoading();
+                this.chart.clear();
+                $.extend(true, this.options, data);
+                this.chart.setOption(this.options);
+                return;
             }
 
-            this.chart.hideLoading();
+            var type = this.options.type;
+            var _options = $.extend(true, {}, chartOptions[type](data), this.options);
+
+
+            if ($.isFunction(options)) {
+                options_all = options(_options);
+            } else {
+                options_all = $.extend(true, _options, options || {});
+            }
+
+            this.hideLoading();
             this.chart.clear();
-            this.chart.setOption(_options_all);
+            this.chart.setOption(options_all);
 
             return this;
         };
@@ -87,12 +139,51 @@ define(function(require, exports, module) {
             this.chart.on(eventName, eventListener);
             return this;
         };
+
+        /**
+         * 设置属性
+         * @param {Object} options
+         */
+        this.set = function(options) {
+            this.chart.setOption($.extend(true, options_all, options), true);
+        };
+
+
+
+        this.onMapSelectedByChina = function(params) {
+
+            console.log(params);
+
+            var mapType = "china";
+            var count = 0;
+            for (var k in params.selected) {
+                count++;
+            }
+
+
+
+            if (count === 1) {
+                mapType = "china";
+            } else if (nameMapProvince[params.target]) {
+                mapType = nameMapProvince[params.target];
+            }
+
+            this.set({
+                series: [{
+                    mapType: mapType,
+                    nameMap: nameMapCity,
+                }]
+            });
+
+
+            this.selected = mapType;
+
+        };
+
     }
 
-    g[PagurianAlias].plugin.echarts = function(seletor, options) {
-        var chart = new Echarts(seletor, options);
-        chart.init();
-        return chart;
+    g[PagurianAlias].echarts = function(seletor, options) {
+        return new Echarts(seletor, options).init();
     };
 
 });

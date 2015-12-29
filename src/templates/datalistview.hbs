@@ -25,19 +25,20 @@
                         <h3 class="page-title">
                             {{data.page.datalistview}}
                         </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="datalistview.html">基础 </a>
+                                </li>
+                                <li>
+                                    <a href="datalistview-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="datalistview.html">基础 </a>
-                        </li>
-                        <li>
-                            <a href="datalistview-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
+
 
                 <div class="row">
                     <div class="col-md-12">
@@ -88,7 +89,7 @@
                             <h3>Javascript代码</h3>
                             <pre><code class="javascript">require('../../widgets/datalistview/module');
 var tpl = $("#dataListViewTpl").html();
-var oDataListView = $p.plugin.dataListView("#dataListView", {
+var oDataListView = $p.dataListView("#dataListView", {
     "dataSource": model.getDataList,
     "tplHtml": tpl,
     "sDom": ["T", "D", "S", "P"],

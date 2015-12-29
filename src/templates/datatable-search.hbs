@@ -25,36 +25,37 @@
                     <h3 class="page-title">
                     {{data.page.datatables}}
                     </h3>
+                    
+                    <div class="tabs-wrap">
+                       <ul  class="nav nav-tabs">
+                            <li>
+                                <a href="datatable.html" >基础 </a>
+                            </li>
+                            <li>
+                                <a href="datatable-extend.html" >细分</a>
+                            </li>
+                            <li>
+                                <a href="datatable-summary.html" >汇总</a>
+                            </li>
+                            <li class="active">
+                                <a href="datatable-search.html" >搜索</a>
+                            </li>
+                            <li>
+                                <a href="datatable-toolbar.html">工具栏</a>
+                            </li>
+                            <li>
+                                <a href="datatable-options.html" >参数说明</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="tabs-wrap">
-               <ul  class="nav nav-tabs">
-                    <li>
-                        <a href="datatable.html" >基础 </a>
-                    </li>
-                    <li>
-                        <a href="datatable-extend.html" >细分</a>
-                    </li>
-                    <li>
-                        <a href="datatable-summary.html" >汇总</a>
-                    </li>
-                    <li class="active">
-                        <a href="datatable-search.html" >搜索</a>
-                    </li>
-                    <li>
-                        <a href="datatable-options.html" >参数说明</a>
-                    </li>
-                </ul>
-            </div>
-
-
-
 
             <div class="row">
                 <div class="col-md-12">
 
-                    <div class="tools-wrap">
+                    <div class="table-toolbar">
                         <div class="input-icon input-search">
                             <i class="fa fa-search"></i>
                             <input placeholder="查询关键字" id="txt_search" class="form-control" maxlength="1024" type="text">
@@ -92,7 +93,7 @@
                         <pre><code class="javascript">
 require('../../plugins/datatables/module');
 
-$p.plugin.dataTable("#my_table", {
+$p.dataTable("#my_table", {
     "fnDataSource": model.getDataList,
     "sClass": "table-fixed",
     "aaSorting": [

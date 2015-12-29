@@ -1,0 +1,173 @@
+{{>fixtures/doctype}}
+
+<head>
+    <title> {{data.page.datatables}}</title>
+    {{>fixtures/head}}
+</head>
+
+<body>
+
+    {{>fixtures/header}}
+
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+                {{>fixtures/theme-panel}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.datatables}}
+                        </h3>
+
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="datatable.html">基础 </a>
+                                </li>
+                                <li>
+                                    <a href="datatable-extend.html">细分</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-summary.html">汇总</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-search.html">搜索</a>
+                                </li>
+                                <li class="active">
+                                    <a href="datatable-toolbar.html">工具栏</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-toolbar">
+                            <span class="label"> 状态 :</span>
+                            <div class="btn-group btn-dropdown btn-select">
+                                <button data-toggle="dropdown" type="button" class="btn btn-default  dropdown-toggle w-unset">全部 <i class="fa fa-angle-down"></i></button>
+                                <ul role="menu" class="dropdown-menu">
+                                    <li><a data-id="ALL" href="javascript:;">全部</a></li>
+                                    <li><a data-id="ENABLE" href="javascript:;">启用</a></li>
+                                    <li><a data-id="DISABLE" href="javascript:;">禁用</a></li>
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-default ">报告导出</button>
+
+                            <div class="input-icon input-search right">
+                                <i class="fa fa-search"></i>
+                                <input placeholder="查询关键字" id="txt_search" class="form-control" maxlength="1024" type="text">
+                            </div>
+
+                        </div>
+                        <table id="my_table"></table>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                        <div class="markdown">
+
+
+
+
+                            <h3>HTML代码</h3>
+                            <pre><code class="html">
+&lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;
+                            </code></pre>
+                            <h3>Javascript代码</h3>
+                            <pre>
+                                <code class="javascript">
+require('../../plugins/datatables/module');
+
+$p.dataTable("#my_table", {
+    "fnDataSource": model.getDataList,
+    "sClass": "table-fixed",
+    "aaSorting": [
+        [2, "desc"]
+    ],
+    "fnParams": function() {
+        return {};
+    },
+    "aoColumns": [{
+    "bSortable": false,
+    "mData": "keywords",
+    "sTitle": "关键字",
+    mRender: function(data, type, full) {
+        return &#39;&lt;span title= &quot; &#39; + full.keywords + &#39; &quot; &gt; &#39; + full.keywords + &#39; &lt;/span&gt;&#39; } }, { "bSortable": false, "sTitle":"搜索引擎", "mData": "searchEngine"
+    },
+    {
+        "sClass": "t-a-r",
+        "sTitle": "浏览量(PV)",
+        "mData": "pageViews"
+    },
+    {
+        "sClass": "t-a-r",
+        "sTitle": "独立访问者(UV)",
+        "mData": "uniqueVisitors"
+    },
+    {
+        "sClass": "t-a-r",
+        "sTitle": "访问次数(VV)",
+        "mData": "visitViews"
+    }]
+});
+</code></pre>
+
+                            <h3>JSON 数据</h3>
+                            <a href="/test/api/keywords.json" target="_blank">keywords.json</a>
+
+                            <h3>基于版本</h3>
+                            <p>[v1.9.4]</p>
+
+                            <h3>更多实例</h3>
+
+                            <a href="http://legacy.datatables.net/examples/" target="_blank">
+                             http://legacy.datatables.net/examples/
+                        </a>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+    {{>fixtures/footer}}
+    <script type="text/javascript">
+        pagurian.call("modules/datatable/app", function(app) {
+            app.page.dataTable();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+
+</html>

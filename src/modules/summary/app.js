@@ -2,11 +2,14 @@
  * Created by yangguo on 2015/9/9 0009.
  */
 define(function(require, exports, module) {
-    var app = require('../../lib/app');
+    window.CONFIG={
+        appId:"Summary"
+    };
+    var app = require("../../lib/app");
     var model = require('./model');
 
     require('../../widgets/summary/module');
-    require('../../plugins/echarts/module');
+    require("../../plugins/echarts/module");
 
     var summaryDemo;
 
@@ -98,7 +101,7 @@ define(function(require, exports, module) {
             "dataSource": model.getSummaryData
         };
 
-        summaryDemo = $p.plugin.summary("#summaryTest", option);
+        summaryDemo = $p.summary("#summaryTest", option);
     };
 
     app.page.summaryPro = function() {
@@ -227,7 +230,7 @@ define(function(require, exports, module) {
             }
         };
 
-        var chart = $p.plugin.echarts("my_chart", {
+        var chart = $p.echarts("my_chart", {
             type: "line",
             title: {
                 text: '数据分析',
@@ -267,7 +270,7 @@ define(function(require, exports, module) {
             },
             //点击面板的回调
             "callBackPanel": function(columnName, columnData, allDatas) {
-                $p.com.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
+                $p.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
                 chart.load(chartData[columnName]);
                 console.log(columnName);
                 console.log(columnData);
@@ -279,7 +282,7 @@ define(function(require, exports, module) {
             }
         };
 
-        summary = $p.plugin.summary("#summaryProTest", option);
+        summaryDemo = $p.summary("#summaryProTest", option);
     };
 
     module.exports = app;

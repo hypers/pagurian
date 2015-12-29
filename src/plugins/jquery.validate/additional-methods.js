@@ -938,7 +938,17 @@ define(function(require, exports, module) {
      */
     $.validator.addMethod("validString", function(value, element) {
         return this.optional(element) || /^[0-9A-Za-z\u3400-\u4DB5\u4E00-\u9FA5\u9FA6-\u9FBB\uF900-\uFA2D\uFA30-\uFA6A\uFA70-\uFAD9\uFF00-\uFFEF\u2E80-\u2EFF\u3000-\u303F\u31C0-\u31EF\`\ \~\!\@\$\#\%\^\&\(\)\-\_\=\+\[\{\]\}\'\,\.\·\…\“\‘\’\”\×\—]+$/.test(value);
-    }, "该字段包含非法字符");
+    }, $.validator.locale.special_char);
+
+    /**
+     * 自定义字符集
+     * 有效字符 ："数字 字母 - _ , "
+     */
+    $.validator.addMethod("validString2", function(value, element) {
+        return this.optional(element) || /^[0-9A-Za-z\-\_\,\ ]+$/.test(value);
+    }, $.validator.locale.special_char);
+
+
 
 
 });

@@ -1,0 +1,115 @@
+{{>fixtures/doctype}}
+
+<head>
+    <title>{{data.page.form}}</title>
+    {{>fixtures/head}}
+</head>
+
+<body>
+
+    {{>fixtures/header}}
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+
+        {{>fixtures/sidebar}}
+
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+
+            <div class="page-content">
+
+
+                {{>fixtures/theme-panel}}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            {{data.page.form}}
+                        </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="com-form.html" >样式</a>
+                                </li>
+                                <li>
+                                    <a href="com-form-validation.html" >验证</a>
+                                </li>
+                                <li >
+                                    <a href="com-form-val.html" >赋值</a>
+                                </li>
+                                <li class="active" >
+                                    <a href="com-form-fileupload.html" >文件上传</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="portlet box default ">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    文件上传
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <form action="#" id="form_sample_1" class="form-horizontal">
+                                    <div class="form-body">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">File
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="file" name="file" id="file" multiple="true" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="markdown">
+                        <h3>Javascript代码</h3>
+<pre><code class="javascript">
+$p.upload("#file", {
+    formData: {
+        "token": "abc"
+    },
+    uploader: '/src/plugins/uploadify/3.2.1/uploadify.php',
+    onUploadSuccess: function(file, data, response) {
+        console.log(file, data, response);
+    }
+});
+</code></pre>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+
+
+    {{>fixtures/footer}}
+    <script type="text/javascript">
+        pagurian.call("modules/form/app", function(app) {
+            app.page.fileUpload();
+        });
+    </script>
+
+    {{>fixtures/tracker}}
+</body>
+
+</html>

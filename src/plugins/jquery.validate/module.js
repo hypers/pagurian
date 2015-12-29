@@ -2,7 +2,7 @@ define(function(require, exports, module) {
     /*
      * Metadata - jQuery plugin for parsing metadata from elements
      *
-     * Copyright (c) 2006 John Resig, Yehuda Katz, J�örn Zaefferer, Paul McLanahan
+     * Copyright (c) 2006 John Resig, Yehuda Katz, Jörn Zaefferer, Paul McLanahan
      *
      * Dual licensed under the MIT and GPL licenses:
      *   http://www.opensource.org/licenses/mit-license.php
@@ -55,15 +55,19 @@ define(function(require, exports, module) {
      * @see metadata()
      */
 
-
     require('./jquery.validate');
+
+
+    var languages = {
+        zh_CN: require('./locale/zh_CN'),
+        en_US: require('./locale/en_US')
+    };
+    var locale = languages[$p.language || "zh_CN"];
+
+    jQuery.validator.locale = locale;
+
     require('./additional-methods');
-    var locale = {};
 
-    locale.zh_CN = require('./locale/zh_CN');
-    locale.en_US = require('./locale/en_US');
-
-    var active_locale = locale[pagurian.language || "zh_CN"];
 
     (function($) {
 
@@ -90,11 +94,11 @@ define(function(require, exports, module) {
 
                     data = "{}";
 
-                    if (settings.type == "class") {
+                    if (settings.type === "class") {
                         var m = settings.cre.exec(elem.className);
                         if (m)
                             data = m[1];
-                    } else if (settings.type == "elem") {
+                    } else if (settings.type === "elem") {
                         if (!elem.getElementsByTagName)
                             return undefined;
                         var e = elem.getElementsByTagName(settings.name);
@@ -133,23 +137,23 @@ define(function(require, exports, module) {
 
 
         jQuery.extend(jQuery.validator.messages, {
-            required: active_locale.required,
-            remote: active_locale.remote,
-            email: active_locale.email,
-            url: active_locale.url,
-            date: active_locale.date,
-            dateISO: active_locale.dateISO,
-            number: active_locale.number,
-            digits: active_locale.digits,
-            creditcard: active_locale.creditcard,
-            equalTo: active_locale.equalTo,
-            accept: active_locale.accept,
-            maxlength: jQuery.validator.format(active_locale.maxlength),
-            minlength: jQuery.validator.format(active_locale.minlength),
-            rangelength: jQuery.validator.format(active_locale.rangelength),
-            range: jQuery.validator.format(active_locale.range),
-            max: jQuery.validator.format(active_locale.max),
-            min: jQuery.validator.format(active_locale.min)
+            required: locale.required,
+            remote: locale.remote,
+            email: locale.email,
+            url: locale.url,
+            date: locale.date,
+            dateISO: locale.dateISO,
+            number: locale.number,
+            digits: locale.digits,
+            creditcard: locale.creditcard,
+            equalTo: locale.equalTo,
+            accept: locale.accept,
+            maxlength: jQuery.validator.format(locale.maxlength),
+            minlength: jQuery.validator.format(locale.minlength),
+            rangelength: jQuery.validator.format(locale.rangelength),
+            range: jQuery.validator.format(locale.range),
+            max: jQuery.validator.format(locale.max),
+            min: jQuery.validator.format(locale.min),
         });
 
 

@@ -18,9 +18,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].plugin.slider = function(seletor, options) {
-        var slider = new Slider(seletor, options);
-        return slider.init();
+    g[PagurianAlias].slider = function(seletor, options) {
+        return new Slider(seletor, options).init();
     };
 
 });

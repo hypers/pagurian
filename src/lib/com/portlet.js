@@ -58,9 +58,9 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].com.portlet = function(seletor, options) {
-        var obj = new Portlet(seletor, options);
-        return obj;
+    g[PagurianAlias].portlet = function(seletor, options) {
+        return new Portlet(seletor, options);
+        
     };
 
 });

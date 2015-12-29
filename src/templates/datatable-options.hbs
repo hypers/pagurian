@@ -1,7 +1,7 @@
 {{>fixtures/doctype}}
 
 <head>
-    <title>{{data.page.slider}}</title>
+    <title>{{data.page.datatables}}</title>
     {{>fixtures/head}}
     <style media="screen">
         .table-custom td div {
@@ -30,36 +30,41 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="page-title">
-                            {{data.page.slider}}
+                            {{data.page.datatables}}
                         </h3>
+
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="datatable.html">基础 </a>
+                                </li>
+                                <li>
+                                    <a href="datatable-extend.html">细分</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-summary.html">汇总</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-search.html" >搜索</a>
+                                </li>
+                                <li>
+                                    <a href="datatable-toolbar.html">工具栏</a>
+                                </li>
+                                <li class="active">
+                                    <a href="datatable-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="datatable.html">基础 </a>
-                        </li>
-                        <li>
-                            <a href="datatable-extend.html">细分</a>
-                        </li>
-                        <li>
-                            <a href="datatable-summary.html">汇总</a>
-                        </li>
-                        <li>
-                            <a href="datatable-search.html" >搜索</a>
-                        </li>
-                        <li class="active">
-                            <a href="datatable-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
 
                 <div class="row">
                     <div class="col-md-12">
 
                         <div class="markdown">
-                            <pre><code class="html">$p.plugin.dataTable(Seletor, Options);</code></pre>
+                            <pre><code class="html">$p.dataTable(Seletor, Options);</code></pre>
                         </div>
 
                     </div>

@@ -2,20 +2,20 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function URL() {
-        this.getParameter = function(paramName) {
+    g[PagurianAlias].url = {
+        getParameter: function(paramName) {
             var searchString = window.location.search.substring(1),
                 i, val, params = searchString.split("&");
 
             for (i = 0; i < params.length; i++) {
                 val = params[i].split("=");
-                if (val[0] == paramName) {
+                if (val[0] === paramName) {
                     return unescape(val[1]);
                 }
             }
             return null;
-        };
-        this.format = function(url) {
+        },
+        format: function(url) {
             if (!url) {
                 return "";
             }
@@ -23,30 +23,29 @@ define(function(require, exports, module) {
                 url = "http://" + url;
             }
             return url;
-        };
+        },
 
-        this.forward = function(url) {
+        forward: function(url) {
             setTimeout(function() {
                 window.location.href = url;
             }, 1000);
             return this;
-        };
+        },
 
         /**
          * [reload description]
          * @return {[type]} [description]
          */
-        this.reload = function() {
+        reload: function() {
             window.location.reload();
             return this;
-        };
-
+        },
         /**
          * [convertParams Object To URL Params]
          * @param  {[Object]} params
          * @return {[String]}
          */
-        this.convertParams = function(params) {
+        convertParams: function(params) {
             var str_params = "",
                 url_split = "";
             for (var i in params) {
@@ -65,12 +64,7 @@ define(function(require, exports, module) {
                 }
             }
             return str_params;
-        };
-    }
-
-
-    var url = new URL();
-
-    g[PagurianAlias].url = url;
+        }
+    };
 
 });

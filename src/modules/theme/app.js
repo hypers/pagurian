@@ -1,12 +1,12 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
-    var app = require('../../lib/app');
+    var app = require("../../lib/app");
     var model = require('./model');
 
     require('../../plugins/colorpicker/js/colorpicker');
 
-    app.page.color = function() {
-
+    app.page.color = function () {
+        _setMenuActive("Color");
         /*
          * Color utility functions
          * Source: http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
@@ -55,7 +55,7 @@ define(function(require, exports, module) {
                 hex: shadeColor(color, -0.5),
                 name: '@H900'
             }];
-        };
+        }
 
         function ColorPanel() {
 
@@ -64,36 +64,36 @@ define(function(require, exports, module) {
 
             this.element = $("<ul id='cl_" + id + "' class='panel_color'></ul>");
 
-            this.draw = function(color) {
+            this.draw = function (color) {
 
                 $("#panel_color_wrap").append(this.element);
                 var colors = computeColors(color),
                     i = 0,
                     element = this.element,
                     font_color = "#f5f5f5";
-                var timer = setInterval(function() {
+                var timer = setInterval(function () {
                     if (i === colors.length) {
                         clearInterval(timer);
                         return;
                     }
 
                     if (i >= 5) {
-                        font_color = "color:#fff"
-                    };
+                        font_color = "color:#fff";
+                    }
                     var item = $("<li style='display:none;background:" + colors[i].hex + ";" + font_color + "'>" + colors[i].name + ":" + colors[i].hex + ";</li>");
                     element.append(item);
                     i++;
                     item.slideDown();
                 }, 100);
-            }
+            };
         }
 
-        $("#btn_add_color").click(function() {
+        $("#btn_add_color").click(function () {
             var color = $("#txt_color").val();
             new ColorPanel().draw(color);
         });
 
-        var handleColorPicker = function() {
+        var handleColorPicker = function () {
             if (!jQuery().colorpicker) {
                 return;
             }
@@ -104,7 +104,6 @@ define(function(require, exports, module) {
         };
 
 
-
         new ColorPanel().draw("#1b9451");
         new ColorPanel().draw("#29a7e1");
         new ColorPanel().draw("#9c27b0");
@@ -112,8 +111,20 @@ define(function(require, exports, module) {
         handleColorPicker();
     };
 
-    app.page.buttons = function() {
+    app.page.buttons = function () {
+        _setMenuActive("Button");
+    };
 
+    /**
+     * 设置菜单选中
+     * @param menuName 菜单的data-id
+     * @private
+     */
+    var _setMenuActive = function (menuName) {
+        window.CONFIG = {
+            appId: menuName
+        };
+        app.init();
     };
 
     module.exports = app;

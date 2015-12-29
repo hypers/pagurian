@@ -32,28 +32,29 @@
                         <h3 class="page-title">
                             {{data.page.sizer}}
                         </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="sizer-single.html">单选 </a>
+                                </li>
+                                <li>
+                                    <a href="sizer-multiple.html">多选 </a>
+                                </li>
+                                <li class="active">
+                                    <a href="sizer-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="sizer-single.html">单选 </a>
-                        </li>
-                        <li>
-                            <a href="sizer-multiple.html">多选 </a>
-                        </li>
-                        <li class="active">
-                            <a href="sizer-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
+
 
                 <div class="row">
                     <div class="col-md-12">
 
                         <div class="markdown">
-                            <pre><code class="html">$p.plugin.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                            <pre><code class="html">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
                         </div>
 
                     </div>
@@ -67,8 +68,8 @@
                             <thead>
                                 <tr>
                                     <th width="200">参数</th>
-                                    <th width="400">默认值</th>
-                                    <th width="400">数据类型</th>
+                                    <th width="300">默认值</th>
+                                    <th width="300">数据类型</th>
                                     <th>描述</th>
                                 </tr>
                             </thead>
@@ -175,8 +176,8 @@
                             <thead>
                                 <tr>
                                     <th width="200">参数</th>
-                                    <th width="400">默认值</th>
-                                    <th width="400">数据类型</th>
+                                    <th width="300">默认值</th>
+                                    <th width="300">数据类型</th>
                                     <th>描述</th>
                                 </tr>
                             </thead>
@@ -212,8 +213,8 @@
                             <thead>
                                 <tr>
                                     <th width="200">参数</th>
-                                    <th width="400">默认值</th>
-                                    <th width="400">数据类型</th>
+                                    <th width="300">默认值</th>
+                                    <th width="300">数据类型</th>
                                     <th>描述</th>
                                 </tr>
                             </thead>
@@ -229,6 +230,43 @@
                                     <td>value</td>
                                     <td>string</td>
                                     <td>选项的值</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="row  clear">
+                    <div class="col-md-12">
+                        <h3>SelectDatas</h3>
+                        <hr>
+                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                            <thead>
+                                <tr>
+                                    <th width="200">参数</th>
+                                    <th width="300">默认值</th>
+                                    <th width="300">数据类型</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><mark>--</mark></td>
+                                    <td>--</td>
+                                    <td>array</td>
+                                    <td>
+                                        数据格式如下:
+                                     <pre>
+[{
+  "id": 4 //选中项的id
+  "name": "2.1.4" //此数据用于设置默认的选中文字，如需提示文字，则不需要此设置 仅在isMultiple为false时有效
+},
+...
+]
+                                     </pre>
+                                        如果<code>name</code>不为空则使用<code>name</code>的值覆盖原先按钮的提示问题
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -10,6 +10,20 @@
     margin-left: -190px;
     margin-top: -225px;
     background: none !important;
+
+    /***
+    修复chrome下记住密码导致文本框变成黄色的bug
+    ***/
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px white inset;
+        border: 1px solid #CCC !important;
+
+        &:focus{
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            border: 1px solid #CCC !important;
+        }
+    }
+
     .input-icon input {
         border: none;
         height: 40px;

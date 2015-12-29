@@ -25,22 +25,23 @@
                         <h3 class="page-title">
                             {{data.page.sizer}}
                         </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="sizer-single.html">单选 </a>
+                                </li>
+                                <li>
+                                    <a href="sizer-multiple.html">多选 </a>
+                                </li>
+                                <li>
+                                    <a href="sizer-options.html">参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="sizer-single.html">单选 </a>
-                        </li>
-                        <li>
-                            <a href="sizer-multiple.html">多选 </a>
-                        </li>
-                        <li>
-                            <a href="sizer-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
+
 
                 <div class="row clearfix">
                     <div class="col-md-12">
@@ -93,7 +94,7 @@ var selectDatas = [{
     }
 };
 
-var sizer = $p.plugin.sizer("#sizer-multiple", options,selectDatas);</code></pre>
+var sizer = $p.sizer("#sizer-multiple", options,selectDatas);</code></pre>
                             <h3>JSON 数据</h3>
                             <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
                         </div>

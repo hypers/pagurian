@@ -32,27 +32,28 @@
                         <h3 class="page-title">
                             {{data.page.summary}}
                         </h3>
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                    <li>
+                                        <a href="summary.html">基础</a>
+                                    </li>
+                                    <li>
+                                        <a href="summary-pro.html">高级</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="summary-options.html">参数说明</a>
+                                    </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                            <li>
-                                <a href="summary.html">基础</a>
-                            </li>
-                            <li>
-                                <a href="summary-pro.html">高级</a>
-                            </li>
-                            <li class="active">
-                                <a href="summary-options.html">参数说明</a>
-                            </li>
-                    </ul>
-                </div>
+
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="markdown">
-                            <pre><code class="html">$p.plugin.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                            <pre><code class="html">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
                         </div>
 
                     </div>
@@ -138,13 +139,13 @@
                                     <td>是否显示设置按钮</td>
                                 </tr>
                                 <tr>
-                                    <td><mark>dataSource</mark></td>
+                                    <td><mark>[dataSource]</mark></td>
                                     <td>--</td>
                                     <td>function</td>
                                     <td>一个方法，定义dataListview显示的数据源</td>
                                 </tr>
                                 <tr>
-                                    <td><mark>dataParams</mark></td>
+                                    <td><mark>[dataParams]</mark></td>
                                     <td>{}</td>
                                     <td>object</td>
                                     <td>设置自定义请求参数</td>

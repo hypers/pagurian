@@ -1,6 +1,9 @@
 /**
  * Created by hypers-godfery on 2015/10/14.
  * Update by hypers-godfery on 2015/11/23.
+ * Update by hypers-godfery on 2015/12/5.
+ * 1.增加了sizer组件对新数据的支持,(同时支持老数据)
+ * 2.修复了sizer组件单选情况下默认选中有选项，而按钮中的文字没有被选项name所覆盖的bug
  */
 define(function (require, exports, module) {
         var g = window,
@@ -16,11 +19,11 @@ define(function (require, exports, module) {
          * @param {[type]} chooseDatas [选中的选项]
          */
         function Sizer(selector, options, chooseDatas) {
-            var o = this,
+            var that = this,
                 _nameStr = "sizer",
                 _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //版本
-            this.version = "2015.11.23.1354";
+            this.version = "2015.12.05.23.01";
             //id
             this.sizerName = _nameStr + _id;
             //提示文字
@@ -79,25 +82,28 @@ define(function (require, exports, module) {
                 //仅isMultiple为true时有效
                 callbackSelectAll: null,//全选时的回调
                 callbackSubmit: null,//确认按钮回调
-                callbackCancel: null, //取消按钮回调
+                callbackCancel: null //取消按钮回调
             };
 
             //初始化组件
             var init = function () {
-                o.options = $.extend(o.options, options);
-                if (o.options.isMultiple) {
-                    o._tmpSelectDatas = [];//暂存数据
-                    o.isFirstClick = true;//是否为第一次点击
-                    o.isFirstSearch = true;//是否为第一次搜索
+                that.options = $.extend(that.options, options);
+                if (that.options.isMultiple) {
+                    that._tmpSelectDatas = [];//暂存数据
+                    that.isFirstClick = true;//是否为第一次点击
+                    that.isFirstSearch = true;//是否为第一次搜索
                 }
                 bindEvent(selector);
                 drawDom(selector);
-                o.promtText = $("#" + o.sizerName).find("button").attr("title");
-                if (o.options.isExpand) {
-                    o.expandPanel();
+                that.promtText = $("#" + that.sizerName).find("button").attr("title");
+                if (that.options.isExpand) {
+                    that.expandPanel();
                 }
                 if (chooseDatas) {
-                    o.selectDatas = chooseDatas;
+                    if (!that.options.isMultiple && chooseDatas[0][that.options.dataMapping.name]) {
+                        singleSetText(chooseDatas[0][that.options.dataMapping.name]);
+                    }
+                    that.selectDatas = chooseDatas;
                 }
             };
 
@@ -105,41 +111,41 @@ define(function (require, exports, module) {
             var drawDom = function (selector) {
                 var _sizerWrap = '',
                     _sizerSelectPanel = '';
-                _sizerWrap += '<div id="' + o.sizerName + '"class="sizer-wrap ' + o.options.style;
+                _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style;
                 //_sizerWrap += o.options.isExpand ? " sizer-open" : "";
                 _sizerWrap += '"></div>';
 
                 $(selector).wrap(_sizerWrap);
                 _sizerSelectPanel += '<div id="' + _nameStr + '_select_panel' + _id + '" class="sizer-select-panel ';
-                _sizerSelectPanel += o.options.isMultiple ? "sizer-multiple" : "";
+                _sizerSelectPanel += that.options.isMultiple ? "sizer-multiple" : "";
                 _sizerSelectPanel += '">';
                 _sizerSelectPanel += '    <div class="sizer-top">';
                 _sizerSelectPanel += '        <div class="sizer-search-wrap">';
                 _sizerSelectPanel += '            <div class="input-icon input-search">';
                 _sizerSelectPanel += '                <i class="fa fa-search"></i>';
-                _sizerSelectPanel += '                <input id="' + _nameStr + '_search' + _id + '" type="text" placeholder="' + o.options.search + '" class="form-control" maxlength="1024"/>';
+                _sizerSelectPanel += '                <input id="' + _nameStr + '_search' + _id + '" type="text" placeholder="' + that.options.search + '" class="form-control" maxlength="1024"/>';
                 _sizerSelectPanel += '            </div>';
                 _sizerSelectPanel += '            <label class="sizer-prompt">';
-                _sizerSelectPanel += o.options.isMultiple ? oLanguage.multiple : oLanguage.single;
+                _sizerSelectPanel += that.options.isMultiple ? oLanguage.multiple : oLanguage.single;
                 _sizerSelectPanel += '            </label>';
                 _sizerSelectPanel += '            <div class="sizer-btn-group">';
-                if (o.options.isMultiple) {
+                if (that.options.isMultiple) {
                     _sizerSelectPanel += '                <a href="javascript:;" id="' + _nameStr + '_selectAll' + _id + '">' + oLanguage.chooseAll + '</a>';
                 }
                 _sizerSelectPanel += '                <a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">';
-                _sizerSelectPanel += o.options.isMultiple ? oLanguage.clearMultiple : oLanguage.clearSingle;
+                _sizerSelectPanel += that.options.isMultiple ? oLanguage.clearMultiple : oLanguage.clearSingle;
                 _sizerSelectPanel += '                </a>';
                 _sizerSelectPanel += '            </div>';
                 _sizerSelectPanel += '        </div>';
                 _sizerSelectPanel += '        <div id="' + _nameStr + '_listwrap' + _id + '" class="sizer-list-wrap loading">';//scollbar
                 _sizerSelectPanel += '            <div class="sizer-loading">';
-                _sizerSelectPanel += o.options.processing;
+                _sizerSelectPanel += that.options.processing;
                 _sizerSelectPanel += '            </div>';
                 _sizerSelectPanel += '            <ul id="' + _nameStr + '_datalist' + _id + '" class="sizer-data-list">';
                 _sizerSelectPanel += '            </ul>';
                 _sizerSelectPanel += '        </div>';
                 _sizerSelectPanel += '    </div>';
-                if (o.options.isMultiple) {
+                if (that.options.isMultiple) {
                     _sizerSelectPanel += '    <div class="sizer-footer">';
                     _sizerSelectPanel += '        <button id="' + _nameStr + '_btnSubmit' + _id + '" class="btn btn-primary" type="button">' + oLanguage.btnSubmit + '</button>';
                     _sizerSelectPanel += '        <button id="' + _nameStr + '_btnCancel' + _id + '"  class="btn btn-default" type="button">' + oLanguage.btnCancel + '</button>';
@@ -147,7 +153,7 @@ define(function (require, exports, module) {
                 }
                 _sizerSelectPanel += '</div>';
                 $(selector).after(_sizerSelectPanel);
-                $("#" + _nameStr + '_select_panel' + _id).css(o.options.position);
+                $("#" + _nameStr + '_select_panel' + _id).css(that.options.position);
 
             };
 
@@ -157,16 +163,16 @@ define(function (require, exports, module) {
              * @param options
              */
             var bindEvent = function (selector) {
-                var _isMultiple = o.options.isMultiple;
+                var _isMultiple = that.options.isMultiple;
                 $(document).delegate(selector, 'click', function () {
-                    o.expandPanel();
+                    that.expandPanel();
                 });
 
                 //选项点击事件
-                $(document).delegate("#" + o.sizerName + " .sizer-data-list-li", 'click', function () {
-                    var _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
-                        _dataName = o.options.dataMapping.name,
-                        _dataValue = o.options.dataMapping.value,
+                $(document).delegate("#" + that.sizerName + " .sizer-data-list-li", 'click', function () {
+                    var _selectDatas = !that.options.isMultiple ? that.selectDatas : that._tmpSelectDatas,
+                        _dataName = that.options.dataMapping.name,
+                        _dataValue = that.options.dataMapping.value,
                         _data = {},
                         isSelect = $(this).hasClass("selected");
 
@@ -174,25 +180,27 @@ define(function (require, exports, module) {
                     _data[_dataValue] = $(this).data("value");
 
                     //单选
-                    if (!o.options.isMultiple) {
+                    if (!that.options.isMultiple) {
                         var _isSelected = $(this).hasClass("selected");
-                        $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
+                        $("#" + that.sizerName + " .sizer-data-list-li").removeClass("selected");
                         _selectDatas = [];
                         if (!_isSelected) {
                             $(this).addClass("selected");
                         }
                         _selectDatas.push(_data);
                         singleSetText(_data[_dataName]);
-                        o.selectDatas = _selectDatas;
-                        o.options.callbackOption && o.options.callbackOption(_data, isSelect);
+                        that.selectDatas = _selectDatas;
+                        if ($.isFunction(that.options.callbackOption)) {
+                            that.options.callbackOption(_data, isSelect);
+                        }
                         closePanel(true);
                     }
 
                     //多选
-                    if (o.options.isMultiple) {
-                        if (o.isFirstClick) {
-                            _selectDatas = _selectDatas.concat(o.selectDatas);
-                            o.isFirstClick = false;
+                    if (that.options.isMultiple) {
+                        if (that.isFirstClick) {
+                            _selectDatas = _selectDatas.concat(that.selectDatas);
+                            that.isFirstClick = false;
                         }
                         _selectDatas = uniqueDatas(_selectDatas);
                         if (!isSelect) { //添加选项
@@ -203,8 +211,10 @@ define(function (require, exports, module) {
                             $(this).removeClass("selected");
                             _selectDatas = removeData(_data, _selectDatas);
                         }
-                        o._tmpSelectDatas = _selectDatas;
-                        o.options.callbackOption && o.options.callbackOption(_data, isSelect);
+                        that._tmpSelectDatas = _selectDatas;
+                        if ($.isFunction(that.options.callbackOption)) {
+                            that.options.callbackOption(_data, isSelect);
+                        }
                     }
 
                     //去重
@@ -239,35 +249,43 @@ define(function (require, exports, module) {
                 //搜索框事件
                 $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (e) {
                     var resultDatas = searchData($(this).val());
-                    o.options.callbackSearch && o.options.callbackSearch(resultDatas);
+                    if ($.isFunction(that.options.callbackSearch)) {
+                        that.options.callbackSearch(resultDatas);
+                    }
                 });
 
                 //多选筛选器独有事件
                 if (_isMultiple) {
                     //全选
                     $(document).delegate("#" + _nameStr + '_selectAll' + _id, 'click', function () {
-                        if (o.isFirstClick) {
-                            o.isFirstClick = false;
+                        if (that.isFirstClick) {
+                            that.isFirstClick = false;
                         }
-                        var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
+                        var $dataLis = $("#" + that.sizerName + " .sizer-data-list-li");
                         $dataLis.each(function () {
                             if (!$(this).hasClass("selected")) {
                                 $(this).click();
                             }
                         });
-                        o.options.callbackSelectAll && o.options.callbackSelectAll(o._tmpSelectDatas);
+                        if ($.isFunction(that.options.callbackSelectAll)) {
+                            that.options.callbackSelectAll(that._tmpSelectDatas);
+                        }
                     });
 
                     //确定
                     $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
-                        o.selectDatas = o._tmpSelectDatas;
-                        o.options.callbackSubmit && o.options.callbackSubmit(o.selectDatas, o.allDatas);
+                        that.selectDatas = that._tmpSelectDatas;
+                        if ($.isFunction(that.options.callbackSubmit)) {
+                            that.options.callbackSubmit();
+                        }
                         closePanel(true);
                     });
 
                     //取消
                     $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
-                        o.options.callbackCancel && o.options.callbackCancel();
+                        if ($.isFunction(that.options.callbackCancel)) {
+                            that.options.callbackCancel();
+                        }
                         closePanel(true);
                     });
                 }
@@ -277,27 +295,27 @@ define(function (require, exports, module) {
              * 关闭面板
              */
             var closePanel = function (isCallBack) {
-                var $sizerWrap = $("#" + o.sizerName);
+                var $sizerWrap = $("#" + that.sizerName);
                 $sizerWrap.removeClass("sizer-open");
-                if (o.options.isMultiple) {
-                    o._tmpSelectDatas = [];
-                    o.isFirstClick = true;
-                    o.isFirstSearch = true;
+                if (that.options.isMultiple) {
+                    that._tmpSelectDatas = [];
+                    that.isFirstClick = true;
+                    that.isFirstSearch = true;
                 }
                 $("#" + _nameStr + '_search' + _id).val("");
                 searchData("");
-
-                isCallBack && o.options.callbackClose && o.options.callbackClose(o.selectDatas, o.allDatas);
-
+                if (isCallBack && $.isFunction(that.options.callbackClose)) {
+                    that.options.callbackClose(that.selectDatas, that.allDatas);
+                }
             };
 
             /**
              * 为单选按钮设置文字
-             * @param text
+             * @param text 需要设置的文字
              */
             var singleSetText = function (text) {
-                $("#" + o.sizerName).find("span.sizer-btn-text").empty().append(text);
-                $("#" + o.sizerName).find("button").attr("title", text);
+                $("#" + that.sizerName).find("span.sizer-btn-text").empty().append(text);
+                $("#" + that.sizerName).find("button").attr("title", text);
             };
 
             /**
@@ -318,14 +336,17 @@ define(function (require, exports, module) {
                     //选中默认选中项
                     if (chooseDatas) {
                         for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
-                            if (allDatas[i][o.options.dataMapping.value] === chooseDatas[j][o.options.dataMapping.value]) {
+                            if (allDatas[i][that.options.dataMapping.value] === chooseDatas[j][that.options.dataMapping.value]) {
                                 _tpl += 'selected ';
+                                /*if(!o.options.isMultiple){
+                                 singleSetText(allDatas[i][o.options.dataMapping.name]);
+                                 }*/
                             }
                         }
                     }
                     _tpl += ((i + 1) % 4 === 0 ? 'mr-n"' : '"');
-                    _tpl += 'title="' + allDatas[i][o.options.dataMapping.name] + '" data-value="' + allDatas[i][o.options.dataMapping.value] + '">';
-                    _tpl += '<a href="javascript:;">' + allDatas[i][o.options.dataMapping.name] + '</a></li>';
+                    _tpl += 'title="' + allDatas[i][that.options.dataMapping.name] + '" data-value="' + allDatas[i][that.options.dataMapping.value] + '">';
+                    _tpl += '<a href="javascript:;">' + allDatas[i][that.options.dataMapping.name] + '</a></li>';
                     $dataList.append(_tpl);
                 }
             };
@@ -334,28 +355,25 @@ define(function (require, exports, module) {
              * 打开面板
              */
             this.expandPanel = function () {
-                var $sizerWrap = $("#" + o.sizerName),
+                var $sizerWrap = $("#" + that.sizerName),
                     _isExpand = $sizerWrap.hasClass("sizer-open");
                 //关闭所有已展开的面板
                 $('[id^="' + _nameStr + '"].sizer-wrap').removeClass("sizer-open");
                 //判断是否展开如果展开则关闭
                 if (_isExpand) {
+                    //关闭面板时执行的方法
                     $sizerWrap.removeClass("sizer-open");
-                } else {
-                    $sizerWrap.addClass("sizer-open");
+                    closePanel(true);
+                    return this;
                 }
                 //打开面板时执行的方法
-                if (!_isExpand) {
-                    if (o.needLoad) {
-                        o.loadData();
-                    }
-                    o.options.callbackExpand && o.options.callbackExpand(o.selectDatas);
+                $sizerWrap.addClass("sizer-open");
+                if (that.needLoad) {
+                    that.loadData();
                 }
-                //关闭面板时执行的方法
-                if (_isExpand) {
-                    closePanel(true);
+                if ($.isFunction(that.options.callbackExpand)) {
+                    that.options.callbackExpand(that.selectDatas);
                 }
-
                 return this;
             };
 
@@ -364,16 +382,17 @@ define(function (require, exports, module) {
              */
             this.loadData = function () {
                 var $listWrap = $("#" + _nameStr + "_listwrap" + _id);
-                o.params = o.options.dataParams;
-                o.options.dataSource(o.options.dataParams, function (resp) {
+                that.params = that.options.dataParams;
+                that.options.dataSource(that.options.dataParams, function (resp) {
                     if ($listWrap.hasClass("loading")) {
                         $listWrap.removeClass("loading");
                     }
-                    var _datas = resp.result || [];
-                    o.allDatas = _datas;
+                    var _result = resp.result || {};
+                    var _datas = $.isArray(_result) ? _result : _result.items || [];
+                    that.allDatas = _datas;
                     chooseDatas = chooseDatas ? chooseDatas : [];
                     setData(_datas, chooseDatas);
-                    o.needLoad = false;
+                    that.needLoad = false;
                 });
                 return this;
             };
@@ -383,8 +402,14 @@ define(function (require, exports, module) {
              */
             this.update = function () {
                 cleanOption(false);
-                !o.options.isMultiple && singleSetText(o.promtText);
-                o.options.isMultiple && $("#" + o.sizerName).removeClass("sizer-open");
+                //多选
+                if (that.options.isMultiple) {
+                    $("#" + that.sizerName).removeClass("sizer-open");
+                    this.loadData();
+                    return this;
+                }
+                //单选
+                singleSetText(that.promtText);
                 this.loadData();
                 return this;
             };
@@ -395,29 +420,35 @@ define(function (require, exports, module) {
              */
             function cleanOption(isCallBackClose) {
                 //多选
-                if (o.options.isMultiple) {
-                    if (o.isFirstClick) {
-                        o.isFirstClick = false;
+                if (that.options.isMultiple) {
+                    if (that.isFirstClick) {
+                        that.isFirstClick = false;
                     }
-                    var $dataLis = $("#" + o.sizerName + " .sizer-data-list-li");
+                    var $dataLis = $("#" + that.sizerName + " .sizer-data-list-li");
                     $dataLis.each(function () {
                         if ($(this).hasClass("selected")) {
                             $(this).click();
                         }
                     });
+
                     if (!isCallBackClose) {
                         closePanel(isCallBackClose);
-                    } else {
-                        o.options.callbackClean && o.options.callbackClean(o._tmpSelectDatas);
+                        return;
                     }
 
+                    if ($.isFunction(that.options.callbackClean)) {
+                        that.options.callbackClean(that._tmpSelectDatas);
+                    }
                 }
 
                 //单选
-                if (!o.options.isMultiple) {
-                    $("#" + o.sizerName + " .sizer-data-list-li").removeClass("selected");
-                    o.selectDatas = [];
-                    singleSetText(o.promtText);
+                if (!that.options.isMultiple) {
+                    $("#" + that.sizerName + " .sizer-data-list-li").removeClass("selected");
+                    that.selectDatas = [];
+                    singleSetText(that.promtText);
+                    if($.isFunction(that.options.callbackClean)){
+                        that.options.callbackClean(that._tmpSelectDatas);
+                    }
                     closePanel(isCallBackClose);
                 }
             }
@@ -430,21 +461,21 @@ define(function (require, exports, module) {
             function searchData(text) {
                 var word = text,
                     $dataList = $("#" + _nameStr + "_datalist" + _id).empty(),
-                    _datas = o.allDatas,
+                    _datas = that.allDatas,
                     _tempDatas = [],
-                    _selectDatas = !o.options.isMultiple ? o.selectDatas : o._tmpSelectDatas,
+                    _selectDatas = !that.options.isMultiple ? that.selectDatas : that._tmpSelectDatas,
                     _tempSelectDatas = [];
-                if (o.isFirstSearch) {
-                    _selectDatas = _selectDatas.concat(o.selectDatas);
+                if (that.isFirstSearch) {
+                    _selectDatas = _selectDatas.concat(that.selectDatas);
                 }
                 word = $.trim(word);
                 for (var i = 0, len = _datas.length; i < len; i++) {
-                    if (_datas[i][o.options.dataMapping.name].indexOf(word) <= -1) {
+                    if (_datas[i][that.options.dataMapping.name].indexOf(word) <= -1) {
                         continue;
                     }
                     _tempDatas.push(_datas[i]);
                     for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                        if (_datas[i][o.options.dataMapping.value] === _selectDatas[j][o.options.dataMapping.value]) {
+                        if (_datas[i][that.options.dataMapping.value] === _selectDatas[j][that.options.dataMapping.value]) {
                             _tempSelectDatas.push(_datas[i]);
                         }
                     }
@@ -462,7 +493,7 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          * @param {[type]} chooseDatas [选中的选项]
          */
-        g[PagurianAlias].plugin.sizer = function (seletor, options, chooseDatas) {
+        g[PagurianAlias].sizer = function (seletor, options, chooseDatas) {
             var sizer = new Sizer(seletor, options, chooseDatas);
             return sizer;
         };
