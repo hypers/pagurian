@@ -76,13 +76,11 @@ define(function(require, exports, module) {
             submit: function(modal, data, params) {
                 //更新用户信息
                 model.update(params.id, data, function(resp, valid) {
-
-                    modal.complete(resp, valid);
-
                     if (valid) {
                         $p.alert(resp.message);
                         modal.hide();
                     }
+                    modal.complete();
                 });
             }
         });
@@ -102,11 +100,11 @@ define(function(require, exports, module) {
      * @param menuName 菜单的data-id
      * @private
      */
-    var _setMenuActive = function(menuName){
+    var _setMenuActive = function(menuName) {
         window.CONFIG = {
             appId: menuName
         };
-        app.init();
+        app.activateCurrentMenu();
     };
 
     module.exports = app;

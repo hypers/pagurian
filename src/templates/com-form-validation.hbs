@@ -39,52 +39,55 @@
                            <li >
                                <a href="com-form-fileupload.html" >文件上传</a>
                            </li>
+                           <li>
+                               <a href="com-form-submit.html">提交</a>
+                           </li>
                         </ul>
                     </div>
                 </div>
             </div>
-
-
-
-
 
             <div class="row">
 
                 <div class="col-md-12 ">
 
                     <div class="portlet box default ">
-
-                        <div class="portlet-body form">
-                            <form action="#" id="form_sample_1" class="form-horizontal">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                表单验证
+                            </div>
+                        </div>
+                        <div class="portlet-body form form-page">
+                            <form action="#" id="form_sample_1" >
                                 <div class="form-body">
 
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Name
+                                        <label class="control-label">Name
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input type="text" name="name" data-required="1" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Email
+                                        <label class="control-label">Email
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input name="email" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">URL
+                                        <label class="control-label">URL
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input name="url" type="text" class="form-control"/>
                                             <span class="help-block">
                                                 e.g: http://www.demo.com or http://demo.com
@@ -92,32 +95,32 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Number
+                                        <label class="control-label">Number
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input name="number" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Digits
+                                        <label class="control-label">Digits
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input name="digits" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Credit Card
+                                        <label class="control-label">Credit Card
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <input name="creditcard" type="text" class="form-control"/>
                                             <span class="help-block">
                                                 e.g: 5500 0000 0000 0004
@@ -125,8 +128,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Occupation&nbsp;&nbsp;</label>
-                                        <div class="col-md-4">
+                                        <label class="control-label">Occupation&nbsp;&nbsp;</label>
+                                        <div>
                                             <input name="occupation" type="text" class="form-control"/>
                                             <span class="help-block">
                                                 optional field
@@ -134,12 +137,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label col-md-3">Category
+                                        <label class="control-label">Category
                                         <span class="required">
                                             *
                                         </span>
                                         </label>
-                                        <div class="col-md-4">
+                                        <div>
                                             <select class="form-control" name="category" class="select2me">
                                                 <option value="">Select...</option>
                                                 <option value="Category 1">Category 1</option>
@@ -150,11 +153,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-actions fluid">
-                                    <div class="col-md-offset-3 col-md-9">
-                                        <button type="submit" class="btn green">Submit</button>
-                                        <button type="button" class="btn default">Cancel</button>
-                                    </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn green">Submit</button>
+                                    <button type="button" class="btn default">Cancel</button>
                                 </div>
                             </form>
                         </div>
@@ -172,7 +173,6 @@
                         <h3>Javascript代码</h3>
                         <pre><code class="javascript">
 require('../../plugins/jquery.validate/module');
-
 $p.form("#form_sample_1", {
     validate: {
         rules: {
@@ -207,14 +207,10 @@ $p.form("#form_sample_1", {
                 required: true
             }
         },
-        custom: function(form, data) {
+        //自定义验证
+        custom: function (form, data) {
             return true;
         }
-    },
-    submit: function(form, data) {
-        model.add(data, function(resp) {
-            $p.alert(resp.message);
-        })
     }
 });
 

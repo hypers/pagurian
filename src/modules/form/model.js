@@ -9,7 +9,7 @@ define(function(require, exports, module) {
     function Model() {
 
         this.add = function(params, callback) {
-            service.get(api.succeed, params, callback);
+            service.post(api.succeed, params, callback);
             return this;
         };
 

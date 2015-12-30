@@ -36,13 +36,13 @@
                                 <li>
                                     <a href="com-form-validation.html">验证</a>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <a href="com-form-val.html">赋值</a>
                                 </li>
                                 <li>
                                     <a href="com-form-fileupload.html">文件上传</a>
                                 </li>
-                                <li>
+                                <li class="active">
                                     <a href="com-form-submit.html">提交</a>
                                 </li>
                             </ul>
@@ -59,7 +59,7 @@
                         <div class="portlet box default ">
                             <div class="portlet-title">
                                 <div class="caption">
-                                    表单赋值
+                                    表单提交
                                 </div>
                             </div>
                             <div class="portlet-body form form-page">
@@ -109,6 +109,7 @@
                                                     <input type="radio" name="radio" value="3"> Option 3
                                                 </label>
                                             </div>
+                                            <span for="radio"  class="help-block"></span>
                                         </div>
 
                                         <div class="form-group">
@@ -124,9 +125,13 @@
                                                     <input type="checkbox" name="checkbox" value="3" /> Checkbox 3
                                                 </label>
                                             </div>
+                                            <span for="checkbox"  class="help-block"></span>
                                         </div>
                                     </div>
-
+                                    <div class="form-actions">
+                                        <button type="button" id="btn_submit" class="btn green">Submit</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -134,18 +139,69 @@
                         <div class="markdown">
                             <h3>Javascript代码</h3>
 <pre><code class="javascript">
-$p.form("#form_sample_1").val({
-    text: "This is text",
-    textarea: "This is Textarea",
-    select: 2,
-    radio: 2,
-    checkbox: [2, 3]
+$p.com.form("#form_sample_1", {
+    //表单验证
+    validate: {
+        rules: {
+            text: {
+                maxlength: 128,
+                required: true,
+                validString: true
+            },
+            radio: {
+                required: true
+            },
+            checkbox: {
+                required: true
+            }
+        },
+        //自定义验证
+        custom: function(data, form) {
+            $p.log("自定义验证");
+            return true;
+        }
+    },
+    //提交按钮
+    submitButton: "#btn_submit",
+    //提交接口
+    submitModelEvent: model.add,
+    //接口参数
+    submitModelParams: function(params, callback) {
+        //新增参数项，回调函数
+        return [params, callback];
+    },
+    //数据格式化
+    submitDataFormat: function(data, form) {
+        var _data = [];
+        //格式化后的数据
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].name == 'checkbox') {
+                _data.push({
+                    name: "checkboxes",
+                    value: {
+                        id: data[i].value,
+                        title: data[i].name
+                    }
+                });
+                continue;
+            }
+            _data.push(data[i]);
+        }
+        return _data;
+    },
+    //提交成功
+    submitSuccess: function(resp, valid) {
+        $p.alert(resp.message);
+    },
+    //提交失败
+    submitError: function(resp, valid) {
+        $p.alert(resp.message, "error");
+    }
 });
 </code></pre>
                         </div>
                     </div>
                 </div>
-
 
 
             </div>
@@ -158,7 +214,7 @@ $p.form("#form_sample_1").val({
     {{>fixtures/footer}}
     <script type="text/javascript">
         pagurian.call("modules/form/app", function(app) {
-            app.page.val();
+            app.page.submit();
         });
     </script>
 

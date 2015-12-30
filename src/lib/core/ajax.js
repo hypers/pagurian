@@ -169,9 +169,8 @@ define(function(require, exports, module) {
             };
 
             if (this.bundle) {
-
                 options.contentType = "application/json";
-                if (type === "post" || type === "put" || type === "patch") {
+                if ($.inArray(type, ["post", "put", "patch"]) > -1) {
                     data = $.toJSON({
                         data: arrayToObject(data)
                     });
