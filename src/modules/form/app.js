@@ -119,7 +119,10 @@ define(function(require, exports, module) {
                             value: {
                                 id: data[i].value,
                                 title: data[i].name
-                            }
+                            },
+                            //当checkbox只选中一项的时候,提交的时候会当做Object{}处理
+                            //属性type: "array",是为了让该字段当做Array[]处理
+                            type: "array"
                         });
                         continue;
                     }
