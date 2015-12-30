@@ -162,7 +162,7 @@ define({
     "geo.country.trinidad_and_tobago": "Trinidad and Tobago",
     "geo.country.tunisia": "Tunisia",
     "geo.country.turkey": "Turkey",
-    "geo.country.united_republic_of_tanzania": "Tanzania",
+    "geo.country.united_republic_of_tanzania": "United Republic of Tanzania",
     "geo.country.uganda": "Uganda",
     "geo.country.ukraine": "Ukraine",
     "geo.country.uruguay": "Uruguay",

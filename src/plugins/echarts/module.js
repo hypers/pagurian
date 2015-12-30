@@ -12,8 +12,6 @@ define(function(require, exports, module) {
     var lang = pagurian.language || "zh_CN";
     var locale = languages[lang];
 
-    var cities;
-
     var chartOptions = {
         line: require('./chart/line'),
         pie: require('./chart/pie'),
@@ -53,15 +51,19 @@ define(function(require, exports, module) {
             }
 
             $.extend(true, this.options, options);
-            this.id = seletor;
-            this.chart = echarts.init(document.getElementById(seletor));
+
+            this.echarts = echarts.init(document.getElementById(seletor));
+            this.container = $("#" + seletor);
             this.showLoading();
+
+            //兼容老的版本
+            this.chart = this.echarts;
 
             return this;
         };
 
         this.showLoading = function(effect) {
-            this.chart.showLoading({
+            this.echarts.showLoading({
                 effect: effect || "spin",
                 textStyle: {
                     color: "#fff"
@@ -75,45 +77,41 @@ define(function(require, exports, module) {
         };
 
         this.hideLoading = function() {
-            this.chart.hideLoading();
+            this.echarts.hideLoading();
+            this.container.find(".chart-message").remove();
             return this;
         };
 
         this.message = function(status, message) {
 
             this.hideLoading();
-            this.chart.clear();
-            var icon = "icon-info icon-big";
-            var msg = message || locale.empty;
+            this.echarts.clear();
+
+            var icon = "icon-info icon-big"; //显示图标
+            var text = message || locale.empty; //显示文本
 
             if (status === "timeout") {
+                //超时显示内容
                 icon = "icon-exclamation-circle icon-big red";
-                msg += "<br/><a class='btn btn-default' id='btn_reload'>" + locale.search_reset + "</a>";
+                text += $p.str.format("<br/><a class='btn btn-default'>{0}</a>", locale.search_reset);
             } else if (status === "error") {
+                //出错显示内容
                 icon = "icon-exclamation-circle icon-big red";
             }
 
-            if ($("#" + seletor + ".chart-message").length > 0) {
-                $(".chart-message").html("<h3><i class='icon " + icon + "' ></i> " + msg + "</h3>");
-                return;
-            }
-
-            $("#" + this.id).append("<div class='chart-message'><h3><i class='icon " + icon + "' ></i> " + msg + "</h3></div>");
-
+            this.container.append($p.str.format("<div class='chart-message'><h3><i class='icon {0}' ></i> {1}</h3></div>", icon, text));
             return this;
         };
 
 
         this.load = function(data, options) {
-            $("#" + seletor + " .chart-message").remove();
 
             //如果没有 type 参数，
             //则直接setOption 采用Echart自己的参数
             if (!this.options.type) {
-                this.chart.hideLoading();
-                this.chart.clear();
-                $.extend(true, this.options, data);
-                this.chart.setOption(this.options);
+                this.echarts.hideLoading();
+                this.echarts.clear();
+                this.echarts.setOption($.extend(true, {}, this.options, data));
                 return;
             }
 
@@ -128,8 +126,8 @@ define(function(require, exports, module) {
             }
 
             this.hideLoading();
-            this.chart.clear();
-            this.chart.setOption(options_all);
+            this.echarts.clear();
+            this.echarts.setOption(options_all);
 
             return this;
         };
@@ -141,7 +139,7 @@ define(function(require, exports, module) {
          * @param {Object} eventListener 事件响应函数
          */
         this.on = function(eventName, eventListener) {
-            this.chart.on(eventName, eventListener);
+            this.echarts.on(eventName, eventListener);
             return this;
         };
 
@@ -150,7 +148,7 @@ define(function(require, exports, module) {
          * @param {Object} options
          */
         this.set = function(options) {
-            this.chart.setOption($.extend(true, options_all, options), true);
+            this.echarts.setOption($.extend(true, options_all, options), true);
         };
 
         /**

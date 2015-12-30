@@ -131,7 +131,6 @@ define(function(require, exports, module) {
             }]
         });
 
-
     };
 
     app.events.resize = function() {

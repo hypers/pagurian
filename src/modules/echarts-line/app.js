@@ -1,11 +1,11 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     window.CONFIG = {
         appId: "Echarts 折线图"
     };
     var app = require("../../lib/app");
     require("../../plugins/echarts/module");
     var chart = {};
-    app.page.line = function () {
+    app.page.line = function() {
 
         chart = $p.echarts("my_chart", {
             type: "line",
@@ -39,7 +39,7 @@ define(function (require, exports, module) {
 
     };
 
-    app.page.stack = function () {
+    app.page.stack = function() {
 
 
         chart = $p.echarts("my_chart", {
@@ -74,7 +74,7 @@ define(function (require, exports, module) {
 
     };
 
-    app.page.areaStack = function () {
+    app.page.areaStack = function() {
 
 
         chart = $p.echarts("my_chart", {
@@ -137,7 +137,7 @@ define(function (require, exports, module) {
 
     };
 
-    app.events.resize = function () {
+    app.events.resize = function() {
         if (chart.chart && "function" === typeof chart.chart.resize) {
             chart.chart.resize();
         }
