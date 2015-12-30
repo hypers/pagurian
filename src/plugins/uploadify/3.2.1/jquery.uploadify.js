@@ -1572,7 +1572,7 @@ define(function(require, exports, module) {
                                     swfuploadify.cancelUpload($(this).attr('id'));
                                 }
                                 $(this).find('.data').removeClass('data').html(' - ' + locale.cancelled);
-                                $(this).find('.uploadify-progress-bar').remove();
+                                $(this).find('.uploadify-progress-bar').addClass("error");
                                 $(this).delay(1000 + 100 * delay).fadeOut(500, function() {
                                     $(this).remove();
                                 });
@@ -1585,7 +1585,7 @@ define(function(require, exports, module) {
                             for (var n = 0; n < args.length; n++) {
                                 swfuploadify.cancelUpload(args[n]);
                                 $('#' + args[n]).find('.data').removeClass('data').html(' - ' + locale.cancelled);
-                                $('#' + args[n]).find('.uploadify-progress-bar').remove();
+                                $('#' + args[n]).find('.uploadify-progress-bar').addClass("error");
                                 $('#' + args[n]).delay(1000 + 100 * n).fadeOut(500, function() {
                                     $(this).remove();
                                 });
