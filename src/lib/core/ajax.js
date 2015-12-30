@@ -8,7 +8,11 @@ define(function(require, exports, module) {
 
 
 
-
+    /**
+     * [{name:"username",value:"foobar"}]
+     * To
+     * {username:"foobar"}
+     */
     function arrayToObject(arr) {
 
         if ($.isPlainObject(arr)) {
@@ -19,6 +23,13 @@ define(function(require, exports, module) {
             format_obj = {};
 
         for (var i = 0; i < arr.length; i++) {
+
+            /**
+             * 但数组中的name出现重复的时候，则由一个数组存多个值
+             * {name:"a",value:1},{name:"a",value:2}
+             * To
+             * {a:[1,2]}
+             */
             if (obj[arr[i].name]) {
                 var _t = obj[arr[i].name];
                 if (!$.isArray(obj[arr[i].name])) {
@@ -27,10 +38,13 @@ define(function(require, exports, module) {
                 obj[arr[i].name].push(arr[i].value);
                 continue;
             }
+
+            //当不存在重复的name,需要已数组的方式传递，需要添加type="array"
             if (arr[i].type === "array") {
                 obj[arr[i].name] = [arr[i].value];
                 continue;
             }
+
             obj[arr[i].name] = arr[i].value;
         }
 
@@ -46,23 +60,20 @@ define(function(require, exports, module) {
             if (a.length > 1) {
 
                 if ($.isArray(_value)) {
-
                     format_obj[a[0]] = format_obj[a[0]] || [];
-
                     for (var j = 0, _v; j < _value.length; j++) {
                         _v = {};
                         _v[a[1]] = _value[j];
                         format_obj[a[0]].push(_v);
                     }
-
                     continue;
                 }
 
                 format_obj[a[0]] = format_obj[a[0]] || {};
                 format_obj[a[0]][a[1]] = _value;
-
                 continue;
             }
+
             format_obj[k] = _value;
         }
 
@@ -192,11 +203,9 @@ define(function(require, exports, module) {
             }
 
             options.data = data;
-
             $.ajax(options);
 
             return this;
-
         },
         request: function(type, url, params, callback) {
             this.send(type, url, params, callback);
