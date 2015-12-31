@@ -116,7 +116,7 @@ define(function(require, exports, module) {
                     //如果值是数组，在配置数组中的每个值 [xxx,yyy,zzz]
                     if ($.isArray(value)) {
                         for (var i = 0; i < value.length; i++) {
-                            if ($that.val() == value[i].toString()) {
+                            if ($that.val() === value[i].toString()) {
                                 checked = true;
                             }
                         }

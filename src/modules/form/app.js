@@ -113,7 +113,7 @@ define(function(require, exports, module) {
                 for (var i = 0; i < data.length; i++) {
 
                     //name 为checkbox的值，修改为checkboxes
-                    if (data[i].name == 'checkbox') {
+                    if (data[i].name === 'checkbox') {
                         _data.push({
                             name: "checkboxes",
                             value: {
