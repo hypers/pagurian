@@ -53,7 +53,7 @@ define({
     "geo.country.ethiopia": "Ethiopia",
     "geo.country.finland": "Finland",
     "geo.country.fiji": "Fiji",
-    "geo.country.falkland_islands": "Falkland Islands(Islas Malvinas)",
+    "geo.country.falkland_islands": "Falkland Islands",
     "geo.country.france": "France",
     "geo.country.gabon": "Gabon",
     "geo.country.united_kingdom": "United Kingdom",
