@@ -6,7 +6,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 
 // Define a destination
-$targetFolder = '/'; // Relative to the root
+$targetFolder = '/dist/'; // Relative to the root
 
 if (!empty($_FILES) && $_POST['token'] == "abc") {
 	$tempFile = $_FILES['Filedata']['tmp_name'];

@@ -945,7 +945,7 @@ define(function(require, exports, module) {
      * 有效字符 ："数字 字母 - _ , "
      */
     $.validator.addMethod("validString2", function(value, element) {
-        return this.optional(element) || /^[0-9A-Za-z\-\_\,]+$/.test(value);
+        return this.optional(element) || /^[0-9A-Za-z\-\_\,\ ]+$/.test(value);
     }, $.validator.locale.special_char);
 
 

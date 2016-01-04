@@ -1,5 +1,7 @@
 define(function(require, exports, module) {
-
+    window.CONFIG = {
+        appId: "DataTables"
+    };
     var app = require("../../lib/app");
     var model = require('./model');
 

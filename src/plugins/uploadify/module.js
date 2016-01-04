@@ -33,6 +33,14 @@ define(function(require, exports, module) {
             },
             onError: function(errorType) {
                 $p.log(errorType);
+            },
+            /**
+             * 新增的一个onRemove事件
+             * 和onCancel不同点在于:onCancel上次文件的过程中(未完成上次)的时候触发，
+             * onRemove不管是上次过程中还是已经上次完成，只有点击了删除按钮都会触发。
+             */
+            onRemove: function(file) {
+                $p.log(file + " has been removed");
             }
         };
 

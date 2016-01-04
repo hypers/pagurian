@@ -89,6 +89,12 @@ define(function(require, exports, module) {
     var app = {
         page: {},
         events: {},
+        updateUniform: function() {
+            layout.updateUniform();
+        },
+        activateCurrentMenu: function() {
+            layout.activateCurrentMenu();
+        },
         init: function() {
 
             //版本兼容处理
@@ -97,6 +103,7 @@ define(function(require, exports, module) {
             //初始化页面布局
             layout.init();
             layout.custom();
+            layout.activateCurrentMenu();
             layout.resize(function() {
                 if (app.events.resize && "function" === typeof app.events.resize) {
                     app.events.resize();

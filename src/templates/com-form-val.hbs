@@ -27,26 +27,30 @@
                         <h3 class="page-title">
                             {{data.page.form}}
                         </h3>
+
+                        <div class="tabs-wrap">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a href="com-form.html">样式</a>
+                                </li>
+                                <li>
+                                    <a href="com-form-validation.html">验证</a>
+                                </li>
+                                <li class="active">
+                                    <a href="com-form-val.html">赋值</a>
+                                </li>
+                                <li>
+                                    <a href="com-form-fileupload.html">文件上传</a>
+                                </li>
+                                <li>
+                                    <a href="com-form-submit.html">提交</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="com-form.html" >样式</a>
-                        </li>
-                        <li>
-                            <a href="com-form-validation.html" >验证</a>
-                        </li>
-                        <li  class="active">
-                            <a href="com-form-val.html" >赋值</a>
-                        </li>
-                        <li >
-                            <a href="com-form-fileupload.html" >文件上传</a>
-                        </li>
 
-                    </ul>
-                </div>
 
                 <div class="row">
 
@@ -58,65 +62,67 @@
                                     表单赋值
                                 </div>
                             </div>
-                            <div class="portlet-body form">
-                                <form action="#" id="form_sample_1" class="form-horizontal">
+                            <div class="portlet-body form form-page">
+                                <form action="#" id="form_sample_1">
                                     <div class="form-body">
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Text
-
+                                            <label>Text
                                             </label>
-                                            <div class="col-md-9">
+                                            <div>
                                                 <input type="text" name="text" data-required="1" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Textarea
+                                            <label>Textarea
 
                                             </label>
-                                            <div class="col-md-9">
+                                            <div>
                                                 <textarea name="textarea" class="form-control"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Select</label>
-                                            <div class="col-md-9">
-                                                <select name="select" class="form-control">
-                                                    <option value="">select...</option>
-                                                    <option value="1">一</option>
-                                                    <option value="2">二</option>
-                                                    <option value="3">三</option>
-                                                    <option value="4">四</option>
-                                                    <option value="6">五</option>
-                                                </select>
-                                            </div>
+                                            <label>Select</label>
+
+                                            <select name="select" class="form-control">
+                                                <option value="">select...</option>
+                                                <option value="1">一</option>
+                                                <option value="2">二</option>
+                                                <option value="3">三</option>
+                                                <option value="4">四</option>
+                                                <option value="6">五</option>
+                                            </select>
+
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Radio</label>
-                                            <div class="col-md-9 radio-list">
-                                                <label>
+                                            <label>Radio</label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
                                                     <input type="radio" name="radio" value="1"> Option 1
                                                 </label>
 
-                                                <label>
+                                                <label class="radio-inline">
                                                     <input type="radio" name="radio" value="2"> Option 2
                                                 </label>
 
-                                                <label>
+                                                <label class="radio-inline">
                                                     <input type="radio" name="radio" value="3"> Option 3
                                                 </label>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">Checkboxes</label>
-                                            <div class="col-md-9 checkbox-list">
-                                                <label>
-                                                    <input type="checkbox" name="checkbox" value="1"> Checkbox 1 </label>
-                                                <label>
-                                                    <input type="checkbox" name="checkbox" value="2"> Checkbox 2 </label>
-                                                <label>
-                                                    <input type="checkbox" name="checkbox" value="3"> Checkbox 3 </label>
+                                            <label>Checkboxes</label>
+                                            <div class="checkbox-list">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="checkbox" value="1" /> Checkbox 1
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="checkbox" value="2" /> Checkbox 2
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="checkbox" value="3" /> Checkbox 3
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -126,14 +132,14 @@
                         </div>
 
                         <div class="markdown">
-<h3>Javascript代码</h3>
+                            <h3>Javascript代码</h3>
 <pre><code class="javascript">
 $p.form("#form_sample_1").val({
     text: "This is text",
     textarea: "This is Textarea",
     select: 2,
     radio: 2,
-    checkbox: 2
+    checkbox: [2, 3]
 });
 </code></pre>
                         </div>

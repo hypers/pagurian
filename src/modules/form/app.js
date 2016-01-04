@@ -1,4 +1,7 @@
 define(function(require, exports, module) {
+    window.CONFIG = {
+        appId: "Form"
+    };
 
     var app = require("../../lib/app");
     var model = require('./model');
@@ -12,6 +15,7 @@ define(function(require, exports, module) {
 
     };
 
+    //表单验证
     app.page.validation = function() {
 
         $p.form("#form_sample_1", {
@@ -48,32 +52,101 @@ define(function(require, exports, module) {
                         required: true
                     }
                 },
+                //自定义验证
                 custom: function(form, data) {
                     return true;
                 }
-            },
-            submit: function(form, data) {
-                model.add(data, function(resp) {
-                    $p.alert(resp.message);
-                });
             }
         });
 
     };
 
+    //表单赋值
     app.page.val = function() {
-
         $p.form("#form_sample_1").val({
             text: "This is text",
             textarea: "This is Textarea",
             select: 2,
             radio: 2,
-            checkbox: 2
+            checkbox: [2, 3]
         });
+    };
+
+    //表单提交
+    app.page.submit = function() {
+
+        $p.com.form("#form_sample_1", {
+            //表单验证
+            validate: {
+                rules: {
+                    text: {
+                        maxlength: 128,
+                        required: true,
+                        validString: true
+                    },
+                    radio: {
+                        required: true
+                    },
+                    checkbox: {
+                        required: true
+                    }
+                },
+                //自定义验证
+                custom: function(data, form) {
+                    $p.log("自定义验证");
+                    return true;
+                }
+            },
+            //提交按钮
+            submitButton: "#btn_submit",
+            //提交接口
+            submitModelEvent: model.add,
+            //接口参数
+            submitModelParams: function(params, callback) {
+                //新增参数项，回调函数
+                return [params, callback];
+            },
+            //数据格式化
+            submitDataFormat: function(data, form) {
+                var _data = [];
+                //格式化后的数据
+                for (var i = 0; i < data.length; i++) {
+
+                    //name 为checkbox的值，修改为checkboxes
+                    if (data[i].name === 'checkbox') {
+                        _data.push({
+                            name: "checkboxes",
+                            value: {
+                                id: data[i].value,
+                                title: data[i].name
+                            },
+                            //当checkbox只选中一项的时候,提交的时候会当做Object{}处理
+                            //属性type: "array",是为了让该字段当做Array[]处理
+                            type: "array"
+                        });
+                        continue;
+                    }
+                    _data.push(data[i]);
+                }
+                return _data;
+            },
+            //提交成功
+            submitSuccess: function(resp, valid) {
+                $p.alert(resp.message);
+            },
+            //提交失败
+            submitError: function(resp, valid) {
+                $p.alert(resp.message, "error");
+            }
+        });
+
 
     };
 
-    app.page.fileUpload=function(){
+
+
+    //文件上传
+    app.page.fileUpload = function() {
         $p.upload("#file", {
             formData: {
                 "token": "abc"
@@ -83,9 +156,9 @@ define(function(require, exports, module) {
                 console.log(file, data, response);
             }
         });
-
     };
 
-    module.exports = app;
 
+
+    module.exports = app;
 });

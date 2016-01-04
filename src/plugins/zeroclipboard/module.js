@@ -31,10 +31,12 @@ define(function(require, exports, module) {
 
         //复制错误执行的回调方法
         this.client.on('error', function(event) {
-            if ($.isFunction(options.error)) {
-                options.error(event);
-            }
             ZeroClipboard.destroy();
+            $(seletor).click(function() {
+                if ($p.tool.isFunction(options.error)) {
+                    options.error(event, $seletor);
+                }
+            });
         });
 
     }

@@ -3,6 +3,7 @@
  * Updated by hypers-godfery on 2015/9/10 fixbug.
  * Updated by hypers-godfery on 2015/10/12 添加国际化.
  * Updated by hypers-godfery on 2015/12/6 添加对新数据格式的支持.
+ * Updated by hypers-godfery on 2015/12/21 优化并精简大量代码.
  */
 define(function (require, exports, module) {
     var g = window,
@@ -13,10 +14,12 @@ define(function (require, exports, module) {
 
     /**
      * [DataListView 数据视图类]
-     * @param {[type]} selector [选择器]
+     * @param {[type]} selector [选择器] 推荐使用class或者id
      * @param {[type]} options [参数]
      */
     function DataListView(selector, options) {
+        var that = this,
+            _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         this.params = {};
         /**
          * [options 可选参数]
@@ -49,51 +52,61 @@ define(function (require, exports, module) {
                 "ele": "div",
                 "cls": "dataListView_Wrap"
             },
+            "aPageSize": [30, 50, 100],
             "sDom": ["D", "<div style='display: block;' class='bottom'>", "S", "T", "P", "</div>"]
         };
-        this.version = "2015.12.06.0028";
-        this.dataListName = selector.substring(1);
+        this.version = "2015.12.21.2228";
+        this.dataListName = selector.substring(1) + _id;
         this.paginate = {};
+        /**
+         * [update description] 更新数据
+         * @return {[type]} [description]
+         */
+        this.update = function () {
+            loadData();
+            return this;
+        };
+
         /**
          * [init description] 初始化页面
          * @return {[type]} [description]
          */
         this.init = function () {
-            var o = this;
-            options = $.extend(this.options, options);
-            this.bindEvent();
+            options = $.extend({}, that.options, options);
+            bindEvent();
             //初始化页面
             if (options.bInitLoad) {
-                this.loadData();
+                loadData();
             }
+            return that;
         };
         /**
          * [bindEvent 绑定事件]
          * @return {[type]} [description]
          */
-        this.bindEvent = function () {
-            var o = this;
-            $(document).delegate('#' + o.dataListName + '_paginate .pagination li:not(.disabled)', 'click', function () {
+        var bindEvent = function () {
+            //var that = that;
+            $(document).delegate('#' + that.dataListName + '_paginate li:not(.disabled)', 'click', function () {
                 var page = $(this).data("id");
                 switch (page) {
                     case "prev" :
-                        page = o.params.page - 1 === 0 ? 1 : o.params.page - 1;
+                        page = that.params.page - 1 === 0 ? 1 : that.params.page - 1;
                         break;
                     case "next":
-                        page = o.params.page + 1 > o.params.pagenum ? o.params.pagenum : o.params.page + 1;
+                        page = that.params.page + 1 > that.params.pagenum ? that.params.pagenum : that.params.page + 1;
                         break;
                     default:
                         break;
                 }
-                o.params.page = page;
-                o.params.pagesize = $('#' + o.dataListName + '_length select').val() === undefined ? 30 : $('#' + o.dataListName + '_length select').val();
-                o.update();
+                that.params.page = page;
+                that.params.pagesize = $('#' + that.dataListName + '_length select').val() === undefined ? 30 : $('#' + that.dataListName + '_length select').val();
+                that.update();
             });
 
-            $(document).delegate('.dataListView_length select', 'change', function () {
-                o.params.page = 1;
-                o.params.pagesize = $(this).val();
-                o.update();
+            $(document).delegate('#' + that.dataListName + '_length .dataListView_length select', 'change', function () {
+                that.params.page = 1;
+                that.params.pagesize = $(this).val();
+                that.update();
             });
         };
         /**
@@ -101,9 +114,15 @@ define(function (require, exports, module) {
          * @param  {[type]} data [description]
          * @return {[type]}      [description]
          */
-        this.initDom = function (data) {
-            var o = $(selector);
-            var _paginate;
+        var initDom = function (data) {
+            //$selector {[JQuery Obj]} [selector obj]
+            var $selector = $(selector);
+            var _paginate = {
+                "listLength": 5,
+                "page": 1,
+                "pagesize": 1,
+                "pagenum": 1
+            };
             if (data.page) {
                 _paginate = {
                     "listLength": 5,
@@ -112,18 +131,10 @@ define(function (require, exports, module) {
                     "total": +data.page.total,
                     "pagenum": Math.ceil(+data.page.total / +data.page.pagesize)
                 };
-            } else {
-                _paginate = {
-                    "listLength": 5,
-                    "page": 1,
-                    "pagesize": 1,
-                    "pagenum": 1
-                };
             }
+            that.paginate = _paginate;
 
-            var oPaginate = this.paginate = _paginate;
-
-            var sClass, iStart, iEnd, iHalf = Math.ceil(oPaginate.listLength / 2);
+            var sClass='', iStart = 1, iEnd =1, iHalf = Math.ceil(_paginate.listLength / 2);
 
             var sDom = "",
                 sDataView = "",
@@ -131,59 +142,49 @@ define(function (require, exports, module) {
                 sPageSelect = "",
                 sPageTotal = "";
 
-            sDataView += '<' + options.sDataBody.ele + ' id="' + this.dataListName + '_data_body" class="' + options.sDataBody.cls + '"></' + options.sDataBody.ele + '>';
+            sDataView += '<' + options.sDataBody.ele + ' id="' + that.dataListName + '_data_body" class="' + options.sDataBody.cls + '"></' + options.sDataBody.ele + '>';
 
             //生成paginate
-            sPaginate += '    <div class="dataListView_paginate" id="' + this.dataListName + '_paginate">';
+            sPaginate += '    <div class="dataListView_paginate" id="' + that.dataListName + '_paginate">';
             sPaginate += '        <ul style="visibility: visible;" class="pagination">';
             sPaginate += '             <li class="prev" data-id="1"><a href="javascript:;" title="' + oLanguage.oPaginate.sFirst + '"><i class="fa fa-angle-double-left"></i></a></li>';
             sPaginate += '             <li class="prev" data-id="prev"><a href="javascript:;" title="' + oLanguage.oPaginate.sPrevious + '"><i class="fa fa-angle-left"></i></a></li>';
 
-            if (oPaginate.pagenum < oPaginate.listLength) {
+            if (_paginate.pagenum < _paginate.listLength) {
                 iStart = 1;
-                iEnd = oPaginate.pagenum;
-            } else if (oPaginate.page <= iHalf) {
+                iEnd = _paginate.pagenum;
+            } else if (_paginate.page <= iHalf) {
                 iStart = 1;
-                iEnd = oPaginate.listLength;
-            } else if (oPaginate.page >= (oPaginate.pagenum - iHalf)) {
-                iStart = oPaginate.pagenum - oPaginate.listLength + 1;
-                iEnd = oPaginate.pagenum;
+                iEnd = _paginate.listLength;
+            } else if (_paginate.page >= (_paginate.pagenum - iHalf)) {
+                iStart = _paginate.pagenum - _paginate.listLength + 1;
+                iEnd = _paginate.pagenum;
             } else {
-                iStart = oPaginate.page - iHalf + 1;
-                iEnd = iStart + oPaginate.listLength - 1;
+                iStart = _paginate.page - iHalf + 1;
+                iEnd = iStart + _paginate.listLength - 1;
             }
-
             for (var j = iStart; j <= iEnd; j++) {
-                sClass = (j === oPaginate.page) ? 'class="active"' : '';
+                sClass = (j === _paginate.page) ? 'class="active"' : '';
                 sPaginate += '<li ' + sClass + ' data-id=' + j + '><a href="javascript:;">' + j + '</a></li>';
             }
 
             sPaginate += '             <li class="next" data-id="next"><a href="javascript:;" title="' + oLanguage.oPaginate.sNext + '"><i class="fa fa-angle-right"></i></a></li>';
-            sPaginate += '             <li class="next" data-id="' + oPaginate.pagenum + '"><a href="javascript:;" title="' + oLanguage.oPaginate.sLast + '"><i class="fa fa-angle-double-right"></i></a></li>';
+            sPaginate += '             <li class="next" data-id="' + _paginate.pagenum + '"><a href="javascript:;" title="' + oLanguage.oPaginate.sLast + '"><i class="fa fa-angle-double-right"></i></a></li>';
             sPaginate += '        </ul>';
             sPaginate += '    </div>';
 
             //生成pageSelect
-            sPageSelect += '     <div class="dataListView_length" id="' + this.dataListName + '_length">';
+            sPageSelect += '     <div class="dataListView_length" id="' + that.dataListName + '_length">';
             sPageSelect += '         <label>';
             var _sPageSelect = oLanguage.sLengthMenu,
                 _menu_ = "";
             _menu_ += '                 <select class="form-control input-small">';
-            _menu_ += '                         <option ';
-            if (oPaginate.pagesize === 30) {
-                _menu_ += 'selected="selected"';
+            var _arrPageSize = options.aPageSize;
+            for (var _ps = 0; _ps < _arrPageSize.length; _ps++) {
+                _menu_ += '<option value="' + _arrPageSize[_ps] + '"';
+                _menu_ += _paginate.pagesize === _arrPageSize[_ps] ? 'selected="selected"' : '';
+                _menu_ += '>' + _arrPageSize[_ps] + '</option>';
             }
-            _menu_ += '                                  value="30">30</option>';
-            _menu_ += '                         <option ';
-            if (oPaginate.pagesize === 50) {
-                _menu_ += 'selected="selected"';
-            }
-            _menu_ += '                                  value="50">50</option>';
-            _menu_ += '                         <option ';
-            if (oPaginate.pagesize === 100) {
-                _menu_ += 'selected="selected"';
-            }
-            _menu_ += '                                  value="100">100</option>';
             _menu_ += '                 </select>';
             _sPageSelect = _sPageSelect.replace(" _MENU_ ", _menu_);
             sPageSelect += _sPageSelect;
@@ -191,11 +192,10 @@ define(function (require, exports, module) {
             sPageSelect += '     </div>';
 
             //生成pageTotal
-            if (oPaginate.total) {
-                sPageTotal += '     <div class="dataListView_info"  id="' + this.dataListName + '_info"> ';
+            if (_paginate.total) {
+                sPageTotal += '     <div class="dataListView_info"  id="' + that.dataListName + '_info"> ';
                 sPageTotal += oLanguage.sInfo;
-                sPageTotal = sPageTotal.replace("_TOTAL_", oPaginate.total);
-                //sPageTotal += '共 <span class="num">' + oPaginate.total + '</span> 条数据';
+                sPageTotal = sPageTotal.replace("_TOTAL_", _paginate.total);
                 sPageTotal += '     </div>';
             }
 
@@ -209,28 +209,29 @@ define(function (require, exports, module) {
             for (var i = 0, l = options.sDom.length; i < l; i++) {
                 if (oDom[options.sDom[i]]) {
                     sDom += oDom[options.sDom[i]];
-                } else {
-                    sDom += (options.sDom[i] === "D" ||
-                    options.sDom[i] === "S" ||
-                    options.sDom[i] === "T" ||
-                    options.sDom[i] === "P") ? "" : options.sDom[i];
+                    continue;
                 }
+                sDom += (options.sDom[i] === "D" ||
+                options.sDom[i] === "S" ||
+                options.sDom[i] === "T" ||
+                options.sDom[i] === "P") ? "" : options.sDom[i];
+
             }
 
-            o.find('#' + this.dataListName + '_paginate').remove();
-            o.find('#' + this.dataListName + '_info').remove();
-            o.find('#' + this.dataListName + '_length').remove();
-            o.find('#' + this.dataListName + '_data_body').remove();
-            o.append(sDom);
+            $selector.find('#' + that.dataListName + '_paginate').remove();
+            $selector.find('#' + that.dataListName + '_info').remove();
+            $selector.find('#' + that.dataListName + '_length').remove();
+            $selector.find('#' + that.dataListName + '_data_body').remove();
+            $selector.append(sDom);
 
             //判断上一页下一页等按钮是否可用
-            if (oPaginate.page === 1) {
+            if (_paginate.page === 1) {
                 $('li.prev').addClass('disabled');
             } else {
                 $('li.prev').removeClass('disabled');
             }
 
-            if (oPaginate.page === oPaginate.pagenum || oPaginate.pagenum === 0) {
+            if (_paginate.page === _paginate.pagenum || _paginate.pagenum === 0) {
                 $('li.next').addClass('disabled');
             } else {
                 $('li.next').removeClass('disabled');
@@ -241,23 +242,23 @@ define(function (require, exports, module) {
          * [initProcessing 初始化状态dom]
          * @return {[void]}
          */
-        this.initProcessing = function () {
+        var initProcessing = function () {
             var sProcessing = "",
                 o = $(selector);
 
-            sProcessing += '<div style="visibility:visible" class="dataTables_processing" id="' + this.dataListName + '_processing">';
+            sProcessing += '<div style="visibility:visible" class="dataTables_processing" id="' + that.dataListName + '_processing">';
             sProcessing += options.sProcessing;
             sProcessing += '</div>';
 
-            if (this.options.bEmptyData) { //如果查询结果为空 则清除文本
+            if (that.options.bEmptyData) { //如果查询结果为空 则清除文本
                 o.find(".dataTables_empty").empty().append("&nbsp;");
             }
 
-            if (o.find('#' + this.dataListName + '_processing').length === 0) {
+            if (o.find('#' + that.dataListName + '_processing').length === 0) {
                 o.append(sProcessing);
-            } else {
-                $('#' + this.dataListName + '_processing').css({"visibility": "visible"});
+                return;
             }
+            $('#' + that.dataListName + '_processing').css({"visibility": "visible"});
         };
 
         /**
@@ -265,9 +266,9 @@ define(function (require, exports, module) {
          * @param  {[type]} data [description]
          * @return {[type]}      [description]
          */
-        this.initDataView = function (data) {
+        var initDataView = function (data) {
             var o = this,
-                oData = $('#' + this.dataListName + '_data_body');
+                oData = $('#' + that.dataListName + '_data_body');
             oData.empty();
             var _result = data.result || {};
             var _datas = $.isArray(_result) ? _result : _result.items || [];
@@ -282,17 +283,16 @@ define(function (require, exports, module) {
                     '            </tbody>',
                     '        </table>'].join("");
                 o.options.bEmptyData = true;
-                $('#' + this.dataListName + '_processing').css({"visibility": "hidden"});
+                $('#' + that.dataListName + '_processing').css({"visibility": "hidden"});
                 oData.append(_empty_tml);
-                $("#" + this.dataListName + "_paginate").empty();
+                $("#" + that.dataListName + "_paginate").empty();
                 if (options.fnCall) {
                     options.fnCall();
                 }
-                return;
             }
             var result = _datas;
-            o.options.bEmptyData = false;
-            $('#' + this.dataListName + '_processing').css({"visibility": "hidden"});
+            that.options.bEmptyData = false;
+            $('#' + that.dataListName + '_processing').css({"visibility": "hidden"});
             for (var i = 0; i < result.length; i++) {
                 oData.append(options.fnFormat(result[i]));
             }
@@ -305,26 +305,21 @@ define(function (require, exports, module) {
          * [loadData 载入数据]
          * @return {[type]} [description]
          */
-        this.loadData = function () {
+        var loadData = function () {
             var o = this,
                 _selector = $(selector);
-            this.params = options.fnParams();
+            that.params = $.extend({}, that.params, options.fnParams());
             _selector.addClass("dataListView");
-            o.initProcessing();
-            options.dataSource(this.params, function (resp) {
+            initProcessing();
+            options.dataSource(that.params, function (resp) {
                 //初始化底部分页插件
-                o.initDom(resp);
+                initDom(resp);
                 //初始化视图数据
-                o.initDataView(resp);
+                initDataView(resp);
             });
         };
-        /**
-         * [update description] 更新数据
-         * @return {[type]} [description]
-         */
-        this.update = function () {
-            this.loadData();
-        };
+
+        that.init();
     }
 
     /**
@@ -335,7 +330,6 @@ define(function (require, exports, module) {
      */
     g[PagurianAlias].dataListView = function (seletor, options) {
         var view = new DataListView(seletor, options);
-        view.init();
         return view;
     };
 });

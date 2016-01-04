@@ -175,16 +175,12 @@ define(function (require, exports, module) {
              */
             var init = function () {
                 o.options = $.extend(o.options, options);
-                _allColumns = o.options.allColumns;
+                _allColumns = $.isArray(o.options.allColumns) ? o.options.allColumns : [];
                 _allRows = o.options.allRows;
                 o.maxNum = o.options.maxNum ? o.options.maxNum : _allColumns.length;
                 o.minNum = o.options.minNum ? o.options.minNum : MIN_COLUMN_NUM;
                 o.canChoose = o.options.canChoose;
                 o.showSetting = o.options.showSetting;
-                if (!isArray(_allColumns)) {
-                    console.log('Summary:[' + selector + '] allColumns不为[Array]类型:,请正确设置allColumns');
-                    return;
-                }
                 //判断并设置最大展示数和展示数
                 o.maxNum = o.maxNum <= _allColumns.length ? o.maxNum : _allColumns.length;
                 if (o.maxNum > _allColumns.length) {

@@ -254,7 +254,7 @@ define(function(require, exports, module) {
             e.stopPropagation();
         });
 
-        $("[data-type='select'] .dropdown-menu a").click(function() {
+        $("[data-type='select']").on("click", " .dropdown-menu a", function() {
             var text = $(this).text();
             var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
             $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
@@ -393,7 +393,7 @@ define(function(require, exports, module) {
 
     };
 
-    var doHLJS = function() {
+    var doHighlightCode = function() {
         if (!window.hljs) {
             return;
         }
@@ -434,7 +434,6 @@ define(function(require, exports, module) {
             doResponsiveOnResize();
             doUniform();
             doResponsiveOnInit();
-
             doFixInputPlaceholderForIE();
 
             doSelect2();
@@ -446,7 +445,7 @@ define(function(require, exports, module) {
             doPopovers();
             doTabs();
             doTheme();
-            doHLJS();
+            doHighlightCode();
         },
 
         fixContentHeight: function() {
@@ -457,37 +456,34 @@ define(function(require, exports, module) {
         },
         initDropdownMenu: function() {
             var dropdown = new Dropdown("#dropdown_pro_menu");
-
             callbackQueue.push(function() {
                 dropdown.update();
             });
             this.dropdown = dropdown;
             return this;
         },
-        initMenu: function() {
+        activateCurrentMenu: function() {
             if (window.CONFIG && CONFIG.appId) {
                 $(".page-sidebar-menu li[data-id='" + CONFIG.appId + "']").addClass("active");
             }
         },
+        updateUniform: function() {
+            doUniform();
+        },
         custom: function() {
 
-            $(".page-sidebar-menu>li>a").click(function() {
-                var o = $(this).parents("li");
-                if (o.hasClass("open")) {
-                    o.removeClass("open");
-                    o.find(".arrow").removeClass("open");
-                    o.find(".sub-menu").slideUp(100);
-                    return;
+            $(".page-sidebar-menu>li>a").on("click", function() {
+                var $li = $(this).parents("li");
+                if ($li.hasClass("open")) {
+                    $li.removeClass("open");
+                    $li.find(".arrow").removeClass("open");
+                } else {
+                    $li.addClass("open");
+                    $li.find(".arrow").addClass("open");
                 }
-                o.addClass("open");
-                o.find(".arrow").addClass("open");
-                o.find(".sub-menu").slideDown(100);
             });
-
         }
-
     };
-
 
     function Dropdown(seletor, options) {
 

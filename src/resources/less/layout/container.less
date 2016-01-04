@@ -134,8 +134,13 @@ Page sidebar
 .page-sidebar-menu > li > ul.sub-menu {
     list-style: none;
     clear: both;
+    display: none;
     margin: 8px 0;
 }
+.page-sidebar-menu > li.open .sub-menu {
+    display: block;
+}
+
 .page-sidebar-menu > li.active > ul.sub-menu {
     display: block;
 }

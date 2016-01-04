@@ -12,6 +12,18 @@ define(function(require, exports, module) {
             return name.replace(/\-(\w)/g, function(x) {
                 return x.slice(1).toUpperCase();
             });
+        },
+
+        //字符串格式化
+        //$p.str.format("Hello,{0}","Pagurian");
+        format: function(pattern) {
+            var pointer = 0,
+                i;
+            for (i = 1; i < arguments.length; i++) {
+                pattern = pattern.replace('{' + pointer + '}', arguments[i]);
+                pointer++;
+            }
+            return pattern;
         }
     };
 
