@@ -1,77 +1,58 @@
-{{>fixtures/doctype}}
-<head>
-	<title>{{data.page.dialog}}</title>
-	{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.dialog}}
 
-{{>fixtures/header}}
+    {{#*inline "pageContent"}}
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.dialog}}
+                </h3>
+            </div>
+        </div>
 
-	{{>fixtures/sidebar}}
-
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
-
-		<div class="page-content">
-
-			{{>fixtures/theme-panel}}
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.dialog}}
-					</h3>
-				</div>
-			</div>
-
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-6">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-6">
 
 
 
-                    <!-- BEGIN PORTLET-->
-                    <div class="portlet box default">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                默认
-                            </div>
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            默认
                         </div>
-                        <div class="portlet-body">
-                            <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
+                    </div>
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
 
-                            <div class="markdown inner">
-<pre><code class="javascript">
-$p.dialog("#btn_remove", {
-    title: "提示",
-    body: "你确定要删除吗？",
-    submit: function(modal, data, params, callback) {
-        modal.hide();
-        $p.alert("你点击了确定");
-    }
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_remove", {
+        title: "提示",
+        body: "你确定要删除吗？",
+        submit: function(modal, data, params, callback) {
+            modal.hide();
+            $p.alert("你点击了确定");
+        }
 });
 </code></pre>
                         </div>
 
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            表单
                         </div>
                     </div>
-                    <!-- END PORTLET-->
-
-                    <!-- BEGIN PORTLET-->
-                    <div class="portlet box default">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                表单
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
-                            <div class="markdown inner">
-                                <pre><code class="javascript">
-$p.dialog("#btn_add", {
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_add", {
     title: "添加用户",
     body: $("#tpl_user").html(),
     validate: function(modal, data, params) {
@@ -82,43 +63,40 @@ $p.dialog("#btn_add", {
         $p.alert("你点击了确定");
     }
 });
-                                </code></pre>
-                            </div>
+</code></pre>
+                        </div>
 
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+
+
+
+            </div>
+            <div class="col-md-6">
+
+
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            表单填充
                         </div>
                     </div>
-                    <!-- END PORTLET-->
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
 
-
-
-
-				</div>
-                <div class="col-md-6">
-
-
-
-                    <!-- BEGIN PORTLET-->
-                    <div class="portlet box default">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                表单填充
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
-
-                            <div class="markdown inner">
-                                <pre><code class="javascript">
-$p.dialog("#btn_update", {
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_update", {
     title: "编辑用户",
     body: $("#tpl_user").html(),
     initForm: function(modal, form, params) {
-
         //获取用户信息
         model.getUser(params.id, params, function(data) {
             $p.form(form).val(data);
         });
-
     },
     validate: function(modal, data, params) {
         return true;
@@ -134,166 +112,163 @@ $p.dialog("#btn_update", {
         });
     }
 });
-                                </code></pre>
-                            </div>
+</code></pre>
+                        </div>
 
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            其他
                         </div>
                     </div>
-                    <!-- END PORTLET-->
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_form_lang" ><i class="fa fa-edit"></i> 长表单</a>
+                    </div>
+                    <div>
+                        <!-- END PORTLET-->
 
-
-					<!-- BEGIN PORTLET-->
-					<div class="portlet box default">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                其他
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <a class="btn default" id="btn_form_lang" ><i class="fa fa-edit"></i> 长表单</a>
-						</div>
-					<div>
-					<!-- END PORTLET-->
+                    </div>
 
                 </div>
 
-			</div>
 
 
 
-
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
-
-{{>fixtures/footer}}
-
-<script type="text/tpl" id="tpl_user" >
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="portlet-body">
-                <form action="">
-                    <div class="form-group">
-                        <label class="control-label">用户名</label>
-                        <input type="text" class="form-control" maxlength="50" name="name" />
-						<span for="name" class="help-block"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-                </form>
+                <!-- END PAGE CONTENT-->
             </div>
         </div>
-    </div>
-</script>
+        <!-- END CONTENT -->
+    {{/inline}}
 
-<script type="text/tpl" id="tpl_user_lang" >
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="portlet-body">
-                <form action="">
-                    <div class="form-group">
-                        <label class="control-label">用户名</label>
-                        <input type="text" class="form-control" maxlength="50" name="name" />
-						<span for="name" class="help-block"></span>
+    {{#*inline "appScript"}}
+        <script type="text/tpl" id="tpl_user" >
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet-body">
+                        <form action="">
+                            <div class="form-group">
+                                <label class="control-label">用户名</label>
+                                <input type="text" class="form-control" maxlength="50" name="name" />
+                                <span for="name" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-					<div class="form-group">
-                        <label class="control-label">年龄</label>
-                        <input type="text" class="form-control" maxlength="3" name="age" />
-						<span for="age" class="help-block"></span>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
-</script>
+        </script>
 
-<script type="text/javascript">
-	pagurian.call("modules/com/app", function(app) {
-		app.page.dialogs();
-	});
-</script>
+        <script type="text/tpl" id="tpl_user_lang" >
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet-body">
+                        <form action="">
+                            <div class="form-group">
+                                <label class="control-label">用户名</label>
+                                <input type="text" class="form-control" maxlength="50" name="name" />
+                                <span for="name" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">年龄</label>
+                                <input type="text" class="form-control" maxlength="3" name="age" />
+                                <span for="age" class="help-block"></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </script>
 
-{{>fixtures/tracker}}
-</body>
-</html>
+        <script type="text/javascript">
+            pagurian.call("modules/com/app", function(app) {
+                app.page.dialogs();
+            });
+        </script>
+    {{/inline}}
+
+{{/base}}

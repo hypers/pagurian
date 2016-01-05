@@ -1,79 +1,60 @@
-{{>fixtures/doctype}}
-<head>
-<title>{{data.page.echarts_bar}}</title>
-{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.echarts_bar}}
 
-{{>fixtures/header}}
-
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
-
-   {{>fixtures/sidebar}}
-
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
-
-		<div class="page-content">
-
-			{{>fixtures/theme-panel}}
+    {{#*inline "pageContent"}}
 
 
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.echarts_bar}}
-					</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.echarts_bar}}
+                </h3>
 
-                    <div class="tabs-wrap">
-                        <ul  class="nav nav-tabs">
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
 
-                            <li>
-                                <a href="echarts-bar.html" >标准柱状图</a>
-                            </li>
-                            <li class="active">
-                                <a href="echarts-bar-horizon.html" >横向柱状图</a>
-                            </li>
-                            <li>
-                                <a href="echarts-bar-stack.html" >堆积柱状图</a>
-                            </li>
-                            <li>
-                                <a href="echarts-bar-custom.html" >彩虹柱状图</a>
-                            </li>
-                        </ul>
+                        <li>
+                            <a href="echarts-bar.html" >标准柱状图</a>
+                        </li>
+                        <li class="active">
+                            <a href="echarts-bar-horizon.html" >横向柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-stack.html" >堆积柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-custom.html" >彩虹柱状图</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet box default">
+
+                    <div class="portlet-body">
+                        <div  class="chart-default " >
+                            <div class="chart-body" id="my_chart"></div>
+                        </div>
+
                     </div>
 
-				</div>
-			</div>
+                </div>
 
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
+            </div>
 
-					<div class="portlet box default">
-
-						<div class="portlet-body">
-							<div  class="chart-default " >
-								<div class="chart-body" id="my_chart"></div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
+        </div>
 
 
-            <div class="row">
-                <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="markdown">
                     <h3>Javascript</h3>
-                    <pre><code class="javascript">
-require('../../plugins/echarts/module');
-
+<pre><code class="javascript">require('../../plugins/echarts/module');
 var chart = $p.echarts("my_chart", {
     type: "bar"
 });
@@ -93,34 +74,25 @@ chart.load({
         name: "访问总次数(VV)",
         value: [255, 120, 184, 195, 208, 198, 174]
     }]
-});
+});</code></pre>
 
-                </code></pre>
+                    {{>fixtures/echarts-footer}}
 
-                {{>fixtures/echarts-footer}}
-
-                </div>
                 </div>
             </div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
 
-{{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call([
+                "modules/echarts-bar/app",
+                "plugins/echarts/loader"
+            ], function(app) {
+                app.page.horizon();
+            });
+        </script>
+    {{/inline}}
 
-
-<script type="text/javascript">
-    pagurian.call([
-        "modules/echarts-bar/app",
-        "plugins/echarts/loader"
-    ], function(app) {
-		app.page.horizon();
-	});
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

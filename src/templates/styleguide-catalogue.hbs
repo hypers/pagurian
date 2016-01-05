@@ -1,39 +1,19 @@
-{{>fixtures/doctype}}
-<head>
-    <title>{{data.page.catalogue}}</title>
-    {{>fixtures/head}}
-</head>
+{{#>base title=data.page.catalogue}}
 
-<body>
+{{#*inline "pageContent"}}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                {{data.page.catalogue}}
+            </h3>
+        </div>
+    </div>
 
-{{>fixtures/header}}
-
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
-
-   {{>fixtures/sidebar}}
-
-    <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
-
-        <div class="page-content">
-            {{>fixtures/theme-panel}}
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="page-title">
-                    {{data.page.catalogue}}
-                    </h3>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <!--markdown-->
-                    <div class="markdown">
-                <pre><code>
-Pagurian
+    <div class="row">
+        <div class="col-md-12">
+            <!--markdown-->
+            <div class="markdown">
+<pre><code>Pagurian
 ├── [.] .build
 ├── dist/                   //发布目录
 │   ├── lib/
@@ -55,38 +35,27 @@ Pagurian
 ├── test/                   //测试
 ├── Gruntfile.js
 ├── package.json
-└── pagurian.js
-                </code></pre>
-                    </div>
-                    <!--end markdown-->
-                    </div>
-                </div>
-
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>View Less</h3>
-                    <a href="/src/resources/css/source/themes/default.less" target="_blank">src/resources/css/source/themes/default.less</a>
-                    <br/><br/>
-                </div>
+└── pagurian.js</code></pre>
             </div>
-
+            <!--end markdown-->
         </div>
-
     </div>
-    <!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
 
+    <div class="row">
+        <div class="col-md-12">
+            <h3>View Less</h3>
+            <a href="/src/resources/css/source/themes/default.less" target="_blank">src/resources/css/source/themes/default.less</a>
+            <br/><br/>
+        </div>
+    </div>
+{{/inline}}
 
-{{>fixtures/footer}}
-<script type="text/javascript">
-    pagurian.call("modules/styleguide/app", function(app) {
-        app.page.javascript();
-    });
-</script>
+{{#*inline "appScript"}}
+    <script type="text/javascript">
+        pagurian.call("modules/styleguide/app", function(app) {
+            app.page.javascript();
+        });
+    </script>
+{{/inline}}
 
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

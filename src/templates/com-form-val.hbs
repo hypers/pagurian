@@ -1,168 +1,134 @@
-{{>fixtures/doctype}}
+{{#>base title=data.page.form}}
 
-<head>
-    <title>{{data.page.form}}</title>
-    {{>fixtures/head}}
-</head>
+    {{#*inline "pageContent"}}
 
-<body>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="page-title">
+                        {{data.page.form}}
+                    </h3>
 
-    {{>fixtures/header}}
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container">
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-
-                {{>fixtures/theme-panel}}
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.form}}
-                        </h3>
-
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li>
-                                    <a href="com-form.html">样式</a>
-                                </li>
-                                <li>
-                                    <a href="com-form-validation.html">验证</a>
-                                </li>
-                                <li class="active">
-                                    <a href="com-form-val.html">赋值</a>
-                                </li>
-                                <li>
-                                    <a href="com-form-fileupload.html">文件上传</a>
-                                </li>
-                                <li>
-                                    <a href="com-form-submit.html">提交</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="tabs-wrap">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a href="com-form.html">样式</a>
+                            </li>
+                            <li>
+                                <a href="com-form-validation.html">验证</a>
+                            </li>
+                            <li class="active">
+                                <a href="com-form-val.html">赋值</a>
+                            </li>
+                            <li>
+                                <a href="com-form-fileupload.html">文件上传</a>
+                            </li>
+                            <li>
+                                <a href="com-form-submit.html">提交</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
 
+                <div class="col-md-12">
 
-                <div class="row">
-
-                    <div class="col-md-12">
-
-                        <div class="portlet box default ">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    表单赋值
-                                </div>
+                    <div class="portlet box default ">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                表单赋值
                             </div>
-                            <div class="portlet-body form form-page">
-                                <form action="#" id="form_sample_1">
-                                    <div class="form-body">
+                        </div>
+                        <div class="portlet-body form form-page">
+                            <form action="#" id="form_sample_1">
+                                <div class="form-body">
 
-                                        <div class="form-group">
-                                            <label>Text
+                                    <div class="form-group">
+                                        <label>Text
+                                        </label>
+                                        <div>
+                                            <input type="text" name="text" data-required="1" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Textarea
+
+                                        </label>
+                                        <div>
+                                            <textarea name="textarea" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select</label>
+
+                                        <select name="select" class="form-control">
+                                            <option value="">select...</option>
+                                            <option value="1">一</option>
+                                            <option value="2">二</option>
+                                            <option value="3">三</option>
+                                            <option value="4">四</option>
+                                            <option value="6">五</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Radio</label>
+                                        <div class="radio-list">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="radio" value="1"> Option 1
                                             </label>
-                                            <div>
-                                                <input type="text" name="text" data-required="1" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Textarea
 
+                                            <label class="radio-inline">
+                                                <input type="radio" name="radio" value="2"> Option 2
                                             </label>
-                                            <div>
-                                                <textarea name="textarea" class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Select</label>
 
-                                            <select name="select" class="form-control">
-                                                <option value="">select...</option>
-                                                <option value="1">一</option>
-                                                <option value="2">二</option>
-                                                <option value="3">三</option>
-                                                <option value="4">四</option>
-                                                <option value="6">五</option>
-                                            </select>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Radio</label>
-                                            <div class="radio-list">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="radio" value="1"> Option 1
-                                                </label>
-
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="radio" value="2"> Option 2
-                                                </label>
-
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="radio" value="3"> Option 3
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Checkboxes</label>
-                                            <div class="checkbox-list">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="checkbox" value="1" /> Checkbox 1
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="checkbox" value="2" /> Checkbox 2
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="checkbox" value="3" /> Checkbox 3
-                                                </label>
-                                            </div>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="radio" value="3"> Option 3
+                                            </label>
                                         </div>
                                     </div>
 
-                                </form>
-                            </div>
-                        </div>
+                                    <div class="form-group">
+                                        <label>Checkboxes</label>
+                                        <div class="checkbox-list">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="checkbox" value="1" /> Checkbox 1
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="checkbox" value="2" /> Checkbox 2
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="checkbox" value="3" /> Checkbox 3
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="markdown">
-                            <h3>Javascript代码</h3>
-<pre><code class="javascript">
-$p.form("#form_sample_1").val({
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="markdown">
+                        <h3>Javascript代码</h3>
+<pre><code class="javascript">$p.form("#form_sample_1").val({
     text: "This is text",
     textarea: "This is Textarea",
     select: 2,
     radio: 2,
     checkbox: [2, 3]
-});
-</code></pre>
-                        </div>
+});</code></pre>
                     </div>
                 </div>
-
-
-
             </div>
-        </div>
-        <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
+    {{/inline}}
 
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/form/app", function(app) {
+                app.page.val();
+            });
+        </script>
+    {{/inline}}
 
-    {{>fixtures/footer}}
-    <script type="text/javascript">
-        pagurian.call("modules/form/app", function(app) {
-            app.page.val();
-        });
-    </script>
-
-    {{>fixtures/tracker}}
-</body>
-
-</html>
+{{/base}}
