@@ -1,71 +1,47 @@
-{{>fixtures/doctype}}
+{{#>base title=data.page.slider}}
 
-<head>
-    <title>{{data.page.slider}}</title>
-    {{>fixtures/head}}
-    <style media="screen">
-        .table-custom td div{
-            font-size: 12px;
-            color: #aaa;
-        }
-    </style>
-</head>
+    {{#*inline "pageContent"}}
+        <style media="screen">
+            .table-custom td div{
+                font-size: 12px;
+                color: #aaa;
+            }
+        </style>
 
-<body>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.slider}}
+                </h3>
 
-    {{>fixtures/header}}
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container">
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-                {{>fixtures/theme-panel}}
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.slider}}
-                        </h3>
-
-                        <div class="tabs-wrap">
-            			   <ul  class="nav nav-tabs">
-            					<li class="active">
-            						<a href="slider.html" >基础</a>
-            					</li>
-            					<li>
-            						<a href="slider-options.html" >参数说明</a>
-            					</li>
-            				</ul>
-            			</div>
-                        
-                    </div>
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+                        <li class="active">
+                            <a href="slider.html" >基础</a>
+                        </li>
+                        <li>
+                            <a href="slider-options.html" >参数说明</a>
+                        </li>
+                    </ul>
                 </div>
 
+            </div>
+        </div>
 
-
-                <!-- BEGIN PAGE CONTENT-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="text" id="range" value="20" name="example_name"/>
-                        <div class="markdown">
-                            <pre><code class="javascript">
-$p.slider("#range",{
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" id="range" value="20" name="example_name"/>
+                <div class="markdown">
+<pre><code class="javascript">$p.slider("#range",{
     from:10
-});
-                            </code></pre>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="text" id="range2" value=""  />
-                        <div class="markdown">
-                            <pre><code class="javascript">
-$p.slider("#range2", {
+});</code></pre>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input type="text" id="range2" value=""  />
+                <div class="markdown">
+<pre><code class="javascript">$p.slider("#range2", {
     type: "double",
     grid: true,
     min: 0,
@@ -73,15 +49,13 @@ $p.slider("#range2", {
     from: 200,
     to: 800,
     prefix: "$"
-});
-                            </code></pre>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="text" id="range3" value=""  />
-                        <div class="markdown">
-                            <pre><code class="javascript">
-$p.slider("#range2",{
+});</code></pre>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input type="text" id="range3" value=""  />
+                <div class="markdown">
+<pre><code class="javascript">$p.slider("#range2",{
     grid: true,
     from: 3,
     force_edges:true,
@@ -91,40 +65,31 @@ $p.slider("#range2",{
         "July", "August", "September",
         "October", "November", "December"
     ]
-});
-                            </code></pre>
-                        </div>
-                    </div>
+});</code></pre>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <h3>更多实例</h3>
-                        <p>
-                            <a href="http://ionden.com/a/plugins/ion.rangeSlider/demo.html" target="_blank">
-                                 http://ionden.com/a/plugins/ion.rangeSlider/demo.html
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                <!-- END PAGE CONTENT-->
             </div>
         </div>
-        <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
 
+        <div class="row">
+            <div class="col-md-12">
 
-    {{>fixtures/footer}}
-    <script type="text/javascript">
-        pagurian.call("modules/slider/app", function(app) {
-            app.page.index();
-        });
-    </script>
+                <h3>更多实例</h3>
+                <p>
+                    <a href="http://ionden.com/a/plugins/ion.rangeSlider/demo.html" target="_blank">
+                        http://ionden.com/a/plugins/ion.rangeSlider/demo.html
+                    </a>
+                </p>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
 
-    {{>fixtures/tracker}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/slider/app", function(app) {
+                app.page.index();
+            });
+        </script>
+    {{/inline}}
 
-</body>
-
-</html>
+{{/base}}

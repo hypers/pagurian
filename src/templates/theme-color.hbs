@@ -1,74 +1,45 @@
-{{>fixtures/doctype}}
-<head>
-	<title>{{data.page.color}}</title>
-	{{>fixtures/head}}
-</head>
-<body>
-{{>fixtures/header}}
+{{#>base title=data.page.color}}
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+{{#*inline "pageContent"}}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                {{data.page.color}}
+            </h3>
+        </div>
+    </div>
 
+    <div id="palette"></div>
+    <div style="clear: both;"></div>
 
-	{{>fixtures/sidebar}}
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+    <div id="panel_color_wrap"></div>
+    <div class="tool-action " style="margin-bottom:50px">
+        <div class="row ">
+            <div class="col-md-3">
 
-		<div class="page-content">
+                <div class="input-group color colorpicker-default" data-color="#3865a8" data-color-format="rgba">
+                    <input type="text" class="form-control" value="#3865a8"  id="txt_color">
+                                <span class="input-group-btn">
+                                    <button class="btn default" type="button"><i style="background-color: #3865a8;"></i></button>
+                                </span>
+                </div>
 
-			{{>fixtures/theme-panel}}
-
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.color}}
-					</h3>
-				</div>
-			</div>
-
-			<div id="palette"></div>
-			<div style="clear: both;"></div>
-
-			<div id="panel_color_wrap"></div>
-			<div class="tool-action " style="margin-bottom:50px">
-				<div class="row ">
-					<div class="col-md-3">
-
-						<div class="input-group color colorpicker-default" data-color="#3865a8" data-color-format="rgba">
-							<input type="text" class="form-control" value="#3865a8"  id="txt_color">
-							<span class="input-group-btn">
-								<button class="btn default" type="button"><i style="background-color: #3865a8;"></i></button>
-							</span>
-						</div>
-
-					</div>
-					<div class="col-md-3">
-						<button type="button" class="btn btn-primary" id="btn_add_color" >创建色板</button>
-					</div>
-				</div>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary" id="btn_add_color" >创建色板</button>
+            </div>
+        </div>
 
 
-			</div>
+    </div>
+{{/inline}}
 
+{{#*inline "appScript"}}
+    <script type="text/javascript">
+        pagurian.call("modules/theme/app", function(app) {
+            app.page.color();
+        });
+    </script>
+{{/inline}}
 
-
-
-
-
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
-
-{{>fixtures/footer}}
-<script type="text/javascript">
-	pagurian.call("modules/theme/app", function(app) {
-		app.page.color();
-	});
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

@@ -1,77 +1,56 @@
-{{>fixtures/doctype}}
-<head>
-    <title> {{data.page.summary}}</title>
-    {{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.summary}}
 
-    {{>fixtures/header}}
-
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container datalistview-container">
-
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-                {{>fixtures/theme-panel}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.summary}}
-                        </h3>
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a href="summary.html">基础</a>
-                                </li>
-                                <li>
-                                    <a href="summary-pro.html">高级</a>
-                                </li>
-                                <li>
-                                    <a href="summary-options.html">参数说明</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+    {{#*inline "pageContent"}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.summary}}
+                </h3>
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="summary.html">基础</a>
+                        </li>
+                        <li>
+                            <a href="summary-pro.html">高级</a>
+                        </li>
+                        <li>
+                            <a href="summary-options.html">参数说明</a>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div id="summaryTest" class="summary-wrap"></div>
+            </div>
+        </div>
 
-
-                <div class="row clearfix">
-                    <div class="col-md-12">
-                        <div id="summaryTest" class="summary-wrap"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="markdown">
-                            <h3>HTML代码</h3>
-                            <pre><code class="html">&lt;div id="summaryTest" class="summary-wrap"&gt;&lt;/div&gt;</code></pre>
-                            <h3>javascript代码</h3>
-                            <pre><code class="javascript">require('../../widgets/summary/module');
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">&lt;div id="summaryTest" class="summary-wrap"&gt;&lt;/div&gt;</code></pre>
+                    <h3>javascript代码</h3>
+<pre><code class="javascript">require('../../widgets/summary/module');
 var getColumns = function () {
     var columns = [];
 
     columns.push({
-        "cName": "showCounts",
-        "title": "展示次数"
+    "cName": "showCounts",
+    "title": "展示次数"
     });
 
     columns.push({
-        "cName": "clickCounts",
-        "title": "点击次数(CLK)"
+    "cName": "clickCounts",
+    "title": "点击次数(CLK)"
     });
 
     columns.push({
-        "cName": "viewCounts",
-        "title": "访问次数(VV)"
+    "cName": "viewCounts",
+    "title": "访问次数(VV)"
     });
 
     columns.push({
@@ -121,12 +100,12 @@ var getRows = function () {
             var num = (Math.round(data * 10000) / 100).toFixed(2),
             _html = "";
             _html = num >= 0 ? ('&lt;span class="summary-span-rate add"&gt;+' + num + '%&lt;/span&gt;') :
-                                ('&lt;span class="summary-span-rate reduce"&gt;' + num + '%&lt;/span&gt;');
-            return _html;
-        }
-    });
+                            ('&lt;span class="summary-span-rate reduce"&gt;' + num + '%&lt;/span&gt;');
+        return _html;
+    }
+});
 
-    return rows;
+return rows;
 };
 
 var option = {
@@ -137,31 +116,20 @@ var option = {
     //数据源
     "dataSource": model.getSummaryData
 };
-var summary = $p.summary("#summaryTest", option);
-                            </code></pre>
-                            <h3>JSON 数据</h3>
-                            <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
-                            </div>
-                        </div>
-                    </div>
+var summary = $p.summary("#summaryTest", option);</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
                 </div>
             </div>
-
-
         </div>
-    </div>
-    <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
+    {{/inline}}
 
-    {{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/summary/app", function (app) {
+                app.page.summary();
+            });
+        </script>
+    {{/inline}}
 
-    <script type="text/javascript">
-        pagurian.call("modules/summary/app", function (app) {
-            app.page.summary();
-        });
-    </script>
-
-    {{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

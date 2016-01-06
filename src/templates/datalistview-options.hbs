@@ -1,180 +1,144 @@
-{{>fixtures/doctype}}
+{{#>base title=data.page.datalistview}}
 
-<head>
-    <title>{{data.page.datalistview}}</title>
-    {{>fixtures/head}}
-    <style media="screen">
-        .table-custom td div {
-            font-size: 12px;
-            color: #aaa;
-        }
-    </style>
-</head>
+    {{#*inline "pageContent"}}
 
-<body>
-
-    {{>fixtures/header}}
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container">
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-                {{>fixtures/theme-panel}}
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.datalistview}}
-                        </h3>
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li>
-                                    <a href="datalistview.html">基础 </a>
-                                </li>
-                                <li class="active">
-                                    <a href="datalistview-options.html">参数说明</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.datalistview}}
+                </h3>
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="datalistview.html">基础 </a>
+                        </li>
+                        <li class="active">
+                            <a href="datalistview-options.html">参数说明</a>
+                        </li>
+                    </ul>
                 </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="markdown">
-                            <pre><code class="html">$p.dataListView(Seletor, Options);</code></pre>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Options</h3>
-                        <hr>
-                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
-                            <thead>
-                                <tr>
-                                    <th width="200">参数</th>
-                                    <th>默认值</th>
-                                    <th width="100">数据类型</th>
-                                    <th>描述</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><mark>dataSource</mark></td>
-                                    <td>--</td>
-                                    <td>function</td>
-                                    <td>一个方法，定义dataListview显示的数据源</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>fnParams</mark></td>
-                                    <td>--</td>
-                                    <td>function</td>
-                                    <td>设置自定义请求参数</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>fnCall</mark></td>
-                                    <td>--</td>
-                                    <td>function</td>
-                                    <td>载入数据完成后执行的回调函数</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>sProcessing</mark></td>
-                                    <td>&lt;i class="fa fa-spinner fa-spin big"&gt;&lt;/i&gt;&nbsp;&nbsp;加载中</td>
-                                    <td>string</td>
-                                    <td>文字加载中的提示文字</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>bInitLoad</mark></td>
-                                    <td>true</td>
-                                    <td>boolean</td>
-                                    <td>是否初始化时载入数据</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>sTplHtml</mark></td>
-                                    <td>--</td>
-                                    <td>string</td>
-                                    <td>数据模板</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>sDataBody</mark></td>
-                                    <td>{<br/>
-                                        &nbsp;"ele": "div",<br/>
-                                        &nbsp;"cls": "dataListView_Wrap"<br/>
-                                        }</td>
-                                    <td>obejct</td>
-                                    <td>定义数据的显示节点及节点样式</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>sDom</mark></td>
-                                    <td>["D", "&lt;div style='display: block;' class='bottom'&gt;", "S", "T", "P", "&lt;/div&gt;"]</td>
-                                    <td>array</td>
-                                    <td>数据的展示顺序及结构[D:data 数据,S:select 每页显示多少,T:total 共计,P:paginate 分页]</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row  clear">
-                    <div class="col-md-12">
-                        <h3>Options.sDataBody</h3>
-                        <hr>
-                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
-                            <thead>
-                                <tr>
-                                    <th width="200">参数</th>
-                                    <th>默认值</th>
-                                    <th width="100">数据类型</th>
-                                    <th>描述</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><mark>ele</mark></td>
-                                    <td>div</td>
-                                    <td>string</td>
-                                    <td>数据填充的父节点</td>
-                                </tr>
-                                <tr>
-                                    <td><mark>cls</mark></td>
-                                    <td>dataListView_Wrap</td>
-                                    <td>string</td>
-                                    <td>数据填充父节点的class</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-                <!-- END PAGE CONTENT-->
             </div>
         </div>
-        <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
 
+        <div class="row">
+            <div class="col-md-12">
 
-    {{>fixtures/footer}}
-    <script type="text/javascript">
-        pagurian.call("modules/slider/app", function(app) {
-            app.page.index();
-        });
-    </script>
+                <div class="markdown">
+                    <pre><code class="html">$p.dataListView(Seletor, Options);</code></pre>
+                </div>
 
-    {{>fixtures/tracker}}
+            </div>
+        </div>
 
-</body>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Options</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th>默认值</th>
+                        <th width="100">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><mark>dataSource</mark></td>
+                        <td>--</td>
+                        <td>function</td>
+                        <td>一个方法，定义dataListview显示的数据源</td>
+                    </tr>
+                    <tr>
+                        <td><mark>fnParams</mark></td>
+                        <td>--</td>
+                        <td>function</td>
+                        <td>设置自定义请求参数</td>
+                    </tr>
+                    <tr>
+                        <td><mark>fnCall</mark></td>
+                        <td>--</td>
+                        <td>function</td>
+                        <td>载入数据完成后执行的回调函数</td>
+                    </tr>
+                    <tr>
+                        <td><mark>sProcessing</mark></td>
+                        <td>&lt;i class="fa fa-spinner fa-spin big"&gt;&lt;/i&gt;&nbsp;&nbsp;加载中</td>
+                        <td>string</td>
+                        <td>文字加载中的提示文字</td>
+                    </tr>
+                    <tr>
+                        <td><mark>bInitLoad</mark></td>
+                        <td>true</td>
+                        <td>boolean</td>
+                        <td>是否初始化时载入数据</td>
+                    </tr>
+                    <tr>
+                        <td><mark>sTplHtml</mark></td>
+                        <td>--</td>
+                        <td>string</td>
+                        <td>数据模板</td>
+                    </tr>
+                    <tr>
+                        <td><mark>sDataBody</mark></td>
+                        <td>{<br/>
+                            &nbsp;"ele": "div",<br/>
+                            &nbsp;"cls": "dataListView_Wrap"<br/>
+                            }</td>
+                        <td>obejct</td>
+                        <td>定义数据的显示节点及节点样式</td>
+                    </tr>
+                    <tr>
+                        <td><mark>sDom</mark></td>
+                        <td>["D", "&lt;div style='display: block;' class='bottom'&gt;", "S", "T", "P", "&lt;/div&gt;"]</td>
+                        <td>array</td>
+                        <td>数据的展示顺序及结构[D:data 数据,S:select 每页显示多少,T:total 共计,P:paginate 分页]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-</html>
+        <div class="row  clear">
+            <div class="col-md-12">
+                <h3>Options.sDataBody</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th>默认值</th>
+                        <th width="100">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><mark>ele</mark></td>
+                        <td>div</td>
+                        <td>string</td>
+                        <td>数据填充的父节点</td>
+                    </tr>
+                    <tr>
+                        <td><mark>cls</mark></td>
+                        <td>dataListView_Wrap</td>
+                        <td>string</td>
+                        <td>数据填充父节点的class</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/slider/app", function(app) {
+                app.page.index();
+            });
+        </script>
+    {{/inline}}
+
+{{/base}}

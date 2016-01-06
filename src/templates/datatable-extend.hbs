@@ -1,90 +1,65 @@
-{{>fixtures/doctype}}
-<head>
-	<title> {{data.page.datatables}}</title>
-	{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.datatables}}
 
-{{>fixtures/header}}
-
-
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
-
-
-   {{>fixtures/sidebar}}
-
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
-
-		<div class="page-content">
-
-			{{>fixtures/theme-panel}}
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.datatables}}
-					</h3>
-					<div class="tabs-wrap">
-					   <ul  class="nav nav-tabs">
-							<li>
-								<a href="datatable.html" >基础 </a>
-							</li>
-							<li  class="active">
-								<a href="datatable-extend.html" >细分</a>
-							</li>
-							<li>
-		                        <a href="datatable-summary.html" >汇总</a>
-		                    </li>
-							<li>
-		                        <a href="datatable-search.html" >搜索</a>
-		                    </li>
-							<li>
-		                        <a href="datatable-toolbar.html">工具栏</a>
-		                    </li>
-							<li>
-		                        <a href="datatable-options.html" >参数说明</a>
-		                    </li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-
-
-			<div class="row">
-				<div class="col-md-12">
-					<table id="my_table"></table>
-				</div>
-
-			</div>
-
-			<div class="row">
-                <div class="col-md-12">
-                    <h3>说明</h3>
-                    <ol>
-                        <li>给fnExtendDetails参数设置回调方法，方法返回显示的内容</li>
-                    </ol>
+    {{#*inline "pageContent"}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.datatables}}
+                </h3>
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+                        <li>
+                            <a href="datatable.html" >基础 </a>
+                        </li>
+                        <li  class="active">
+                            <a href="datatable-extend.html" >细分</a>
+                        </li>
+                        <li>
+                            <a href="datatable-summary.html" >汇总</a>
+                        </li>
+                        <li>
+                            <a href="datatable-search.html" >搜索</a>
+                        </li>
+                        <li>
+                            <a href="datatable-toolbar.html">工具栏</a>
+                        </li>
+                        <li>
+                            <a href="datatable-options.html" >参数说明</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
 
-			<div class="row">
-				<div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <table id="my_table"></table>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>说明</h3>
+                <ol>
+                    <li>给fnExtendDetails参数设置回调方法，方法返回显示的内容</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
 
 
-					<div class="markdown">
+                <div class="markdown">
 
 
 
 
-					<h3>HTML代码</h3>
-						<pre><code class="html">
-&lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;
-						</code></pre>
-						<h3>Javascript代码</h3>
-						<pre><code class="javascript">
-require('../../plugins/datatables/module');
-
+                    <h3>HTML代码</h3>
+<pre><code class="html">&lt;table id=&quot;my_table&quot;&gt;&lt;/table&gt;</code></pre>
+                    <h3>Javascript代码</h3>
+<pre><code class="javascript">require('../../plugins/datatables/module');
 var oTable = $p.dataTable(&quot;#my_table&quot;, {
     &quot;fnDataSource&quot;: model.getDataList,
     &quot;sClass&quot;: &quot;table-fixed&quot;,
@@ -98,10 +73,10 @@ var oTable = $p.dataTable(&quot;#my_table&quot;, {
 
         var aData = oTable.fnGetData(nTr);
         var sOut = &#39;&lt;table class=&quot;table&quot;&gt;&lt;tbody&gt;&#39;;
-        sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
-        sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
-        sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
-        sOut += &#39;&lt;/tbody&gt;&lt;/table&gt;&#39;;
+            sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
+            sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
+            sOut += &#39;&lt;tr&gt;&lt;td class=&quot;w50&quot;&gt;&lt;/td&gt;&lt;td &gt;&#39; + aData.keywords + &#39;-细分&lt;/td&gt;&lt;td class=&quot;w150&quot;&gt;&#39; + aData.searchEngine + &#39;&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;123&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;456&lt;/td&gt;&lt;td class=&quot;w150 t-a-r &quot;&gt;212&lt;/td&gt;&lt;/tr&gt;&#39;;
+            sOut += &#39;&lt;/tbody&gt;&lt;/table&gt;&#39;;
 
         fnCallback(sOut);
     },
@@ -130,45 +105,35 @@ var oTable = $p.dataTable(&quot;#my_table&quot;, {
         &quot;sTitle&quot;: &quot;访问次数(VV)&quot;,
         &quot;mData&quot;: &quot;visitViews&quot;
     }]
-});
+});</code></pre>
 
-						</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/keywords.json" target="_blank">keywords.json</a>
 
-						<h3>JSON 数据</h3>
-						<a href="/test/api/keywords.json" target="_blank">keywords.json</a>
+                    <h3>基于版本</h3>
+                    <p>[v1.9.4]</p>
 
-						<h3>基于版本</h3>
-						<p>[v1.9.4]</p>
+                    <h3>更多实例</h3>
 
-						<h3>更多实例</h3>
-
-						<a href="http://legacy.datatables.net/examples/" target="_blank">
-							 http://legacy.datatables.net/examples/
-						</a>
+                    <a href="http://legacy.datatables.net/examples/" target="_blank">
+                        http://legacy.datatables.net/examples/
+                    </a>
 
 
-					</div>
+                </div>
 
 
-					</div>
+            </div>
 
-				</div>
-			</div>
+        </div>
+    {{/inline}}
 
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/datatable/app", function(app) {
+                app.page.dataTableExtend();
+            });
+        </script>
+    {{/inline}}
 
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
-
-{{>fixtures/footer}}
-<script type="text/javascript">
-	pagurian.call("modules/datatable/app", function(app) {
-		app.page.dataTableExtend();
-	});
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}
