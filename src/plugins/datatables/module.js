@@ -368,33 +368,25 @@ define(function(require, exports, module) {
             if (this.options.oSearch) {
                 var searchId = this.options.oSearch.sInput;
                 var searchWord = this.options.oSearch.sParamName;
-                var search_keyword = "";
 
                 $(searchId).keyup(function(e) {
 
-                    var word = $.trim($(this).val()),
-                        isChange = search_keyword === word ? 0 : 1,
-                        isPush = false;
-                    if ((e.which === 13 || that.bLoadFinish) && isChange) {
+                    var $input = $(this);
+                    if ((e.which == 13 || that.bLoadFinish)) {
+                        setTimeout(function() {
+                            var word = $.trim($input.val());
 
-                        that.bLoadFinish = false;
-                        that.aApiParams[searchWord] = word;
-                        search_keyword = word;
-
-                        if (!$(seletor).is(":hidden")) {
-
+                            that.aApiParams[searchWord] = word;
                             that.update();
-                            if ($.isFunction(that.options.oSearch.fnCallback)) {
+                            if (typeof that.options.oSearch.fnCallback == "function") {
                                 that.options.oSearch.fnCallback(word);
                             }
-                        }
 
+                        }, 500);
+                        that.bLoadFinish = false;
                         return;
                     }
-
                 });
-
-
             }
 
             return this;
@@ -409,7 +401,6 @@ define(function(require, exports, module) {
         //清空表格数据
         this.clearTable = function() {
             $(seletor + " .table-summary").html("--");
-            this.table.fnClearTable();
         };
 
         //创建表格序号
