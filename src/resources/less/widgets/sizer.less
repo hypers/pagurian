@@ -7,7 +7,7 @@
     .pos(r);
     //关闭状态
     @pd: 18px;
-    @search-h: 36px; //搜索框的宽度
+    @search-h: 36px; //搜索框的高度
     @select-panel-w: 588px;
 
     .@{ns_sizzer}select-panel {
@@ -39,7 +39,7 @@
         .input-search {
             .d-ib;
             .fl;
-            width: 259px;
+            width: 260px;
 
             i {
                 margin: 10px 2px 4px 12px;
@@ -47,6 +47,7 @@
 
             input {
                 height: @search-h;
+                width: 100%;
             }
         }
 
@@ -208,7 +209,7 @@
     }
 
     .@{ns_sizzer}btn-text {
-        max-width: 74px;
+        max-width: 100%;
         .ellipsis-basic;
         .d-ib;
     }
