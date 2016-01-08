@@ -372,13 +372,13 @@ define(function(require, exports, module) {
                 $(searchId).keyup(function(e) {
 
                     var $input = $(this);
-                    if ((e.which == 13 || that.bLoadFinish)) {
+                    if ((e.which === 13 || that.bLoadFinish)) {
                         setTimeout(function() {
                             var word = $.trim($input.val());
 
                             that.aApiParams[searchWord] = word;
                             that.update();
-                            if (typeof that.options.oSearch.fnCallback == "function") {
+                            if (typeof that.options.oSearch.fnCallback === "function") {
                                 that.options.oSearch.fnCallback(word);
                             }
 

@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+.@{ns}breadcrumb {
+    width: 100%;
+    padding: 18px 0px;
+    margin: 0;
+
+    > li {
+        list-style-type: none;
+        .d-i;
+        color: @H500;
+        font-size: 14px;
+        font-weight: 300;
+
+        a {
+            color: @H500;
+        }
+
+        + li::before {
+            padding: 0px 3px 0 0;
+            color: @B900;
+            content: "\f105";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: 400;
+        }
+    }
+
+    .active {
+        color: @B900;
+    }
+
+    >.highlight{
+        .d-b;
+        font-size: 20px;
+        color: @B900;
+        padding-top: 18px;
+
+        &::before{
+            content: "";
+            padding: 0;
+        }
+    }
+}
