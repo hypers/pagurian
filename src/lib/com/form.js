@@ -235,12 +235,13 @@ define(function(require, exports, module) {
             }
 
             if (valid) {
-
                 if (handleSubmitParams) {
                     submitParams = handleSubmitParams.apply(this, submitParams);
                 }
-
                 handleSubmit.apply(this, submitParams);
+            } else {
+                //如果验证失败,重置按钮状态
+                that.complete();
             }
 
             if (this.options.isAjaxRequest) {
