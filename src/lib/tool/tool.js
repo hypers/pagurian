@@ -1,3 +1,6 @@
+/**
+ * Updated by hypers-godfery on 2015/1/6 添加isString方法
+ */
 define(function(require, exports, module) {
 
     var g = window;
@@ -48,6 +51,9 @@ define(function(require, exports, module) {
 
         isFunction: function(o) {
             return typeof o === "function";
+        },
+        isString:function(o){
+            return Object.prototype.toString.call(o) === '[object String]';
         },
 
         /**
