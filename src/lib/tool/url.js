@@ -9,11 +9,14 @@ define(function(require, exports, module) {
 
             for (i = 0; i < params.length; i++) {
                 val = params[i].split("=");
-                if (val[0] === paramName) {
-                    return unescape(val[1]);
+                if (val[0] == paramName) {
+                    return g[PagurianAlias].tool.decode(val[1]);
                 }
             }
             return null;
+        },
+        getReferrer: function() {
+            return document.referrer;
         },
         format: function(url) {
             if (!url) {
