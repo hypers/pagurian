@@ -441,7 +441,7 @@ define(function(require, exports, module) {
                 },
 
                 valid: function() {
-                    return this.size() == 0;
+                    return this.size() === 0;
                 },
 
                 size: function() {
@@ -451,11 +451,10 @@ define(function(require, exports, module) {
                 focusInvalid: function() {
                     if (this.settings.focusInvalid) {
                         try {
-                            $(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
-                                .filter(":visible")
-                                //.focus()
-                                // manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
-                                //.trigger("focusin");
+                            $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []).
+                            filter(":visible").focus().trigger("focusout");
+                            // manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+                            //.trigger("focusin");
                         } catch (e) {
                             // ignore IE throwing errors when focusing hidden elements
                         }
@@ -755,7 +754,8 @@ define(function(require, exports, module) {
 
                 optional: function(element) {
                     var value = $.trim(element.value);
-
+                    //bugfix:https://github.com/hypers/pagurian/issues/35
+                    $(".help-block[for='" + ($(element).attr("id") || element.name) + "']").removeClass("tip");
                     return !$.validator.methods.required.call(this, value, element) && "dependency-mismatch";
                 },
                 startRequest: function(element) {
