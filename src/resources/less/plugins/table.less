@@ -156,14 +156,7 @@ Responsive & Scrollable Tables
     margin: 0 !important;
     background-color: #fff;
 }
-.table-scrollable > .table > thead > tr > th,
-.table-scrollable > .table > tbody > tr > th,
-.table-scrollable > .table > tfoot > tr > th,
-.table-scrollable > .table > thead > tr > td,
-.table-scrollable > .table > tbody > tr > td,
-.table-scrollable > .table > tfoot > tr > td {
-    white-space: nowrap;
-}
+
 .table-scrollable > .table-bordered {
     border: 0;
 }
@@ -281,6 +274,8 @@ Bootstrap Tables
     th,
     td {
         padding: 10px 20px !important;
+        white-space: normal;
+        word-wrap: break-word;
     }
     clear: inherit !important;
     a {
