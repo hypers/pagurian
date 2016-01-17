@@ -281,7 +281,6 @@ define(function(require, exports, module) {
                                 });
                             }
 
-
                             //判断请求状态
                             if (a.code === 0 && a.result) {
                                 var status_text = "";
@@ -296,7 +295,6 @@ define(function(require, exports, module) {
                             } else if (a.code === 500) {
                                 $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
-
 
                             //如果数据为空就不显示底部的分页条
                             if (a && a.page && a.page.total > 0) {
@@ -412,6 +410,12 @@ define(function(require, exports, module) {
         //清空表格数据
         this.clearTable = function() {
             $(seletor + " .table-summary").html("--");
+        };
+
+        //销毁表格
+        this.destroy=function(){
+            this.table.fnDestroy();
+            this.container.empty();
         };
 
         //创建表格序号
