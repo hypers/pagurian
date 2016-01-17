@@ -355,7 +355,7 @@ define(function(require, exports, module) {
                     if (aoColumns[i].sTitle) {
                         aoColumns[i].sTitle += summary;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(p);
+                        $(seletor + " thead th:eq(" + i + ")").append(summary);
                     }
                     that.bShowSummary = true;
                 }
