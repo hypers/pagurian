@@ -266,12 +266,12 @@ define(function(require, exports, module) {
                                             return;
                                         }
 
-                                        oTable.fnOpen(nTr, "<div class='p10 t-a-c'>加载中...</div>", 'details');
+                                        oTable.fnOpen(nTr, "<div class='p10 t-a-c'>" + locale.sLoadingRecords + "</div>", 'details');
                                         /* Open this row */
                                         row_details.addClass("row-details-open disabled").removeClass("row-details-close");
                                         oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
 
-                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='icon icon-info icon-big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
+                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'>" + locale.sEmptyTable + "</div>", 'details');
                                             var ndetails = row_details.parents("tr").next().find(".details");
                                             row_details.removeClass("disabled");
                                             ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
@@ -336,21 +336,32 @@ define(function(require, exports, module) {
             this.container = $(seletor);
             $.extend(true, this.options, options);
 
-            //显示汇总信息
+
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var p = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var subtitle = "<p class='table-subtitle' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_subtitle_" + aoColumns[i].mData + "'>" + aoColumns[i].sSubtitle + "</p>";
 
+                //表头副标题
+                if (aoColumns[i].sSubtitle) {
+                    if (aoColumns[i].sTitle) {
+                        aoColumns[i].sTitle += subtitle;
+                    } else {
+                        $(seletor + " thead th:eq(" + i + ")").append(subtitle);
+                    }
+                }
+
+                //表头汇总指标
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
                     if (aoColumns[i].sTitle) {
-                        aoColumns[i].sTitle += p;
+                        aoColumns[i].sTitle += summary;
                     } else {
                         $(seletor + " thead th:eq(" + i + ")").append(p);
                     }
-
                     that.bShowSummary = true;
                 }
+
             }
 
 
