@@ -39,11 +39,11 @@ define(function(require, exports, module) {
         isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
 
         if (isIE10) {
-            jQuery('html').addClass('ie10'); // detect IE10 version
+            $('html').addClass('ie10'); // detect IE10 version
         }
 
         if (isIE10 || isIE9 || isIE8) {
-            jQuery('html').addClass('ie'); // detect IE10 version
+            $('html').addClass('ie'); // detect IE10 version
         }
 
 
@@ -171,14 +171,11 @@ define(function(require, exports, module) {
 
     };
 
-
-
     /**
      * 辅助函数来计算侧边栏高度固定侧边栏布局。
      */
     var _calculateFixedSidebarViewportHeight = function() {
-        var sidebarHeight = $(window).height() - $('.header').height() +
-            1;
+        var sidebarHeight = $(window).height() - $('.header').height() + 1;
         if ($('body').hasClass("page-footer-fixed")) {
             sidebarHeight = sidebarHeight - $('.footer').outerHeight();
         }
@@ -192,28 +189,22 @@ define(function(require, exports, module) {
      * 把手portlet的工具和行动
      */
     var doPortletTools = function() {
-        jQuery('body').on('click',
-            '.portlet > .portlet-title > .tools > a.remove',
-            function(e) {
-                e.preventDefault();
-                jQuery(this).closest(".portlet").remove();
-            });
-        jQuery('body').on('click',
-            '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand',
-            function(e) {
-                e.preventDefault();
-                var el = jQuery(this).closest(".portlet").children(
-                    ".portlet-body");
-                if (jQuery(this).hasClass("collapse")) {
-                    jQuery(this).removeClass("collapse").addClass(
-                        "expand");
-                    el.slideUp(200);
-                } else {
-                    jQuery(this).removeClass("expand").addClass(
-                        "collapse");
-                    el.slideDown(200);
-                }
-            });
+        $('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
+            e.preventDefault();
+            $(this).closest(".portlet").remove();
+        });
+        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', function(e) {
+            e.preventDefault();
+            var el = $(this).closest(".portlet").children(".portlet-body");
+
+            if ($(this).hasClass("collapse")) {
+                $(this).removeClass("collapse").addClass("expand");
+                el.slideUp(200);
+            } else {
+                $(this).removeClass("expand").addClass("collapse");
+                el.slideDown(200);
+            }
+        });
     };
 
     /**
@@ -223,9 +214,7 @@ define(function(require, exports, module) {
         if (!jQuery().uniform) {
             return;
         }
-        var test = $(
-            "input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)"
-        );
+        var test = $("input[type=checkbox]:not(.toggle), input[type=radio]:not(.toggle, .star)");
         if (test.size() > 0) {
             test.each(function() {
                 if ($(this).parents(".checker").size() === 0) {
@@ -242,7 +231,7 @@ define(function(require, exports, module) {
      * 处理 Bootstrap Tooltips.
      */
     var doTooltips = function() {
-        jQuery('.tooltips').tooltip();
+        $('.tooltips').tooltip();
     };
 
     /**
@@ -286,8 +275,7 @@ define(function(require, exports, module) {
      * 处理 popovers
      */
     var doPopovers = function() {
-        jQuery('.popovers').popover();
-
+        $('.popovers').popover();
     };
 
     /**
@@ -298,10 +286,10 @@ define(function(require, exports, module) {
         $('body').on('shown.bs.tab', '.nav.nav-tabs', function() {
             doSidebarAndContentHeight();
         });
+
         if (location.hash) {
             var tabid = location.hash.substr(1);
-            $('a[href="#' + tabid + '"]').parents(
-                '.tab-pane:hidden').each(function() {
+            $('a[href="#' + tabid + '"]').parents('.tab-pane:hidden').each(function() {
                 var tabid = $(this).attr("id");
                 $('a[href="#' + tabid + '"]').click();
             });
@@ -315,15 +303,12 @@ define(function(require, exports, module) {
      */
     var doFixInputPlaceholderForIE = function() {
         if (isIE8 || isIE9) {
-            jQuery(
-                'input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)'
-            ).each(function() {
+            $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function() {
 
-                var input = jQuery(this);
+                var input = $(this);
 
                 if (input.val() === '' && input.attr("placeholder") !== '') {
-                    input.addClass("placeholder").val(input
-                        .attr('placeholder'));
+                    input.addClass("placeholder").val(input.attr('placeholder'));
                 }
 
                 input.focus(function() {
@@ -334,8 +319,7 @@ define(function(require, exports, module) {
 
                 input.blur(function() {
                     if (input.val() === '' || input.val() === input.attr('placeholder')) {
-                        input.val(input.attr(
-                            'placeholder'));
+                        input.val(input.attr('placeholder'));
                     }
                 });
             });
@@ -365,9 +349,7 @@ define(function(require, exports, module) {
         var panel = $('.theme-panel');
 
         var setColor = function(color) {
-            $("#style_themes").attr("href", pagurian.path.app +
-                "resources/css/themes-" + (color ||
-                    "default") + ".css");
+            $("#style_themes").attr("href", pagurian.path.app + "resources/css/themes-" + (color || "default") + ".css");
             $.cookie('style_color', color);
         };
 
@@ -400,12 +382,8 @@ define(function(require, exports, module) {
 
         $('pre code').each(function() {
             var lines = $(this).text().split('\n').length;
-            var $numbering = $('<ul/>').addClass(
-                'pre-numbering');
-            $(this)
-                .addClass('has-numbering')
-                .parent()
-                .append($numbering);
+            var $numbering = $('<ul/>').addClass('pre-numbering');
+            $(this).addClass('has-numbering').parent().append($numbering);
             for (i = 1; i <= lines; i++) {
                 $numbering.append($('<li/>').text(i));
             }
@@ -509,12 +487,8 @@ define(function(require, exports, module) {
 
             //如果可视高度小于一级菜单高度时显示箭头
             if ((this.windowHeight - header_h) < first_h) {
-                first.prepend(
-                    '<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up "></i></a>'
-                );
-                first.append(
-                    '<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>'
-                );
+                first.prepend('<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up "></i></a>');
+                first.append('<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>');
                 first.css("height", this.windowHeight - header_h);
             } else {
                 first.css("height", first_h);
@@ -568,8 +542,7 @@ define(function(require, exports, module) {
                         first.hide();
                         second.hide();
                         third.hide();
-                        dom.find("li").removeClass(
-                            "active");
+                        dom.find("li").removeClass("active");
                     }
 
                     clearTimeout(k);
@@ -580,8 +553,6 @@ define(function(require, exports, module) {
                 second.hide();
                 third.hide();
             });
-
-
 
             //设置一级滚动事件
             this.setDropdownScroll(first);
@@ -603,14 +574,12 @@ define(function(require, exports, module) {
 
         //鼠标滚动事件
         this.dropdownMouseWheel = function(obj) {
+
             obj.unbind("mousewheel");
             obj.bind('mousewheel', function(event, delta) {
 
-
-                var scroll_top = obj.find(
-                    ".dropdown-scroll-top");
-                var scroll_bottom = obj.find(
-                    ".dropdown-scroll-bottom");
+                var scroll_top = obj.find(".dropdown-scroll-top");
+                var scroll_bottom = obj.find(".dropdown-scroll-bottom");
 
                 var dir = delta > 0 ? 'up' : 'down';
 
@@ -620,8 +589,7 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                var item = $(this).children(
-                    ".dropdown-menu");
+                var item = $(this).children(".dropdown-menu");
                 var t = parseInt(item.css("top"));
                 var _l = item.children("li").length;
 
@@ -636,8 +604,7 @@ define(function(require, exports, module) {
                     item.css("top", t);
                 } else {
                     scroll_top.removeClass("disabled");
-                    if (t <= ($(this).height() - (_l *
-                            item_h) - arrow_h)) {
+                    if (t <= ($(this).height() - (_l * item_h) - arrow_h)) {
                         scroll_bottom.addClass("disabled");
                         return false;
                     }
@@ -658,10 +625,7 @@ define(function(require, exports, module) {
             obj.find(".dropdown-scroll-top").unbind();
             obj.find(".dropdown-scroll-top").hover(function() {
 
-
-
-                obj.find(".dropdown-scroll-bottom").removeClass(
-                    "disabled");
+                obj.find(".dropdown-scroll-bottom").removeClass("disabled");
                 var scroll = $(this);
 
                 hideChild(scroll);
@@ -685,8 +649,7 @@ define(function(require, exports, module) {
             obj.find(".dropdown-scroll-bottom").unbind();
             obj.find(".dropdown-scroll-bottom").hover(function() {
 
-                obj.find(".dropdown-scroll-top").removeClass(
-                    "disabled");
+                obj.find(".dropdown-scroll-top").removeClass("disabled");
 
                 var scroll = $(this);
                 hideChild(scroll);
@@ -696,8 +659,7 @@ define(function(require, exports, module) {
 
                 timer = setInterval(function() {
 
-                    if (t <= (obj.height() - (_l *
-                            item_h) - arrow_h)) {
+                    if (t <= (obj.height() - (_l * item_h) - arrow_h)) {
                         scroll.addClass("disabled");
                         clearInterval(timer);
                         return;
@@ -712,8 +674,7 @@ define(function(require, exports, module) {
 
 
             function hideChild(activeObj) {
-                var obj_dropdown = activeObj.parents(
-                    ".dropdown-wrap");
+                var obj_dropdown = activeObj.parents(".dropdown-wrap");
                 var level = obj_dropdown.data("level");
                 if (level === 1) {
                     second.hide();
@@ -750,8 +711,7 @@ define(function(require, exports, module) {
                     $(this).addClass("active");
                     var offset = $(this).offset();
                     var top = offset.top;
-                    var item = $(this).find(
-                        ".dropdown-menu:eq(0)");
+                    var item = $(this).find(".dropdown-menu:eq(0)");
                     var l = item.children("li").length;
                     var total_h = item_h * l; //二级菜单高度
 
@@ -759,29 +719,19 @@ define(function(require, exports, module) {
                     subObj.css("top", top - 1);
 
                     //如果可视高度小于二级菜单高度时显示箭头
-                    if (dropdown.windowHeight < (total_h +
-                            top)) {
+                    if (dropdown.windowHeight < (total_h + top)) {
 
                         if (total_h > scroll_min_h) {
-                            subObj.prepend(
-                                '<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up"></i></a>'
-                            );
-                            subObj.append(
-                                '<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>'
-                            );
+                            subObj.prepend('<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up"></i></a>');
+                            subObj.append('<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>');
                         }
 
-                        var _total_h = dropdown.windowHeight -
-                            top; //二级菜单可显示的高度
+                        var _total_h = dropdown.windowHeight - top; //二级菜单可显示的高度
 
                         if (scroll_min_h > _total_h) {
-                            subObj.css("height",
-                                scroll_min_h);
-                            subObj.css("top", top - (
-                                scroll_min_h -
-                                _total_h));
+                            subObj.css("height", scroll_min_h);
+                            subObj.css("top", top - (scroll_min_h - _total_h));
                         } else {
-
                             subObj.css("height", _total_h);
                         }
 
