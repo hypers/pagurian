@@ -1,13 +1,12 @@
 .checker {
     margin-top: -4px !important;
-    margin-right: 0 !important;
+    margin-right: 0;
 }
-.form-horizontal{
+.form-horizontal {
     .radio > span {
         margin-top: 2px;
     }
 }
-
 .checker input,
 .radio input {
     outline: none !important;
@@ -20,7 +19,7 @@ div.checker.disabled:hover,
 div.radio.disabled:hover {
     cursor: not-allowed;
 }
-.checkboxs {
+.checkboxes {
     border: 1px solid #b5b5b5;
     height: 150px;
     overflow: auto;
@@ -32,13 +31,12 @@ div.radio.disabled:hover {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        -ms-text-overflow: ellipsis;
-        -o-text-overflow: ellipsis;
-        /* Opera */
-        -moz-binding: url("ellipsis.xml#ellipsis");
-        /*FireFox*/
         &:hover {
             background: #ddefe5;
         }
     }
+}
+.checkbox-wrap {
+    border: 1px solid #ddd;
+    padding: 10px;
 }

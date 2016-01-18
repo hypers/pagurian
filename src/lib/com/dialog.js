@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
     var g = window;
     var template = require("../tpl/dialog.tpl");
@@ -15,13 +15,13 @@ define(function (require, exports, module) {
         function resetForm(form) {
 
             var form_element_list = form.find("input,textarea");
-            form_element_list.each(function () {
+            form_element_list.each(function() {
                 if ($(this).attr('type') === "text" || $(this).attr('type') === "hidden" || $(this).get(0).tagName === "TEXTAREA") {
                     $(this).val("");
                 }
             });
 
-            form.find(".help-block").each(function () {
+            form.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
                     $(this).text(tip).addClass("tip");
@@ -52,7 +52,7 @@ define(function (require, exports, module) {
          * @param  {Object} options 配置项
          * @return {Object}    Dialog
          */
-        this.init = function (seletor, options) {
+        this.init = function(seletor, options) {
 
             var modal = this;
 
@@ -67,7 +67,7 @@ define(function (require, exports, module) {
             var form = $("#modal" + _id + " form");
             if (seletor) {
                 //给按钮绑定事件
-                $(document).delegate(seletor, 'click', function () {
+                $(document).delegate(seletor, 'click', function() {
                     var params = $(this).data("params");
                     modal.params = eval("(" + params + ")") || {};
                     modal.show();
@@ -78,9 +78,10 @@ define(function (require, exports, module) {
             }
 
             this.element = $("#modal" + _id);
+            this.element.addClass(options.className);
 
             //提交按钮绑定事件
-            this.submitButton = $("#btn_submit" + _id).click(function () {
+            this.submitButton = $("#btn_submit" + _id).click(function() {
 
                 var data = form.serializeArray() || [];
                 //jquery.validate 验证表单
@@ -103,7 +104,7 @@ define(function (require, exports, module) {
             });
 
             //取消按钮绑定事件
-            this.cancelButton = $("#btn_cancel" + _id).click(function () {
+            this.cancelButton = $("#btn_cancel" + _id).click(function() {
                 if ($.isFunction(options.cancel)) {
                     options.cancel(modal, modal.params);
                 }
@@ -117,7 +118,7 @@ define(function (require, exports, module) {
          * 这个时候，你如果需要把按钮恢复正常状态，就需要调用complete方法
          * @return {Object}  Dialog
          */
-        this.complete = function () {
+        this.complete = function() {
             $("#modal" + _id + " .submit-waiting").html('');
             $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
 
@@ -128,7 +129,7 @@ define(function (require, exports, module) {
          * 显示Dialog
          * @return {Object} Dialog
          */
-        this.show = function () {
+        this.show = function() {
 
             resetForm($("#modal" + _id + " form"));
             $('#modal' + _id + " .submit-waiting").html("");
@@ -139,8 +140,7 @@ define(function (require, exports, module) {
             $("#whisper" + _id).html("").show();
 
             //调整Modal的高度
-            setTimeout(function () {
-
+            setTimeout(function() {
                 var modal_body = $('#modal' + _id + ' .modal-body');
                 //modal 滚动高度
                 var available_height = modal_body.height();
@@ -168,7 +168,7 @@ define(function (require, exports, module) {
          * 隐藏Dialog
          * @return {Object} Dialog
          */
-        this.hide = function () {
+        this.hide = function() {
             $('#modal' + _id).modal('hide');
             return this;
         };
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
          * @param  {String} type    信息类型：info,error
          * @return {Object}         Dialog
          */
-        this.showWhisper = function (message, type) {
+        this.showWhisper = function(message, type) {
 
             var $whisper = $("#whisper" + _id).html(message).show();
             var className = {
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
 
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
             clearTimeout(timer);
-            timer = setTimeout(function () {
+            timer = setTimeout(function() {
                 $whisper.html("").hide();
             }, 3000);
 
@@ -201,7 +201,7 @@ define(function (require, exports, module) {
     /**
      *
      */
-    g[PagurianAlias].dialog = function (seletor, options) {
+    g[PagurianAlias].dialog = function(seletor, options) {
 
         //当只传递一个参数的情况下，则不绑定click
         if (arguments.length === 1) {
