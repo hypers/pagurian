@@ -75,6 +75,10 @@ define(function(require, exports, module) {
                         options.initForm(modal, form, modal.params);
                     }
                 });
+
+                if ($.isFunction(options.preload)) {
+                    options.preload(modal);
+                }
             }
 
             this.element = $("#modal" + _id);
