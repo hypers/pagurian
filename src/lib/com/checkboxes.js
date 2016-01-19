@@ -16,23 +16,23 @@ define(function(require, exports, module) {
 
             this.container.on("click", "input[type='checkbox']", function() {
 
-                that.actives = [];
                 var $input = $(this);
-                var active = {
+                var checkedItem = {
                     value: $input.val(),
                     text: $input.data("text"),
                     checked: $input.is(":checked")
                 };
-                $(".checkbox-item input").each(function(index) {
-                    if ($(this).is(":checked")) {
-                        that.actives.push({
-                            value: $(this).val(),
-                            text: $(this).data("text")
-                        });
+
+                //修改被点击的checkbox选中状态
+                for (var i = 0; i < that.items.length; i++) {
+                    if (that.items[i].value.toString() === $input.val()) {
+                        that.items[i].checked = $input.is(":checked");
                     }
-                });
+                }
+
+                //执行回调方法
                 if ($.isFunction(options.click)) {
-                    options.click(active, that.actives);
+                    options.click(checkedItem, that.getCheckedItems());
                 }
 
             });
@@ -42,7 +42,6 @@ define(function(require, exports, module) {
         this.load = function(options) {
 
             this.items = options.items || [];
-            this.actives = options.actives || [];
             this.name = options.name;
 
             var item;
@@ -57,10 +56,8 @@ define(function(require, exports, module) {
                     'data-text="' + this.items[i].text + '"'
                 ];
 
-                for (var j = 0; j < this.actives.length; j++) {
-                    if (this.actives[j].value == this.items[i].value) {
-                        item.push('checked=checked');
-                    }
+                if (this.items[i].checked) {
+                    item.push('checked=checked');
                 }
                 item.push('/> ' + this.items[i].text + '</label>');
                 this.container.append(item.join(" "));
@@ -94,13 +91,22 @@ define(function(require, exports, module) {
 
         //获取所有选项
         this.getItems = function() {
-            return this.actives;
+            return this.items;
         };
 
         //获取选择的选项
-        this.getActives = function() {
-            return this.actives;
+        this.getCheckedItems = function() {
+
+            var checkedItems = [];
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].checked) {
+                    checkedItems.push(this.items[i]);
+                }
+            }
+
+            return checkedItems;
         };
+
 
         //销毁
         this.destroy = function() {
