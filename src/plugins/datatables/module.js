@@ -145,7 +145,7 @@ define(function(require, exports, module) {
                         if (!$.isFunction(params[key])) {
 
                             //如果是一个数组的，就设置多个值
-                            if (typeof params[key] === "object") {
+                            if ($.isArray(params[key])) {
                                 for (var j = 0; j < params[key].length; j++) {
                                     aApiParams.push({
                                         "name": key,
