@@ -16,6 +16,7 @@ define(function(require, exports, module) {
 
             this.container.on("click", "input[type='checkbox']", function() {
 
+
                 var $input = $(this);
                 var checkedItem = {
                     value: $input.val(),
@@ -36,18 +37,23 @@ define(function(require, exports, module) {
                 }
 
             });
+
+            return this;
         };
 
         //载入数据
-        this.load = function(options) {
+        this.load = function(data) {
 
-            this.items = options.items || [];
-            this.name = options.name;
-
-            var item;
-
+            this.items = [];
+            this.name = data.name;
             this.container.empty();
-            for (var i = 0; i < this.items.length; i++) {
+
+            var item, i;
+            for (i = 0; i < data.items.length; i++) {
+                this.items.push($.extend({}, data.items[i]));
+            }
+
+            for (i = 0; i < this.items.length; i++) {
 
                 item = [
                     '<label class="checkbox-item" ><input type="checkbox"',
@@ -68,17 +74,19 @@ define(function(require, exports, module) {
                 this.container.find("input[type='checkbox']").uniform();
             }
 
-
+            return this;
         };
 
         //选中全部
         this.checkAll = function() {
             this.check(true);
+            return this;
         };
 
         //取消选中全部
         this.uncheckAll = function() {
             this.check(false);
+            return this;
         };
 
         this.check = function(flag) {
@@ -106,7 +114,6 @@ define(function(require, exports, module) {
 
             return checkedItems;
         };
-
 
         //销毁
         this.destroy = function() {
