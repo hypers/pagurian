@@ -163,6 +163,8 @@ define(function(require, exports, module) {
                     modal_body.css("max-height", content_height);
                 }
 
+                modal_body.scrollTop(0);
+
             }, 200);
 
             return this;
