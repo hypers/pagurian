@@ -702,6 +702,7 @@ define(function(require, exports, module) {
                 },
 
                 idOrName: function(element) {
+                    return element.name || element.id;
                     return this.groups[element.name] || (this.checkable(element) ? element.name : element.id || element.name);
                 },
 
