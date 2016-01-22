@@ -99,6 +99,7 @@ define(function(require, exports, module) {
             $elements.each(function(index) {
                 var $that = $(this);
                 var name = $that.attr("name");
+                if (!name) return;
                 var value = getValue(name);
 
                 if ($that.is("select")) {
