@@ -1,23 +1,12 @@
-{{#>base title=data.page.sizer}}
+{{#>base title=data.page.sizer appId="Sizer"}}
+
     {{#*inline "pageContent"}}
         <div class="row">
             <div class="col-md-12">
                 <h3 class="page-title">
                     {{data.page.sizer}}
                 </h3>
-                <div class="tabs-wrap">
-                    <ul class="nav nav-tabs">
-                        <li>
-                            <a href="sizer-single.html">单选 </a>
-                        </li>
-                        <li>
-                            <a href="sizer-multiple.html">多选 </a>
-                        </li>
-                        <li class="active">
-                            <a href="sizer-options.html">参数说明</a>
-                        </li>
-                    </ul>
-                </div>
+                {{> fixtures/tab-sizer options=true}}
             </div>
         </div>
 
