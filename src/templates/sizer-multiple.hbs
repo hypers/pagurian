@@ -7,19 +7,13 @@
                 <h3 class="page-title">
                     {{data.page.sizer}}
                 </h3>
-                {{> fixtures/tab-sizer multipleHasPanel=true}}
+                {{> fixtures/tab-sizer multiple=true}}
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet box default sizer-demo-wrap-mul">
-                    <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w300 t-a-l">版本</button>
-                    <div id="sizerPanel" class="sizer-result-wrap w300">
-                        <div class="sizer-result-title">已选的版本</div>
-                        <div class="sizer-result-content-wrap">
-                            <div class="sizer-result-content"></div>
-                        </div>
-                    </div>
+                    <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn">版本</button>
                 </div>
             </div>
         </div>
@@ -83,7 +77,7 @@
     {{#*inline "appScript"}}
         <script type="text/javascript">
             pagurian.call("modules/sizer/app", function (app) {
-                app.page.multipleHasPanel();
+                app.page.multiple();
             });
         </script>
     {{/inline}}

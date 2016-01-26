@@ -21,7 +21,8 @@ define(function (require, exports, module) {
      */
     function Sizer(selector, options, chooseDatas) {
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl"),
-            sizerFooterTpl = require("./tpl/sizerFooter.tpl");
+            sizerFooterTpl = require("./tpl/sizerFooter.tpl"),
+            sizerButton = require("./tpl/sizerButton.tpl");
         var that = this,
             _nameStr = "sizer",
             _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
@@ -33,6 +34,8 @@ define(function (require, exports, module) {
             _isFirstClick = true;
         oLanguage.nameStr = _nameStr;
         oLanguage.id = _id;
+        that.promtText = $.trim($(selector).text());
+        oLanguage.promtText = $.trim($(selector).text());
         selector = (selector instanceof jQuery) ? selector.selector : selector;
         //版本
         this.version = "2016.01.14.1054";
@@ -109,7 +112,6 @@ define(function (require, exports, module) {
             }
             bindEvent(selector);
             drawDom(selector);
-            that.promtText = $("#" + that.sizerName).find("button").attr("title");
             if (that.options.isExpand) {
                 that.expandPanel();
             }
@@ -128,10 +130,9 @@ define(function (require, exports, module) {
                 '<label id="' + _nameStr + '_selectAll' + _id + '"><input type="checkbox">' + oLanguage.chooseAll + '</label>' :
                 '<a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">' + oLanguage.clearSingle + '</a>';
             oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
-
+            $(selector).empty().attr('title', oLanguage.promtText).append($p.tpl($(sizerButton).html(), oLanguage));
             _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
             $(selector).wrap(_sizerWrap);
-
             var sizerSelectPanel = $($p.tpl(sizerPanelTpl, oLanguage));
             sizerSelectPanel.find(".sizer-btn-group").append(_topBtn);
             if (that.options.isMultiple) {
@@ -185,7 +186,6 @@ define(function (require, exports, module) {
                             return "" + _data[_dataValue] !== "" + o[_dataValue];
                         });
                     }
-                    //console.log(that._tmpSelectDatas);
                     if ($.isFunction(that.options.callbackOption)) {
                         that.options.callbackOption(_data, $checkBox.is("checked"));
                     }
@@ -221,6 +221,7 @@ define(function (require, exports, module) {
                         _selects.push(new SizerData($o.data("key"), $o.val()));
                     });
                     if (_isFirstClick) {
+                        _isFirstClick = false;
                         that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
                     }
                     if ($(this).find('[type="checkbox"]').is(':checked')) {
@@ -243,7 +244,6 @@ define(function (require, exports, module) {
                             }
                         }
                         that._tmpSelectDatas = _newSelectDats;
-                        console.log(that._tmpSelectDatas);
                     }
                     uniForm();
                 });
@@ -322,7 +322,7 @@ define(function (require, exports, module) {
          * @param text 需要设置的文字
          */
         var singleSetText = function (text) {
-            var title = text !== ( that.promtText && !that.options.isMultiple ) ? that.promtText + ':' + text : text;
+            var title = text !== ( that.promtText && !that.options.isMultiple ) ? oLanguage.promtText + ':' + text : text;
             $("#" + that.sizerName).find("span.sizer-btn-text").empty().append(text);
             $("#" + that.sizerName).find("button").attr("title", title);
         };
@@ -441,7 +441,7 @@ define(function (require, exports, module) {
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"]').prop("checked", false);
                 _value = $.isArray(value) ? value[0] : value;
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"][value="' + _value[that.options.dataMapping.value] + '"]').prop("checked", "checked").uniform();
-                singleSetText(_value[that.options.dataMapping.name] || that.promtText);
+                singleSetText(_value[that.options.dataMapping.name] || oLanguage.promtText);
                 that._tmpSelectDatas = that.selectDatas = [_value];
                 return;
             }
@@ -495,7 +495,7 @@ define(function (require, exports, module) {
                 return this;
             }
             //单选
-            singleSetText(that.promtText);
+            singleSetText(oLanguage.promtText);
             this.loadData();
             return this;
         };
@@ -531,7 +531,7 @@ define(function (require, exports, module) {
             if (!that.options.isMultiple) {
                 $("#" + that.sizerName + " .sizer-data-list-li").removeClass("selected");
                 that.selectDatas = [];
-                singleSetText(that.promtText);
+                singleSetText(oLanguage.promtText);
                 if ($.isFunction(that.options.callbackClean)) {
                     that.options.callbackClean(that._tmpSelectDatas);
                 }
@@ -647,7 +647,7 @@ define(function (require, exports, module) {
                 that.chooseData(data);
                 return this;
             },
-            onBind: function (eventName, call) {
+            on: function (eventName, call) {
                 if ($.isFunction(that.options[eventName]) || that.options[eventName] === null) {
                     that.options[eventName] = call;
                 }

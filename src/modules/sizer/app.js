@@ -94,5 +94,36 @@ define(function (require, exports, module) {
         var sizer = $p.sizer("#sizer-multiple", options, selectDatas);
     };
 
+    /**
+     * 多选按钮含有展示面板
+     */
+    app.page.multipleHasPanel = function () {
+        var options = {
+            isMultiple: true,
+            dataSource: model.getSizerData,//数据源
+            style: "d-ib" //筛选器自定义class
+        };
+        var sizer = $p.sizer($("#sizer-multiple"), options)
+            .on('callbackSubmit', function (selectDatas, allDatas) {
+                //console.log("Submit");
+                //console.log(selectDatas);
+                //console.log(allDatas);
+                appendSpan("#sizerPanel", selectDatas);
+            });
+
+        /**
+         * 选择器
+         * @param selector
+         * @param selectDatas
+         */
+        function appendSpan(selector, selectDatas) {
+            var spans = [];
+            for (var i = 0; i < selectDatas.length; i++) {
+                spans.push('<span>' + selectDatas[i].name + '</span>');
+            }
+            $(selector).find('.sizer-result-content').empty().append(spans.join(''));
+        }
+    };
+
     module.exports = app;
 });
