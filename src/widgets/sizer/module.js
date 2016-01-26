@@ -126,7 +126,7 @@ define(function (require, exports, module) {
             var _sizerWrap = '',
                 _topBtn = that.options.isMultiple ?
                 '<label id="' + _nameStr + '_selectAll' + _id + '"><input type="checkbox">' + oLanguage.chooseAll + '</label>' :
-                '<a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">' + oLanguage.clearSingle + '</a>'
+                '<a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">' + oLanguage.clearSingle + '</a>';
             oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
 
             _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
@@ -239,7 +239,7 @@ define(function (require, exports, module) {
                                 }
                             }
                             if (isAdd) {
-                                _newSelectDats.push(_oldSelectDatas[i])
+                                _newSelectDats.push(_oldSelectDatas[i]);
                             }
                         }
                         that._tmpSelectDatas = _newSelectDats;
@@ -343,7 +343,7 @@ define(function (require, exports, module) {
                 var _type = that.options.isMultiple ? "checkbox" : "radio";
                 var _tpl = '',
                     _liCls = ((i + 1) % 2 === 0 ) ? 'mr-n' : '';
-                _tpl += '<li class="sizer-data-list-li ' + _liCls + '">'
+                _tpl += '<li class="sizer-data-list-li ' + _liCls + '">';
                 _tpl += '<label title="' + allDatas[i][that.options.dataMapping.name] + '"><input type="' + _type + '" value="' + allDatas[i][that.options.dataMapping.value] + '" data-key="' + allDatas[i][that.options.dataMapping.name] + '"';
                 if (chooseDatas) {
                     for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
@@ -364,7 +364,7 @@ define(function (require, exports, module) {
         var uniForm = function () {
             that.container.find("input[type='checkbox']").uniform();
             that.container.find("input[type='radio']").uniform();
-        }
+        };
 
         var getSelectDatas = function () {
             var _selectDatas = [];
@@ -376,7 +376,7 @@ define(function (require, exports, module) {
                 _selectDatas.push(oValue);
             });
             return _selectDatas;
-        }
+        };
 
         /**
          * 打开面板
@@ -417,7 +417,7 @@ define(function (require, exports, module) {
                 var _result = resp.result || {};
                 var _datas = $.isArray(_result) ? _result : _result.items || [];
                 if (_datas.length > 8) {
-                    $listWrap.addClass("scollbar")
+                    $listWrap.addClass("scollbar");
                 }
                 that.allDatas = _datas;
                 chooseDatas = chooseDatas ? chooseDatas : [];
@@ -435,10 +435,11 @@ define(function (require, exports, module) {
          * string:"all"全选,"null"全不选
          */
         this.chooseData = function (value) {
-            var $container = $('#' + that.sizerName);
+            var $container = $('#' + that.sizerName),
+                _value;
             if (!that.options.isMultiple) {
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"]').prop("checked", false);
-                var _value = $.isArray(value) ? value[0] : value;
+                _value = $.isArray(value) ? value[0] : value;
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"][value="' + _value[that.options.dataMapping.value] + '"]').prop("checked", "checked").uniform();
                 singleSetText(_value[that.options.dataMapping.name] || that.promtText);
                 that._tmpSelectDatas = that.selectDatas = [_value];
@@ -459,18 +460,6 @@ define(function (require, exports, module) {
                 var _valueStr = that.options.dataMapping.value,
                     _selectDatas = [];
 
-                /**
-                 * 通过id获取已选中的对象
-                 * @param id
-                 * @returns {*}
-                 * @private
-                 */
-                function _getData(id) {
-                    return $.grep(that.allDatas, function (value) {
-                        return "" + id === "" + value[_valueStr];
-                    })[0];
-                }
-
                 for (var i = 0; i < value.length; i++) {
                     _value = value[i];
                     $('#' + that.sizerName + ' .sizer-data-list [type="checkbox"][value="' + _value[_valueStr] + '"]').prop("checked", "checked");
@@ -479,8 +468,20 @@ define(function (require, exports, module) {
                 that.selectDatas = that._tmpSelectDatas = _selectDatas;
             }
 
+            /**
+             * 通过id获取已选中的对象
+             * @param id
+             * @returns {*}
+             * @private
+             */
+            function _getData(id) {
+                return $.grep(that.allDatas, function (value) {
+                    return "" + id === "" + value[_valueStr];
+                })[0];
+            }
+
             uniForm();
-        }
+        };
 
         /**
          * 重新拉取数据
@@ -640,7 +641,7 @@ define(function (require, exports, module) {
                 return that.allDatas;
             },
             getSelectDatas: function () {
-                return that.selectDatas
+                return that.selectDatas;
             },
             chooseData: function (data) {
                 that.chooseData(data);
@@ -664,7 +665,7 @@ define(function (require, exports, module) {
             },
             expandPanel: that.expandPanel,
             update: that.update
-        }
+        };
     }
 
     /**
