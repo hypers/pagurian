@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    require('./js/ion.rangeSlider');
+    require('./2.1.2/ion.rangeSlider');
 
     function Slider(seletor, options) {
 
