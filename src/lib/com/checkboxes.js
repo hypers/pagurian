@@ -62,9 +62,15 @@ define(function(require, exports, module) {
                     'data-text="' + this.items[i].text + '"'
                 ];
 
+                //选中
                 if (this.items[i].checked) {
                     item.push('checked=checked');
                 }
+                //禁用
+                if (this.items[i].disabled) {
+                    item.push('disabled=true');
+                }
+
                 item.push('/> ' + this.items[i].text + '</label>');
                 this.container.append(item.join(" "));
             }
