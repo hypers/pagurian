@@ -86,6 +86,7 @@ define(function (require, exports, module) {
             style: "", //筛选器自定义class
             processing: oLanguage.processing, //loading默认文字
             search: oLanguage.search, //搜索框默认文字
+            matchCase: true,
             callbackExpand: null, //面板展开时的回调
             callbackClose: null, //面板关闭时的回调
             callbackOption: null, //点击选项的回调
@@ -100,6 +101,7 @@ define(function (require, exports, module) {
         //初始化组件
         var init = function () {
             that.options = $.extend(that.options, options);
+            that.matchCase = that.options.matchCase;
             if (that.options.isMultiple) {
                 that._tmpSelectDatas = []; //暂存数据
                 that.isFirstClick = true; //是否为第一次点击
@@ -545,10 +547,11 @@ define(function (require, exports, module) {
                 _datas = that.allDatas,
                 _tempDatas = [],
                 _tempSelectDatas = [];
-            word = $.trim(word);
+            word = that.matchCase ? $.trim(word).toUpperCase() : $.trim(word);
             $("#" + _nameStr + "_datalist" + _id).empty();
             for (var i = 0, len = _datas.length; i < len; i++) {
-                if (_datas[i][that.options.dataMapping.name].indexOf(word) <= -1) {
+                var _str = that.matchCase ? _datas[i][that.options.dataMapping.name].toUpperCase() : _datas[i][that.options.dataMapping.name];
+                if (_str.indexOf(word) <= -1) {
                     continue;
                 }
                 _tempDatas.push(_datas[i]);
