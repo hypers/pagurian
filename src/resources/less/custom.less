@@ -295,3 +295,30 @@ mark{
     font-size: 13px;
     text-align: center;
 }
+
+//SIZER结果展示面板
+.@{ns_sizer}result-wrap {
+    margin-top: 16px;
+    height: 120px;
+    padding: 14px 20px;
+    background: @B050;
+
+    .@{ns_sizer}result-title {
+        margin-bottom: 14px;
+    }
+
+    .@{ns_sizer}result-content-wrap{
+        min-height: 20px;
+        max-height: 60px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .@{ns_sizer}result-content {
+        span {
+            color: @H500;
+            .d-ib;
+            margin-right: 20px;
+        }
+    }
+}

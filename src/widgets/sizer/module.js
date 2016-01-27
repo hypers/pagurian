@@ -1,10 +1,6 @@
 /**
  * Created by hypers-godfery on 2015/10/14.
- * Update by hypers-godfery on 2015/11/23.
- * Update by hypers-godfery on 2015/12/5.
- * 1.增加了sizer组件对新数据的支持,(同时支持老数据)
- * 2.修复了sizer组件单选情况下默认选中有选项，而按钮中的文字没有被选项name所覆盖的bug
- * Update by hypers-godfery on 2016/1/7.
+ * Update by hypers-godfery on 2016/1/27 重构组件
  */
 define(function (require, exports, module) {
     var g = window,
@@ -38,7 +34,7 @@ define(function (require, exports, module) {
         oLanguage.promtText = $.trim($(selector).text());
         selector = (selector instanceof jQuery) ? selector.selector : selector;
         //版本
-        this.version = "2016.01.14.1054";
+        this.version = "2016.01.27.1029";
         //id
         this.sizerName = _nameStr + _id;
         //提示文字
@@ -71,7 +67,6 @@ define(function (require, exports, module) {
          * callbackSearch: function(datas){},//搜索框录入回调
          * callbackClean: function(){},//点击清除/清除选择的回调
          * ======仅isMultiple为true时有效========
-         * callbackSelectAll: function(){},//全选时的回调
          * callbackSubmit: function(){},//确认按钮回调
          * callbackCancel: function(){}}//取消按钮回调
          * }
