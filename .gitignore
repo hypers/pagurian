@@ -6,3 +6,5 @@ node_modules/
 dist/
 .idea/
 _site
+pagurian.iml
+src/widgets/sizer/_module.js

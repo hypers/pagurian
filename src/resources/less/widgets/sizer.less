@@ -1,8 +1,8 @@
 @charset "utf-8";
 @import "../functions";
 
-@ns_sizzer: sizer-;
-.@{ns_sizzer}wrap {
+@ns_sizer: sizer-;
+.@{ns_sizer}wrap {
     display: inline-block;
     .pos(r);
     //关闭状态
@@ -10,7 +10,7 @@
     @search-h: 36px; //搜索框的高度
     @select-panel-w: 588px;
 
-    .@{ns_sizzer}select-panel {
+    .@{ns_sizer}select-panel {
         border: 1px solid @B500;
         .pos(a);
         .d-n;
@@ -18,28 +18,27 @@
         background: #ffffff;
         z-index: 99;
     }
-    .@{ns_sizzer}top {
+    .@{ns_sizer}top {
         padding: @pd;
     }
-    .@{ns_sizzer}select-panel {
-        .@{ns_sizzer}search-wrap {
+    .@{ns_sizer}select-panel {
+        .@{ns_sizer}search-wrap {
             .clearfix;
         }
 
-        &.@{ns_sizzer}multiple {
-            .@{ns_sizzer}top {
+        &.@{ns_sizer}multiple {
+            .@{ns_sizer}top {
                 padding: 18px 18px 10px;
             }
         }
     }
 
     //选择面板-搜索部分
-    .@{ns_sizzer}search-wrap {
+    .@{ns_sizer}search-wrap {
 
         .input-search {
-            .d-ib;
-            .fl;
-            width: 260px;
+            .d-b;
+            width: 100%;
 
             i {
                 margin: 10px 2px 4px 12px;
@@ -51,7 +50,7 @@
             }
         }
 
-        .@{ns_sizzer}prompt {
+        .@{ns_sizer}prompt {
             .l-h(@search-h);
             .fl;
             padding-left: 15px;
@@ -59,41 +58,56 @@
             color: @B600;
         }
 
-        .@{ns_sizzer}btn-group {
-            .fr;
-            .l-h(@search-h);
+        .@{ns_sizer}btn-group {
+            .d-b;
+            //.l-h(@search-h);
+            border-bottom: 1px solid @B200;
+            margin-bottom: 10px;
+            padding: 10px 0;
+
+            label {
+                padding-left: 10px;
+                width: 184px;
+                .l-h(36px);
+                margin: 0;
+
+                &:hover {
+                    background: @H050;
+                }
+            }
         }
     }
 
     //选择面板-选项列表部分
-    .@{ns_sizzer}list-wrap {
-        margin-top: 10px;
-        width: @select-panel-w -@pd*2;
+    .@{ns_sizer}list-wrap {
+        //margin-top: 10px;
+        //width: @select-panel-w -@pd*2;
         .pos(r);
         min-height: 31px;
-        max-height: 155px;
+        max-height: 162px;
         overflow-y: auto;
-        width: 550px;
+        width: 380px;
 
         &.scollbar {
-            width: 567px;
+            width: 406px;
+            padding-right: 10px;
         }
 
         &.loading {
-            .@{ns_sizzer}loading {
+            .@{ns_sizer}loading {
                 visibility: visible;
             }
 
-            @{ns_sizzer}data-list {
+            @{ns_sizer}data-list {
                 visibility: hidden;
             }
         }
 
-        .@{ns_sizzer}loading, .@{ns_sizzer}empty, @{ns_sizzer}-list-body {
+        .@{ns_sizer}loading, .@{ns_sizer}empty, @{ns_sizer}-list-body {
             width: 100%;
         }
 
-        .@{ns_sizzer}loading, .@{ns_sizzer}empty {
+        .@{ns_sizer}loading, .@{ns_sizer}empty {
             text-align: center;
             .pos(a);
             top: 50%;
@@ -101,18 +115,18 @@
             margin-top: -11px;
         }
 
-        .@{ns_sizzer}empty {
+        .@{ns_sizer}empty {
             i {
                 color: @H500;
                 font-size: 16px !important;
             }
         }
 
-        .@{ns_sizzer}loading {
+        .@{ns_sizer}loading {
             visibility: hidden;
         }
 
-        .@{ns_sizzer}data-list {
+        .@{ns_sizer}data-list {
             margin: 0;
             padding: 0;
             visibility: visible;
@@ -125,19 +139,18 @@
         }
     }
 
-    .@{ns_sizzer}data-list {
+    .@{ns_sizer}data-list {
         .clearfix;
+
         @li-w: 130px;
         @li-pd: 10px;
-        li.@{ns_sizzer}data-list-li {
+        li.@{ns_sizer}data-list-li {
             .fl;
-            width: 130px;
+            width: 184px;
             margin: 1px 10px 0 0;
             .l-h(30px);
-            padding: 0  @li-pd;
             color: @B900;
             cursor: pointer;
-            .ellipsis-basic;
 
             &.mr-n {
                 margin-right: 0;
@@ -147,68 +160,60 @@
                 background: @H050;
             }
 
-            &.selected {
-                background: @H500;
-                color: #ffffff;
-                & a {
-                    color: #fff;
-                }
+            label {
+                display: block;
+                padding: 0  @li-pd;
+                margin: 0;
+                cursor: pointer;
+                .ellipsis-basic;
             }
 
-            & a {
-                .d-b;
-                width: 100%;
-                height: 100%;
-                color: @B900;
-                text-decoration: none;
-                .ellipsis-basic();
-
-                &:hover {
-                    text-decoration: none;
-                }
+            .radio {
+                height: 24px;
             }
 
-            .@{ns_sizzer}data-btn {
+            .@{ns_sizer}data-btn {
                 width: @li-w - @li-pd*2;
                 text-align: left;
             }
         }
-        .@{ns_sizzer}data-none {
+        .@{ns_sizer}data-none {
             color: @B600;
             .fl;
         }
     }
 
     //多选筛选器底部
-    .@{ns_sizzer}footer {
+    .@{ns_sizer}footer {
         background: @B050;
         padding: 18px;
         .tr;
     }
 
     //打开状态
-    &.@{ns_sizzer}open {
-        .@{ns_sizzer}btn {
+    &.@{ns_sizer}open {
+        .@{ns_sizer}btn {
             border-color: @B500;
             z-index: 100;
             border-bottom: 0px none;
         }
-        .@{ns_sizzer}select-panel {
+        .@{ns_sizer}select-panel {
             .d-b;
         }
     }
 }
 
 //sizer按钮
-.@{ns_sizzer}btn {
+.@{ns_sizer}btn {
     .pos(r);
+    height: 35px;
     padding: 6px 36px 3.5px 18px;
 
-    &:hover{
+    &:hover {
         border-color: @B500;
     }
 
-    .@{ns_sizzer}btn-text {
+    .@{ns_sizer}btn-text {
         max-width: 100%;
         .ellipsis-basic;
         .d-ib;
