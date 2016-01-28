@@ -236,7 +236,7 @@ define(function(require, exports, module) {
                                     }
                                 }
 
-                                if ($p.tool.isNull(summary_value)) {
+                                if ($p.tool.isNull(summary_value) || summary_value === undefined) {
                                     summary_value = that.options.sDefaultValue;
                                 }
 
