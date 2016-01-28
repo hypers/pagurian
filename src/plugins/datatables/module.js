@@ -16,6 +16,8 @@ define(function(require, exports, module) {
 
     function DataTables(seletor, options) {
 
+
+
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
         var that = this;
 
@@ -25,6 +27,7 @@ define(function(require, exports, module) {
         this.aApiParams = {};
         this.version = "0.2.160106";
         this.options = {
+            "sDefaultValue": "--",
             "sForm": '#form',
             "bAutoload": true,
             "bProcessing": true,
@@ -141,6 +144,7 @@ define(function(require, exports, module) {
                 if ($.isFunction(oSettings.oInit.fnParams)) {
                     var params = oSettings.oInit.fnParams(aApiParams) || {};
 
+
                     for (key in params) {
                         if (!$.isFunction(params[key])) {
 
@@ -154,7 +158,6 @@ define(function(require, exports, module) {
                                 }
                                 continue;
                             }
-
                             aApiParams.push({
                                 "name": key,
                                 "value": params[key]
@@ -180,15 +183,30 @@ define(function(require, exports, module) {
                             var total = a.page ? a.page.total : 0;
                             var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
+                            var columns = oSettings.oInit.aoColumns;
+
+
 
 
                             //设置默认值，如果返回的值为空默认为"--"
                             for (var i = 0; i < items.length; i++) {
                                 for (var o in items[i]) {
                                     if (!items[i][o] && items[i][o] !== 0) {
-                                        items[i][o] = "--";
+                                        items[i][o] = that.options.sDefaultValue;
                                     }
                                 }
+
+
+                                for (var j = 0; j < columns.length; j++) {
+                                    if (!columns[j].mData) {
+                                        continue;
+                                    }
+                                    //如果Table中的列在后端没有返回，则初始为"--"
+                                    if (items[i][columns[j].mData] === undefined) {
+                                        items[i][columns[j].mData] = that.options.sDefaultValue;
+                                    }
+                                }
+
                             }
 
                             var data = {
@@ -218,8 +236,8 @@ define(function(require, exports, module) {
                                     }
                                 }
 
-                                if ($p.tool.isNull(summary_value) || summary_value === undefined) {
-                                    summary_value = "--";
+                                if ($p.tool.isNull(summary_value)) {
+                                    summary_value = that.options.sDefaultValue;
                                 }
 
                                 $(this).html(summary_value);
@@ -338,7 +356,7 @@ define(function(require, exports, module) {
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>" + that.options.sDefaultValue + "</p>";
                 var subtitle = "<p class='table-subtitle' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_subtitle_" + aoColumns[i].mData + "'>" + aoColumns[i].sSubtitle + "</p>";
 
                 //表头副标题
@@ -365,8 +383,15 @@ define(function(require, exports, module) {
             if (this.options.oSearch) {
                 var searchId = this.options.oSearch.sInput;
                 var searchWord = this.options.oSearch.sParamName;
+                var searchInputPlaceholder = $(searchId).attr("placeholder");
+                var searchInitVal = $.trim($(searchId).val());
 
-                that.aApiParams[searchWord] = $.trim($(searchId).val());
+                //如果搜索框中的值等于placeholder则关键词设为空
+                if (searchInitVal === searchInputPlaceholder) {
+                    searchInitVal = "";
+                }
+
+                that.aApiParams[searchWord] = searchInitVal;
 
                 $(searchId).prop("disabled", false);
                 $(searchId).keyup(function(e) {
@@ -374,7 +399,13 @@ define(function(require, exports, module) {
                     var $input = $(this);
                     if ((e.which === 13 || that.bLoadFinish)) {
                         setTimeout(function() {
+
                             var word = $.trim($input.val());
+
+                            //如果搜索框中的值等于placeholder则关键词设为空
+                            if (word === searchInputPlaceholder) {
+                                word = "";
+                            }
 
                             that.aApiParams[searchWord] = word;
                             that.update();
@@ -400,7 +431,6 @@ define(function(require, exports, module) {
             $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
             $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
 
-
             return this;
         };
 
@@ -412,11 +442,11 @@ define(function(require, exports, module) {
 
         //清空表格数据
         this.clearTable = function() {
-            $(seletor + " .table-summary").html("--");
+            $(seletor + " .table-summary").html(that.options.sDefaultValue);
         };
 
         //销毁表格
-        this.destroy=function(){
+        this.destroy = function() {
             this.table.fnDestroy();
             this.container.empty();
         };
@@ -432,7 +462,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].dataTable = function(seletor, options) {
+    g[PagurianAlias].plugin.dataTable = function(seletor, options) {
         return new DataTables(seletor, options).init();
     };
 
