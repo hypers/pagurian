@@ -41,7 +41,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
     color: #9f9f9f;
 }
 .uploadify-queue-item .cancel a:before {
-    content: "\e603";
+    content: "\e908";
 }
 .uploadify-queue-item.completed {}
 .uploadify-queue-info {
