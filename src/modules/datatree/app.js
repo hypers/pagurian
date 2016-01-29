@@ -5,25 +5,27 @@ define(function(require, exports, module) {
     var app = require("../../lib/app");
 
     require("../../plugins/datatree/module");
+    require('../../plugins/number-spinner/module');
 
     app.page.index = function() {
         $p.dataTree("#tree", {
-            'core': {
-                'data': [{
-                    "text": "Root node",
-                    "state": {
-                        "opened": true
+            core: {
+                data: [{
+                    text: "Root node",
+                    state: {
+                        opened: true
                     },
-                    "children": [{
-                            "text": "Child node 1",
-                            "state": {
-                                "selected": true
+                    children: [{
+                            id: 1,
+                            text: "Child node 1",
+                            state: {
+                                selected: true
                             },
-                            "icon": "fa fa-flash"
+                            icon: "fa fa-flash"
                         }, {
-                            "text": "Child node 2",
-                            "state": {
-                                "disabled": true
+                            text: "Child node 2",
+                            state: {
+                                disabled: true
                             }
                         },
                         "Child node 3"
@@ -34,31 +36,50 @@ define(function(require, exports, module) {
     };
 
     app.page.advanced = function() {
-        $p.dataTree("#tree", {
-            "plugins": ["checkbox", "search"],
-            'core': {
-                'data': [{
-                    "text": "Root node",
-                    "state": {
-                        "opened": true
+
+        var treeData = [{
+            text: "Root node",
+            state: {
+                opened: true
+            },
+            children: [{
+                    text: "Child node 1",
+                    id: "111",
+                    state: {
+                        selected: true
                     },
-                    "children": [{
-                            "text": "Child node 1",
-                            "state": {
-                                "selected": true
-                            },
-                            "icon": "fa fa-flash"
-                        }, {
-                            "text": "Child node 2",
-                            "state": {
-                                "disabled": true
-                            }
-                        },
-                        "Child node 3"
-                    ]
-                }]
+                    icon: "fa fa-flash"
+                }, {
+                    text: "Child node 2",
+                    state: {
+                        disabled: true
+                    }
+                },
+                "Child node 3"
+            ]
+        }];
+
+        $p.dataTree("#tree", {
+            plugins: ["checkbox", "search", "added"],
+            core: {
+                data: treeData
+            },
+            search: {
+                input: "#input_search"
+            },
+            added: {
+                numberSpinner: {
+                    decimals: 2,
+                    min: -10,
+                    max: 100
+                }
+            },
+            change: function(e, node) {
+                console.log(node);
             }
+
         });
+
     };
 
     module.exports = app;

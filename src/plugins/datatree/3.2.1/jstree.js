@@ -530,7 +530,12 @@ define(function(require, exports, module) {
              * @name loading.jstree
              */
             this.trigger("loading");
-            this.load_node($.jstree.root);
+            this.load_node($.jstree.root, function() {
+                if ($.isFunction(options.initedCallback)) {
+                    options.initedCallback();
+                }
+            });
+
         },
         /**
          * destroy an instance
@@ -8833,5 +8838,8 @@ define(function(require, exports, module) {
     }
 
 
+    var added = require('../extend/plugin.added');
 
+    $.jstree.defaults.added = added.defaults;
+    $.jstree.plugins.added = added.structure;
 });

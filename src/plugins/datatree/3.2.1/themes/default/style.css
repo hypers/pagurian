@@ -9,6 +9,7 @@
 }
 .jstree-node {
     white-space: nowrap;
+    position: relative;
 }
 .jstree-anchor {
     display: inline-block;
@@ -284,6 +285,11 @@
     background: #beebff;
     border-radius: 2px;
     box-shadow: inset 0 0 1px #999999;
+}
+.jstree-checkbox-selection .jstree-clicked {
+    background: none;
+    border-radius: unset;
+    box-shadow: none;
 }
 .jstree-default .jstree-no-icons .jstree-anchor > .jstree-themeicon {
     display: none;
@@ -1014,4 +1020,29 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+.jstree-node .jstree-input {
+    padding: 2px 4px;
+    font-size: 12px;
+    height: 22px;
+}
+.jstree-node>.jstree-input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+}
+.jstree-node .bootstrap-touchspin {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+}
+.jstree-node .bootstrap-touchspin .btn {
+    margin-top: -5px;
+    padding: 1px 4px;
+    height: 22px;
+}
+.jstree-node .bootstrap-touchspin .input-group-btn i {
+    font-size: 12px;
 }
