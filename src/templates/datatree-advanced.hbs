@@ -34,9 +34,17 @@
 
 
             <div class="col-md-12">
-                <div id="tree"></div>
+
+                <div class="tree-wrap">
+                    <div class="input-icon">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="name" id="input_search" placeholder="搜索" class="form-control" >
+                    </div>
+                    <div id="tree"></div>
+                </div>
+
                 <div class="markdown">
-{{>codes/datatree-base}}
+{{>codes/datatree-advanced}}
                 </div>
             </div>
 

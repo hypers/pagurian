@@ -47,6 +47,18 @@ define(function(require, exports, module) {
             return nodes;
         };
 
+        this.getSelectedNodeValues = function() {
+            var nodes = this.getSelectedNodes(),
+                $input, values = [];
+            for (var i = 0; i < nodes.length; i++) {
+                $input = this.container.find(".jstree-input[name='" + nodes[i] + "']");
+                values.push({
+                    name: nodes[i],
+                    value: $input.val()
+                });
+            }
+            return values;
+        };
 
         /**
          * 销毁
