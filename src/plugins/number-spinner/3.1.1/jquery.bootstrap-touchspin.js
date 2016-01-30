@@ -63,8 +63,8 @@ define(function(require, exports, module) {
                 mousewheel: true,
                 buttondown_class: 'btn btn-default',
                 buttonup_class: 'btn btn-default',
-                buttondown_txt: '-',
-                buttonup_txt: '+'
+                buttondown_txt: '<i class="fa fa-minus"></i>',
+                buttonup_txt: '<i class="fa fa-plus"></i>'
             };
 
             var attributeMap = {
