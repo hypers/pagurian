@@ -5,7 +5,6 @@ define(function(require, exports, module) {
     var app = require("../../lib/app");
 
     require("../../plugins/datatree/module");
-    require('../../plugins/number-spinner/module');
 
     app.page.index = function() {
         $p.dataTree("#tree", {
@@ -77,8 +76,8 @@ define(function(require, exports, module) {
             change: function(e, node) {
                 console.log(node);
             }
-
         });
+
 
     };
 
