@@ -462,7 +462,7 @@ define(function(require, exports, module) {
         }
     }
 
-    g[PagurianAlias].plugin.dataTable = function(seletor, options) {
+    g[PagurianAlias].dataTable = function(seletor, options) {
         return new DataTables(seletor, options).init();
     };
 

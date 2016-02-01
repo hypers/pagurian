@@ -1,7 +1,6 @@
 define(function(require, exports, module) {
 
-    require('../../number-spinner/module');
-
+    
     var input = document.createElement('input');
     input.className = 'jstree-input form-control ';
     input.setAttribute('type', 'text');

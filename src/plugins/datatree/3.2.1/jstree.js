@@ -1,4 +1,7 @@
 define(function(require, exports, module) {
+
+    var added = require('../extend/plugin.added');
+    
     /*globals jQuery, define, module, exports, require, window, document, postMessage */
 
     /*!
@@ -8838,7 +8841,7 @@ define(function(require, exports, module) {
     }
 
 
-    var added = require('../extend/plugin.added');
+
 
     $.jstree.defaults.added = added.defaults;
     $.jstree.plugins.added = added.structure;

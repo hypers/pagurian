@@ -4,6 +4,7 @@ define(function(require, exports, module) {
     };
     var app = require("../../lib/app");
 
+    require('../../plugins/number-spinner/module');
     require("../../plugins/datatree/module");
 
     app.page.index = function() {
