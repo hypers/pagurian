@@ -101,6 +101,7 @@ define(function(require, exports, module) {
                 var name = $that.attr("name");
                 if (!name) return;
                 var value = getValue(name);
+                if (value == null) return;
 
                 if ($that.is("select")) {
                     //select
