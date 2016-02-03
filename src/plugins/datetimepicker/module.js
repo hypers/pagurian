@@ -59,8 +59,8 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].dateTimePicker = function(seletor, options, callback) {
-        var picker = new DateTimePicker(seletor, options, callback);
+    g[PagurianAlias].dateTimePicker = function(selector, options, callback) {
+        var picker = new DateTimePicker(selector, options, callback);
         return picker.init();
     };
 

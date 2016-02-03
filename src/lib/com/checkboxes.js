@@ -2,10 +2,10 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function Checkboxes(seletor, options) {
+    function Checkboxes(selector, options) {
 
 
-        this.container = $(seletor);
+        this.container = $(selector);
 
         //初始化
         this.init = function() {
@@ -128,8 +128,8 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].checkboxes = function(seletor, options) {
-        return new Checkboxes(seletor, options).init();
+    g[PagurianAlias].checkboxes = function(selector, options) {
+        return new Checkboxes(selector, options).init();
     };
 
 });

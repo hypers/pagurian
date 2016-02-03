@@ -11,7 +11,7 @@ define(function(require, exports, module) {
     };
     var locale = languages[$p.language || "zh_CN"];
 
-    function Uploadify(seletor, options) {
+    function Uploadify(selector, options) {
 
 
         this.options = {
@@ -50,7 +50,7 @@ define(function(require, exports, module) {
          */
         this.uploadCompleted = function() {
 
-            var $queue = $("#" + $(seletor).attr("id") + "-queue");
+            var $queue = $("#" + $(selector).attr("id") + "-queue");
             var $items = $queue.find(".uploadify-queue-item");
             var $completed = $queue.find(".completed");
             return $items.length === $completed.length;
@@ -62,7 +62,7 @@ define(function(require, exports, module) {
          */
         this.getUploadFiles = function() {
             var files = [];
-            var $queue = $("#" + $(seletor).attr("id") + "-queue");
+            var $queue = $("#" + $(selector).attr("id") + "-queue");
 
             $(".completed").each(function() {
                 files.push($(this).data("itemData"));
@@ -72,11 +72,11 @@ define(function(require, exports, module) {
         };
 
 
-        this.container = $(seletor).uploadify($.extend(this.options, options));
+        this.container = $(selector).uploadify($.extend(this.options, options));
     }
 
-    g[PagurianAlias].upload = function(seletor, options) {
-        return new Uploadify(seletor, options);
+    g[PagurianAlias].upload = function(selector, options) {
+        return new Uploadify(selector, options);
     };
 
 });

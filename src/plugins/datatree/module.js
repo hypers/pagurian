@@ -4,9 +4,9 @@ define(function(require, exports, module) {
     var g = window;
 
 
-    function DataTree(seletor, options) {
+    function DataTree(selector, options) {
 
-        this.container = $(seletor);
+        this.container = $(selector);
         this.container.jstree($.extend({
             initedCallback: function() {
                 var spinnerOptions = options.added ? options.added.numberSpinner : {};
@@ -94,7 +94,7 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].dataTree = function(seletor, options) {
-        return new DataTree(seletor, options);
+    g[PagurianAlias].dataTree = function(selector, options) {
+        return new DataTree(selector, options);
     };
 });

@@ -328,8 +328,8 @@ define(function (require, exports, module) {
      * @param  {[type]} options [选项]
      * @return {[type]}         [dataListView]
      */
-    g[PagurianAlias].dataListView = function (seletor, options) {
-        var view = new DataListView(seletor, options);
+    g[PagurianAlias].dataListView = function (selector, options) {
+        var view = new DataListView(selector, options);
         return view;
     };
 });

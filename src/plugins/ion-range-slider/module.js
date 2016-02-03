@@ -4,11 +4,11 @@ define(function(require, exports, module) {
 
     require('./2.1.2/ion.rangeSlider');
 
-    function Slider(seletor, options) {
+    function Slider(selector, options) {
 
         this.init = function() {
 
-            return $(seletor).ionRangeSlider($.extend({
+            return $(selector).ionRangeSlider($.extend({
                 hide_min_max: false,
                 keyboard: true,
                 min: 0,
@@ -18,8 +18,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].slider = function(seletor, options) {
-        return new Slider(seletor, options).init();
+    g[PagurianAlias].slider = function(selector, options) {
+        return new Slider(selector, options).init();
     };
 
 });

@@ -19,7 +19,7 @@ define(function(require, exports, module) {
         map: require('./chart/map'),
     };
 
-    function Echarts(seletor, options) {
+    function Echarts(selector, options) {
 
         this.version = "0.1.1208";
         this.options = {
@@ -52,8 +52,8 @@ define(function(require, exports, module) {
 
             $.extend(true, this.options, options);
 
-            this.echarts = echarts.init(document.getElementById(seletor));
-            this.container = $("#" + seletor);
+            this.echarts = echarts.init(document.getElementById(selector));
+            this.container = $("#" + selector);
             this.showLoading();
 
             //兼容老的版本
@@ -182,8 +182,8 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].echarts = function(seletor, options) {
-        return new Echarts(seletor, options).init();
+    g[PagurianAlias].echarts = function(selector, options) {
+        return new Echarts(selector, options).init();
     };
 
 });

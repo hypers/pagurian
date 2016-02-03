@@ -14,7 +14,7 @@ define(function(require, exports, module) {
     require('./extend/pagination');
     require('./extend/compatibility');
 
-    function DataTables(seletor, options) {
+    function DataTables(selector, options) {
 
 
 
@@ -226,7 +226,7 @@ define(function(require, exports, module) {
                             }
 
                             //汇总信息
-                            $(seletor + " thead .table-summary").each(function() {
+                            $(selector + " thead .table-summary").each(function() {
 
                                 var key = $(this).data("field");
                                 var summary_value = summary[key];
@@ -255,19 +255,19 @@ define(function(require, exports, module) {
                                 $(nCloneTd).addClass("w60 nCloneTd nExtend");
                                 nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
-                                $(seletor + ' thead tr').each(function() {
+                                $(selector + ' thead tr').each(function() {
                                     if (!$(this).find(".nCloneTh").length) {
                                         this.insertBefore(nCloneTh, this.childNodes[0]);
                                     }
                                 });
 
-                                $(seletor + ' tbody tr').each(function() {
+                                $(selector + ' tbody tr').each(function() {
                                     this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
                                 });
 
 
-                                $(seletor + '  tbody td .row-details').unbind("click");
-                                $(seletor + '  tbody td .row-details').click(function() {
+                                $(selector + '  tbody td .row-details').unbind("click");
+                                $(selector + '  tbody td .row-details').click(function() {
 
 
                                     var row_details = $(this);
@@ -309,16 +309,16 @@ define(function(require, exports, module) {
                                     status_text = a.message;
                                 }
 
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
                             } else if (a.code === 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
 
                             //如果数据为空就不显示底部的分页条
                             if (a && a.page && a.page.total > 0) {
-                                $(seletor + "_wrapper .bottom").show();
+                                $(selector + "_wrapper .bottom").show();
                             } else {
-                                $(seletor + "_wrapper .bottom").hide();
+                                $(selector + "_wrapper .bottom").hide();
                             }
 
                             //初始化回调
@@ -349,7 +349,7 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var aoColumns;
-            this.container = $(seletor);
+            this.container = $(selector);
             $.extend(true, this.options, options);
 
 
@@ -364,7 +364,7 @@ define(function(require, exports, module) {
                     if (aoColumns[i].sTitle) {
                         aoColumns[i].sTitle += subtitle;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(subtitle);
+                        $(selector + " thead th:eq(" + i + ")").append(subtitle);
                     }
                 }
 
@@ -373,7 +373,7 @@ define(function(require, exports, module) {
                     if (aoColumns[i].sTitle) {
                         aoColumns[i].sTitle += summary;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(summary);
+                        $(selector + " thead th:eq(" + i + ")").append(summary);
                     }
                     that.bShowSummary = true;
                 }
@@ -420,16 +420,16 @@ define(function(require, exports, module) {
                 });
             }
 
-            $(seletor).addClass("table-custom table  table-hover  " + options.sClass);
+            $(selector).addClass("table-custom table  table-hover  " + options.sClass);
 
-            this.table = oTable = $(seletor).dataTable(this.options);
+            this.table = oTable = $(selector).dataTable(this.options);
 
             if (that.bShowSummary) {
-                $(seletor + '_wrapper').addClass("table-summary-wrapper");
+                $(selector + '_wrapper').addClass("table-summary-wrapper");
             }
 
-            $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
-            $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
+            $(selector + '_wrapper .dataTables_filter input').addClass("form-control input-small");
+            $(selector + '_wrapper .dataTables_length select').addClass("form-control input-small");
 
             return this;
         };
@@ -442,7 +442,7 @@ define(function(require, exports, module) {
 
         //清空表格数据
         this.clearTable = function() {
-            $(seletor + " .table-summary").html(that.options.sDefaultValue);
+            $(selector + " .table-summary").html(that.options.sDefaultValue);
         };
 
         //销毁表格
@@ -455,15 +455,15 @@ define(function(require, exports, module) {
         function createOrderNumbers(current, pagesize) {
             var index = (current - 1) * pagesize,
                 k = 1;
-            $(seletor).find("tbody tr").each(function() {
+            $(selector).find("tbody tr").each(function() {
                 $(this).find("td:eq(0)").text(index + k);
                 k++;
             });
         }
     }
 
-    g[PagurianAlias].dataTable = function(seletor, options) {
-        return new DataTables(seletor, options).init();
+    g[PagurianAlias].dataTable = function(selector, options) {
+        return new DataTables(selector, options).init();
     };
 
 });

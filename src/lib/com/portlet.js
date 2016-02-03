@@ -9,12 +9,12 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function Portlet(seletor, options) {
+    function Portlet(selector, options) {
 
-        if (seletor instanceof jQuery) {
-            this.element = seletor;
+        if (selector instanceof jQuery) {
+            this.element = selector;
         } else {
-            this.element = $(seletor);
+            this.element = $(selector);
         }
 
         this.options = {};
@@ -58,8 +58,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].portlet = function(seletor, options) {
-        return new Portlet(seletor, options);
+    g[PagurianAlias].portlet = function(selector, options) {
+        return new Portlet(selector, options);
         
     };
 
