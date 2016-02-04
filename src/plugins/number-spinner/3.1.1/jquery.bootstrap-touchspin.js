@@ -29,13 +29,14 @@ define(function(require, exports, module) {
                     var originalinput = $(this),
                         originalinput_data = originalinput.data();
                     $(document).off(_scopeEventNames([
-          'mouseup',
-          'touchend',
-          'touchcancel',
-          'mousemove',
-          'touchmove',
-          'scroll',
-          'scrollstart'], originalinput_data.spinnerid).join(' '));
+                      'mouseup',
+                      'touchend',
+                      'touchcancel',
+                      'mousemove',
+                      'touchmove',
+                      'scroll',
+                      'scrollstart'
+                    ], originalinput_data.spinnerid).join(' '));
                 });
                 return;
             }

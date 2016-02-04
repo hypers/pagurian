@@ -20,7 +20,7 @@ define(function(require, exports, module) {
     }
 
     g[PagurianAlias].numberSpinner = function(selector, options) {
-        return new NumberSpinner(selector, options).init();
+        return new NumberSpinner(selector, options);
     };
 
 });
