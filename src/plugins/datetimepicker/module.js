@@ -48,7 +48,7 @@ define(function(require, exports, module) {
 
                 if (typeof callback === "function") {
                     data = e.currentTarget.value || $(e.currentTarget).find("input[type='text']").val();
-                    callback(data);
+                    callback(data, e);
                 }
 
             });
