@@ -11,28 +11,31 @@ define(function (require, exports, module) {
 
     /**
      * [Sizer 筛选器类]
-     * @param {[type]} selector [选择器]
-     * @param {[type]} options [参数]
-     * @param {[type]} chooseDatas [选中的选项]
+     * @param {[string|jQuery]} selector [选择器]
+     * @param {[array]} options [参数]
+     * @param {string} chooseDatas [选中的选项]
      */
     function Sizer(selector, options, chooseDatas) {
-        var sizerPanelTpl = require("./tpl/sizerPanel.tpl"),
-            sizerFooterTpl = require("./tpl/sizerFooter.tpl"),
-            sizerButton = require("./tpl/sizerButton.tpl");
-        var that = this,
-            _nameStr = "sizer",
-            _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
-            /**
-             * 是否为展开面板后的第一次点击
-             * @type {boolean}
-             * @private
-             */
-            _isFirstClick = true;
+        var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
+        var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
+        var sizerButton = require("./tpl/sizerButton.tpl");
+        var that = this;
+        var _nameStr = "sizer";
+        var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+        var _evTimeStamp = 0;
+        /**
+         * 是否为展开面板后的第一次点击
+         * @type {boolean}
+         * @private
+         */
+        var _isFirstClick = true;
+
         oLanguage.nameStr = _nameStr;
         oLanguage.id = _id;
         that.promtText = $.trim($(selector).text());
         oLanguage.promtText = $.trim($(selector).text());
         selector = (selector instanceof jQuery) ? selector.selector : selector;
+
         //版本
         this.version = "2016.01.27.1029";
         //id
@@ -150,12 +153,15 @@ define(function (require, exports, module) {
          */
         var bindEvent = function (selector) {
             var _isMultiple = that.options.isMultiple;
-            $(document).delegate(selector, 'click', function () {
+            $(document).on('click', selector, function () {
                 that.expandPanel();
             });
 
             //选项点击事件
-            $(document).delegate('#' + that.sizerName + ' .sizer-data-list-li [type]', 'click', function (event) {
+            $(document).on('click', '#' + that.sizerName + ' .sizer-data-list-li [type]', function (event) {
+                if (!_isCanTrigger()) {
+                    return;
+                }
                 var type = that.options.isMultiple ? 'checkbox' : 'radio',
                     $checkBox = $(this);
                 var _dataName = that.options.dataMapping.name,
@@ -190,12 +196,12 @@ define(function (require, exports, module) {
             });
 
             //清除选择
-            $(document).delegate("#" + _nameStr + '_clean' + _id, 'click', function () {
+            $(document).on('click', "#" + _nameStr + '_clean' + _id, function () {
                 cleanOption(true);
             });
 
             //搜索框事件
-            $(document).delegate("#" + _nameStr + '_search' + _id, 'keyup', function (e) {
+            $(document).on('keyup', "#" + _nameStr + '_search' + _id, function (e) {
                 if (_isFirstClick) {
                     _isFirstClick = false;
                     that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
@@ -210,7 +216,17 @@ define(function (require, exports, module) {
             //多选筛选器独有事件
             if (_isMultiple) {
                 //全选
-                $(document).delegate("#" + _nameStr + '_selectAll' + _id, 'click', function () {
+                $(document).on('click', "#" + _nameStr + '_selectAll' + _id, function (e) {
+                    var _target = e.target;
+                    //if(!_isCanTrigger()){
+                    //    return;
+                    //}
+                    //if(_target.tagName !== "INPUT"){
+                    //    var _$checkBox = $(this).find('[type="checkbox"]');
+                    //    var _checked = _$checkBox.is(':checked') ? false : 'checked';
+                    //    _$checkBox.prop('checked', _checked);
+                    //    _$checkBox.uniform();
+                    //}
                     var _selects = [];
                     var $checkBoxes = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
                     $checkBoxes.each(function () {
@@ -246,7 +262,7 @@ define(function (require, exports, module) {
                 });
 
                 //确定
-                $(document).delegate("#" + _nameStr + '_btnSubmit' + _id, 'click', function () {
+                $(document).on('click', "#" + _nameStr + '_btnSubmit' + _id, function () {
                     that.selectDatas = that._tmpSelectDatas;
                     that._tmpSelectDatas = [];
                     var _keyName = that.options.dataMapping.name,
@@ -267,7 +283,7 @@ define(function (require, exports, module) {
                 });
 
                 //取消
-                $(document).delegate("#" + _nameStr + '_btnCancel' + _id, 'click', function () {
+                $(document).on('click', "#" + _nameStr + '_btnCancel' + _id, function () {
                     that._tmpSelectDatas = [];
                     var _keyName = that.options.dataMapping.name,
                         _valueName = that.options.dataMapping.value;
@@ -285,7 +301,6 @@ define(function (require, exports, module) {
                     resetSelectAll();
                     closePanel(true);
                 });
-
 
             }
         };
@@ -417,8 +432,26 @@ define(function (require, exports, module) {
                     $listWrap.addClass("scollbar");
                 }
                 that.allDatas = _datas;
-                chooseDatas = chooseDatas ? chooseDatas : [];
-                setData(_datas, chooseDatas);
+                var _chooseDatas = [];
+                if(that.options.isMultiple){
+                    if (chooseDatas === "all") {
+                        _chooseDatas = _datas;
+                    }
+
+                    if (chooseDatas === "null") {
+                        _chooseDatas = [];
+                    }
+
+                    if ($.isArray(chooseDatas)) {
+                        _chooseDatas = chooseDatas;
+                    }
+                }else{
+                    if($.isArray(chooseDatas)){
+                        _chooseDatas.push(chooseDatas[0]);
+                    }
+                }
+
+                setData(_datas, _chooseDatas);
                 that.needLoad = false;
             });
             return this;
@@ -483,8 +516,11 @@ define(function (require, exports, module) {
         /**
          * 重新拉取数据
          */
-        this.update = function () {
+        this.update = function (params) {
             cleanOption(false);
+            if (params !== undefined) {
+                that.params = that.options.dataParams = params;
+            }
             //多选
             if (that.options.isMultiple) {
                 $("#" + that.sizerName).removeClass("sizer-open");
@@ -495,6 +531,27 @@ define(function (require, exports, module) {
             singleSetText(oLanguage.promtText);
             this.loadData();
             return this;
+        };
+
+        /**
+         * 绑定、解绑事件
+         * @param eventName 事件名称
+         * @param call 回调事件 如果没有 则为解绑
+         */
+        this.manageEvent = function (eventName, call) {
+            if (Object.prototype.toString.call(eventName) !== "[object String]") {
+                return;
+            }
+            var _eventName = 'callback' + eventName.split("")[0].toUpperCase() + eventName.substr(1, eventName.length - 1);
+            if (arguments.length === 1) {
+                if ($.isFunction(that.options[_eventName])) {
+                    that.options[_eventName] = null;
+                }
+                return;
+            }
+            if ($.isFunction(that.options[_eventName]) || that.options[_eventName] === null) {
+                that.options[_eventName] = call;
+            }
         };
 
         /**
@@ -628,6 +685,18 @@ define(function (require, exports, module) {
             $('#' + _nameStr + '_selectAll' + _id + ' [type="checkbox"]').prop("checked", false).uniform();
         }
 
+        /**
+         * 判断是否可以触发事件
+         * @returns {boolean}
+         * @private
+         */
+        function _isCanTrigger() {
+            var _now = +new Date();
+            var _canTrigger = (_now - _evTimeStamp >= 100);
+            _evTimeStamp = _now;
+            return _canTrigger;
+        }
+
         init();
 
         return {
@@ -646,15 +715,11 @@ define(function (require, exports, module) {
                 return this;
             },
             on: function (eventName, call) {
-                if ($.isFunction(that.options[eventName]) || that.options[eventName] === null) {
-                    that.options[eventName] = call;
-                }
+                that.manageEvent(eventName, call);
                 return this;
             },
-            unBind: function (eventName, call) {
-                if ($.isFunction(that.options[eventName])) {
-                    that.options[eventName] = null;
-                }
+            unBind: function (eventName) {
+                that.manageEvent(eventName);
                 return this;
             },
             //销毁

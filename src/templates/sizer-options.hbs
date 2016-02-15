@@ -14,7 +14,68 @@
             <div class="col-md-12">
 
                 <div class="markdown">
-                    <pre><code class="html">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                    <pre><code class="javascript">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Functions</h3>
+                <div class="markdown">
+                    <pre><code class="javascript">/**
+* 获取配置
+* @return {Object}
+**/
+Sizer.getOption();
+/**
+*获取全部数据
+*@return {Array}
+**/
+Sizer.getAllDatas();
+/**
+* 获取已选数据
+* @return {Array}
+**/
+Sizer.getSelectDatas();
+/**
+* 选中数据
+* @param data {array|string|obj}
+* array:[{name:"2.1.12.3",value:1},...]
+* obj:{name:"2.1.12.3",value:1},
+* string:"all"全选,"null"全不选
+* @return Sizer;
+**/
+Sizer.chooseData(data);
+/**
+* 动态绑定事件
+* @param functionName {String}
+* expand,close,option,search,clean,submit,cancel
+* @param callback {Function}
+* @return Sizer;
+**/
+Sizer.on(functionName,callback);
+/**
+* 取消事件绑定
+* @param functionName {String}
+* expand,close,option,search,clean,submit,cancel
+* @return Sizer;
+**/
+Sizer.unBind(functionName);
+/**
+* 销毁插件
+*/
+Sizer.destroy();
+/**
+* 切换面板状态
+*/
+Sizer.expandPanel();
+/**
+* 更新数据
+* @param params{Object}
+*/
+Sizer.update(params);</code></pre>
                 </div>
 
             </div>
@@ -222,7 +283,8 @@
   "name": "2.1.4" //此数据用于设置默认的选中文字，如需提示文字，则不需要此设置 仅在isMultiple为false时有效
 },
 ...
-]</pre>
+]或者
+"all","null"</pre>
                             如果<code>name</code>不为空则使用<code>name</code>的值覆盖原先按钮的提示问题
                         </td>
                     </tr>
@@ -231,6 +293,7 @@
 
             </div>
         </div>
+
         <!-- END PAGE CONTENT-->
     {{/inline}}
 
