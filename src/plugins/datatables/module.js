@@ -14,7 +14,9 @@ define(function(require, exports, module) {
     require('./extend/pagination');
     require('./extend/compatibility');
 
-    function DataTables(seletor, options) {
+    function DataTables(selector, options) {
+
+
 
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
         var that = this;
@@ -25,6 +27,7 @@ define(function(require, exports, module) {
         this.aApiParams = {};
         this.version = "0.2.160106";
         this.options = {
+            "sDefaultValue": "--",
             "sForm": '#form',
             "bAutoload": true,
             "bProcessing": true,
@@ -141,6 +144,7 @@ define(function(require, exports, module) {
                 if ($.isFunction(oSettings.oInit.fnParams)) {
                     var params = oSettings.oInit.fnParams(aApiParams) || {};
 
+
                     for (key in params) {
                         if (!$.isFunction(params[key])) {
 
@@ -154,7 +158,6 @@ define(function(require, exports, module) {
                                 }
                                 continue;
                             }
-
                             aApiParams.push({
                                 "name": key,
                                 "value": params[key]
@@ -180,15 +183,30 @@ define(function(require, exports, module) {
                             var total = a.page ? a.page.total : 0;
                             var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
+                            var columns = oSettings.oInit.aoColumns;
+
+
 
 
                             //设置默认值，如果返回的值为空默认为"--"
                             for (var i = 0; i < items.length; i++) {
                                 for (var o in items[i]) {
                                     if (!items[i][o] && items[i][o] !== 0) {
-                                        items[i][o] = "--";
+                                        items[i][o] = that.options.sDefaultValue;
                                     }
                                 }
+
+
+                                for (var j = 0; j < columns.length; j++) {
+                                    if (!columns[j].mData) {
+                                        continue;
+                                    }
+                                    //如果Table中的列在后端没有返回，则初始为"--"
+                                    if (items[i][columns[j].mData] === undefined) {
+                                        items[i][columns[j].mData] = that.options.sDefaultValue;
+                                    }
+                                }
+
                             }
 
                             var data = {
@@ -208,18 +226,18 @@ define(function(require, exports, module) {
                             }
 
                             //汇总信息
-                            $(seletor + " thead .table-summary").each(function() {
+                            $(selector + " thead .table-summary").each(function() {
 
                                 var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (summary_value && oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
+                                    if (oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
 
-                                if ($p.tool.isNull(summary_value)) {
-                                    summary_value = "--";
+                                if ($p.tool.isNull(summary_value) || summary_value === undefined) {
+                                    summary_value = that.options.sDefaultValue;
                                 }
 
                                 $(this).html(summary_value);
@@ -237,19 +255,19 @@ define(function(require, exports, module) {
                                 $(nCloneTd).addClass("w60 nCloneTd nExtend");
                                 nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
-                                $(seletor + ' thead tr').each(function() {
+                                $(selector + ' thead tr').each(function() {
                                     if (!$(this).find(".nCloneTh").length) {
                                         this.insertBefore(nCloneTh, this.childNodes[0]);
                                     }
                                 });
 
-                                $(seletor + ' tbody tr').each(function() {
+                                $(selector + ' tbody tr').each(function() {
                                     this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
                                 });
 
 
-                                $(seletor + '  tbody td .row-details').unbind("click");
-                                $(seletor + '  tbody td .row-details').click(function() {
+                                $(selector + '  tbody td .row-details').unbind("click");
+                                $(selector + '  tbody td .row-details').click(function() {
 
 
                                     var row_details = $(this);
@@ -291,16 +309,16 @@ define(function(require, exports, module) {
                                     status_text = a.message;
                                 }
 
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
                             } else if (a.code === 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
 
                             //如果数据为空就不显示底部的分页条
                             if (a && a.page && a.page.total > 0) {
-                                $(seletor + "_wrapper .bottom").show();
+                                $(selector + "_wrapper .bottom").show();
                             } else {
-                                $(seletor + "_wrapper .bottom").hide();
+                                $(selector + "_wrapper .bottom").hide();
                             }
 
                             //初始化回调
@@ -331,14 +349,14 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var aoColumns;
-            this.container = $(seletor);
+            this.container = $(selector);
             $.extend(true, this.options, options);
 
 
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>" + that.options.sDefaultValue + "</p>";
                 var subtitle = "<p class='table-subtitle' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_subtitle_" + aoColumns[i].mData + "'>" + aoColumns[i].sSubtitle + "</p>";
 
                 //表头副标题
@@ -346,7 +364,7 @@ define(function(require, exports, module) {
                     if (aoColumns[i].sTitle) {
                         aoColumns[i].sTitle += subtitle;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(subtitle);
+                        $(selector + " thead th:eq(" + i + ")").append(subtitle);
                     }
                 }
 
@@ -355,35 +373,39 @@ define(function(require, exports, module) {
                     if (aoColumns[i].sTitle) {
                         aoColumns[i].sTitle += summary;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(summary);
+                        $(selector + " thead th:eq(" + i + ")").append(summary);
                     }
                     that.bShowSummary = true;
                 }
 
             }
 
-
-            $(seletor).addClass("table-custom table  table-hover  " + options.sClass);
-
-            this.table = oTable = $(seletor).dataTable(this.options);
-
-            if (that.bShowSummary) {
-                $(seletor + '_wrapper').addClass("table-summary-wrapper");
-            }
-
-            $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
-            $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
-
             if (this.options.oSearch) {
                 var searchId = this.options.oSearch.sInput;
                 var searchWord = this.options.oSearch.sParamName;
+                var searchInputPlaceholder = $(searchId).attr("placeholder");
+                var searchInitVal = $.trim($(searchId).val());
 
+                //如果搜索框中的值等于placeholder则关键词设为空
+                if (searchInitVal === searchInputPlaceholder) {
+                    searchInitVal = "";
+                }
+
+                that.aApiParams[searchWord] = searchInitVal;
+
+                $(searchId).prop("disabled", false);
                 $(searchId).keyup(function(e) {
 
                     var $input = $(this);
                     if ((e.which === 13 || that.bLoadFinish)) {
                         setTimeout(function() {
+
                             var word = $.trim($input.val());
+
+                            //如果搜索框中的值等于placeholder则关键词设为空
+                            if (word === searchInputPlaceholder) {
+                                word = "";
+                            }
 
                             that.aApiParams[searchWord] = word;
                             that.update();
@@ -398,6 +420,17 @@ define(function(require, exports, module) {
                 });
             }
 
+            $(selector).addClass("table-custom table  table-hover  " + options.sClass);
+
+            this.table = oTable = $(selector).dataTable(this.options);
+
+            if (that.bShowSummary) {
+                $(selector + '_wrapper').addClass("table-summary-wrapper");
+            }
+
+            $(selector + '_wrapper .dataTables_filter input').addClass("form-control input-small");
+            $(selector + '_wrapper .dataTables_length select').addClass("form-control input-small");
+
             return this;
         };
 
@@ -409,11 +442,11 @@ define(function(require, exports, module) {
 
         //清空表格数据
         this.clearTable = function() {
-            $(seletor + " .table-summary").html("--");
+            $(selector + " .table-summary").html(that.options.sDefaultValue);
         };
 
         //销毁表格
-        this.destroy=function(){
+        this.destroy = function() {
             this.table.fnDestroy();
             this.container.empty();
         };
@@ -422,15 +455,15 @@ define(function(require, exports, module) {
         function createOrderNumbers(current, pagesize) {
             var index = (current - 1) * pagesize,
                 k = 1;
-            $(seletor).find("tbody tr").each(function() {
+            $(selector).find("tbody tr").each(function() {
                 $(this).find("td:eq(0)").text(index + k);
                 k++;
             });
         }
     }
 
-    g[PagurianAlias].dataTable = function(seletor, options) {
-        return new DataTables(seletor, options).init();
+    g[PagurianAlias].dataTable = function(selector, options) {
+        return new DataTables(selector, options).init();
     };
 
 });

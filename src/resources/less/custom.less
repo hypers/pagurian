@@ -17,8 +17,6 @@
         padding-left: 36px !important;
     }
 }
-
-
 .header {
     .nav-title {
         display: inline-block;
@@ -53,7 +51,7 @@
                 text-overflow: ellipsis;
                 -ms-text-overflow: ellipsis;
                 -o-text-overflow: ellipsis;
-                -moz-binding: url("ellipsis.xml#ellipsis");
+                -moz-binding: url(ellipsis.xml#ellipsis);
                 position: relative;
                 .icon-r {
                     position: absolute;
@@ -85,7 +83,6 @@
         li {
             position: relative;
             a {
-                padding: 0;
                 padding: 0 18px;
                 font-size: 14px;
                 overflow: hidden;
@@ -93,7 +90,7 @@
                 text-overflow: ellipsis;
                 -ms-text-overflow: ellipsis;
                 -o-text-overflow: ellipsis;
-                -moz-binding: url("ellipsis.xml#ellipsis");
+                -moz-binding: url(ellipsis.xml#ellipsis);
             }
             .fa-angle-down {
                 position: absolute;
@@ -130,18 +127,15 @@
         }
     }
 }
-
 #btn_date_type {
     position: relative;
     display: none;
 }
-
 #data_panel .whisper {
     left: 90px;
     position: absolute;
     top: 240px;
 }
-
 #panel_color_wrap {
     margin-left: -@edge;
     .panel_color {
@@ -156,7 +150,6 @@
         }
     }
 }
-
 .color-title {
     background: #f1f1f1;
     color: #5f5f5f;
@@ -165,33 +158,27 @@
     padding: 4px;
     width: 64px;
 }
-
 .color-dot {
     width: 26px;
     height: 26px;
     float: left;
 }
-
 .base_color {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
-
 .d-ib {
     .d-ib;
 }
-
 /***
 sizer
 ***/
 .sizer-demo-wrap {
     height: 140px;
 }
-
 .sizer-demo-wrap-mul {
     height: 200px;
 }
-
 /***
 datalistview
 ***/
@@ -204,22 +191,18 @@ datalistview
         .dataListView_paginate {
             .fl;
         }
-
         .dataListView_info {
             line-height: 14px;
             margin: 18px 10px;
         }
-
         .data-list-view {
             width: @tw;
             margin: 18px 10px;
-
             .table-data-list-left {
                 width: @tl;
             }
             .table-data-list-right {
                 width: @tw - @tl;
-
                 .fl {
                     .fl;
                 }
@@ -229,30 +212,24 @@ datalistview
                     .ellipsis-basic;
                 }
             }
-
             .update-time {
                 .fr;
                 margin-top: 10px;
             }
-
             .video_name {
                 font-size: 22px;
                 color: @H500;
             }
-
             .font-gray {
                 color: @B500;
             }
-
             a {
                 color: @H500;
-
                 &:hover {
                     .tu;
                 }
             }
         }
-
     }
     .tools-wrap {
         &.tools-video-info {
@@ -260,33 +237,26 @@ datalistview
             background-color: @B050;
             margin-bottom: 0;
         }
-
         .tools-left {
             display: flex;
             position: absolute;
             top: 10px;
             left: 10px;
-
-            .btn.btn-green {
-
-            }
+            .btn.btn-green {}
         }
-
         .input-video-info {
             width: 770px;
             .fl;
         }
     }
-
     .table-scrollable.table-no-border {
         border: none;
         min-height: 270px;
     }
 }
-
-mark{
+mark {
     display: inline-block;
-    padding: 0px 8px;
+    padding: 0 8px;
     color: #017E66;
     background-color: #E7F2ED;
     height: 24px;
@@ -295,30 +265,35 @@ mark{
     font-size: 13px;
     text-align: center;
 }
-
 //SIZER结果展示面板
 .@{ns_sizer}result-wrap {
     margin-top: 16px;
     height: 120px;
     padding: 14px 20px;
     background: @B050;
-
     .@{ns_sizer}result-title {
         margin-bottom: 14px;
     }
-
-    .@{ns_sizer}result-content-wrap{
+    .@{ns_sizer}result-content-wrap {
         min-height: 20px;
         max-height: 60px;
         overflow-y: auto;
         width: 100%;
     }
-
     .@{ns_sizer}result-content {
         span {
             color: @H500;
             .d-ib;
             margin-right: 20px;
         }
+    }
+}
+
+.tree-wrap {
+    border: 1px solid @B300;
+    padding: 10px;
+    width: 500px;
+    .input-icon {
+        margin-bottom: 10px;
     }
 }

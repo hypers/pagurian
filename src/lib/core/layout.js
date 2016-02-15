@@ -463,12 +463,12 @@ define(function(require, exports, module) {
         }
     };
 
-    function Dropdown(seletor, options) {
+    function Dropdown(selector, options) {
 
         this.windowHeight = $(window).height();
         this.isExpandSubMenu = 0;
 
-        var dom = $(seletor); //当前菜单对象
+        var dom = $(selector); //当前菜单对象
         var header_h = 60; //的高度
         var item_h = 40; //每一个菜单高度
         var scroll_min_h = 200; //滚动最小高度

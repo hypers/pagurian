@@ -8,7 +8,7 @@
     "page": {
         "alert": "警告框 Alert",
         "button": "按钮 Button",
-        "breadcrumb":"面包屑导航 Breadcrumb",
+        "breadcrumb": "面包屑导航 Breadcrumb",
         "color": "配色 Color",
         "catalogue": "目录设计",
         "ckeditor": "CKEditor",
@@ -29,8 +29,10 @@
         "popover": "弹出框 Popover",
         "sizer": "筛选器 Sizer",
         "summary": "汇总面板 Summary",
-        "slider": "Range Slider",
-        "tooltip": "提示框 Tooltip"
+        "slider": "Slider",
+        "tooltip": "提示框 Tooltip",
+        "spinner": "Number Spinner",
+        "datatree": "DataTree"
     },
     "menu": [{
         "name": "theme",
@@ -46,7 +48,7 @@
             "title": "Button",
             "url": "theme-buttons.html",
             "active": 0
-        },{
+        }, {
             "name": "breadcrumb",
             "title": "Breadcrumb",
             "url": "breadcrumb.html",
@@ -105,18 +107,27 @@
             "title": "DataTables",
             "url": "datatable.html",
             "active": 0
+        },{
+            "name": "dataTree",
+            "title": "DataTree",
+            "url": "datatree.html",
+            "active": 0
         }, {
             "name": "datepicker",
             "title": "Date Pickers",
             "url": "datepicker.html"
         }, {
             "name": "slider",
-            "title": "Range Slider",
+            "title": "Slider",
             "url": "slider.html",
             "active": 0
+        }, {
+            "name": "numbserSpinner",
+            "title": "Number Spinner",
+            "url": "number-spinner.html"
         }]
     }, {
-        "name": "plugin",
+        "name": "chart",
         "title": "图表",
         "icon": "fa fa-bar-chart-o",
         "items": [{

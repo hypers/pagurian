@@ -4,9 +4,9 @@ define(function(require, exports, module) {
 
     function Select() {
 
-        this.init = function(seletor, options) {
+        this.init = function(selector, options) {
             var dataList = options.data;
-            var elements = $(seletor);
+            var elements = $(selector);
             elements.empty();
             var selected = "";
 
@@ -21,9 +21,9 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].select = function(seletor, options) {
+    g[PagurianAlias].select = function(selector, options) {
 
-        return new Select().init(seletor, options);
+        return new Select().init(selector, options);
 
 
     };

@@ -737,8 +737,8 @@ define(function (require, exports, module) {
      * @param {[type]} options [参数]
      * @param {[type]} chooseDatas [选中的选项]
      */
-    g[PagurianAlias].sizer = function (seletor, options, chooseDatas) {
-        var sizer = new Sizer(seletor, options, chooseDatas);
+    g[PagurianAlias].sizer = function (selector, options, chooseDatas) {
+        var sizer = new Sizer(selector, options, chooseDatas);
         return sizer;
     };
 });

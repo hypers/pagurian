@@ -5,20 +5,22 @@ define(function(require, exports, module) {
     require('./3.1.1/jquery.bootstrap-touchspin.css');
     require('./3.1.1/jquery.bootstrap-touchspin');
 
-    function NumberSpinner(seletor, options) {
+    function NumberSpinner(selector, options) {
 
-        this.init = function() {
+        this.container = (selector instanceof jQuery) ? selector : $(selector);
 
-            return $(seletor).TouchSpin($.extend({
-                verticalbuttons: true
-            }, options));
+        this.container.TouchSpin($.extend({
+            verticalbuttons: true
+        }, options));
 
+        this.destroy = function() {
+            this.container.TouchSpin("destroy");
         };
 
     }
 
-    g[PagurianAlias].numberSpinner = function(seletor, options) {
-        return new NumberSpinner(seletor, options).init();
+    g[PagurianAlias].numberSpinner = function(selector, options) {
+        return new NumberSpinner(selector, options);
     };
 
 });

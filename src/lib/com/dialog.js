@@ -48,11 +48,11 @@ define(function(require, exports, module) {
 
         /**
          * 初始化
-         * @param  {String} seletor 选择器
+         * @param  {String} selector 选择器
          * @param  {Object} options 配置项
          * @return {Object}    Dialog
          */
-        this.init = function(seletor, options) {
+        this.init = function(selector, options) {
 
             var modal = this;
 
@@ -65,9 +65,9 @@ define(function(require, exports, module) {
             $("body").append(this.tpl);
 
             var form = $("#modal" + _id + " form");
-            if (seletor) {
+            if (selector) {
                 //给按钮绑定事件
-                $(document).delegate(seletor, 'click', function() {
+                $(document).delegate(selector, 'click', function() {
                     var params = $(this).data("params");
                     modal.params = eval("(" + params + ")") || {};
                     modal.show();
@@ -207,14 +207,14 @@ define(function(require, exports, module) {
     /**
      *
      */
-    g[PagurianAlias].dialog = function(seletor, options) {
+    g[PagurianAlias].dialog = function(selector, options) {
 
         //当只传递一个参数的情况下，则不绑定click
         if (arguments.length === 1) {
             return new Dialog().init(null, arguments[0]);
         }
 
-        return new Dialog().init(seletor, options);
+        return new Dialog().init(selector, options);
     };
 
 });

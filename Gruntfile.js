@@ -193,7 +193,7 @@ module.exports = function (grunt) {
             dev: {
                 engine: 'handlebars',
                 cwd: 'src/templates/',
-                partials: ['src/templates/fixtures/*.hbs', 'src/templates/base.hbs'],
+                partials: ['src/templates/fixtures/*.hbs', 'src/templates/base.hbs','src/templates/codes/*.hbs',],
                 data: 'src/templates/data.json',
                 options: {},
                 files: [{
