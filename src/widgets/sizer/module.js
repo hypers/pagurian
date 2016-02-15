@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         selector = (selector instanceof jQuery) ? selector.selector : selector;
 
         //版本
-        this.version = "2016.01.27.1029";
+        this.version = "2016.2.15.0055";
         //id
         this.sizerName = _nameStr + _id;
         //提示文字
