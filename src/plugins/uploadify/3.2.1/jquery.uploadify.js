@@ -2097,7 +2097,6 @@ define(function(require, exports, module) {
                         if (file.status == SWFUpload.FILE_STATUS.IN_PROGRESS || $.inArray(file.id, this.queueData.uploadQueue) >= 0) {
                             this.queueData.uploadSize -= file.size;
                         }
-                        console.log("dddd");
                         // Trigger the onCancel event
                         if (settings.onCancel) {
                             settings.onCancel.call(this, file);
