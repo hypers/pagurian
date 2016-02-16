@@ -1,56 +1,35 @@
-{{>fixtures/doctype}}
-<head>
-    <title> {{data.page.datalistview}}</title>
-    {{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.datalistview}}
 
-    {{>fixtures/header}}
+{{#*inline "pageContent"}}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                {{data.page.datalistview}}
+            </h3>
+            <div class="tabs-wrap">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="datalistview.html">基础 </a>
+                    </li>
+                    <li>
+                        <a href="datalistview-options.html">参数说明</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12 datalistview-container">
+            <div id="dataListView" class="dataListView data-list-view-video-info-search"></div>
+        </div>
+    </div>
 
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container datalistview-container">
-
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-                {{>fixtures/theme-panel}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.datalistview}}
-                        </h3>
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a href="datalistview.html">基础 </a>
-                                </li>
-                                <li>
-                                    <a href="datalistview-options.html">参数说明</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="dataListView" class="dataListView data-list-view-video-info-search"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="markdown">
-                            <h3>HTML代码</h3>
-                            <pre><code class="html">&lt;!--页面--&gt;
+    <div class="row">
+        <div class="col-md-12">
+            <div class="markdown">
+                <h3>HTML代码</h3>
+<pre><code class="html">&lt;!--页面--&gt;
 &lt;div id="dataListView" class="dataListView data-list-view-video-info-search"&gt;&lt;/div&gt;
 &lt;!--模板--&gt;
 &lt;scrip t type="text/html" id="dataListViewTpl"&gt;
@@ -58,16 +37,16 @@
         &lt;tbody&gt;
             &lt;tr&gt;
                 &lt;td colspan="4"&gt;
-                    &lt;span class="video_name"&gt;{videoName}&lt;/span&gt;
-                    &lt;span&gt;(&lt;a href="{url}" target="_blank"&gt;链接地址&lt;/a&gt;)&lt;/span&gt;
-                    &lt;span class="font-gray update-time"&gt;{infoUpdateTime}&lt;/span&gt;
+                &lt;span class="video_name"&gt;{videoName}&lt;/span&gt;
+                &lt;span&gt;(&lt;a href="{url}" target="_blank"&gt;链接地址&lt;/a&gt;)&lt;/span&gt;
+                &lt;span class="font-gray update-time"&gt;{infoUpdateTime}&lt;/span&gt;
                 &lt;/td&gt;
             &lt;/tr&gt;
             &lt;tr&gt;
                 &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;频道：&lt;/span&gt;&lt;span&gt;{channelName}&lt;/span&gt;&lt;/td&gt;
                 &lt;td class="table-data-list-right"&gt;
-                    &lt;span class="font-gray fl"&gt;演员：&lt;/span&gt;
-                    &lt;span class="ellipsis fl"&gt;{actor}&lt;/span&gt;
+                &lt;span class="font-gray fl"&gt;演员：&lt;/span&gt;
+                &lt;span class="ellipsis fl"&gt;{actor}&lt;/span&gt;
                 &lt;/td&gt;
             &lt;/tr&gt;
             &lt;tr&gt;
@@ -84,38 +63,29 @@
             &lt;/tr&gt;
         &lt;/tbody&gt;
     &lt;/table&gt;
-&lt;/script&gt;
-                             </code></pre>
-                            <h3>Javascript代码</h3>
-                            <pre><code class="javascript">require('../../widgets/datalistview/module');
-var tpl = $("#dataListViewTpl").html();
-var oDataListView = $p.dataListView("#dataListView", {
-    "dataSource": model.getDataList,
-    "tplHtml": tpl,
-    "sDom": ["T", "D", "S", "P"],
-    "fnParams": function () {
-        return {};
-    },
-    "fnFormat": function (row) {
-        return $p.tpl(tpl, row);
-    }
-});
-                                </code></pre>
-                            <h3>JSON 数据</h3>
-                            <a href="/test/api/datalistdata.json" target="_blank">datalistdata.json</a>
-                        </div>
-                    </div>
-                </div>
+&lt;/script&gt;</code></pre>
+            <h3>Javascript代码</h3>
+<pre><code class="javascript">require('../../widgets/datalistview/module');
+    var tpl = $("#dataListViewTpl").html();
+    var oDataListView = $p.dataListView("#dataListView", {
+        "dataSource": model.getDataList,
+        "tplHtml": tpl,
+        "sDom": ["T", "D", "S", "P"],
+        "fnParams": function () {
+            return {};
+        },
+        "fnFormat": function (row) {
+            return $p.tpl(tpl, row);
+        }
+    });</code></pre>
+                <h3>JSON 数据</h3>
+                <a href="/test/api/datalistdata.json" target="_blank">datalistdata.json</a>
             </div>
-
-
         </div>
     </div>
-    <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
+{{/inline}}
 
-    {{>fixtures/footer}}
+{{#*inline "appScript"}}
     <script type="text/html" id="dataListViewTpl">
         <table class="data-list-view">
             <tbody>
@@ -154,7 +124,6 @@ var oDataListView = $p.dataListView("#dataListView", {
             app.page.dataListView();
         });
     </script>
+{{/inline}}
 
-    {{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -193,13 +193,13 @@ module.exports = function(grunt) {
             dev: {
                 engine: 'handlebars',
                 cwd: 'src/templates/',
-                partials: ['src/templates/fixtures/*.hbs'],
+                partials: ['src/templates/fixtures/*.hbs', 'src/templates/base.hbs','src/templates/codes/*.hbs',],
                 data: 'src/templates/data.json',
                 options: {},
                 files: [{
                     expand: true,
                     cwd: 'src/templates/',
-                    src: ['*.hbs'],
+                    src: ['*.hbs', '!base.hbs'],
                     dest: 'dist/templates',
                     ext: '.html'
                 }]

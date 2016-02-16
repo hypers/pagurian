@@ -1,0 +1,78 @@
+{{#>base title=data.page.spinner}}
+
+    {{#*inline "pageContent"}}
+        <style media="screen">
+            .table-custom td div {
+                font-size: 12px;
+                color: #aaa;
+            }
+        </style>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.spinner}}
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="number-spinner.html">基础</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <input type="text" id="txt_spinner"  class="form-control input-small" />
+                <div class="markdown">
+                    <pre><code class="javascript">$p.numberSpinner("#txt_spinner");</code></pre>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input type="text" id="txt_spinner2"  class="form-control input-small" />
+                <div class="markdown">
+                    <pre><code class="javascript">
+$p.numberSpinner("#txt_spinner2", {
+    min: -10,
+    max: 100,
+    step: 0.1,
+    decimals: 2,
+    boostat: 5,
+    maxboostedstep: 10
+});</code></pre>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h3>更多实例</h3>
+                <p>
+                    <a href="http://www.virtuosoft.eu/code/bootstrap-touchspin/" target="_blank">
+                        http://www.virtuosoft.eu/code/bootstrap-touchspin/
+                    </a>
+                </p>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+            <script type="text/javascript">
+                pagurian.call("modules/number-spinner/app", function(app) {
+                    app.page.index();
+                });
+            </script>
+            {{/inline}}
+
+            {{/base}}

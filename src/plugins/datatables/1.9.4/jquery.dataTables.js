@@ -853,12 +853,16 @@
 
                                  // If array notation is used, we just want to strip it and use the property name
                                  // and assign the value. If it isn't used, then we get the result we want anyway
-                                 data[a[a.length - 1].replace(__reArray, '')] = val;
+
+                                 if ($.isPlainObject(data)) {
+                                     data[a[a.length - 1].replace(__reArray, '')] = val;
+                                 }
                              };
 
                              return function(data, val) {
                                  return setData(data, val, mSource);
                              };
+
                          } else {
                              /* Array or flat object mapping */
                              return function(data, val) {

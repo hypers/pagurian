@@ -2,9 +2,9 @@ define(function(require, exports, module) {
 
     var g = window;
 
-    function Form(seletor, options) {
+    function Form(selector, options) {
 
-        this.element = (seletor instanceof jQuery) ? seletor : $(seletor);
+        this.element = (selector instanceof jQuery) ? selector : $(selector);
         this.options = {
             isAjaxRequest: true, //是否ajax请求 默认true
             submitButton: this.element.find(".btn[type='submit']") //默认submit按钮
@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 
             //自定义submit 按钮
             if (!(this.options.submitButton instanceof jQuery)) {
-                this.options.submitButton = $(seletor + " " + this.options.submitButton);
+                this.options.submitButton = $(selector + " " + this.options.submitButton);
             }
 
             $btn_submit = this.options.submitButton;
@@ -99,7 +99,9 @@ define(function(require, exports, module) {
             $elements.each(function(index) {
                 var $that = $(this);
                 var name = $that.attr("name");
+                if (!name) return;
                 var value = getValue(name);
+                if (value === null) return;
 
                 if ($that.is("select")) {
                     //select
@@ -235,12 +237,13 @@ define(function(require, exports, module) {
             }
 
             if (valid) {
-
                 if (handleSubmitParams) {
                     submitParams = handleSubmitParams.apply(this, submitParams);
                 }
-
                 handleSubmit.apply(this, submitParams);
+            } else {
+                //如果验证失败,重置按钮状态
+                that.complete();
             }
 
             if (this.options.isAjaxRequest) {
@@ -264,8 +267,8 @@ define(function(require, exports, module) {
 
     }
 
-    g[PagurianAlias].form = function(seletor, options) {
-        return new Form(seletor, options).init();
+    g[PagurianAlias].form = function(selector, options) {
+        return new Form(selector, options).init();
     };
 
 });

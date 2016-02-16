@@ -55,7 +55,7 @@ define(function (require, exports, module) {
             "aPageSize": [30, 50, 100],
             "sDom": ["D", "<div style='display: block;' class='bottom'>", "S", "T", "P", "</div>"]
         };
-        this.version = "2015.12.21.2228";
+        this.version = "2015.01.05.1035";
         this.dataListName = selector.substring(1) + _id;
         this.paginate = {};
         /**
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
                 that.update();
             });
 
-            $(document).delegate('#' + that.dataListName + '_length .dataListView_length select', 'change', function () {
+            $(document).delegate('#' + that.dataListName + '_length.dataListView_length select', 'change', function () {
                 that.params.page = 1;
                 that.params.pagesize = $(this).val();
                 that.update();
@@ -328,8 +328,8 @@ define(function (require, exports, module) {
      * @param  {[type]} options [选项]
      * @return {[type]}         [dataListView]
      */
-    g[PagurianAlias].dataListView = function (seletor, options) {
-        var view = new DataListView(seletor, options);
+    g[PagurianAlias].dataListView = function (selector, options) {
+        var view = new DataListView(selector, options);
         return view;
     };
 });

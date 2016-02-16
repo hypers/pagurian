@@ -1,0 +1,80 @@
+{{#>base title=data.page.sizer appId="Sizer"}}
+
+    {{#*inline "pageContent"}}
+        {{>fixtures/theme-panel}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.sizer}}
+                </h3>
+                {{> fixtures/tab-sizer multipleHasPanel=true}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box default sizer-demo-wrap-mul">
+                    <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w300 t-a-l">版本</button>
+                    <div id="sizerPanel" class="sizer-result-wrap w300">
+                        <div class="sizer-result-title">已选的版本</div>
+                        <div class="sizer-result-content-wrap">
+                            <div class="sizer-result-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+    <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120"&gt;
+    版本
+&lt;/button&gt;
+&lt;div id="sizerPanel" class="sizer-result-wrap w300"&gt;
+    &lt;div class="sizer-result-title"&gt;已选的版本&lt;/div&gt;
+    &lt;div class="sizer-result-content-wrap"&gt;
+        &lt;div class="sizer-result-content"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    <h3>javascript代码</h3>
+    <pre><code class="javascript">require('../../widgets/sizer/module');
+var options = {
+    isMultiple: true,
+    dataSource: model.getSizerData,//数据源
+    style: "d-ib" //筛选器自定义class
+};
+
+var sizer = $p.sizer($("#sizer-multiple"), options)
+                .on('submit', function (selectDatas, allDatas) {
+                    appendSpan("#sizerPanel", selectDatas);
+                    });
+
+/**
+* 选择器
+* @param selector
+* @param selectDatas
+*/
+function appendSpan(selector, selectDatas) {
+    var spans = [];
+    for (var i = 0; i < selectDatas.length; i++) {
+        spans.push('<span>' + selectDatas[i].name + '</span>');
+    }
+    $(selector).find('.sizer-result-content').empty().append(spans.join(''));
+}</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
+                </div>
+            </div>
+        </div>
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/sizer/app", function (app) {
+                app.page.multipleHasPanel();
+            });
+        </script>
+    {{/inline}}
+
+{{/base}}

@@ -651,8 +651,8 @@ define(function (require, exports, module) {
          * @param {[type]} selector [选择器]
          * @param {[type]} options [参数]
          */
-        g[PagurianAlias].summary = function (seletor, options) {
-            var summary = new Summary(seletor, options);
+        g[PagurianAlias].summary = function (selector, options) {
+            var summary = new Summary(selector, options);
             return summary;
         };
     }

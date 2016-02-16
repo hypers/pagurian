@@ -1,44 +1,20 @@
+/**
+ * Updated by hypers-godfery on 2015/1/6 添加isString方法
+ */
 define(function(require, exports, module) {
 
     var g = window;
 
     g[PagurianAlias].tool = {
-        getQueryString: function(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"),
-                r = window.location.search.substr(1).match(reg);
-            if (r !== null) {
-                return unescape(r[2]);
-            }
-            return null;
-        },
-        getReferrer: function() {
-            var ref;
-            try {
-                ref = G.top.document.referrer;
-            } catch (e) {
-                log(e);
-
-                try {
-                    ref = G.parent.document.referrer;
-                } catch (ex) {
-                    log(ex);
-                    ref = document.referrer;
-                }
-            }
-            return ref;
-        },
         newId: function() {
             return '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         },
-
         isArray: function(o) {
             return Object.prototype.toString.call(o) === "[object Array]";
         },
-
         isObject: function(o) {
             return Object.prototype.toString.call(o) === "[object Object]";
         },
-
         isNumber: function(value) {
             return /^[0-9]+$/.test(value);
         },
@@ -49,7 +25,9 @@ define(function(require, exports, module) {
         isFunction: function(o) {
             return typeof o === "function";
         },
-
+        isString: function(o) {
+            return Object.prototype.toString.call(o) === '[object String]';
+        },
         /**
          *加码
          */
@@ -63,7 +41,6 @@ define(function(require, exports, module) {
         decode: function(value) {
             return decodeURIComponent(value);
         },
-
         encodeHtml: function(str) {
             var s = "";
             if (str.length === 0) return "";
@@ -76,7 +53,6 @@ define(function(require, exports, module) {
             s = s.replace(/\n/g, "<br>");
             return s;
         },
-
         decodeHtml: function(str) {
             var s = "";
             if (!str || str.length === 0) return "";

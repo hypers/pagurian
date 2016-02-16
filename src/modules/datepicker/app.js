@@ -46,7 +46,7 @@ define(function(require, exports, module) {
 
         $p.dateTimePicker('#picker2', {
             defaultDate: moment(),
-        }, function(date) {
+        }, function(date,e) {
             $p.alert(date);
         });
 

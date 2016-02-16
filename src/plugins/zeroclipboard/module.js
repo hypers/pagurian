@@ -7,11 +7,11 @@ define(function(require, exports, module) {
         swfPath: pagurian.path.app + "plugins/zeroclipboard/2.2.0/ZeroClipboard.swf"
     });
 
-    function Copy(seletor, options) {
+    function Copy(selector, options) {
 
-        var $seletor = (seletor instanceof jQuery) ? seletor : $(seletor);
+        var $selector = (selector instanceof jQuery) ? selector : $(selector);
         var that = this;
-        this.client = new ZeroClipboard($seletor);
+        this.client = new ZeroClipboard($selector);
 
         this.client.on('ready', function(event) {
 
@@ -32,17 +32,17 @@ define(function(require, exports, module) {
         //复制错误执行的回调方法
         this.client.on('error', function(event) {
             ZeroClipboard.destroy();
-            $(seletor).click(function() {
+            $(selector).click(function() {
                 if ($p.tool.isFunction(options.error)) {
-                    options.error(event, $seletor);
+                    options.error(event, $selector);
                 }
             });
         });
 
     }
 
-    g[PagurianAlias].copy = function(seletor, options) {
-        return new Copy(seletor, options);
+    g[PagurianAlias].copy = function(selector, options) {
+        return new Copy(selector, options);
     };
 
 });

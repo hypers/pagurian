@@ -120,6 +120,7 @@ define(function(require, exports, module) {
                 "bShowSummary": true,
                 "sClass": "t-a-r",
                 "sTitle": "浏览量(PV)",
+                "sSubtitle":"--",
                 "mData": "pageViews"
             }, {
                 "sClass": "t-a-r",
@@ -128,11 +129,13 @@ define(function(require, exports, module) {
                     return value + ".00";
                 },
                 "sTitle": "独立访问者(UV)",
+                "sSubtitle":"--",
                 "mData": "uniqueVisitors"
             }, {
                 "sClass": "t-a-r",
                 "bShowSummary": true,
                 "sTitle": "访问次数(VV)",
+                "sSubtitle":"副标题",
                 "mData": "visitViews"
             }]
         });
@@ -182,7 +185,6 @@ define(function(require, exports, module) {
             }]
         });
     };
-
 
     module.exports = app;
 

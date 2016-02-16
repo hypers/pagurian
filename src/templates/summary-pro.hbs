@@ -1,72 +1,51 @@
-{{>fixtures/doctype}}
-<head>
-    <title> {{data.page.summary}}</title>
-    {{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.summary}}
 
-    {{>fixtures/header}}
+    {{#*inline "pageContent"}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.summary}}
+                </h3>
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="summary.html">基础</a>
+                        </li>
+                        <li class="active">
+                            <a href="summary-pro.html">高级</a>
+                        </li>
+                        <li>
+                            <a href="summary-options.html">参数说明</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-
-    <!-- BEGIN CONTAINER -->
-    <div class="page-container datalistview-container">
-
-
-        {{>fixtures/sidebar}}
-
-        <!-- BEGIN CONTENT -->
-        <div class="page-content-wrapper">
-
-            <div class="page-content">
-
-                {{>fixtures/theme-panel}}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            {{data.page.summary}}
-                        </h3>
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li>
-                                    <a href="summary.html">基础</a>
-                                </li>
-                                <li class="active">
-                                    <a href="summary-pro.html">高级</a>
-                                </li>
-                                <li>
-                                    <a href="summary-options.html">参数说明</a>
-                                </li>
-                            </ul>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="summaryProTest" class="summary-wrap"></div>
+                <div class="portlet-body">
+                    <div  class="chart-default " >
+                        <div class="chart-body" id="my_chart"></div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-
-
-                <div class="row clearfix">
-                    <div class="col-md-12">
-                        <div id="summaryProTest" class="summary-wrap"></div>
-                        <div class="portlet-body">
-                            <div  class="chart-default " >
-                                <div class="chart-body" id="my_chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="markdown">
-                            <h3>HTML代码</h3>
-                            <pre><code class="html">&lt;div id="summaryTest" class="summary-wrap"&gt;&lt;/div&gt;
-&lt;div class="portlet-body"&gt;
-    &lt;div  class="chart-default " &gt;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+<pre><code class="html">&lt;div id="summaryTest" class="summary-wrap"&gt;&lt;/div&gt;
+    &lt;div class="portlet-body"&gt;
+        &lt;div  class="chart-default " &gt;
         &lt;div class="chart-body" id="my_chart"&gt;&lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-                            <h3>javascript代码</h3>
-                            <pre><code class="javascript">var getColumns = function () {
-var columns = [];
+                    <h3>javascript代码</h3>
+<pre><code class="javascript">var getColumns = function () {
+    var columns = [];
 
     columns.push({
         "cName": "showCounts",
@@ -127,12 +106,12 @@ var getRows = function () {
     rows.push({
         "dataName": "rate",
         'render': function (data, full) {
-            var num = (Math.round(data * 10000) / 100).toFixed(2),
-                _html = "";
-                _html = num >= 0 ? ('&lt;span class="summary-span-rate add"&gt;+' + num + '%&lt;/span&gt;') :
-                       ('&lt;span class="summary-span-rate reduce"&gt;' + num + '%&lt;/span&gt;');
-            return _html;
-        }
+                var num = (Math.round(data * 10000) / 100).toFixed(2),
+                    _html = "";
+                    _html = num >= 0 ? ('&lt;span class="summary-span-rate add"&gt;+' + num + '%&lt;/span&gt;') :
+                            ('&lt;span class="summary-span-rate reduce"&gt;' + num + '%&lt;/span&gt;');
+        return _html;
+    }
     });
 
     return rows;
@@ -140,11 +119,11 @@ var getRows = function () {
 
 var chartData = {
     "clickCounts": {
-        columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
-        rows: [{
-            name: "点击次数(CLK)",
-            data: [120, 132, 101, 134, 90, 230, 210]
-        }]
+            columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+            rows: [{
+                name: "点击次数(CLK)",
+                data: [120, 132, 101, 134, 90, 230, 210]
+            }]
     },
     "viewCounts": {
         columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
@@ -242,28 +221,21 @@ var option = {
     }
 };
 var summary = $p.summary("#summaryTest", option);</code></pre>
-                            <h3>JSON 数据</h3>
-                            <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
-                        </div>
-                    </div>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
                 </div>
             </div>
-
-
         </div>
-    </div>
-    <!-- END CONTENT -->
-    </div>
-    <!-- END CONTAINER -->
+    {{/inline}}
 
-    {{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call(["modules/summary/app",
+                            "plugins/echarts/loader"],
+                            function (app) {
+                                app.page.summaryPro();
+                            });
+        </script>
+    {{/inline}}
 
-    <script type="text/javascript">
-        pagurian.call(["modules/summary/app","plugins/echarts/loader"], function (app) {
-            app.page.summaryPro();
-        });
-    </script>
-
-    {{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

@@ -6,30 +6,33 @@
     "description": "一个管理系统的前端框架",
     "update": "",
     "page": {
-        "color": "配色 Color",
-        "button": "按钮 Button",
-        "form": "表单 Form",
-        "dialog": "对话框 Dialog",
         "alert": "警告框 Alert",
-        "tooltip": "提示框 Tooltip",
-        "popover": "弹出框 Popover",
+        "button": "按钮 Button",
+        "breadcrumb": "面包屑导航 Breadcrumb",
+        "color": "配色 Color",
+        "catalogue": "目录设计",
+        "ckeditor": "CKEditor",
+        "css": "CSS规范",
         "datatables": "DataTables",
         "datalistview": "数据列表 DataListView",
         "datepicker": "Date Pickers",
-        "sizer": "筛选器 Sizer",
-        "summary": "汇总面板 Summary",
+        "dialog": "对话框 Dialog",
+        "echarts_bar": "Echarts 柱状图",
+        "echarts_custom": "Echarts 自定义",
         "echarts_line": "Echarts 折线图",
         "echarts_map": "Echarts 地图",
-        "echarts_bar": "Echarts 柱状图",
-        "echarts_pie": "Echarts 饼图",
         "echarts_mashup": "Echarts 混搭",
-        "echarts_custom": "Echarts 自定义",
-        "ckeditor": "CKEditor",
-        "catalogue": "目录设计",
+        "echarts_pie": "Echarts 饼图",
+        "form": "表单 Form",
         "js": "Javascript规范",
-        "css": "CSS规范",
         "login": "Pagurian 单页-登录",
-        "slider": "Range Slider"
+        "popover": "弹出框 Popover",
+        "sizer": "筛选器 Sizer",
+        "summary": "汇总面板 Summary",
+        "slider": "Slider",
+        "tooltip": "提示框 Tooltip",
+        "spinner": "Number Spinner",
+        "datatree": "DataTree"
     },
     "menu": [{
         "name": "theme",
@@ -44,6 +47,11 @@
             "name": "buttons",
             "title": "Button",
             "url": "theme-buttons.html",
+            "active": 0
+        }, {
+            "name": "breadcrumb",
+            "title": "Breadcrumb",
+            "url": "breadcrumb.html",
             "active": 0
         }, {
             "name": "color",
@@ -99,18 +107,27 @@
             "title": "DataTables",
             "url": "datatable.html",
             "active": 0
+        },{
+            "name": "dataTree",
+            "title": "DataTree",
+            "url": "datatree.html",
+            "active": 0
         }, {
             "name": "datepicker",
             "title": "Date Pickers",
             "url": "datepicker.html"
         }, {
             "name": "slider",
-            "title": "Range Slider",
+            "title": "Slider",
             "url": "slider.html",
             "active": 0
+        }, {
+            "name": "numbserSpinner",
+            "title": "Number Spinner",
+            "url": "number-spinner.html"
         }]
     }, {
-        "name": "plugin",
+        "name": "chart",
         "title": "图表",
         "icon": "fa fa-bar-chart-o",
         "items": [{
