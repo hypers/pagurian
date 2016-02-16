@@ -29,7 +29,7 @@
      * @type {Object}
      */
     var pagurian = {
-        version: CONFIG.version || "1.5.4",
+        version: CONFIG.version || "1.6.0",
         language: CONFIG.language || "zh_CN", //简体中文:zh_CN , 英文:en_US
         util: {},
         com: {},
