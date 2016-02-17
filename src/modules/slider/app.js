@@ -1,7 +1,5 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "Range Slider"
-    };
+    
     var app = require("../../lib/app");
 
     require("../../plugins/ion-range-slider/module");

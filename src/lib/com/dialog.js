@@ -81,8 +81,8 @@ define(function(require, exports, module) {
                 }
             }
 
-            this.element = $("#modal" + _id);
-            this.element.addClass(options.className);
+            this.container = $("#modal" + _id);
+            this.container.addClass(options.className);
 
             //提交按钮绑定事件
             this.submitButton = $("#btn_submit" + _id).click(function() {

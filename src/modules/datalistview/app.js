@@ -2,9 +2,7 @@
  * Created by yangguo on 2015/9/9 0009.
  */
 define(function (require, exports, module) {
-    window.CONFIG = {
-        appId: "DataListView"
-    };
+    
     var app = require("../../lib/app");
     var model = require('./model');
 

@@ -1,10 +1,8 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "Spinner"
-    };
-    var app = require("../../lib/app");
 
+    var app = require("../../lib/app");
     require("../../plugins/number-spinner/module");
+    
     app.page.index = function() {
         $p.numberSpinner("#txt_spinner");
         $p.numberSpinner("#txt_spinner2", {

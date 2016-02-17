@@ -32,19 +32,20 @@
         "slider": "Slider",
         "tooltip": "提示框 Tooltip",
         "spinner": "Number Spinner",
-        "datatree": "DataTree"
+        "datatree": "DataTree",
+        "uploader":"Uploader"
     },
     "menu": [{
         "name": "theme",
         "title": "基础UI",
         "icon": "fa fa-picture-o",
         "items": [{
-            "name": "alerts",
+            "name": "alert",
             "title": "Alert",
             "url": "com-alert.html",
             "active": 0
         }, {
-            "name": "buttons",
+            "name": "button",
             "title": "Button",
             "url": "theme-buttons.html",
             "active": 0
@@ -59,7 +60,7 @@
             "url": "theme-color.html",
             "active": 0
         }, {
-            "name": "dialogs",
+            "name": "dialog",
             "title": "Dialog",
             "url": "com-dialogs.html",
             "active": 0
@@ -69,12 +70,12 @@
             "url": "com-form.html",
             "active": 0
         }, {
-            "name": "Popover",
+            "name": "popover",
             "title": "Popover",
             "url": "com-popover.html",
             "active": 0
         }, {
-            "name": "Tooltip",
+            "name": "tooltip",
             "title": "Tooltip",
             "url": "com-tooltip.html",
             "active": 0
@@ -84,7 +85,7 @@
         "title": "组件",
         "icon": "fa fa-briefcase",
         "items": [{
-            "name": "dataListView",
+            "name": "datalistview",
             "title": "DataListView",
             "url": "datalistview.html",
             "active": 0
@@ -103,12 +104,12 @@
         "title": "插件",
         "icon": "fa fa-puzzle-piece",
         "items": [{
-            "name": "dataTables",
+            "name": "datatables",
             "title": "DataTables",
             "url": "datatable.html",
             "active": 0
         },{
-            "name": "dataTree",
+            "name": "datatree",
             "title": "DataTree",
             "url": "datatree.html",
             "active": 0
@@ -122,41 +123,45 @@
             "url": "slider.html",
             "active": 0
         }, {
-            "name": "numbserSpinner",
+            "name": "spinner",
             "title": "Number Spinner",
             "url": "number-spinner.html"
+        }, {
+            "name": "uploader",
+            "title": "Uploader",
+            "url": "uploader.html"
         }]
     }, {
         "name": "chart",
         "title": "图表",
         "icon": "fa fa-bar-chart-o",
         "items": [{
-            "name": "echartsLine",
+            "name": "echarts_line",
             "title": "Echarts 折线图",
             "url": "echarts-line.html",
             "active": 0
         }, {
-            "name": "echartsBar",
+            "name": "echarts_bar",
             "title": "Echarts 柱状图",
             "url": "echarts-bar.html",
             "active": 0
         }, {
-            "name": "echartsPie",
+            "name": "echarts_pie",
             "title": "Echarts 饼图",
             "url": "echarts-pie.html",
             "active": 0
         }, {
-            "name": "echartsMap",
+            "name": "echarts_map",
             "title": "Echarts 地图",
             "url": "echarts-map-world.html",
             "active": 0
         }, {
-            "name": "echartsMsahup",
+            "name": "echarts_msahup",
             "title": "Echarts 混搭",
             "url": "echarts-mashup-linebar.html",
             "active": 0
         }, {
-            "name": "echartsCustom",
+            "name": "echarts_custom",
             "title": "Echarts 自定义",
             "url": "echarts-custom-event.html",
             "active": 0
