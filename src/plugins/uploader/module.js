@@ -14,7 +14,6 @@ define(function(require, exports, module) {
 
     function Uploader(selector, options) {
 
-
         this.options = {
 
             // 选完文件后，是否自动上传。
@@ -80,7 +79,7 @@ define(function(require, exports, module) {
                 root.queueContainer.append(
                     '<div id="' + file.id + '" class="item">' +
                     '<div class="info"> <label>' + file.name + '</label> ' +
-                    '<span class="state"> - 等待上传...</span> </div>' +
+                    '<span class="state"> - ' + locale.waiting + '</span> </div>' +
                     '<div class="cancel"><a href="javascript:;" data-id="' + file.id + '"><i class="icon icon-close"></i></a></div>' +
                     '</div>'
                 );
@@ -105,19 +104,19 @@ define(function(require, exports, module) {
                         '</div>'
                     ).appendTo($li).find('.progress-bar');
                 }
-                $li.find('span.state').text(' - 上传中');
+                $li.find('span.state').text(' - ' + locale.in_progress);
                 $percent.css('width', percentage * 100 + '%');
             });
 
             //当文件上传成功时触发
             this.on('uploadSuccess', function(file) {
-                $('#' + file.id).find('span.state').text(' - 已上传');
+                $('#' + file.id).find('span.state').text(' - ' + locale.success);
                 root.queue.push(file);
             });
 
             //当文件上传出错时触发
             this.on('uploadError', function(file) {
-                $('#' + file.id).find('span.state').text(' - 上传出错');
+                $('#' + file.id).find('span.state').text(' - ' + locale.error);
             });
 
             //不管成功或者失败，文件上传完成时触发
