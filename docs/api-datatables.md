@@ -15,7 +15,7 @@
 ###响应
 <blockquote>
     {
-        "code":"200",                 //HTTP状态  
+        "code":"200000",              //HTTP状态  
         "message":"......",           //服务器返回消息
         "result":{
             "summary":{}
