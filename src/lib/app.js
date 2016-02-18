@@ -17,6 +17,7 @@ define(function(require, exports, module) {
     require('./com/alert');
     require('./com/dialog');
     require('./com/select');
+    require('./com/checkboxes');
 
     //载入工具
     require('./tool/tool');

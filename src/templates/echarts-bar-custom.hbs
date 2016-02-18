@@ -1,134 +1,94 @@
-{{>fixtures/doctype}}
-<head>
-<title>{{data.page.echarts_bar}}</title>
-{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.echarts_bar appId="echarts_bar"}}
 
-{{>fixtures/header}}
+    {{#*inline "pageContent"}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.echarts_bar}}
+                </h3>
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
 
-   {{>fixtures/sidebar}}
+                        <li>
+                            <a href="echarts-bar.html">标准柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-horizon.html">横向柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-stack.html">堆积柱状图</a>
+                        </li>
+                        <li class="active">
+                            <a href="echarts-bar-custom.html">彩虹柱状图</a>
+                        </li>
+                    </ul>
+                </div>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+            </div>
+        </div>
 
-		<div class="page-content">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
 
-			{{>fixtures/theme-panel}}
+                <div class="portlet box default">
 
+                    <div class="portlet-body">
+                        <div class="chart-default ">
+                            <div class="chart-body" id="my_chart"></div>
+                        </div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.echarts_bar}}
-					</h3>
-
-                    <div class="tabs-wrap">
-                        <ul  class="nav nav-tabs">
-
-                            <li>
-                                <a href="echarts-bar.html" >标准柱状图</a>
-                            </li>
-                            <li>
-                                <a href="echarts-bar-horizon.html" >横向柱状图</a>
-                            </li>
-                            <li>
-                                <a href="echarts-bar-stack.html" >堆积柱状图</a>
-                            </li>
-                            <li class="active">
-                                <a href="echarts-bar-custom.html" >彩虹柱状图</a>
-                            </li>
-                        </ul>
                     </div>
-                    
-				</div>
-			</div>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
-
-
-
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-
-					<div class="portlet box default">
-
-						<div class="portlet-body">
-							<div  class="chart-default " >
-								<div class="chart-body" id="my_chart"></div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-
-            <div class="row">
-                <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="markdown">
                     <h3>Javascript</h3>
-                    <pre><code class="javascript">
-require('../../plugins/echarts/module');
-
-var chart = $p.echarts("my_chart", {
-    type: "bar"
-});
-
-
+<pre><code class="javascript">require('../../plugins/echarts/module');
+var chart = $p.echarts("my_chart", { type: "bar" });
 chart.load({
-    name: "PV",
-    columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
-    rows: [{
-        name: "浏览量(PV)",
-        value: [735, 310, 234, 135, 548, 148, 114]
-    }]
-}, function(option) {
-    option.series[0].itemStyle.normal = {
-        color: function(params) {
-            var colorList = [
-                '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B',
-                '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
-                '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
-            ];
-            return colorList[params.dataIndex];
+        name: "PV",
+        columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
+        rows: [{
+            name: "浏览量(PV)",
+            value: [735, 310, 234, 135, 548, 148, 114]
+        }]
+    },
+        function(option) {
+         option.series[0].itemStyle.normal = {
+             color: function(params) {
+                var colorList = [ '#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD', '#D7504B',
+    '#C6E579', '#F4E001', '#F0805A', '#26C0C0' ];
+                return colorList[params.dataIndex];
         }
-    };
-    return option;
-});
+};
+return option; });</code></pre>
 
-                </code></pre>
+                    {{>fixtures/echarts-footer}}
 
-                {{>fixtures/echarts-footer}}
-
-                </div>
                 </div>
             </div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
 
-{{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call([
+                "modules/echarts-bar/app",
+                "plugins/echarts/loader"
+            ], function(app) {
+                app.page.custom();
+            });
+        </script>
+    {{/inline}}
 
-
-<script type="text/javascript">
-    pagurian.call([
-        "modules/echarts-bar/app",
-        "plugins/echarts/loader"], function(app) {
-		app.page.custom();
-	});
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

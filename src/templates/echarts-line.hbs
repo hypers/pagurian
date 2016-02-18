@@ -1,79 +1,53 @@
-{{>fixtures/doctype}}
-<head>
-<title>{{data.page.echarts_line}}</title>
-{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.echarts_line appId="echarts_line"}}
 
-{{>fixtures/header}}
+    {{#*inline "pageContent"}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.echarts_line}}
+                </h3>
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+                        <li class="active">
+                            <a href="echarts-line.html" >标准折线图 </a>
+                        </li>
+                        <li >
+                            <a href="echarts-line-stack.html" >堆积折线图</a>
+                        </li>
+                        <li >
+                            <a href="echarts-line-stack-area.html" >堆积面积图</a>
+                        </li>
+                    </ul>
+                </div>
 
-   {{>fixtures/sidebar}}
+            </div>
+        </div>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
 
-		<div class="page-content">
+                <div class="portlet box default">
 
-			{{>fixtures/theme-panel}}
+                    <div class="portlet-body">
+                        <div  class="chart-default " >
+                            <div class="chart-body" id="my_chart"></div>
+                        </div>
 
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.echarts_line}}
-					</h3>
-
-                    <div class="tabs-wrap">
-                        <ul  class="nav nav-tabs">
-                            <li class="active">
-                                <a href="echarts-line.html" >标准折线图 </a>
-                            </li>
-                            <li >
-                                <a href="echarts-line-stack.html" >堆积折线图</a>
-                            </li>
-                            <li >
-                                <a href="echarts-line-stack-area.html" >堆积面积图</a>
-                            </li>
-                        </ul>
                     </div>
-                    
-				</div>
-			</div>
 
+                </div>
 
+            </div>
 
+        </div>
 
-
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-
-					<div class="portlet box default">
-
-						<div class="portlet-body">
-							<div  class="chart-default " >
-								<div class="chart-body" id="my_chart"></div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="markdown">
-                        <h3>Javascript</h3>
-                        <pre><code class="javascript">
-require('../../plugins/echarts/module');
-
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+<pre><code class="javascript">require('../../plugins/echarts/module');
 var chart = $p.echarts("my_chart", {
     type: "line",
     title: {
@@ -97,37 +71,27 @@ chart.load({
         name: "站内链接",
         value: [320, 332, 301, 334, 390, 330, 320]
     }]
-});
-
-
-                    </code></pre>
+});</code></pre>
 
                     {{>fixtures/echarts-footer}}
 
-                    </div>
                 </div>
             </div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
 
-{{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
 
+            pagurian.call([
+                "modules/echarts-line/app",
+                "plugins/echarts/loader"
+            ], function(app) {
+                app.page.line();
+            });
 
-<script type="text/javascript">
+        </script>
+    {{/inline}}
 
-    pagurian.call([
-        "modules/echarts-line/app",
-        "plugins/echarts/loader"
-    ], function(app) {
-		app.page.line();
-	});
-
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

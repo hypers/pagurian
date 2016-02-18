@@ -9,348 +9,14 @@ define(function(require, exports, module) {
 
     require('./1.9.4/jquery.dataTables');
 
-    /* Set the defaults for DataTables initialisation */
-    $.extend(true, $.fn.dataTable.defaults, {
-        "sDom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
-        //"sDom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // defaukt datatable without  horizobtal scroll
-        "sPaginationType": "bootstrap",
-        "oLanguage": {
-            "sLengthMenu": "_MENU_ records"
-        }
-    });
+    require('./extend/options');
+    require('./extend/functions');
+    require('./extend/pagination');
+    require('./extend/compatibility');
+
+    function DataTables(selector, options) {
 
 
-    /* Default class modification */
-    $.extend($.fn.dataTableExt.oStdClasses, {
-        "sWrapper": "dataTables_wrapper form-inline"
-    });
-
-    /* API method to get paging information */
-    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
-        return {
-            "iStart": oSettings._iDisplayStart,
-            "iEnd": oSettings.fnDisplayEnd(),
-            "iLength": oSettings._iDisplayLength,
-            "iTotal": oSettings.fnRecordsTotal(),
-            "iFilteredTotal": oSettings.fnRecordsDisplay(),
-            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-        };
-    };
-
-
-    $.fn.dataTableExt.oApi.fnReloadAjax = function(oSettings, sNewSource, fnCallback, bStandingRedraw) {
-
-
-        if ($.fn.dataTable.versionCheck) {
-            var api = new $.fn.dataTable.Api(oSettings);
-
-            if (sNewSource) {
-                api.ajax.url(sNewSource).load(fnCallback, !bStandingRedraw);
-            } else {
-                api.ajax.reload(fnCallback, !bStandingRedraw);
-            }
-            return;
-        }
-
-        if (sNewSource !== undefined && sNewSource !== null) {
-            oSettings.sAjaxSource = sNewSource;
-        }
-
-        // Server-side processing should just call fnDraw
-        if (oSettings.oFeatures.bServerSide) {
-            this.fnDraw();
-            return;
-        }
-
-        this.oApi._fnProcessingDisplay(oSettings, true);
-        var that = this;
-        var iStart = oSettings._iDisplayStart;
-        var aData = [];
-
-        this.oApi._fnServerParams(oSettings, aData);
-
-        oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function(json) {
-
-
-            that.oApi._fnClearTable(oSettings);
-
-            var aData = (oSettings.sAjaxDataProp !== "") ?
-                that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
-
-            if (!aData) {
-                return;
-            }
-
-            for (var i = 0; i < aData.length; i++) {
-                that.oApi._fnAddData(oSettings, aData[i]);
-            }
-
-            oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-
-            that.fnDraw();
-
-            if (bStandingRedraw === true) {
-                oSettings._iDisplayStart = iStart;
-                that.oApi._fnCalculateEnd(oSettings);
-                that.fnDraw(false);
-            }
-
-            that.oApi._fnProcessingDisplay(oSettings, false);
-
-            if (typeof fnCallback === 'function') {
-                fnCallback(oSettings);
-            }
-        }, oSettings);
-    };
-
-    $.fn.dataTableExt.oApi.fnLengthChange = function(oSettings, iDisplay) {
-        oSettings._iDisplayLength = iDisplay;
-        oSettings.oApi._fnCalculateEnd(oSettings);
-
-        /* If we have space to show extra rows (backing up from the end point - then do so */
-        if (oSettings._iDisplayEnd === oSettings.aiDisplay.length) {
-            oSettings._iDisplayStart = oSettings._iDisplayEnd - oSettings._iDisplayLength;
-            if (oSettings._iDisplayStart < 0) {
-                oSettings._iDisplayStart = 0;
-            }
-        }
-
-        if (oSettings._iDisplayLength === -1) {
-            oSettings._iDisplayStart = 0;
-        }
-
-        oSettings.oApi._fnDraw(oSettings);
-
-        if (oSettings.aanFeatures.l) {
-            $('select', oSettings.aanFeatures.l).val(iDisplay);
-        }
-    };
-
-    /* Bootstrap style pagination control */
-    $.extend($.fn.dataTableExt.oPagination, {
-        "bootstrap": {
-            "fnInit": function(oSettings, nPaging, fnDraw) {
-                var oLang = oSettings.oLanguage.oPaginate;
-                var fnClickHandler = function(e) {
-                    e.preventDefault();
-                    if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
-                        fnDraw(oSettings);
-                    }
-                };
-
-                // pagination with prev, next link icons
-                $(nPaging).append(
-                    '<ul class="pagination">' +
-                    '<li class="prev disabled"><a href="#" title="' + oLang.sPrevious + '"><i class="fa fa-angle-left"></i></a></li>' +
-                    '<li class="next disabled"><a href="#" title="' + oLang.sNext + '"><i class="fa fa-angle-right"></i></a></li>' +
-                    '</ul>'
-                );
-
-                var els = $('a', nPaging);
-                $(els[0]).bind('click.DT', {
-                    action: "previous"
-                }, fnClickHandler);
-                $(els[1]).bind('click.DT', {
-                    action: "next"
-                }, fnClickHandler);
-            },
-
-            "fnUpdate": function(oSettings, fnDraw) {
-                var iListLength = 5;
-                var oPaging = oSettings.oInstance.fnPagingInfo();
-                var an = oSettings.aanFeatures.p;
-                var i, j, sClass, iStart, iEnd, iHalf = Math.floor(iListLength / 2);
-
-                if (oPaging.iTotalPages < iListLength) {
-                    iStart = 1;
-                    iEnd = oPaging.iTotalPages;
-                } else if (oPaging.iPage <= iHalf) {
-                    iStart = 1;
-                    iEnd = iListLength;
-                } else if (oPaging.iPage >= (oPaging.iTotalPages - iHalf)) {
-                    iStart = oPaging.iTotalPages - iListLength + 1;
-                    iEnd = oPaging.iTotalPages;
-                } else {
-                    iStart = oPaging.iPage - iHalf + 1;
-                    iEnd = iStart + iListLength - 1;
-                }
-
-                if (oPaging.iTotalPages < 0) {
-                    $('.pagination', an[i]).css('visibility', 'hidden');
-                } else {
-                    $('.pagination', an[i]).css('visibility', 'visible');
-                }
-
-
-
-
-                for (i = 0, iLen = an.length; i < iLen; i++) {
-                    // Remove the middle elements
-                    $('li:gt(0)', an[i]).filter(':not(:last)').remove();
-
-                    // Add the new list items and their event handlers
-                    for (j = iStart; j <= iEnd; j++) {
-
-                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
-
-                        $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
-                            .insertBefore($('li:last', an[i])[0])
-                            .bind('click', function(e) {
-
-                                e.preventDefault();
-                                oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
-                                fnDraw(oSettings);
-
-                            });
-                    }
-
-                    // Add / remove disabled classes from the static elements
-                    if (oPaging.iPage === 0) {
-                        $('li:first', an[i]).addClass('disabled');
-                    } else {
-                        $('li:first', an[i]).removeClass('disabled');
-                    }
-
-                    if (oPaging.iPage === oPaging.iTotalPages - 1 || oPaging.iTotalPages === 0) {
-                        $('li:last', an[i]).addClass('disabled');
-                    } else {
-                        $('li:last', an[i]).removeClass('disabled');
-                    }
-                }
-            }
-        }
-    });
-
-    /* Bootstrap style full number pagination control */
-    $.extend($.fn.dataTableExt.oPagination, {
-        "bootstrap_full_number": {
-            "fnInit": function(oSettings, nPaging, fnDraw) {
-                var oLang = oSettings.oLanguage.oPaginate;
-                var fnClickHandler = function(e) {
-
-                    e.preventDefault();
-                    if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
-                        fnDraw(oSettings);
-                    }
-                };
-
-                $(nPaging).append(
-                    '<ul class="pagination">' +
-                    '<li class="prev disabled"><a href="#" title="' + oLang.sFirst + '"><i class="fa fa-angle-double-left"></i></a></li>' +
-                    '<li class="prev disabled"><a href="#" title="' + oLang.sPrevious + '"><i class="fa fa-angle-left"></i></a></li>' +
-                    '<li class="next disabled"><a href="#" title="' + oLang.sNext + '"><i class="fa fa-angle-right"></i></a></li>' +
-                    '<li class="next disabled"><a href="#" title="' + oLang.sLast + '"><i class="fa fa-angle-double-right"></i></a></li>' +
-                    '</ul>'
-                );
-                var els = $('a', nPaging);
-                $(els[0]).bind('click.DT', {
-                    action: "first"
-                }, fnClickHandler);
-                $(els[1]).bind('click.DT', {
-                    action: "previous"
-                }, fnClickHandler);
-                $(els[2]).bind('click.DT', {
-                    action: "next"
-                }, fnClickHandler);
-                $(els[3]).bind('click.DT', {
-                    action: "last"
-                }, fnClickHandler);
-            },
-
-            "fnUpdate": function(oSettings, fnDraw) {
-
-                var iListLength = 5;
-                var oPaging = oSettings.oInstance.fnPagingInfo();
-                var an = oSettings.aanFeatures.p;
-                var i, j, sClass, iStart, iEnd, iHalf = Math.floor(iListLength / 2);
-
-                if (oPaging.iTotalPages < iListLength) {
-                    iStart = 1;
-                    iEnd = oPaging.iTotalPages;
-                } else if (oPaging.iPage <= iHalf) {
-                    iStart = 1;
-                    iEnd = iListLength;
-                } else if (oPaging.iPage >= (oPaging.iTotalPages - iHalf)) {
-                    iStart = oPaging.iTotalPages - iListLength + 1;
-                    iEnd = oPaging.iTotalPages;
-                } else {
-                    iStart = oPaging.iPage - iHalf + 1;
-                    iEnd = iStart + iListLength - 1;
-                }
-
-                if (oPaging.iTotalPages < 0) {
-                    $('.pagination', an[i]).css('visibility', 'hidden');
-                } else {
-                    $('.pagination', an[i]).css('visibility', 'visible');
-                }
-
-                for (i = 0, iLen = an.length; i < iLen; i++) {
-                    // Remove the middle elements
-                    $('li:gt(1)', an[i]).filter(':not(.next)').remove();
-
-                    // Add the new list items and their event handlers
-                    for (j = iStart; j <= iEnd; j++) {
-                        sClass = (j === oPaging.iPage + 1) ? 'class="active"' : '';
-                        $('<li ' + sClass + '><a href="#">' + j + '</a></li>')
-                            .insertBefore($('li.next:first', an[i])[0])
-                            .bind('click', function(e) {
-                                e.preventDefault();
-                                oSettings._iDisplayStart = (parseInt($('a', this).text(), 10) - 1) * oPaging.iLength;
-                                fnDraw(oSettings);
-                            });
-                    }
-
-                    // Add / remove disabled classes from the static elements
-                    if (oPaging.iPage === 0) {
-                        $('li.prev', an[i]).addClass('disabled');
-                    } else {
-                        $('li.prev', an[i]).removeClass('disabled');
-                    }
-
-                    if (oPaging.iPage === oPaging.iTotalPages - 1 || oPaging.iTotalPages === 0) {
-                        $('li.next', an[i]).addClass('disabled');
-                    } else {
-                        $('li.next', an[i]).removeClass('disabled');
-                    }
-                }
-            }
-        }
-    });
-
-
-    /*
-     * TableTools Bootstrap compatibility
-     * Required TableTools 2.1+
-     */
-    if ($.fn.DataTable.TableTools) {
-        // Set the classes that TableTools uses to something suitable for Bootstrap
-        $.extend(true, $.fn.DataTable.TableTools.classes, {
-            "container": "btn-group",
-            "buttons": {
-                "normal": "btn default",
-                "disabled": "btn disabled"
-            },
-            "collection": {
-                "container": "DTTT_dropdown dropdown-menu",
-                "buttons": {
-                    "normal": "",
-                    "disabled": "disabled"
-                }
-            }
-        });
-
-        // Have the collection use a bootstrap compatible dropdown
-        $.extend(true, $.fn.DataTable.TableTools.DEFAULTS.oTags, {
-            "collection": {
-                "container": "ul",
-                "button": "li",
-                "liner": "a"
-            }
-        });
-    }
-
-    function DataTables(seletor, options) {
 
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
         var that = this;
@@ -359,8 +25,9 @@ define(function(require, exports, module) {
         this.bLoadFinish = false;
         this.bShowSummary = false;
         this.aApiParams = {};
-        this.version = "0.1.1208";
+        this.version = "0.2.160106";
         this.options = {
+            "sDefaultValue": "--",
             "sForm": '#form',
             "bAutoload": true,
             "bProcessing": true,
@@ -477,11 +144,12 @@ define(function(require, exports, module) {
                 if ($.isFunction(oSettings.oInit.fnParams)) {
                     var params = oSettings.oInit.fnParams(aApiParams) || {};
 
+
                     for (key in params) {
                         if (!$.isFunction(params[key])) {
 
                             //如果是一个数组的，就设置多个值
-                            if (typeof params[key] === "object") {
+                            if ($.isArray(params[key])) {
                                 for (var j = 0; j < params[key].length; j++) {
                                     aApiParams.push({
                                         "name": key,
@@ -490,7 +158,6 @@ define(function(require, exports, module) {
                                 }
                                 continue;
                             }
-
                             aApiParams.push({
                                 "name": key,
                                 "value": params[key]
@@ -516,15 +183,30 @@ define(function(require, exports, module) {
                             var total = a.page ? a.page.total : 0;
                             var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
+                            var columns = oSettings.oInit.aoColumns;
+
+
 
 
                             //设置默认值，如果返回的值为空默认为"--"
                             for (var i = 0; i < items.length; i++) {
                                 for (var o in items[i]) {
                                     if (!items[i][o] && items[i][o] !== 0) {
-                                        items[i][o] = "--";
+                                        items[i][o] = that.options.sDefaultValue;
                                     }
                                 }
+
+
+                                for (var j = 0; j < columns.length; j++) {
+                                    if (!columns[j].mData) {
+                                        continue;
+                                    }
+                                    //如果Table中的列在后端没有返回，则初始为"--"
+                                    if (items[i][columns[j].mData] === undefined) {
+                                        items[i][columns[j].mData] = that.options.sDefaultValue;
+                                    }
+                                }
+
                             }
 
                             var data = {
@@ -540,22 +222,22 @@ define(function(require, exports, module) {
                             //生成序号
                             var bOrderNumbers = oSettings.oInit.bOrderNumbers || oSettings.oInit.isCreateOrder;
                             if (bOrderNumbers && items.length) {
-                                createNumber(a.page.current, a.page.pagesize);
+                                createOrderNumbers(a.page.current, a.page.pagesize);
                             }
 
                             //汇总信息
-                            $(seletor + " thead .table-summary").each(function() {
+                            $(selector + " thead .table-summary").each(function() {
 
                                 var key = $(this).data("field");
                                 var summary_value = summary[key];
                                 for (i = 0; i < oSettings.aoColumns.length; i++) {
-                                    if (summary_value && oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
+                                    if (oSettings.aoColumns[i].mData === key && $.isFunction(oSettings.aoColumns[i].fnSummaryFormat)) {
                                         summary_value = oSettings.aoColumns[i].fnSummaryFormat(summary_value);
                                     }
                                 }
 
-                                if ($p.tool.isNull(summary_value)) {
-                                    summary_value = "--";
+                                if ($p.tool.isNull(summary_value) || summary_value === undefined) {
+                                    summary_value = that.options.sDefaultValue;
                                 }
 
                                 $(this).html(summary_value);
@@ -573,19 +255,19 @@ define(function(require, exports, module) {
                                 $(nCloneTd).addClass("w60 nCloneTd nExtend");
                                 nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
-                                $(seletor + ' thead tr').each(function() {
+                                $(selector + ' thead tr').each(function() {
                                     if (!$(this).find(".nCloneTh").length) {
                                         this.insertBefore(nCloneTh, this.childNodes[0]);
                                     }
                                 });
 
-                                $(seletor + ' tbody tr').each(function() {
+                                $(selector + ' tbody tr').each(function() {
                                     this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
                                 });
 
 
-                                $(seletor + '  tbody td .row-details').unbind("click");
-                                $(seletor + '  tbody td .row-details').click(function() {
+                                $(selector + '  tbody td .row-details').unbind("click");
+                                $(selector + '  tbody td .row-details').click(function() {
 
 
                                     var row_details = $(this);
@@ -602,12 +284,12 @@ define(function(require, exports, module) {
                                             return;
                                         }
 
-                                        oTable.fnOpen(nTr, "<div class='p10 t-a-c'>加载中...</div>", 'details');
+                                        oTable.fnOpen(nTr, "<div class='p10 t-a-c'>" + locale.sLoadingRecords + "</div>", 'details');
                                         /* Open this row */
                                         row_details.addClass("row-details-open disabled").removeClass("row-details-close");
                                         oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
 
-                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'><i class='icon icon-info icon-big'></i>&nbsp;&nbsp;&nbsp;查询结果为空</div>", 'details');
+                                            oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'>" + locale.sEmptyTable + "</div>", 'details');
                                             var ndetails = row_details.parents("tr").next().find(".details");
                                             row_details.removeClass("disabled");
                                             ndetails.attr("colspan", parseInt(ndetails.attr("colspan")) + 1);
@@ -616,7 +298,6 @@ define(function(require, exports, module) {
 
                                 });
                             }
-
 
                             //判断请求状态
                             if (a.code === 0 && a.result) {
@@ -628,17 +309,16 @@ define(function(require, exports, module) {
                                     status_text = a.message;
                                 }
 
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i>  " + status_text);
                             } else if (a.code === 500) {
-                                $(seletor + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
+                                $(selector + " .dataTables_empty").html("<i class='icon icon-info red icon-big'></i> " + a.message);
                             }
-
 
                             //如果数据为空就不显示底部的分页条
                             if (a && a.page && a.page.total > 0) {
-                                $(seletor + "_wrapper .bottom").show();
+                                $(selector + "_wrapper .bottom").show();
                             } else {
-                                $(seletor + "_wrapper .bottom").hide();
+                                $(selector + "_wrapper .bottom").hide();
                             }
 
                             //初始化回调
@@ -669,90 +349,121 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var aoColumns;
-
+            this.container = $(selector);
             $.extend(true, this.options, options);
 
-            //显示汇总信息
+
             aoColumns = this.options.aoColumns;
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var p = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>--</p>";
+                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>" + that.options.sDefaultValue + "</p>";
+                var subtitle = "<p class='table-subtitle' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_subtitle_" + aoColumns[i].mData + "'>" + aoColumns[i].sSubtitle + "</p>";
 
+                //表头副标题
+                if (aoColumns[i].sSubtitle) {
+                    if (aoColumns[i].sTitle) {
+                        aoColumns[i].sTitle += subtitle;
+                    } else {
+                        $(selector + " thead th:eq(" + i + ")").append(subtitle);
+                    }
+                }
+
+                //表头汇总指标
                 if (aoColumns[i].mData && aoColumns[i].bShowSummary) {
                     if (aoColumns[i].sTitle) {
-                        aoColumns[i].sTitle += p;
+                        aoColumns[i].sTitle += summary;
                     } else {
-                        $(seletor + " thead th:eq(" + i + ")").append(p);
+                        $(selector + " thead th:eq(" + i + ")").append(summary);
                     }
-
                     that.bShowSummary = true;
                 }
+
             }
-
-
-            $(seletor).addClass("table-custom table  table-hover  " + options.sClass);
-
-            this.table = oTable = $(seletor).dataTable(this.options);
-
-            if (that.bShowSummary) {
-                $(seletor + '_wrapper').addClass("table-summary-wrapper");
-            }
-
-            $(seletor + '_wrapper .dataTables_filter input').addClass("form-control input-small");
-            $(seletor + '_wrapper .dataTables_length select').addClass("form-control input-small");
 
             if (this.options.oSearch) {
                 var searchId = this.options.oSearch.sInput;
                 var searchWord = this.options.oSearch.sParamName;
-                var search_keyword = "";
+                var searchInputPlaceholder = $(searchId).attr("placeholder");
+                var searchInitVal = $.trim($(searchId).val());
 
+                //如果搜索框中的值等于placeholder则关键词设为空
+                if (searchInitVal === searchInputPlaceholder) {
+                    searchInitVal = "";
+                }
+
+                that.aApiParams[searchWord] = searchInitVal;
+
+                $(searchId).prop("disabled", false);
                 $(searchId).keyup(function(e) {
 
-                    var word = $.trim($(this).val()),
-                        isChange = search_keyword === word ? 0 : 1,
-                        isPush = false;
-                    if ((e.which === 13 || that.bLoadFinish) && isChange) {
+                    var $input = $(this);
+                    if ((e.which === 13 || that.bLoadFinish)) {
+                        setTimeout(function() {
 
-                        that.bLoadFinish = false;
-                        that.aApiParams[searchWord] = word;
-                        search_keyword = word;
+                            var word = $.trim($input.val());
 
-                        if (!$(seletor).is(":hidden")) {
+                            //如果搜索框中的值等于placeholder则关键词设为空
+                            if (word === searchInputPlaceholder) {
+                                word = "";
+                            }
 
+                            that.aApiParams[searchWord] = word;
                             that.update();
-                            if ($.isFunction(that.options.oSearch.fnCallback)) {
+                            if (typeof that.options.oSearch.fnCallback === "function") {
                                 that.options.oSearch.fnCallback(word);
                             }
-                        }
 
+                        }, 500);
+                        that.bLoadFinish = false;
                         return;
                     }
-
                 });
-
-
             }
+
+            $(selector).addClass("table-custom table  table-hover  " + options.sClass);
+
+            this.table = oTable = $(selector).dataTable(this.options);
+
+            if (that.bShowSummary) {
+                $(selector + '_wrapper').addClass("table-summary-wrapper");
+            }
+
+            $(selector + '_wrapper .dataTables_filter input').addClass("form-control input-small");
+            $(selector + '_wrapper .dataTables_length select').addClass("form-control input-small");
 
             return this;
         };
 
+        //更新表格数据
         this.update = function() {
             this.table.fnPageChange(0);
             return this;
         };
 
-        function createNumber(current, pagesize) {
+        //清空表格数据
+        this.clearTable = function() {
+            $(selector + " .table-summary").html(that.options.sDefaultValue);
+        };
+
+        //销毁表格
+        this.destroy = function() {
+            this.table.fnDestroy();
+            this.container.empty();
+        };
+
+        //创建表格序号
+        function createOrderNumbers(current, pagesize) {
             var index = (current - 1) * pagesize,
                 k = 1;
-            $(seletor).find("tbody tr").each(function() {
+            $(selector).find("tbody tr").each(function() {
                 $(this).find("td:eq(0)").text(index + k);
                 k++;
             });
         }
     }
 
-    g[PagurianAlias].dataTable = function(seletor, options) {
-        return new DataTables(seletor, options).init();
+    g[PagurianAlias].dataTable = function(selector, options) {
+        return new DataTables(selector, options).init();
     };
 
 });

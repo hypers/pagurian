@@ -6,7 +6,6 @@ define(function(require, exports, module) {
     require('../../plugins/colorpicker/js/colorpicker');
 
     app.page.color = function() {
-        _setMenuActive("Color");
         /*
          * Color utility functions
          * Source: http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
@@ -112,20 +111,10 @@ define(function(require, exports, module) {
     };
 
     app.page.buttons = function() {
-        _setMenuActive("Button");
+
     };
 
-    /**
-     * 设置菜单选中
-     * @param menuName 菜单的data-id
-     * @private
-     */
-    var _setMenuActive = function(menuName) {
-        window.CONFIG = {
-            appId: menuName
-        };
-        app.activateCurrentMenu();
-    };
+
 
     module.exports = app;
 

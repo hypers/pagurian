@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/hypers/pagurian.svg?branch=dev) ](https://travis-ci.org/hypers/pagurian)
 [![devDependency Status](https://david-dm.org/hypers/pagurian/dev-status.svg) ](https://david-dm.org/hypers/pagurian#info=devDependencies)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat) ](http://mit-license.org/)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 
 

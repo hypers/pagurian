@@ -1,3 +1,4 @@
+/.tags1
 syntax: glob
 .DS_Store
 .build/
@@ -5,3 +6,5 @@ node_modules/
 dist/
 .idea/
 _site
+pagurian.iml
+src/widgets/sizer/_module.js

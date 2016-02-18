@@ -1,5 +1,6 @@
 /**********Modal**********/
-.modal {.radio-list.inline label,
+.modal {
+    .radio-list.inline label,
     .checkbox-list.inline label {
         margin-left: 0 !important;
         width: 160px;
@@ -12,6 +13,13 @@
             width: 400px;
         }
     }
+    &.full{
+        .modal-dialog {
+            width: auto !important;
+            margin: @header-height 100px;
+        }
+    }
+
     .modal-header {
         border-bottom: none;
         padding: 10px 20px;
@@ -41,7 +49,7 @@
                 color: @B900;
             }
             &:before {
-                content: "\e603";
+                content: "\e908";
             }
         }
     }
@@ -52,9 +60,7 @@
         padding: 18px;
         border-top: none;
         clear: both;
-        .btn {
-
-        }
+        .btn {}
         .whisper {
             position: absolute;
             line-height: 36px;
@@ -96,7 +102,6 @@
         }
     }
 }
-
 /***
 Close icon used for modal dialog and other UI element close buttons
 ***/
@@ -110,7 +115,6 @@ Close icon used for modal dialog and other UI element close buttons
     text-indent: -10000px;
     outline: none;
 }
-
 /***
 Bootstrap modal
 ***/
@@ -133,13 +137,10 @@ Bootstrap modal
 .modal-full {
     width: 100% !important;
 }
-
 /***
 Modal header close button fix
 ***/
-.modal-header .close {
-
-}
+.modal-header .close {}
 .modal > .loading {
     position: absolute;
     top: 50%;
@@ -156,18 +157,14 @@ Modal header close button fix
 .modal-backdrop.fade.in {
     background-color: #333 !important;
 }
-
 /* fix: content shifting to the right on modal open due to scrollbar closed */
 .modal {
     overflow-y: auto !important;
 }
-.modal-open {
-
-}
+.modal-open {}
 .modal-open-noscroll {
     overflow-y: hidden !important;
 }
-
 /* fix: content shifting to the right on modal open */
 .modal-open.page-overflow .page-container,
 .modal-open.page-overflow .page-container .navbar-fixed-top,

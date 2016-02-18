@@ -1,78 +1,55 @@
-{{>fixtures/doctype}}
-<head>
-<title>{{data.page.echarts_map}}</title>
-{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.echarts_map appId="echarts_map"}}
 
-{{>fixtures/header}}
+    {{#*inline "pageContent"}}
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.echarts_map}}
+                </h3>
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+                        <li>
+                            <a href="echarts-map-world.html" >世界</a>
+                        </li>
+                        <li class="active">
+                            <a href="echarts-map-china.html" >中国</a>
+                        </li>
 
-   {{>fixtures/sidebar}}
+                        <li>
+                            <a href="echarts-map-china-city.html" >中国-城市</a>
+                        </li>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-		<div class="page-content">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
 
-			{{>fixtures/theme-panel}}
+                <div class="portlet box default">
 
+                    <div class="portlet-body">
+                        <div  class="chart-default " >
+                            <div class="chart-body chart-map" id="my_chart"></div>
+                        </div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.echarts_map}}
-					</h3>
-                    <div class="tabs-wrap">
-                        <ul  class="nav nav-tabs">
-                            <li>
-                                <a href="echarts-map-world.html" >世界</a>
-                            </li>
-                            <li class="active">
-                                <a href="echarts-map-china.html" >中国</a>
-                            </li>
-
-                            <li>
-                                <a href="echarts-map-china-city.html" >中国-城市</a>
-                            </li>
-
-                        </ul>
                     </div>
-				</div>
-			</div>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
-
-
-
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-
-					<div class="portlet box default">
-
-						<div class="portlet-body">
-							<div  class="chart-default " >
-								<div class="chart-body chart-map" id="my_chart"></div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-
-            <div class="row">
-                <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="markdown">
                     <h3>Javascript</h3>
-                    <pre><code class="javascript">
-require('../../plugins/echarts/module');
+<pre><code class="javascript">require('../../plugins/echarts/module');
 
 var chart = $p.echarts("my_chart", {
     type: "map",
@@ -106,36 +83,27 @@ chart.load({
         value: 114,
         name: '香港'
     }]
-});
+});</code></pre>
 
-                </code></pre>
+                    {{>fixtures/echarts-footer}}
 
-                {{>fixtures/echarts-footer}}
-
-                </div>
                 </div>
             </div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
 
-{{>fixtures/footer}}
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
 
+            pagurian.call([
+                "modules/echarts-map/app",
+                "plugins/echarts/loader-map"
+            ], function(app) {
+                app.page.china();
+            });
 
-<script type="text/javascript">
+        </script>
+    {{/inline}}
 
-    pagurian.call([
-        "modules/echarts-map/app",
-        "plugins/echarts/loader-map"
-    ], function(app) {
-		app.page.china();
-	});
-
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

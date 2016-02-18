@@ -6,44 +6,53 @@
     "description": "一个管理系统的前端框架",
     "update": "",
     "page": {
-        "color": "配色 Color",
-        "button": "按钮 Button",
-        "form": "表单 Form",
-        "dialog": "对话框 Dialog",
         "alert": "警告框 Alert",
-        "tooltip": "提示框 Tooltip",
-        "popover": "弹出框 Popover",
+        "button": "按钮 Button",
+        "breadcrumb": "面包屑导航 Breadcrumb",
+        "color": "配色 Color",
+        "catalogue": "目录设计",
+        "ckeditor": "CKEditor",
+        "css": "CSS规范",
         "datatables": "DataTables",
         "datalistview": "数据列表 DataListView",
         "datepicker": "Date Pickers",
-        "sizer": "筛选器 Sizer",
-        "summary": "汇总面板 Summary",
+        "dialog": "对话框 Dialog",
+        "echarts_bar": "Echarts 柱状图",
+        "echarts_custom": "Echarts 自定义",
         "echarts_line": "Echarts 折线图",
         "echarts_map": "Echarts 地图",
-        "echarts_bar": "Echarts 柱状图",
-        "echarts_pie": "Echarts 饼图",
         "echarts_mashup": "Echarts 混搭",
-        "echarts_custom": "Echarts 自定义",
-        "ckeditor": "CKEditor",
-        "catalogue": "目录设计",
+        "echarts_pie": "Echarts 饼图",
+        "form": "表单 Form",
         "js": "Javascript规范",
-        "css": "CSS规范",
         "login": "Pagurian 单页-登录",
-        "slider": "Range Slider"
+        "popover": "弹出框 Popover",
+        "sizer": "筛选器 Sizer",
+        "summary": "汇总面板 Summary",
+        "slider": "Slider",
+        "tooltip": "提示框 Tooltip",
+        "spinner": "Number Spinner",
+        "datatree": "DataTree",
+        "uploader":"Uploader"
     },
     "menu": [{
         "name": "theme",
         "title": "基础UI",
         "icon": "fa fa-picture-o",
         "items": [{
-            "name": "alerts",
+            "name": "alert",
             "title": "Alert",
             "url": "com-alert.html",
             "active": 0
         }, {
-            "name": "buttons",
+            "name": "button",
             "title": "Button",
             "url": "theme-buttons.html",
+            "active": 0
+        }, {
+            "name": "breadcrumb",
+            "title": "Breadcrumb",
+            "url": "breadcrumb.html",
             "active": 0
         }, {
             "name": "color",
@@ -51,7 +60,7 @@
             "url": "theme-color.html",
             "active": 0
         }, {
-            "name": "dialogs",
+            "name": "dialog",
             "title": "Dialog",
             "url": "com-dialogs.html",
             "active": 0
@@ -61,12 +70,12 @@
             "url": "com-form.html",
             "active": 0
         }, {
-            "name": "Popover",
+            "name": "popover",
             "title": "Popover",
             "url": "com-popover.html",
             "active": 0
         }, {
-            "name": "Tooltip",
+            "name": "tooltip",
             "title": "Tooltip",
             "url": "com-tooltip.html",
             "active": 0
@@ -76,7 +85,7 @@
         "title": "组件",
         "icon": "fa fa-briefcase",
         "items": [{
-            "name": "dataListView",
+            "name": "datalistview",
             "title": "DataListView",
             "url": "datalistview.html",
             "active": 0
@@ -95,9 +104,14 @@
         "title": "插件",
         "icon": "fa fa-puzzle-piece",
         "items": [{
-            "name": "dataTables",
+            "name": "datatables",
             "title": "DataTables",
             "url": "datatable.html",
+            "active": 0
+        },{
+            "name": "datatree",
+            "title": "DataTree",
+            "url": "datatree.html",
             "active": 0
         }, {
             "name": "datepicker",
@@ -105,41 +119,49 @@
             "url": "datepicker.html"
         }, {
             "name": "slider",
-            "title": "Range Slider",
+            "title": "Slider",
             "url": "slider.html",
             "active": 0
+        }, {
+            "name": "spinner",
+            "title": "Number Spinner",
+            "url": "number-spinner.html"
+        }, {
+            "name": "uploader",
+            "title": "Uploader",
+            "url": "uploader.html"
         }]
     }, {
-        "name": "plugin",
+        "name": "chart",
         "title": "图表",
         "icon": "fa fa-bar-chart-o",
         "items": [{
-            "name": "echartsLine",
+            "name": "echarts_line",
             "title": "Echarts 折线图",
             "url": "echarts-line.html",
             "active": 0
         }, {
-            "name": "echartsBar",
+            "name": "echarts_bar",
             "title": "Echarts 柱状图",
             "url": "echarts-bar.html",
             "active": 0
         }, {
-            "name": "echartsPie",
+            "name": "echarts_pie",
             "title": "Echarts 饼图",
             "url": "echarts-pie.html",
             "active": 0
         }, {
-            "name": "echartsMap",
+            "name": "echarts_map",
             "title": "Echarts 地图",
             "url": "echarts-map-world.html",
             "active": 0
         }, {
-            "name": "echartsMsahup",
+            "name": "echarts_msahup",
             "title": "Echarts 混搭",
             "url": "echarts-mashup-linebar.html",
             "active": 0
         }, {
-            "name": "echartsCustom",
+            "name": "echarts_custom",
             "title": "Echarts 自定义",
             "url": "echarts-custom-event.html",
             "active": 0

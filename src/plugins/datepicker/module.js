@@ -71,8 +71,8 @@ define(function(require, exports, module) {
         };
     }
 
-    g[PagurianAlias].datePicker = function(seletor, options, callback) {
-        var picker = new DatePicker(seletor, options, callback);
+    g[PagurianAlias].datePicker = function(selector, options, callback) {
+        var picker = new DatePicker(selector, options, callback);
         return picker.init();
     };
 

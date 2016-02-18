@@ -1,75 +1,51 @@
-{{>fixtures/doctype}}
-<head>
-<title>{{data.page.echarts_pie}}</title>
-{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.echarts_pie  appId="echarts_pie"}}
 
-{{>fixtures/header}}
+{{#*inline "pageContent"}}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                {{data.page.echarts_pie}}
+            </h3>
+            <div class="tabs-wrap">
+                <ul  class="nav nav-tabs">
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+                    <li>
+                        <a href="echarts-pie.html" >标准饼图</a>
+                    </li>
+                    <li  class="active">
+                        <a href="echarts-pie-loop.html" >环形图</a>
+                    </li>
 
-   {{>fixtures/sidebar}}
+                </ul>
+            </div>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+        </div>
+    </div>
 
-		<div class="page-content">
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
 
-			{{>fixtures/theme-panel}}
+            <div class="portlet box default">
 
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.echarts_pie}}
-					</h3>
-                    <div class="tabs-wrap">
-                        <ul  class="nav nav-tabs">
-
-                            <li>
-                                <a href="echarts-pie.html" >标准饼图</a>
-                            </li>
-                            <li  class="active">
-                                <a href="echarts-pie-loop.html" >环形图</a>
-                            </li>
-
-                        </ul>
+                <div class="portlet-body">
+                    <div  class="chart-default " >
+                        <div class="chart-body" id="my_chart"></div>
                     </div>
 
-				</div>
-			</div>
+                </div>
 
+            </div>
 
+        </div>
 
+    </div>
 
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-
-					<div class="portlet box default">
-
-						<div class="portlet-body">
-							<div  class="chart-default " >
-								<div class="chart-body" id="my_chart"></div>
-							</div>
-
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                <div class="markdown">
-                    <h3>Javascript</h3>
-                    <pre><code class="javascript">
-require('../../plugins/echarts/module');
+    <div class="row">
+        <div class="col-md-12">
+            <div class="markdown">
+                <h3>Javascript</h3>
+<pre><code class="javascript">require('../../plugins/echarts/module');
 
 var chart = $p.echarts("my_chart", {
     type: "pie",
@@ -103,36 +79,27 @@ chart.load({
         value: 114,
         name: '网易有道'
     }],
-});
-
-                </code></pre>
+});</code></pre>
 
                 {{>fixtures/echarts-footer}}
 
-                </div>
-                </div>
             </div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+{{/inline}}
 
-{{>fixtures/footer}}
+{{#*inline "appScript"}}
+    <script type="text/javascript">
 
+        pagurian.call([
+            "modules/echarts-pie/app",
+            "plugins/echarts/loader"
+        ], function(app) {
+            app.page.loop();
+        });
 
-<script type="text/javascript">
+    </script>
+{{/inline}}
 
-    pagurian.call([
-        "modules/echarts-pie/app",
-        "plugins/echarts/loader"
-    ], function(app) {
-		app.page.loop();
-	});
-
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

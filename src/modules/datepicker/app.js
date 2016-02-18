@@ -1,7 +1,5 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "Date Pickers"
-    };
+    
     var app = require("../../lib/app");
 
     require('../../plugins/daterangepicker/module');
@@ -46,7 +44,7 @@ define(function(require, exports, module) {
 
         $p.dateTimePicker('#picker2', {
             defaultDate: moment(),
-        }, function(date) {
+        }, function(date,e) {
             $p.alert(date);
         });
 

@@ -1,142 +1,118 @@
-{{>fixtures/doctype}}
+{{#>base title=data.page.alert appId="alert"}}
 
-<head>
-	<title>{{data.page.alert}}</title>
-	{{>fixtures/head}}
-</head>
-<body>
+    {{#*inline "pageContent"}}
 
-{{>fixtures/header}}
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.alert}}
+                </h3>
+            </div>
+        </div>
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-6">
 
-	{{>fixtures/sidebar}}
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Success
+                        </div>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+                    </div>
+                    <div class="portlet-body">
 
-		<div class="page-content">
-
-			{{>fixtures/theme-panel}}
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.alert}}
-					</h3>
-				</div>
-			</div>
-
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-6">
-
-					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								Success
-							</div>
-
-						</div>
-						<div class="portlet-body">
-
-							<div class="alert alert-success">
-								<strong>成功 (绿色)</strong> 报表保持成功
-							</div>
-							<div class="markdown inner">
-								<pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"报表保持成功"</span>, <span class="hljs-string">"success"</span>);</code></pre>
-								<a class="btn btn-default" href="javascript:;" id="btn_alert_1">Run</a>
-							</div>
+                        <div class="alert alert-success">
+                            <strong>成功 (绿色)</strong> 报表保持成功
+                        </div>
+                        <div class="markdown inner">
+                            <pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span
+                                    class="hljs-string">"报表保持成功"</span>, <span
+                                    class="hljs-string">"success"</span>);</code></pre>
+                            <a class="btn btn-default" href="javascript:;" id="btn_alert_1">Run</a>
+                        </div>
 
 
+                    </div>
+                </div>
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Info
+                        </div>
 
-						</div>
-					</div>
-					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								Info
-							</div>
-
-						</div>
-						<div class="portlet-body">
-
+                    </div>
+                    <div class="portlet-body">
 
 
-							<div class="alert alert-info">
-								<strong>普通信息 (蓝色)</strong> 您有5条系统提醒未读
-							</div>
-							<div class="markdown inner">
-								<pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"您有5条系统提醒未读"</span>, <span class="hljs-string">"info"</span>);</code></pre>
-								<a class="btn btn-default" href="javascript:;" id="btn_alert_2">Run</a>
-							</div>
+                        <div class="alert alert-info">
+                            <strong>普通信息 (蓝色)</strong> 您有5条系统提醒未读
+                        </div>
+                        <div class="markdown inner">
+                            <pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"您有5条系统提醒未读"</span>,<span class="hljs-string">"info"</span>);</code></pre>
+                            <a class="btn btn-default" href="javascript:;" id="btn_alert_2">Run</a>
+                        </div>
 
 
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								Warn
-							</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Warn
+                        </div>
 
-						</div>
-						<div class="portlet-body">
-
-
-							<div class="alert alert-warning">
-								<strong>警告 (黄色)</strong> 您将要删除该项目
-							</div>
-							<div class="markdown inner">
-								<pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"您将要删除该项目"</span>, <span class="hljs-string">"warning"</span>);</code></pre>
-
-								<a class="btn btn-default" href="javascript:;" id="btn_alert_3">Run</a>
-							</div>
+                    </div>
+                    <div class="portlet-body">
 
 
-						</div>
-					</div>
+                        <div class="alert alert-warning">
+                            <strong>警告 (黄色)</strong> 您将要删除该项目
+                        </div>
+                        <div class="markdown inner">
+                            <pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"您将要删除该项目"</span>,<span class="hljs-string">"warning"</span>);</code></pre>
 
-					<div class="portlet box default">
-						<div class="portlet-title">
-							<div class="caption">
-								Error
-							</div>
-						</div>
-						<div class="portlet-body">
+                            <a class="btn btn-default" href="javascript:;" id="btn_alert_3">Run</a>
+                        </div>
 
-							<div class="alert alert-danger">
-								<strong>错误 (红色)</strong> 数据加载错误!找不到您筛选的数据,请尝试刷新页面!
-							</div>
-							<div class="markdown inner">
-								<pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"找不到您筛选的数据,请尝试刷新页面!"</span>, <span class="hljs-string">"error"</span>);</code></pre>
 
-								<a class="btn btn-default" href="javascript:;" id="btn_alert_4">Run</a>
-							</div>
+                    </div>
+                </div>
 
-						</div>
-					</div>
-				</div>
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            Error
+                        </div>
+                    </div>
+                    <div class="portlet-body">
 
-			</div>
-			<!-- END PAGE CONTENT-->
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
+                        <div class="alert alert-danger">
+                            <strong>错误 (红色)</strong> 数据加载错误!找不到您筛选的数据,请尝试刷新页面!
+                        </div>
+                        <div class="markdown inner">
+                            <pre class="prettyprint"><code class="language-js hljs ">$p.alert(<span class="hljs-string">"找不到您筛选的数据,请尝试刷新页面!"</span>,<span class="hljs-string">"error"</span>);</code></pre>
 
-{{>fixtures/footer}}
-<script type="text/javascript">
-	pagurian.call("modules/com/app", function(app) {
-		app.page.alert();
-	});
-</script>
+                            <a class="btn btn-default" href="javascript:;" id="btn_alert_4">Run</a>
+                        </div>
 
-{{>fixtures/tracker}}
+                    </div>
+                </div>
+            </div>
 
-</body>
-</html>
+        </div>
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/com/app", function (app) {
+                app.page.alert();
+            });
+        </script>
+    {{/inline}}
+
+{{/base}}

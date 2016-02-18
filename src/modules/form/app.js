@@ -1,15 +1,11 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "Form"
-    };
+    
 
     var app = require("../../lib/app");
     var model = require('./model');
 
 
     require('../../plugins/jquery.validate/module');
-    require('../../plugins/uploadify/module');
-
 
     app.page.index = function() {
 
@@ -145,18 +141,6 @@ define(function(require, exports, module) {
 
 
 
-    //文件上传
-    app.page.fileUpload = function() {
-        $p.upload("#file", {
-            formData: {
-                "token": "abc"
-            },
-            uploader: '/src/plugins/uploadify/3.2.1/uploadify.php',
-            onUploadSuccess: function(file, data, response) {
-                console.log(file, data, response);
-            }
-        });
-    };
 
 
 

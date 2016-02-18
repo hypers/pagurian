@@ -115,7 +115,8 @@ define(function(require, exports, module) {
                         for (var j = 0; j < params[i].length; j++) {
                             this.options.data.push({
                                 "name": i,
-                                "value": (type === "get") ? encodeURIComponent(params[i][j]) : params[i][j]
+                                "value": (type === "get") ? encodeURIComponent(params[i][j]) : params[i][j],
+                                "type": "array"
                             });
                         }
                         continue;

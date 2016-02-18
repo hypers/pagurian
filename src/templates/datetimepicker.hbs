@@ -1,102 +1,80 @@
-{{>fixtures/doctype}}
-<head>
-	<title> {{data.page.datepicker}}</title>
-	{{>fixtures/head}}
-</head>
-<body>
+{{#>base title=data.page.datepicker appId="datepicker"}}
 
-{{>fixtures/header}}
+{{#*inline "pageContent"}}
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                {{data.page.datepicker}}
+            </h3>
 
+            <div class="tabs-wrap">
+                <ul  class="nav nav-tabs">
+                    <li>
+                        <a href="datepicker.html" >日期</a>
+                    </li>
+                    <li >
+                        <a href="daterangepicker.html" >日期范围</a>
+                    </li>
+                    <li class="active">
+                        <a href="datetimepicker.html" >时间</a>
+                    </li>
 
-<!-- BEGIN CONTAINER -->
-<div class="page-container">
+                </ul>
+            </div>
 
-   {{>fixtures/sidebar}}
+        </div>
+    </div>
 
-	<!-- BEGIN CONTENT -->
-	<div class="page-content-wrapper">
+    <div class="row">
+        <div class="col-md-12">
 
-		<div class="page-content">
+            <!-- BEGIN PORTLET-->
+            <div class="portlet box default">
+                <div class="portlet-body form">
+                    <form action="#" class="form-horizontal form-bordered">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">默认</label>
+                                <div class="col-md-3">
+                                    <input id="picker1" class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">带图标</label>
+                                <div class="col-md-3">
 
-			{{>fixtures/theme-panel}}
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="page-title">
-					{{data.page.datepicker}}
-					</h3>
+                                    <div id="picker2"  class="input-group date date-time-picker input-medium " >
+                                        <input type="text" class="form-control" readonly="" size="16">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn default date-set"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                    </div>
 
-					<div class="tabs-wrap">
-		   			   <ul  class="nav nav-tabs">
-		   					<li>
-		   						<a href="datepicker.html" >日期</a>
-		   					</li>
-		   					<li >
-		   						<a href="daterangepicker.html" >日期范围</a>
-		   					</li>
-		   					<li class="active">
-		                           <a href="datetimepicker.html" >时间</a>
-		                       </li>
-
-		   				</ul>
-		   			</div>
-					
-				</div>
-			</div>
-
-
-
-			<div class="row">
-				<div class="col-md-12">
-
-					<!-- BEGIN PORTLET-->
-					<div class="portlet box default">
-						<div class="portlet-body form">
-							<form action="#" class="form-horizontal form-bordered">
-								<div class="form-body">
-									<div class="form-group">
-										<label class="control-label col-md-3">默认</label>
-										<div class="col-md-3">
-											<input id="picker1" class="form-control form-control-inline input-medium date-picker" size="16" type="text" value=""/>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-md-3">带图标</label>
-										<div class="col-md-3">
-
-											<div id="picker2"  class="input-group date date-time-picker input-medium " >
-												<input type="text" class="form-control" readonly="" size="16">
-												<span class="input-group-btn">
-													<button type="button" class="btn default date-set"><i class="fa fa-calendar"></i></button>
-												</span>
-											</div>
-
-										</div>
-									</div>
+                                </div>
+                            </div>
 
 
-								</div>
-							</form>
+                        </div>
+                    </form>
 
-						</div>
-					</div>
-					<!-- END PORTLET-->
+                </div>
+            </div>
+            <!-- END PORTLET-->
 
-				</div>
-			</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
 
 
-			<div class="row">
-				<div class="col-md-12">
-
-
-					<div class="markdown">
+            <div class="markdown">
 
 
 
 
-					<h3>HTML代码</h3>
-						<pre><code class="html">
-&lt;!--默认--&gt;
+                <h3>HTML代码</h3>
+<pre><code class="html">&lt;!--默认--&gt;
 &lt;input id=&quot;picker1&quot; class=&quot;form-control form-control-inline input-medium date-picker&quot; size=&quot;16&quot; type=&quot;text&quot; value=&quot;&quot;/&gt;
 
 
@@ -106,45 +84,33 @@
     &lt;span class=&quot;input-group-btn&quot;&gt;
         &lt;button type=&quot;button&quot; class=&quot;btn default date-set&quot;&gt;&lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;
     &lt;/span&gt;
-&lt;/div&gt;
-
-
-</code></pre>
-						<h3>Javascript代码</h3>
-						<pre><code class="javascript">
-$p.dateTimePicker('#picker1', {}, function(date) {
-	$p.alert(date);
+&lt;/div&gt;</code></pre>
+                <h3>Javascript代码</h3>
+<pre><code class="javascript">$p.dateTimePicker('#picker1', {}, function(date) {
+    $p.alert(date);
 });
 
 $p.dateTimePicker('#picker2', {
-	defaultDate: moment(),
+    defaultDate: moment(),
 }, function(date) {
-	$p.alert(date);
-});
-					</code></pre>
+    $p.alert(date);
+});</code></pre>
 
 
-						<h3>更多实例</h3>
-						<a href="http://bootstrap-datepicker.readthedocs.org/en/latest/index.html" target="_blank">http://bootstrap-datepicker.readthedocs.org/en/latest/index.html</a>
-					</div>
+                <h3>更多实例</h3>
+                <a href="http://bootstrap-datepicker.readthedocs.org/en/latest/index.html" target="_blank">http://bootstrap-datepicker.readthedocs.org/en/latest/index.html</a>
+            </div>
 
-				</div>
-			</div>
+        </div>
+    </div>
+{{/inline}}
 
+{{#*inline "appScript"}}
+    <script type="text/javascript">
+        pagurian.call("modules/datepicker/app", function(app) {
+            app.page.datetime();
+        });
+    </script>
+{{/inline}}
 
-		</div>
-	</div>
-	<!-- END CONTENT -->
-</div>
-<!-- END CONTAINER -->
-
-{{>fixtures/footer}}
-<script type="text/javascript">
-	pagurian.call("modules/datepicker/app", function(app) {
-		app.page.datetime();
-	});
-</script>
-
-{{>fixtures/tracker}}
-</body>
-</html>
+{{/base}}

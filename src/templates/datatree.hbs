@@ -1,0 +1,68 @@
+{{#>base title=data.page.datatree appId="datatree"}}
+
+    {{#*inline "pageContent"}}
+        <style media="screen">
+            .table-custom td div {
+                font-size: 12px;
+                color: #aaa;
+            }
+        </style>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.datatree}}
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="datatree.html">基础</a>
+                        </li>
+                        <li >
+                            <a href="datatree-advanced.html">高级</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <div id="tree"></div>
+                <div class="markdown">
+{{>codes/datatree-base}}
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h3>更多实例</h3>
+                <p>
+                    <a href="http://jstree.com/" target="_blank">
+                        http://jstree.com/
+                    </a>
+                </p>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+            <script type="text/javascript">
+                pagurian.call("modules/datatree/app", function(app) {
+                    app.page.index();
+                });
+            </script>
+            {{/inline}}
+
+            {{/base}}
