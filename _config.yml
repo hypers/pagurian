@@ -1,0 +1,20 @@
+# Site settings
+title: Pagurian
+email: simonguo.2009@gmail.com
+description: >
+  一个管理系统的前端框架.
+baseurl: ""
+url: "http://pagurian.com"
+fixedNav: 'true' # true or false
+theme: green # green, blue, orange, purple, grey
+githubUsername: hypers/pagurian
+dribbbleUsername:
+codepenUsername:
+
+# Build settings
+permalink: /:year/:month/:title
+markdown: kramdown
+include: [_pages]
+exclude: [_site, CHANGELOG.md, LICENSE, README.md]
+sass:
+  style: compressed

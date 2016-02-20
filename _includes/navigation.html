@@ -1,0 +1,8 @@
+<nav class="c-navigation {% if site.fixedNav == 'true' %}is-fixed{% endif %}">
+  <div class="c-navigation__container u-container">
+    <a class="c-navigation__item {% if page.url == '/' %}is-active{% endif %}" href="{{ "/" | prepend: site.baseurl }}">首页</a>
+    <a class="c-navigation__item" href="/demo/dist/templates/theme-color.html" target="_blank">实例</a>
+    <a class="c-navigation__item" href="/design/" target="_blank">设计</a>
+    <a class="c-navigation__item" href="https://github.com/hypers/pagurian" target="_blank">Github</a>
+  </div>
+</nav>
