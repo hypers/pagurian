@@ -14,7 +14,6 @@ Buttons & Dropdown Buttons
     border-radius: 0 !important;
     text-shadow: none;
 }
-
 /* fix jumping group buttons */
 .btn-group.btn-group-solid .btn + .btn,
 .btn-group.btn-group-solid .btn + .btn-group.btn-group-solid,
@@ -65,7 +64,6 @@ Buttons & Dropdown Buttons
     background-color: #d8d8d8 !important;
     outline: none !important;
 }
-
 /*  Red */
 .btn.red {
     color: white;
@@ -82,7 +80,6 @@ Buttons & Dropdown Buttons
     color: #fff !important;
     outline: none !important;
 }
-
 /*  Blue */
 .btn.blue {
     color: white;
@@ -112,7 +109,6 @@ Buttons & Dropdown Buttons
     color: #fff !important;
     outline: none !important;
 }
-
 /*  Green */
 .btn.green {
     color: white;
@@ -129,7 +125,6 @@ Buttons & Dropdown Buttons
     color: #fff !important;
     outline: none !important;
 }
-
 /*  Purple */
 .btn.purple {
     color: white;
@@ -159,7 +154,6 @@ Buttons & Dropdown Buttons
     color: #fff !important;
     outline: none !important;
 }
-
 /*  Yellow */
 .btn.yellow {
     color: white;
@@ -189,7 +183,6 @@ Buttons & Dropdown Buttons
     color: #fff !important;
     outline: none !important;
 }
-
 /*  Black */
 .btn.dark {
     color: white;
@@ -250,7 +243,6 @@ Buttons & Dropdown Buttons
     padding-left: 0;
     padding-right: 0;
 }
-
 /** Buttons **/
 .btn {
     border-width: 1px;
@@ -260,19 +252,20 @@ Buttons & Dropdown Buttons
     background: @B100 !important;
 }
 .btn-default {
-    border: 1px solid @B300;
+    border: 1px solid @B000;
     color: inherit;
-    &:hover {
-        border-color: @B500;
-        background: @B000;
+    &:hover,
+    &.btn-default-hover {
+        border-color: @B300;
+        background: @B300;
     }
     &:active {
         border-color: @B600;
-        background: @B000;
+        background: @B600;
     }
     &:focus {
         border-color: @B300;
-        background: @B000;
+        background: @B300;
     }
 }
 .btn-link {
@@ -286,7 +279,7 @@ Buttons & Dropdown Buttons
     background: @H500;
     border-color: @H500;
     color: @B000;
-    &:focus{
+    &:focus {
         background: @H500;
         border-color: @H500;
         color: @B000;
@@ -296,7 +289,6 @@ Buttons & Dropdown Buttons
         background: @H600;
         color: @B000;
     }
-
     &:active,
     &.active {
         border-color: @H700;
@@ -405,7 +397,7 @@ Buttons & Dropdown Buttons
 }
 .open {
     .dropdown-toggle.btn-default {
-        border-color: @B500;
+        border-color: @B300;
         background: @B000;
     }
 }
@@ -414,13 +406,15 @@ Buttons & Dropdown Buttons
 }
 .btn-radio {
     .btn-active {
-        border-color: @B300;
+        border-color: @B000;
         border-bottom: 2px solid @H700;
+        background: @B000;
         color: @B900;
     }
     .btn:hover {
-        border-color: @B300;
+        border-color: @B000;
         border-bottom: 2px solid @H700;
+        background: @B000;
         color: @B900;
     }
 }
@@ -428,42 +422,43 @@ Buttons & Dropdown Buttons
     width: 36px;
     height: 36px;
     padding: 5px;
-    .icon{
+    .icon {
         vertical-align: middle;
         font-size: 14px;
     }
-    .fa{
+    .fa {
         vertical-align: bottom;
         font-size: 16px;
     }
-    &.btn-lg{
+    &.btn-lg {
         width: 39px;
         height: 39px;
         padding: 5px;
     }
-    &.btn-sm{
+    &.btn-sm {
         width: 31px;
         height: 31px;
         padding: 0;
     }
 }
-button{
-    &.btn-icon{
-        .fa{
+button {
+    &.btn-icon {
+        .fa {
             vertical-align: unset;
         }
-        &.btn-lg{
+        &.btn-lg {
             padding: 9px;
         }
-        &.btn-sm{
+        &.btn-sm {
             padding: 4px;
-
         }
     }
 }
-.btn-highlight{
+.btn-highlight {
     color: @H500;
-    &:hover,&:active,&:focus{
+    &:hover,
+    &:active,
+    &:focus {
         color: @H600;
     }
 }
@@ -503,18 +498,18 @@ button{
         }
     }
     &.open {
-        .btn {
+        .btn-default {
             background: @B000;
             border-bottom: none;
             z-index: 1001;
         }
         .dropdown-menu {
-            border-color: @B600;
+            border-color: @B300;
             top: 32px;
             min-height: 50px;
         }
         .dropdown-toggle {
-            border-color: @B600;
+            border-color: @B300;
             background: @B000;
         }
     }
@@ -551,6 +546,6 @@ button{
 .btn-hide {
     display: none;
 }
-.uploadify-button{
+.uploadify-button {
     line-height: normal !important;
 }
