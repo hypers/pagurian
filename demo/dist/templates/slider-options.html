@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+	<title>Slider</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<meta content="" name="description"/>
+	<meta content="" name="author"/>
+	<meta name="MobileOptimized" content="320">
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link href="../resources/css/public.css" rel="stylesheet" type="text/css"/>
+	<link id="style_themes" href="../resources/css/themes-green.css" rel="stylesheet" type="text/css"/>
+	
+	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/8.8.0/styles/default.min.css">
+	
+	<!--[if !IE]><!-->
+	<script src="http://cdn.bootcss.com/highlight.js/8.8.0/highlight.min.js"></script>
+	<!--<![endif]-->
+</head>
+<body>
+
+<div class="header navbar navbar-inverse navbar-fixed-top">
+
+    <div class="header-inner">
+
+        <!-- BEGIN LOGO -->
+        <a class="navbar-brand logo" href="/index.html?v=1.5.0">
+            <i class="icon icon-logo-analytics"></i>
+        </a>
+        <!-- END LOGO -->
+        <ul class="nav navbar-nav">
+
+            <li class="active">
+                <a href="javascript:;">开始使用</a>
+            </li>
+            <li>
+                <a href="/docs/ui-guide/html/" target="_blank">UI设计规范</a>
+            </li>
+            <li>
+                <a href="https://github.com/hypers/pagurian" target="_blank">源码下载</a>
+            </li>
+        </ul>
+
+        <div class="nav_right">
+
+            <ul class="nav userbar pull-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        系统管理员
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-user"></i>  基本信息</a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i>  我的消息</a></li>
+                        <li><a href="#"><i class="fa fa-power-off"></i>  退出系统</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+	<div class="page-sidebar-wrapper">
+	    <div class="page-sidebar navbar-collapse collapse">
+	        <!-- BEGIN SIDEBAR MENU -->
+	        <ul class="page-sidebar-menu">
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-picture-o"></i>
+	                        <span class="title">基础UI</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="alert">
+	                                <a href="com-alert.html">Alert</a>
+	                            </li>
+	                            <li data-id="button">
+	                                <a href="theme-buttons.html">Button</a>
+	                            </li>
+	                            <li data-id="breadcrumb">
+	                                <a href="breadcrumb.html">Breadcrumb</a>
+	                            </li>
+	                            <li data-id="color">
+	                                <a href="theme-color.html">Color</a>
+	                            </li>
+	                            <li data-id="dialog">
+	                                <a href="com-dialogs.html">Dialog</a>
+	                            </li>
+	                            <li data-id="form">
+	                                <a href="com-form.html">Form</a>
+	                            </li>
+	                            <li data-id="popover">
+	                                <a href="com-popover.html">Popover</a>
+	                            </li>
+	                            <li data-id="tooltip">
+	                                <a href="com-tooltip.html">Tooltip</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-briefcase"></i>
+	                        <span class="title">组件</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="datalistview">
+	                                <a href="datalistview.html">DataListView</a>
+	                            </li>
+	                            <li data-id="sizer">
+	                                <a href="sizer-single.html">Sizer</a>
+	                            </li>
+	                            <li data-id="summary">
+	                                <a href="summary.html">Summary</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-puzzle-piece"></i>
+	                        <span class="title">插件</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="datatables">
+	                                <a href="datatable.html">DataTables</a>
+	                            </li>
+	                            <li data-id="datatree">
+	                                <a href="datatree.html">DataTree</a>
+	                            </li>
+	                            <li data-id="datepicker">
+	                                <a href="datepicker.html">Date Pickers</a>
+	                            </li>
+	                            <li data-id="slider">
+	                                <a href="slider.html">Slider</a>
+	                            </li>
+	                            <li data-id="spinner">
+	                                <a href="number-spinner.html">Number Spinner</a>
+	                            </li>
+	                            <li data-id="uploader">
+	                                <a href="uploader.html">Uploader</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-bar-chart-o"></i>
+	                        <span class="title">图表</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="echarts_line">
+	                                <a href="echarts-line.html">Echarts 折线图</a>
+	                            </li>
+	                            <li data-id="echarts_bar">
+	                                <a href="echarts-bar.html">Echarts 柱状图</a>
+	                            </li>
+	                            <li data-id="echarts_pie">
+	                                <a href="echarts-pie.html">Echarts 饼图</a>
+	                            </li>
+	                            <li data-id="echarts_map">
+	                                <a href="echarts-map-world.html">Echarts 地图</a>
+	                            </li>
+	                            <li data-id="echarts_msahup">
+	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
+	                            </li>
+	                            <li data-id="echarts_custom">
+	                                <a href="echarts-custom-event.html">Echarts 自定义</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-pagelines"></i>
+	                        <span class="title">单页</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="login">
+	                                <a href="page-login.html">登录页面</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	
+	        </ul>
+	        <!-- END SIDEBAR MENU -->
+	    </div>
+	</div>
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+
+		<div class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            Slider
+                        </h3>
+                        <div class="tabs-wrap">
+                            <ul  class="nav nav-tabs">
+                                <li >
+                                    <a href="slider.html" >基础</a>
+                                </li>
+                                <li class="active">
+                                    <a href="slider-options.html" >参数说明</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-12">
+            
+                        <div class="markdown">
+                            <pre><code class="html">$p.slider(Seletor, Options);</code></pre>
+                        </div>
+            
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Options</h3>
+                        <hr>
+                        <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                            <thead>
+                            <tr>
+                                <th width="200">参数</th>
+                                <th width="100">默认值</th>
+                                <th width="100">数据类型</th>
+                                <th>描述</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="options__step">
+                                <td><mark>type</mark><div>data-type</div></td>
+                                <td>"single"</td>
+                                <td>string</td>
+                                <td>选择一种类型,  <code>single</code> 设置一个值,  <code>double</code> 设置一个范围</td>
+                            </tr>
+                            <tr>
+                                <td><mark>min</mark><div>data-min</div></td>
+                                <td>10</td>
+                                <td>number</td>
+                                <td>设置最小值</td>
+                            </tr>
+                            <tr>
+                                <td><mark>max</mark><div>data-max</div></td>
+                                <td>100</td>
+                                <td>number</td>
+                                <td>设置最大值</td>
+                            </tr>
+                            <tr>
+                                <td><mark>from</mark><div>data-from</div></td>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>设置左手柄（或单柄）的起始位置</td>
+                            </tr>
+                            <tr>
+                                <td><mark>to</mark><div>data-to</div></td>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>设置右手柄的起始位置</td>
+                            </tr>
+                            <tr class="options__step">
+                                <td><mark>step</mark><div>data-step</div></td>
+                                <td>1</td>
+                                <td>number</td>
+                                <td>设置每一步滑动的值，对于0，可以是小数</td>
+                            </tr>
+            
+                            <tr>
+                                <td><mark>min_interval</mark><div>data-min-interval</div></td>
+                                <td>—</td>
+                                <td>number</td>
+                                <td>当类型为double，设置最小范围值</td>
+                            </tr>
+                            <tr>
+                                <td><mark>max_interval</mark><div>data-max-interval</div></td>
+                                <td>—</td>
+                                <td>number</td>
+                                <td>当类型为double，设置最大范围值</td>
+                            </tr>
+            
+            
+                            <tr class="options__step">
+                                <td><mark>values</mark><div>data-values</div></td>
+                                <td>[]</td>
+                                <td>array</td>
+                                <td>设置可能的滑块值的数组，可以是数字或字符串。如果该值设置，min，max和step都无效。</td>
+                            </tr>
+            
+                            <tr class="options__new">
+                                <td><mark>from_fixed</mark><div>data-from-fixed</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>禁止拖动左手柄（或者单手柄）。</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>from_min</mark><div>data-from-min</div></td>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>设置左手柄拖动的最小值</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>from_max</mark><div>data-from-max</div></td>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>设置左手柄拖动的最大值</td>
+                            </tr>
+            
+            
+                            <tr class="options__new">
+                                <td><mark>to_fixed</mark><div>data-to-fixed</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>禁止拖动右手柄。</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>to_min</mark><div>data-to-min</div></td>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>右手柄拖动的最小值</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>to_max</mark><div>data-to-max</div></td>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>设置左手柄拖动的最大值</td>
+                            </tr>
+            
+            
+                            <tr>
+                                <td><mark>prettify_enabled</mark><div>data-prettify-enabled</div></td>
+                                <td>true</td>
+                                <td>boolean</td>
+                                <td>设置长数字的可读性。 10000000 → 10 000 000</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>prettify_separator</mark><div>data-prettify-separator</div></td>
+                                <td>" "</td>
+                                <td>string</td>
+                                <td>设置长数字的可读性。 10 000, 10.000, 10-000 и т.п.</td>
+                            </tr>
+                            <tr class="options__new options__step">
+                                <td><mark>prettify</mark><div>—</div></td>
+                                <td>null</td>
+                                <td>function</td>
+                                <td>
+                                    设置你自己的美化功能。可以是任何东西。
+                                </td>
+                            </tr>
+            
+                            <tr class="options__new options__step">
+                                <td><mark>force_edges</mark><div>data-force-edges</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>强制文字显示在控件内部</td>
+                            </tr>
+            
+                            <tr class="options__new">
+                                <td><mark>keyboard</mark><div>data-keyboard</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>启用键盘操作. Move left: ←, ↓, A, S. Move right: →, ↑, W, D.</td>
+                            </tr>
+                            <tr class="options__new options__step">
+                                <td><mark>keyboard_step</mark><div>data-keyboard-step</div></td>
+                                <td>5</td>
+                                <td>number</td>
+                                <td>键盘操作移动的步数。</td>
+                            </tr>
+            
+                            <tr>
+                                <td><mark>grid</mark><div>data-grid</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>启用刻度尺</td>
+                            </tr>
+                            <tr>
+                                <td><mark>grid_margin</mark><div>data-grid-margin</div></td>
+                                <td>true</td>
+                                <td>boolean</td>
+                                <td>设置刻度尺左右两边是否有边距</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>grid_num</mark><div>data-grid-num</div></td>
+                                <td>4</td>
+                                <td>number</td>
+                                <td>设置刻度单元数</td>
+                            </tr>
+                            <tr class="options__new options__step">
+                                <td><mark>grid_snap</mark><div>data-grid-snap</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>刻度尺单元网格滑块步（步参数）。如果启用，grid_num不会用。</td>
+                            </tr>
+            
+                            <tr>
+                                <td><mark>hide_min_max</mark><div>data-hide-min-max</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>隐藏最大值最小值的显示</td>
+                            </tr>
+                            <tr class="options__step">
+                                <td><mark>hide_from_to</mark><div>data-hide-from-to</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>隐藏左右手柄上的数值</td>
+                            </tr>
+            
+                            <tr>
+                                <td><mark>prefix</mark><div>data-prefix</div></td>
+                                <td>—</td>
+                                <td>string</td>
+                                <td>设置值的前缀。比如将数量100设置为:$100</td>
+                            </tr>
+                            <tr>
+                                <td><mark>postfix</mark><div>data-postfix</div></td>
+                                <td>—</td>
+                                <td>string</td>
+                                <td>值设置后缀。比如将数值100设置为：100K</td>
+                            </tr>
+                            <tr>
+                                <td><mark>max_postfix</mark><div>data-max-postfix</div></td>
+                                <td>—</td>
+                                <td>string</td>
+                                <td>给最大值设置后缀</td>
+                            </tr>
+                            <tr class="options__step">
+                                <td><mark>input_values_separator</mark><div>data-input-values-separator</div></td>
+                                <td>" ; "</td>
+                                <td>string</td>
+                                <td>设置input中两个值的分隔符。</td>
+                            </tr>
+            
+                            <tr class="options__step">
+                                <td><mark>disable</mark><div>data-disable</div></td>
+                                <td>false</td>
+                                <td>boolean</td>
+                                <td>禁用。</td>
+                            </tr>
+            
+                            <tr>
+                                <td><mark>onStart</mark><div>—</div></td>
+                                <td>null</td>
+                                <td>function</td>
+                                <td>回调函数，滑动的时候启动。</td>
+                            </tr>
+                            <tr>
+                                <td><mark>onChange</mark><div>—</div></td>
+                                <td>null</td>
+                                <td>function</td>
+                                <td>回调函数，值发生变化的时候启动。</td>
+                            </tr>
+                            <tr>
+                                <td><mark>onFinish</mark><div>—</div></td>
+                                <td>null</td>
+                                <td>function</td>
+                                <td>回调函数，一次滑动结束的时候启动。</td>
+                            </tr>
+                            <tr class="options__new">
+                                <td><mark>onUpdate</mark><div>—</div></td>
+                                <td>null</td>
+                                <td>function</td>
+                                <td>回调函数。触发<code>update</code> 或者 <code>reset</code>方式的时候启用。</td>
+                            </tr>
+                            </tbody>
+                        </table>
+            
+                    </div>
+                </div>
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+<div class="footer fixed">
+    <span class="copyright">© 2016 Hypers, Inc.</span>
+
+
+    <div class="link">
+        <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
+    </div>
+</div>
+<script src="../../pagurian.js" ></script>
+
+<!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    window.CONFIG = {
+        appId: "slider"
+    };
+</script>
+    <script type="text/javascript">
+        pagurian.call("modules/slider/app", function(app) {
+            app.page.index();
+        });
+    </script>
+
+<!--
+<script>
+    (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
+    {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
+    {i[h].end=1;s=d.createElement(o);s.src=u;f=d.getElementsByTagName(o)[0];
+    f.parentNode.insertBefore(s,f);i[h]("track",h,c,p)})()})(window,document,
+    "HyperAnalyticsObject","script","//t.hypers.com.cn/hwt.js?v=1.3","_ha",{
+        UA:"477",
+        API_URL:"//t.hypers.com.cn/cgi-bin",
+        SWF_URL:"//t.hypers.com.cn/hwt.swf#",
+        IFRAME_URL:"//t.hypers.com.cn/iframe.html"
+     });
+</script>
+<div style="display:none">
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+-->
+
+</body>
+</html>

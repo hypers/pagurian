@@ -3,7 +3,6 @@ syntax: glob
 .DS_Store
 .build/
 node_modules/
-dist/
 .idea/
 _site
 pagurian.iml

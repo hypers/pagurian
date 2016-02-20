@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+	<title>汇总面板 Summary</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+	<meta content="" name="description"/>
+	<meta content="" name="author"/>
+	<meta name="MobileOptimized" content="320">
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link href="../resources/css/public.css" rel="stylesheet" type="text/css"/>
+	<link id="style_themes" href="../resources/css/themes-green.css" rel="stylesheet" type="text/css"/>
+	
+	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/8.8.0/styles/default.min.css">
+	
+	<!--[if !IE]><!-->
+	<script src="http://cdn.bootcss.com/highlight.js/8.8.0/highlight.min.js"></script>
+	<!--<![endif]-->
+</head>
+<body>
+
+<div class="header navbar navbar-inverse navbar-fixed-top">
+
+    <div class="header-inner">
+
+        <!-- BEGIN LOGO -->
+        <a class="navbar-brand logo" href="/index.html?v=1.5.0">
+            <i class="icon icon-logo-analytics"></i>
+        </a>
+        <!-- END LOGO -->
+        <ul class="nav navbar-nav">
+
+            <li class="active">
+                <a href="javascript:;">开始使用</a>
+            </li>
+            <li>
+                <a href="/docs/ui-guide/html/" target="_blank">UI设计规范</a>
+            </li>
+            <li>
+                <a href="https://github.com/hypers/pagurian" target="_blank">源码下载</a>
+            </li>
+        </ul>
+
+        <div class="nav_right">
+
+            <ul class="nav userbar pull-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        系统管理员
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="fa fa-user"></i>  基本信息</a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i>  我的消息</a></li>
+                        <li><a href="#"><i class="fa fa-power-off"></i>  退出系统</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+	<div class="page-sidebar-wrapper">
+	    <div class="page-sidebar navbar-collapse collapse">
+	        <!-- BEGIN SIDEBAR MENU -->
+	        <ul class="page-sidebar-menu">
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-picture-o"></i>
+	                        <span class="title">基础UI</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="alert">
+	                                <a href="com-alert.html">Alert</a>
+	                            </li>
+	                            <li data-id="button">
+	                                <a href="theme-buttons.html">Button</a>
+	                            </li>
+	                            <li data-id="breadcrumb">
+	                                <a href="breadcrumb.html">Breadcrumb</a>
+	                            </li>
+	                            <li data-id="color">
+	                                <a href="theme-color.html">Color</a>
+	                            </li>
+	                            <li data-id="dialog">
+	                                <a href="com-dialogs.html">Dialog</a>
+	                            </li>
+	                            <li data-id="form">
+	                                <a href="com-form.html">Form</a>
+	                            </li>
+	                            <li data-id="popover">
+	                                <a href="com-popover.html">Popover</a>
+	                            </li>
+	                            <li data-id="tooltip">
+	                                <a href="com-tooltip.html">Tooltip</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-briefcase"></i>
+	                        <span class="title">组件</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="datalistview">
+	                                <a href="datalistview.html">DataListView</a>
+	                            </li>
+	                            <li data-id="sizer">
+	                                <a href="sizer-single.html">Sizer</a>
+	                            </li>
+	                            <li data-id="summary">
+	                                <a href="summary.html">Summary</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-puzzle-piece"></i>
+	                        <span class="title">插件</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="datatables">
+	                                <a href="datatable.html">DataTables</a>
+	                            </li>
+	                            <li data-id="datatree">
+	                                <a href="datatree.html">DataTree</a>
+	                            </li>
+	                            <li data-id="datepicker">
+	                                <a href="datepicker.html">Date Pickers</a>
+	                            </li>
+	                            <li data-id="slider">
+	                                <a href="slider.html">Slider</a>
+	                            </li>
+	                            <li data-id="spinner">
+	                                <a href="number-spinner.html">Number Spinner</a>
+	                            </li>
+	                            <li data-id="uploader">
+	                                <a href="uploader.html">Uploader</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-bar-chart-o"></i>
+	                        <span class="title">图表</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="echarts_line">
+	                                <a href="echarts-line.html">Echarts 折线图</a>
+	                            </li>
+	                            <li data-id="echarts_bar">
+	                                <a href="echarts-bar.html">Echarts 柱状图</a>
+	                            </li>
+	                            <li data-id="echarts_pie">
+	                                <a href="echarts-pie.html">Echarts 饼图</a>
+	                            </li>
+	                            <li data-id="echarts_map">
+	                                <a href="echarts-map-world.html">Echarts 地图</a>
+	                            </li>
+	                            <li data-id="echarts_msahup">
+	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
+	                            </li>
+	                            <li data-id="echarts_custom">
+	                                <a href="echarts-custom-event.html">Echarts 自定义</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	                <li class="open">
+	                    <a href="javascript:;">
+	                        <i class="fa fa-pagelines"></i>
+	                        <span class="title">单页</span>
+	                        <span class="arrow open"></span>
+	                    </a>
+	                    <ul class="sub-menu">
+	                            <li data-id="login">
+	                                <a href="page-login.html">登录页面</a>
+	                            </li>
+	                    </ul>
+	                </li>
+	
+	        </ul>
+	        <!-- END SIDEBAR MENU -->
+	    </div>
+	</div>
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+
+		<div class="page-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="page-title">
+                                汇总面板 Summary
+                            </h3>
+                            <div class="tabs-wrap">
+                                <ul class="nav nav-tabs">
+                                    <li>
+                                        <a href="summary.html">基础</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="summary-pro.html">高级</a>
+                                    </li>
+                                    <li>
+                                        <a href="summary-options.html">参数说明</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="summaryProTest" class="summary-wrap"></div>
+                            <div class="portlet-body">
+                                <div  class="chart-default " >
+                                    <div class="chart-body" id="my_chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="markdown">
+                                <h3>HTML代码</h3>
+            <pre><code class="html">&lt;div id="summaryTest" class="summary-wrap"&gt;&lt;/div&gt;
+                &lt;div class="portlet-body"&gt;
+                    &lt;div  class="chart-default " &gt;
+                    &lt;div class="chart-body" id="my_chart"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;</code></pre>
+                                <h3>javascript代码</h3>
+            <pre><code class="javascript">var getColumns = function () {
+                var columns = [];
+            
+                columns.push({
+                    "cName": "showCounts",
+                    "title": "展示次数"
+                });
+            
+                columns.push({
+                    "cName": "clickCounts",
+                    "title": "点击次数(CLK)"
+                });
+            
+                columns.push({
+                    "cName": "viewCounts",
+                    "title": "访问次数(VV)"
+                });
+            
+                columns.push({
+                    "cName": "pageView",
+                    "title": "浏览量(PV)"
+                });
+            
+                columns.push({
+                    "cName": "bounceRate",
+                    "title": "跳出率"
+                });
+            
+                columns.push({
+                    "cName": "avgDayView",
+                    "title": "平均日浏览次数"
+                });
+            
+                columns.push({
+                    "cName": "avgViewDeep",
+                    "title": "平均页面访问深度"
+                });
+            
+                return columns;
+            };
+            
+            var getRows = function () {
+                var rows = [];
+                rows.push({
+                    "dataName": "title",
+                    "isTitle": true,
+                    "klass": "summary-span-title"
+                });
+            
+                rows.push({
+                    "dataName": "value",
+                    "klass": "summary-span-value"
+                });
+            
+                rows.push({
+                    "dataName": "increase",
+                    "tpl": "增长数:{0}"
+                });
+            
+                rows.push({
+                    "dataName": "rate",
+                    'render': function (data, full) {
+                            var num = (Math.round(data * 10000) / 100).toFixed(2),
+                                _html = "";
+                                _html = num >= 0 ? ('&lt;span class="summary-span-rate add"&gt;+' + num + '%&lt;/span&gt;') :
+                                        ('&lt;span class="summary-span-rate reduce"&gt;' + num + '%&lt;/span&gt;');
+                    return _html;
+                }
+                });
+            
+                return rows;
+            };
+            
+            var chartData = {
+                "clickCounts": {
+                        columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                        rows: [{
+                            name: "点击次数(CLK)",
+                            data: [120, 132, 101, 134, 90, 230, 210]
+                        }]
+                },
+                "viewCounts": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "访问次数(VV)",
+                        data: [120, 312, 101, 134, 90, 230, 210]
+                    }]
+                },
+                "pageView": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "浏览量(PV)",
+                        data: [789, 132, 101, 41, 90, 230, 210]
+                    }]
+                },
+                "bounceRate": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "跳出率",
+                        data: [56, 132, 431, 134, 90, 230, 210]
+                    }]
+                },
+                "showCounts": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "展示次数",
+                        data: [120, 132, 101, 134, 120, 321, 210]
+                    }]
+                },
+                "avgDayView": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "平均日浏览次数",
+                        data: [345, 132, 101, 465, 90, 230, 123]
+                    }]
+                },
+                "avgViewDeep": {
+                    columns: ['2014-07-05', '2014-07-06', '2014-07-07', '2014-07-08', '2014-07-09', '2014-07-10', '2014-07-11'],
+                    rows: [{
+                        name: "平均页面访问深度",
+                        data: [120, 14, 101, 134, 90, 230, 210]
+                    }]
+                }
+            };
+            
+            var chart = $p.echarts("my_chart", {
+                type: "line",
+                title: {
+                    text: '数据分析',
+                    subtext: '最近一周数据'
+                }
+            });
+            
+            var option = {
+                //最大列数
+                "maxNum": 5,
+                //最小列数
+                "minNum": 3,
+                //可以切换
+                "canChoose": true,
+                //显示setting按钮
+                "showSetting":true,
+                //数据key
+                "cName": "cName",
+                //列
+                "allColumns": getColumns(),
+                //行
+                "allRows": getRows(),
+                //数据源的参数
+                "dataParams": {},
+                //数据源
+                "dataSource": model.getSummaryData,
+                "callbackOpen": function () {
+                    console.log("callbackOpen");
+                },
+                //确定按钮的回调
+                "callbackSubmit": function (showColumns, datas) {
+                    console.log("callbackSubmit");
+                },
+                //取消按钮的回调
+                "callbackCancel": function () {
+                    console.log("callbackCancel");
+                },
+                //点击面板的回调
+                "callBackPanel": function (columnName, columnData, allDatas) {
+                    $p.alert("【columnName】:" + columnData.cNameTitle + "(" + columnName + ")-" + columnData.value, "success");
+                    chart.load(chartData[columnName]);
+                    console.log(columnName);
+                    console.log(columnData);
+                    console.log(allDatas);
+                },
+                //加载完数据的回调
+                "callBackGetData": function (chooseColumnsName, chooseColumnsData, allDatas) {
+                    chart.load(chartData[chooseColumnsName]);
+                }
+            };
+            var summary = $p.summary("#summaryTest", option);</code></pre>
+                                <h3>JSON 数据</h3>
+                                <a href="/test/api/summaryData.json" target="_blank">summaryData.json</a>
+                            </div>
+                        </div>
+                    </div>
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+<div class="footer fixed">
+    <span class="copyright">© 2016 Hypers, Inc.</span>
+
+
+    <div class="link">
+        <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
+    </div>
+</div>
+<script src="../../pagurian.js" ></script>
+
+<!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    window.CONFIG = {
+        appId: "summary"
+    };
+</script>
+        <script type="text/javascript">
+            pagurian.call(["modules/summary/app",
+                            "plugins/echarts/loader"],
+                            function (app) {
+                                app.page.summaryPro();
+                            });
+        </script>
+
+<!--
+<script>
+    (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
+    {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
+    {i[h].end=1;s=d.createElement(o);s.src=u;f=d.getElementsByTagName(o)[0];
+    f.parentNode.insertBefore(s,f);i[h]("track",h,c,p)})()})(window,document,
+    "HyperAnalyticsObject","script","//t.hypers.com.cn/hwt.js?v=1.3","_ha",{
+        UA:"477",
+        API_URL:"//t.hypers.com.cn/cgi-bin",
+        SWF_URL:"//t.hypers.com.cn/hwt.swf#",
+        IFRAME_URL:"//t.hypers.com.cn/iframe.html"
+     });
+</script>
+<div style="display:none">
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
+</div>
+-->
+
+</body>
+</html>
