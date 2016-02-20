@@ -63,7 +63,7 @@ define(function(require, exports, module) {
             case "200000":
                 return true;
             case "200001":
-                $p.com.alert(data.message, "warning");
+                $p.alert(data.message, "warning");
                 return false;
             case "200002":
 
@@ -78,17 +78,17 @@ define(function(require, exports, module) {
                 }
                 return false;
             case "200403":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403);
                 return false;
 
             case "200403.11":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_11);
                 return false;
 
             case "200403.13":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_13);
                 return false;
 
@@ -96,38 +96,38 @@ define(function(require, exports, module) {
                 window.location.reload();
                 break;
             case "200403.18":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_18);
 
                 return false;
 
             case "200404":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error404);
                 return false;
 
             case 404:
-                $p.com.alert($p.locale.handle_exception, "error");
+                $p.alert($p.locale.handle_exception, "error");
                 return false;
 
             case "100500":
-                $p.com.alert($p.locale.handle_exception, "warning");
+                $p.alert($p.locale.handle_exception, "warning");
                 return false;
 
             case 500:
-                $p.com.alert($p.locale.handle_exception, "error");
+                $p.alert($p.locale.handle_exception, "error");
                 return false;
 
             case 400:
-                $p.com.alert($p.locale.params_error, "error");
+                $p.alert($p.locale.params_error, "error");
                 return false;
 
             case 0:
                 if (data.result && data.result.statusText === "timeout") {
-                    $p.com.alert($p.locale.handle_timeout, "error");
+                    $p.alert($p.locale.handle_timeout, "error");
                     return false;
                 }
-                $p.com.alert($p.locale.handle_exception, "error");
+                $p.alert($p.locale.handle_exception, "error");
                 return false;
 
             default:
