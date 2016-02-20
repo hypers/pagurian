@@ -13,7 +13,7 @@
     +   ...
 
 ###响应
-<blockquote>
+```js
     {
         "code":"200000",              //HTTP状态  
         "message":"......",           //服务器返回消息
@@ -33,4 +33,4 @@
                 "field2":[{"code":"","message":""}]
         }
     }
-</blockquote>
+···
