@@ -12,6 +12,7 @@ define(function(require, exports, module) {
         var mapType = options.mapType || "china";
 
         var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
+        var chinaCityLocale = $p.locale.echarts[lang].china_city;
         var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
         var countryLocale = $p.locale.echarts[lang].country;
         var country_en_US = $p.locale.echarts.en_US.country;
@@ -38,7 +39,10 @@ define(function(require, exports, module) {
             if (mapType === "world") {
                 return countryLocale[key] || key;
             }
-            return chinaProvinceLocale[key] || key;
+            if (chinaProvinceLocale[key]) {
+                return chinaProvinceLocale[key];
+            }
+            return chinaCityLocale[key] || key;
         }
 
         var dataList = options.data || [];
