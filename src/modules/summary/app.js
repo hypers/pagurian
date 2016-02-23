@@ -47,16 +47,6 @@ define(function(require, exports, module) {
                 "title": "跳出率"
             });
 
-            columns.push({
-                "cName": "avgDayView",
-                "title": "平均日浏览次数"
-            });
-
-            columns.push({
-                "cName": "avgViewDeep",
-                "title": "平均页面访问深度"
-            });
-
             return columns;
         };
 
@@ -98,7 +88,8 @@ define(function(require, exports, module) {
             //行
             "allRows": getRows(),
             //数据源
-            "dataSource": model.getSummaryData
+            "dataSource": model.getSummaryData,
+
         };
 
         summaryDemo = $p.summary("#summaryTest", option);
