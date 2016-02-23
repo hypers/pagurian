@@ -206,87 +206,87 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                Echarts 柱状图
-                            </h3>
-            
-                            <div class="tabs-wrap">
-                                <ul  class="nav nav-tabs">
-            
-                                    <li class="active">
-                                        <a href="echarts-bar.html" >标准柱状图</a>
-                                    </li>
-                                    <li>
-                                        <a href="echarts-bar-horizon.html" >横向柱状图</a>
-                                    </li>
-                                    <li>
-                                        <a href="echarts-bar-stack.html" >堆积柱状图</a>
-                                    </li>
-                                    <li>
-                                        <a href="echarts-bar-custom.html" >彩虹柱状图</a>
-                                    </li>
-                                </ul>
-                            </div>
-            
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    Echarts 柱状图
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+
+                        <li class="active">
+                            <a href="echarts-bar.html" >标准柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-horizon.html" >横向柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-stack.html" >堆积柱状图</a>
+                        </li>
+                        <li>
+                            <a href="echarts-bar-custom.html" >彩虹柱状图</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet box default">
+
+                    <div class="portlet-body">
+                        <div  class="chart-default " >
+                            <div class="chart-body" id="my_chart"></div>
                         </div>
+
                     </div>
-            
-                    <!-- BEGIN PAGE CONTENT-->
-                    <div class="row">
-                        <div class="col-md-12">
-            
-                            <div class="portlet box default">
-            
-                                <div class="portlet-body">
-                                    <div  class="chart-default " >
-                                        <div class="chart-body" id="my_chart"></div>
-                                    </div>
-            
-                                </div>
-            
-                            </div>
-            
-                        </div>
-            
-                    </div>
-            
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="markdown">
-                                <h3>Javascript</h3>
-            <pre><code class="javascript">require('../../plugins/echarts/module');
-            var chart = $p.echarts("my_chart", {
-                type: "bar"
-            });
-            
-            chart.load({
-                columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
-                rows: [{
-                    name: "浏览量(PV)",
-                    value: [735, 310, 234, 135, 548, 148, 114]
-                }, {
-                    name: "独立访客者(UV)",
-                    value: [435, 110, 84, 95, 108, 98, 74]
-                }, {
-                    name: "访问总次数(VV)",
-                    value: [255, 120, 184, 195, 208, 198, 174]
-                }]
-            });</code></pre>
-            
-                                <h3>基于版本</h3>
-                                <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
-                                
-                                <h3>更多实例</h3>
-                                <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
-            
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END PAGE CONTENT-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+<pre><code class="javascript">require('../../plugins/echarts/module');
+var chart = $p.echarts("my_chart", {
+    type: "bar"
+});
+
+chart.load({
+    columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
+    rows: [{
+        name: "浏览量(PV)",
+        value: [735, 310, 234, 135, 548, 148, 114]
+    }, {
+        name: "独立访客者(UV)",
+        value: [435, 110, 84, 95, 108, 98, 74]
+    }, {
+        name: "访问总次数(VV)",
+        value: [255, 120, 184, 195, 208, 198, 174]
+    }]
+});</code></pre>
+
+                    <h3>基于版本</h3>
+                    <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
+                    
+                    <h3>更多实例</h3>
+                    <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
+
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -319,7 +319,6 @@
             });
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -335,7 +334,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

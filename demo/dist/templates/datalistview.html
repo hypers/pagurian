@@ -206,88 +206,88 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            数据列表 DataListView
-                        </h3>
-                        <div class="tabs-wrap">
-                            <ul class="nav nav-tabs">
-                                <li class="active">
-                                    <a href="datalistview.html">基础 </a>
-                                </li>
-                                <li>
-                                    <a href="datalistview-options.html">参数说明</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="row">
-                    <div class="col-md-12 datalistview-container">
-                        <div id="dataListView" class="dataListView data-list-view-video-info-search"></div>
-                    </div>
-                </div>
-            
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="markdown">
-                            <h3>HTML代码</h3>
-            <pre><code class="html">&lt;!--页面--&gt;
-            &lt;div id="dataListView" class="dataListView data-list-view-video-info-search"&gt;&lt;/div&gt;
-            &lt;!--模板--&gt;
-            &lt;scrip t type="text/html" id="dataListViewTpl"&gt;
-                &lt;table class="data-list-view"&gt;
-                    &lt;tbody&gt;
-                        &lt;tr&gt;
-                            &lt;td colspan="4"&gt;
-                            &lt;span class="video_name"&gt;{videoName}&lt;/span&gt;
-                            &lt;span&gt;(&lt;a href="{url}" target="_blank"&gt;链接地址&lt;/a&gt;)&lt;/span&gt;
-                            &lt;span class="font-gray update-time"&gt;{infoUpdateTime}&lt;/span&gt;
-                            &lt;/td&gt;
-                        &lt;/tr&gt;
-                        &lt;tr&gt;
-                            &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;频道：&lt;/span&gt;&lt;span&gt;{channelName}&lt;/span&gt;&lt;/td&gt;
-                            &lt;td class="table-data-list-right"&gt;
-                            &lt;span class="font-gray fl"&gt;演员：&lt;/span&gt;
-                            &lt;span class="ellipsis fl"&gt;{actor}&lt;/span&gt;
-                            &lt;/td&gt;
-                        &lt;/tr&gt;
-                        &lt;tr&gt;
-                            &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;专辑：&lt;/span&gt;&lt;span&gt;{albumName}&lt;/span&gt;&lt;/td&gt;
-                            &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;导演：&lt;/span&gt;&lt;span&gt;{director}&lt;/span&gt;&lt;/td&gt;
-                        &lt;/tr&gt;
-                        &lt;tr&gt;
-                            &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;类型：&lt;/span&gt;&lt;span&gt;{videoType}&lt;/span&gt;&lt;/td&gt;
-                            &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;版权：&lt;/span&gt;&lt;span&gt;{copyright}&lt;/span&gt;&lt;/td&gt;
-                        &lt;/tr&gt;
-                        &lt;tr&gt;
-                            &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;地区：&lt;/span&gt;&lt;span&gt;{area}&lt;/span&gt;&lt;/td&gt;
-                            &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;上映时间：&lt;/span&gt;&lt;span&gt;{pubTime}&lt;/span&gt;&lt;/td&gt;
-                        &lt;/tr&gt;
-                    &lt;/tbody&gt;
-                &lt;/table&gt;
-            &lt;/script&gt;</code></pre>
-                        <h3>Javascript代码</h3>
-            <pre><code class="javascript">require('../../widgets/datalistview/module');
-                var tpl = $("#dataListViewTpl").html();
-                var oDataListView = $p.dataListView("#dataListView", {
-                    "dataSource": model.getDataList,
-                    "tplHtml": tpl,
-                    "sDom": ["T", "D", "S", "P"],
-                    "fnParams": function () {
-                        return {};
-                    },
-                    "fnFormat": function (row) {
-                        return $p.tpl(tpl, row);
-                    }
-                });</code></pre>
-                            <h3>JSON 数据</h3>
-                            <a href="/test/api/datalistdata.json" target="_blank">datalistdata.json</a>
-                        </div>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                数据列表 DataListView
+            </h3>
+            <div class="tabs-wrap">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="datalistview.html">基础 </a>
+                    </li>
+                    <li>
+                        <a href="datalistview-options.html">参数说明</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 datalistview-container">
+            <div id="dataListView" class="dataListView data-list-view-video-info-search"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="markdown">
+                <h3>HTML代码</h3>
+<pre><code class="html">&lt;!--页面--&gt;
+&lt;div id="dataListView" class="dataListView data-list-view-video-info-search"&gt;&lt;/div&gt;
+&lt;!--模板--&gt;
+&lt;scrip t type="text/html" id="dataListViewTpl"&gt;
+    &lt;table class="data-list-view"&gt;
+        &lt;tbody&gt;
+            &lt;tr&gt;
+                &lt;td colspan="4"&gt;
+                &lt;span class="video_name"&gt;{videoName}&lt;/span&gt;
+                &lt;span&gt;(&lt;a href="{url}" target="_blank"&gt;链接地址&lt;/a&gt;)&lt;/span&gt;
+                &lt;span class="font-gray update-time"&gt;{infoUpdateTime}&lt;/span&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;频道：&lt;/span&gt;&lt;span&gt;{channelName}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;
+                &lt;span class="font-gray fl"&gt;演员：&lt;/span&gt;
+                &lt;span class="ellipsis fl"&gt;{actor}&lt;/span&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;专辑：&lt;/span&gt;&lt;span&gt;{albumName}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;导演：&lt;/span&gt;&lt;span&gt;{director}&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;类型：&lt;/span&gt;&lt;span&gt;{videoType}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;版权：&lt;/span&gt;&lt;span&gt;{copyright}&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td class="table-data-list-left"&gt;&lt;span class="font-gray"&gt;地区：&lt;/span&gt;&lt;span&gt;{area}&lt;/span&gt;&lt;/td&gt;
+                &lt;td class="table-data-list-right"&gt;&lt;span class="font-gray"&gt;上映时间：&lt;/span&gt;&lt;span&gt;{pubTime}&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/script&gt;</code></pre>
+            <h3>Javascript代码</h3>
+<pre><code class="javascript">require('../../widgets/datalistview/module');
+    var tpl = $("#dataListViewTpl").html();
+    var oDataListView = $p.dataListView("#dataListView", {
+        "dataSource": model.getDataList,
+        "tplHtml": tpl,
+        "sDom": ["T", "D", "S", "P"],
+        "fnParams": function () {
+            return {};
+        },
+        "fnFormat": function (row) {
+            return $p.tpl(tpl, row);
+        }
+    });</code></pre>
+                <h3>JSON 数据</h3>
+                <a href="/test/api/datalistdata.json" target="_blank">datalistdata.json</a>
+            </div>
+        </div>
+    </div>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -351,7 +351,6 @@
         });
     </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -367,7 +366,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

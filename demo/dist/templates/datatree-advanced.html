@@ -206,110 +206,110 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                    <style media="screen">
-                        .table-custom td div {
-                            font-size: 12px;
-                            color: #aaa;
-                        }
-                    </style>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                DataTree
-                            </h3>
-            
-                            <div class="tabs-wrap">
-                                <ul class="nav nav-tabs">
-                                    <li>
-                                        <a href="datatree.html">基础</a>
-                                    </li>
-                                    <li  class="active">
-                                        <a href="datatree-advanced.html">高级</a>
-                                    </li>
-            
-                                </ul>
-                            </div>
-            
-                        </div>
+        <style media="screen">
+            .table-custom td div {
+                font-size: 12px;
+                color: #aaa;
+            }
+        </style>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    DataTree
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="datatree.html">基础</a>
+                        </li>
+                        <li  class="active">
+                            <a href="datatree-advanced.html">高级</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+
+
+            <div class="col-md-12">
+
+                <div class="tree-wrap">
+                    <div class="input-icon">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="name" id="input_search" placeholder="搜索" class="form-control" >
                     </div>
-            
-                    <!-- BEGIN PAGE CONTENT-->
-                    <div class="row">
-            
-            
-                        <div class="col-md-12">
-            
-                            <div class="tree-wrap">
-                                <div class="input-icon">
-                                    <i class="fa fa-search"></i>
-                                    <input type="text" name="name" id="input_search" placeholder="搜索" class="form-control" >
-                                </div>
-                                <div id="tree"></div>
-                            </div>
-            
-                            <div class="markdown">
-            <pre><code class="javascript">
-            var treeData = [{
-                text: "Root node",
-                state: {
-                    opened: true
-                },
-                children: [{
-                        text: "Child node 1",
-                        id: "111",
-                        state: {
-                            selected: true
-                        },
-                        icon: "fa fa-flash"
-                    }, {
-                        text: "Child node 2",
-                        state: {
-                            disabled: true
-                        }
-                    },
-                    "Child node 3"
-                ]
-            }];
-            
-            $p.dataTree("#tree", {
-                plugins: ["checkbox", "search", "added"],
-                core: {
-                    data: treeData
-                },
-                search: {
-                    input: "#input_search"
-                },
-                added: {
-                    numberSpinner: {
-                        decimals: 2,
-                        min: -10,
-                        max: 100
-                    }
-                },
-                change: function(e, node) {
-                    console.log(node);
-                }
-            });
-            </code></pre>
-                            </div>
-                        </div>
-            
-            
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-            
-                            <h3>更多实例</h3>
-                            <p>
-                                <a href="http://jstree.com/" target="_blank">
-                                    http://jstree.com/
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- END PAGE CONTENT-->
+                    <div id="tree"></div>
+                </div>
+
+                <div class="markdown">
+<pre><code class="javascript">
+var treeData = [{
+    text: "Root node",
+    state: {
+        opened: true
+    },
+    children: [{
+            text: "Child node 1",
+            id: "111",
+            state: {
+                selected: true
+            },
+            icon: "fa fa-flash"
+        }, {
+            text: "Child node 2",
+            state: {
+                disabled: true
+            }
+        },
+        "Child node 3"
+    ]
+}];
+
+$p.dataTree("#tree", {
+    plugins: ["checkbox", "search", "added"],
+    core: {
+        data: treeData
+    },
+    search: {
+        input: "#input_search"
+    },
+    added: {
+        numberSpinner: {
+            decimals: 2,
+            min: -10,
+            max: 100
+        }
+    },
+    change: function(e, node) {
+        console.log(node);
+    }
+});
+</code></pre>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h3>更多实例</h3>
+                <p>
+                    <a href="http://jstree.com/" target="_blank">
+                        http://jstree.com/
+                    </a>
+                </p>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -340,7 +340,6 @@
                 });
             </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -356,7 +355,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

@@ -206,149 +206,149 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                对话框 Dialog
-                            </h3>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    对话框 Dialog
+                </h3>
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-6">
+
+
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            默认
                         </div>
                     </div>
-            
-                    <!-- BEGIN PAGE CONTENT-->
-                    <div class="row">
-                        <div class="col-md-6">
-            
-            
-            
-                            <!-- BEGIN PORTLET-->
-                            <div class="portlet box default">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        默认
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
-            
-                                    <div class="markdown inner">
-            <pre><code class="javascript">$p.dialog("#btn_remove", {
-                title: "提示",
-                body: "你确定要删除吗？",
-                submit: function(modal, data, params, callback) {
-                    modal.hide();
-                    $p.alert("你点击了确定");
-                }
-            });
-            </code></pre>
-                                    </div>
-            
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
-            
-                            <!-- BEGIN PORTLET-->
-                            <div class="portlet box default">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        表单
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
-                                    <div class="markdown inner">
-            <pre><code class="javascript">$p.dialog("#btn_add", {
-                title: "添加用户",
-                body: $("#tpl_user").html(),
-                validate: function(modal, data, params) {
-                    return true;
-                },
-                submit: function(modal, data, params, callback) {
-                    modal.hide();
-                    $p.alert("你点击了确定");
-                }
-            });
-            </code></pre>
-                                    </div>
-            
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
-            
-            
-            
-            
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_remove"><i class="fa fa-minus"></i> 删除</a>
+
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_remove", {
+    title: "提示",
+    body: "你确定要删除吗？",
+    submit: function(modal, data, params, callback) {
+        modal.hide();
+        $p.alert("你点击了确定");
+    }
+});
+</code></pre>
                         </div>
-                        <div class="col-md-6">
-            
-            
-            
-                            <!-- BEGIN PORTLET-->
-                            <div class="portlet box default">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        表单填充
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
-            
-                                    <div class="markdown inner">
-            <pre><code class="javascript">$p.dialog("#btn_update", {
-                title: "编辑用户",
-                body: $("#tpl_user").html(),
-                initForm: function(modal, form, params) {
-                    //获取用户信息
-                    model.getUser(params.id, params, function(data) {
-                        $p.form(form).val(data);
-                    });
-                },
-                validate: function(modal, data, params) {
-                    return true;
-                },
-                submit: function(modal, data, params, callback) {
-                    //更新用户信息
-                    model.update(params.id, data, function(resp,valid) {
-                        if(valid){
-                            $p.alert(resp.message);
-                            modal.hide();
-                        }
-                        modal.complete();
-                    });
-                }
-            });
-            </code></pre>
-                                    </div>
-            
-                                </div>
-                            </div>
-                            <!-- END PORTLET-->
-            
-            
-                            <!-- BEGIN PORTLET-->
-                            <div class="portlet box default">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        其他
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <a class="btn default" id="btn_form_lang" ><i class="fa fa-edit"></i> 长表单</a>
-                                </div>
-                                <div>
-                                    <!-- END PORTLET-->
-            
-                                </div>
-            
-                            </div>
-            
-            
-            
-            
-                            <!-- END PAGE CONTENT-->
+
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            表单
                         </div>
                     </div>
-                    <!-- END CONTENT -->
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_add"><i class="fa fa-plus"></i> 添加</a>
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_add", {
+    title: "添加用户",
+    body: $("#tpl_user").html(),
+    validate: function(modal, data, params) {
+        return true;
+    },
+    submit: function(modal, data, params, callback) {
+        modal.hide();
+        $p.alert("你点击了确定");
+    }
+});
+</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+
+
+
+            </div>
+            <div class="col-md-6">
+
+
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            表单填充
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_update" data-params="{id:1}" ><i class="fa fa-edit"></i> 编辑</a>
+
+                        <div class="markdown inner">
+<pre><code class="javascript">$p.dialog("#btn_update", {
+    title: "编辑用户",
+    body: $("#tpl_user").html(),
+    initForm: function(modal, form, params) {
+        //获取用户信息
+        model.getUser(params.id, params, function(data) {
+            $p.form(form).val(data);
+        });
+    },
+    validate: function(modal, data, params) {
+        return true;
+    },
+    submit: function(modal, data, params, callback) {
+        //更新用户信息
+        model.update(params.id, data, function(resp,valid) {
+            if(valid){
+                $p.alert(resp.message);
+                modal.hide();
+            }
+            modal.complete();
+        });
+    }
+});
+</code></pre>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+
+
+                <!-- BEGIN PORTLET-->
+                <div class="portlet box default">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            其他
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <a class="btn default" id="btn_form_lang" ><i class="fa fa-edit"></i> 长表单</a>
+                    </div>
+                    <div>
+                        <!-- END PORTLET-->
+
+                    </div>
+
+                </div>
+
+
+
+
+                <!-- END PAGE CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT -->
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -496,7 +496,6 @@
             });
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -512,7 +511,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

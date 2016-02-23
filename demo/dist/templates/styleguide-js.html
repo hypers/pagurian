@@ -206,154 +206,154 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                Javascript规范
-                            </h3>
-                        </div>
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-            
-                            <!--markdown-->
-                            <div class="markdown">
-            
-            
-                                <ul>
-                                    <li>文件编码：utf-8</li>
-                                    <li>换行符号：UNIX</li>
-                                    <li>缩进格式：使用Tab键盘，Tab宽度为４个空格</li>
-                                    <li>语句必须都有分号结尾，除了for, function, if, switch, try, while</li>
-                                    <li><p>只有长语句可以考虑断行，如：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>])
-                        .replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev)
-                        .replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next)
-                        .replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current)
-                        .replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre>
-            
-                                        <p>为了避免和JSLint的检验机制冲突，“.”或“＋”这类操作符放在行尾，上面代码应改为：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).
-                        replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).
-                        replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).
-                        replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).
-                        replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre></li>
-                                    <li>避免额外的逗号,如：var arr = [1,2,3,]</li>
-                                    <li><p>所有的循环体和判断体都需要用”{}”括起来,如　如，错误的：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (condition)
-                        statement;
-                        <span class="hljs-comment">/* 或 */</span>
-                        <span class="hljs-keyword">if</span> (condition) statement;</code></pre>
-            
-                                        <p>正确的：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (condition) {
-                        statement;
-                        }
-                        <span class="hljs-comment">/** 或 **/</span>
-                        <span class="hljs-keyword">if</span> (condition) { statement; }</code></pre></li>
-                                    <li>for-in循环体中必须用hasOwnProperty方法检查成员是否为自身成员。避免来自原型链上的污染</li>
-                                    <li><p>变量声明。变量声明应放在function的最上面。避免使用未声明的变量. 错误：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">0</span>) {
-                        <span class="hljs-keyword">var</span> isvalid = <span class="hljs-literal">true</span>;
-                        } </code></pre>
-            
-                                        <p>正确的：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> isvalid;
-                        <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">0</span>) {
-                        isvalid = <span class="hljs-literal">true</span>;
-                        }  </code></pre></li>
-                                    <li>不要使用with, void, eval</li>
-                                    <li>使用严格的条件判断符。用===代替==，用!==代替!=</li>
-                                    <li>下面类型的对象不建议用new构造：new Number, new String, new Boolean, new Object(用{}代替), new Array(用[]代替)</li>
-                                    <li>引用对象成员用obj.prop1代替obj[“prop1”]，除非属性名是变量</li>
-                                </ul>
-            
-            
-            
-                                <h3 id="javascript-命名规则">JavaScript 命名规则</h3>
-            
-                                <ul>
-                                    <li><p>构造器的首字母大写,如：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dialog</span> <span class="hljs-params">(config)</span> {</span>
-                        statement;
-                        }
-                        <span class="hljs-keyword">var</span> dlg = <span class="hljs-keyword">new</span> Dialog({...});</code></pre></li>
-                                    <li><p>对象的属性或方法名采用小驼峰式(lower camel-case)，如”init”, “bindEvent”, “updatePosition”：  </p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs ">Dialog.prototype = {
-                        init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>},
-                        bindEvent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>},
-                        updatePosition: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>}
-                        ...
-                        };</code></pre></li>
-                                    <li>私有变量名用下划线开头。如：”_current”, “_defaultConfig”</li>
-                                    <li>常量名全部大写，单词间用下划线分隔。如：“CSS_BTN_CLOSE”, “TXT_LOADING”</li>
-                                </ul>
-            
-            
-            
-                                <h3 id="javascript-格式化要求">JavaScript 格式化要求</h3>
-            
-                                <ul>
-                                    <li><p>语句中的必要空格和缩进</p>
-            
-                                        <ul><li>用来包含语句的”()”前后需要跟空格，诸如： if / for / while / switch ( statements ) { … } 等</li>
-                                            <li>“=”前后需要跟空格</li>
-                                            <li>数组成员间的”,”后面需要跟空格 <br>
-                                                不好的： <br>
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">for</span> (t <span class="hljs-keyword">in</span> selected) { <span class="hljs-keyword">if</span> (!hash[t]) deselect(t) }</code></pre></li></ul>
-            
-                                        <p>好的：</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">for</span> ( t <span class="hljs-keyword">in</span> selected ) {
-                        <span class="hljs-keyword">if</span> ( !hash[t] ) {
-                        deselect(t);
-                        }
-                        }</code></pre></li>
-                                    <li><p>长语句采用断行 <br>
-                                        不好的:</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre>
-            
-                                        <p>好的:</p>
-            
-                    <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).
-                        replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).
-                        replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).
-                        replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).
-                        replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre></li>
-                                    <li><p>格式化对象参数 <br>
-                                        不好的：</p>
-            
-            <pre class="prettyprint"><code class="language-js hljs ">embedSWF(id, { url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href, width: <span class="hljs-number">261</span>, height: <span class="hljs-number">30</span>, params: { wmode:<span class="hljs-string">'transparent'</span> }, attributes: { id: <span class="hljs-string">"player-sample"</span> + i, name: <span class="hljs-string">"player-sample"</span> + i }});
-            </code></pre>
-            
-                                        <p>好的：</p>
-            
-            <pre class="prettyprint"><code class="language-js hljs ">embedSWF(id, {
-                url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href,
-                width: <span class="hljs-number">261</span>,
-                height: <span class="hljs-number">30</span>,
-                params: { wmode:<span class="hljs-string">'transparent'</span> },
-                attributes: {
-                    id: <span class="hljs-string">"player-sample"</span> + i,
-                    name: <span class="hljs-string">"player-sample"</span> + i
-                }
-            });</code></pre>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--end markdown-->
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    Javascript规范
+                </h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--markdown-->
+                <div class="markdown">
+
+
+                    <ul>
+                        <li>文件编码：utf-8</li>
+                        <li>换行符号：UNIX</li>
+                        <li>缩进格式：使用Tab键盘，Tab宽度为４个空格</li>
+                        <li>语句必须都有分号结尾，除了for, function, if, switch, try, while</li>
+                        <li><p>只有长语句可以考虑断行，如：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>])
+            .replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev)
+            .replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next)
+            .replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current)
+            .replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre>
+
+                            <p>为了避免和JSLint的检验机制冲突，“.”或“＋”这类操作符放在行尾，上面代码应改为：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).
+            replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).
+            replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).
+            replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).
+            replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre></li>
+                        <li>避免额外的逗号,如：var arr = [1,2,3,]</li>
+                        <li><p>所有的循环体和判断体都需要用”{}”括起来,如　如，错误的：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (condition)
+            statement;
+            <span class="hljs-comment">/* 或 */</span>
+            <span class="hljs-keyword">if</span> (condition) statement;</code></pre>
+
+                            <p>正确的：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (condition) {
+            statement;
+            }
+            <span class="hljs-comment">/** 或 **/</span>
+            <span class="hljs-keyword">if</span> (condition) { statement; }</code></pre></li>
+                        <li>for-in循环体中必须用hasOwnProperty方法检查成员是否为自身成员。避免来自原型链上的污染</li>
+                        <li><p>变量声明。变量声明应放在function的最上面。避免使用未声明的变量. 错误：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">var</span> isvalid = <span class="hljs-literal">true</span>;
+            } </code></pre>
+
+                            <p>正确的：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> isvalid;
+            <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">0</span>) {
+            isvalid = <span class="hljs-literal">true</span>;
+            }  </code></pre></li>
+                        <li>不要使用with, void, eval</li>
+                        <li>使用严格的条件判断符。用===代替==，用!==代替!=</li>
+                        <li>下面类型的对象不建议用new构造：new Number, new String, new Boolean, new Object(用{}代替), new Array(用[]代替)</li>
+                        <li>引用对象成员用obj.prop1代替obj[“prop1”]，除非属性名是变量</li>
+                    </ul>
+
+
+
+                    <h3 id="javascript-命名规则">JavaScript 命名规则</h3>
+
+                    <ul>
+                        <li><p>构造器的首字母大写,如：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dialog</span> <span class="hljs-params">(config)</span> {</span>
+            statement;
+            }
+            <span class="hljs-keyword">var</span> dlg = <span class="hljs-keyword">new</span> Dialog({...});</code></pre></li>
+                        <li><p>对象的属性或方法名采用小驼峰式(lower camel-case)，如”init”, “bindEvent”, “updatePosition”：  </p>
+
+        <pre class="prettyprint"><code class="language-js hljs ">Dialog.prototype = {
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>},
+            bindEvent: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>},
+            updatePosition: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>}
+            ...
+            };</code></pre></li>
+                        <li>私有变量名用下划线开头。如：”_current”, “_defaultConfig”</li>
+                        <li>常量名全部大写，单词间用下划线分隔。如：“CSS_BTN_CLOSE”, “TXT_LOADING”</li>
+                    </ul>
+
+
+
+                    <h3 id="javascript-格式化要求">JavaScript 格式化要求</h3>
+
+                    <ul>
+                        <li><p>语句中的必要空格和缩进</p>
+
+                            <ul><li>用来包含语句的”()”前后需要跟空格，诸如： if / for / while / switch ( statements ) { … } 等</li>
+                                <li>“=”前后需要跟空格</li>
+                                <li>数组成员间的”,”后面需要跟空格 <br>
+                                    不好的： <br>
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">for</span> (t <span class="hljs-keyword">in</span> selected) { <span class="hljs-keyword">if</span> (!hash[t]) deselect(t) }</code></pre></li></ul>
+
+                            <p>好的：</p>
+
+        <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">for</span> ( t <span class="hljs-keyword">in</span> selected ) {
+            <span class="hljs-keyword">if</span> ( !hash[t] ) {
+            deselect(t);
+            }
+            }</code></pre></li>
+                        <li><p>长语句采用断行 <br>
+                            不好的:</p>
+
+        <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre>
+
+                            <p>好的:</p>
+
+        <pre class="prettyprint"><code class="language-js hljs ">TEMPL_SONGLIST.replace(<span class="hljs-string">'{TABLE}'</span>, da[<span class="hljs-string">'results'</span>]).
+            replace(<span class="hljs-string">'{PREV_NUM}'</span>, prev).
+            replace(<span class="hljs-string">'{NEXT_NUM}'</span>, next).
+            replace(<span class="hljs-string">'{CURRENT_NUM}'</span>, current).
+            replace(<span class="hljs-string">'{TOTAL_NUM}'</span>, da.page_total);</code></pre></li>
+                        <li><p>格式化对象参数 <br>
+                            不好的：</p>
+
+<pre class="prettyprint"><code class="language-js hljs ">embedSWF(id, { url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href, width: <span class="hljs-number">261</span>, height: <span class="hljs-number">30</span>, params: { wmode:<span class="hljs-string">'transparent'</span> }, attributes: { id: <span class="hljs-string">"player-sample"</span> + i, name: <span class="hljs-string">"player-sample"</span> + i }});
+</code></pre>
+
+                            <p>好的：</p>
+
+<pre class="prettyprint"><code class="language-js hljs ">embedSWF(id, {
+    url: <span class="hljs-string">'/swf/player30792.swf?url='</span> + el.href,
+    width: <span class="hljs-number">261</span>,
+    height: <span class="hljs-number">30</span>,
+    params: { wmode:<span class="hljs-string">'transparent'</span> },
+    attributes: {
+        id: <span class="hljs-string">"player-sample"</span> + i,
+        name: <span class="hljs-string">"player-sample"</span> + i
+    }
+});</code></pre>
+                        </li>
+                    </ul>
+                </div>
+                <!--end markdown-->
+            </div>
+        </div>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -384,7 +384,6 @@
             });
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -400,7 +399,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

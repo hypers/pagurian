@@ -206,90 +206,90 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                筛选器 Sizer
-                            </h3>
-                            <div class="tabs-wrap">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a href="sizer-single.html">单选 </a>
-                                    </li>
-                                    <li >
-                                        <a href="sizer-multiple.html">多选 </a>
-                                    </li>
-                                    <li >
-                                        <a href="sizer-hasPanel.html">多选(有结果展示面板) </a>
-                                    </li>
-                                    <li >
-                                        <a href="sizer-options.html">参数说明</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="portlet box default sizer-demo-wrap">
-                                <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120">
-                                    版本
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="markdown">
-                                <h3>HTML代码</h3>
-                <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120"&gt;
-                版本
-            &lt;/button&gt;</code></pre>
-                                <h3>javascript代码</h3>
-                <pre><code class="javascript">require('../../widgets/sizer/module');
-            
-            var selectDatas = [{
-                "id": 4
-                //"name": "2.1.4" //此数据用于设置默认的选中文字，如需提示文字，则不需要此设置 仅在
-            }];
-            
-            var options = {
-                isMultiple: false,//是否为多选 默认为false
-                isExpand: true,//是否默认展开 默认为false
-                dataSource: model.getSizerData,//数据源
-                style: "d-ib",//筛选器自定义class
-                //数据映射
-                //dataMapping: {
-                //    "name": "name",
-                //    "value": "id"
-                //},
-                //processing: oLanguage.processing,//loading默认文字
-                //search: oLanguage.search,//搜索框默认文字
-                callbackExpand: function() { //面板展开时的回调
-                    console.log("Expand");
-                },
-                callbackClose: function(datas, allDatas) { //面板关闭时的回掉
-                    console.log("Close");
-                    console.log(datas);
-                    console.log(allDatas);
-                },
-                callbackOption: function(data) { //点击选项的回调
-                    console.log("Click Option");
-                    console.log(data);
-                },
-                callbackClean: function() { //点击清除选择的回调
-                    console.log("Clean");
-                }
-            };
-            
-            var sizer = $p.sizer("#sizer-multiple", options, selectDatas);</code></pre>
-                                <h3>JSON 数据</h3>
-                                <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    筛选器 Sizer
+                </h3>
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="sizer-single.html">单选 </a>
+                        </li>
+                        <li >
+                            <a href="sizer-multiple.html">多选 </a>
+                        </li>
+                        <li >
+                            <a href="sizer-hasPanel.html">多选(有结果展示面板) </a>
+                        </li>
+                        <li >
+                            <a href="sizer-options.html">参数说明</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box default sizer-demo-wrap">
+                    <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120">
+                        版本
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+    <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120"&gt;
+    版本
+&lt;/button&gt;</code></pre>
+                    <h3>javascript代码</h3>
+    <pre><code class="javascript">require('../../widgets/sizer/module');
+
+var selectDatas = [{
+    "id": 4
+    //"name": "2.1.4" //此数据用于设置默认的选中文字，如需提示文字，则不需要此设置 仅在
+}];
+
+var options = {
+    isMultiple: false,//是否为多选 默认为false
+    isExpand: true,//是否默认展开 默认为false
+    dataSource: model.getSizerData,//数据源
+    style: "d-ib",//筛选器自定义class
+    //数据映射
+    //dataMapping: {
+    //    "name": "name",
+    //    "value": "id"
+    //},
+    //processing: oLanguage.processing,//loading默认文字
+    //search: oLanguage.search,//搜索框默认文字
+    callbackExpand: function() { //面板展开时的回调
+        console.log("Expand");
+    },
+    callbackClose: function(datas, allDatas) { //面板关闭时的回掉
+        console.log("Close");
+        console.log(datas);
+        console.log(allDatas);
+    },
+    callbackOption: function(data) { //点击选项的回调
+        console.log("Click Option");
+        console.log(data);
+    },
+    callbackClean: function() { //点击清除选择的回调
+        console.log("Clean");
+    }
+};
+
+var sizer = $p.sizer("#sizer-multiple", options, selectDatas);</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
+                </div>
+            </div>
+        </div>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -320,7 +320,6 @@
             });
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -336,7 +335,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

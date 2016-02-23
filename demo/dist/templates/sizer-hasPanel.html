@@ -206,86 +206,86 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                筛选器 Sizer
-                            </h3>
-                            <div class="tabs-wrap">
-                                <ul class="nav nav-tabs">
-                                    <li >
-                                        <a href="sizer-single.html">单选 </a>
-                                    </li>
-                                    <li >
-                                        <a href="sizer-multiple.html">多选 </a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="sizer-hasPanel.html">多选(有结果展示面板) </a>
-                                    </li>
-                                    <li >
-                                        <a href="sizer-options.html">参数说明</a>
-                                    </li>
-                                </ul>
-                            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    筛选器 Sizer
+                </h3>
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="sizer-single.html">单选 </a>
+                        </li>
+                        <li >
+                            <a href="sizer-multiple.html">多选 </a>
+                        </li>
+                        <li class="active">
+                            <a href="sizer-hasPanel.html">多选(有结果展示面板) </a>
+                        </li>
+                        <li >
+                            <a href="sizer-options.html">参数说明</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box default sizer-demo-wrap-mul">
+                    <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w300 t-a-l">版本</button>
+                    <div id="sizerPanel" class="sizer-result-wrap w300">
+                        <div class="sizer-result-title">已选的版本</div>
+                        <div class="sizer-result-content-wrap">
+                            <div class="sizer-result-content"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="portlet box default sizer-demo-wrap-mul">
-                                <button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w300 t-a-l">版本</button>
-                                <div id="sizerPanel" class="sizer-result-wrap w300">
-                                    <div class="sizer-result-title">已选的版本</div>
-                                    <div class="sizer-result-content-wrap">
-                                        <div class="sizer-result-content"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="markdown">
-                                <h3>HTML代码</h3>
-                <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120"&gt;
-                版本
-            &lt;/button&gt;
-            &lt;div id="sizerPanel" class="sizer-result-wrap w300"&gt;
-                &lt;div class="sizer-result-title"&gt;已选的版本&lt;/div&gt;
-                &lt;div class="sizer-result-content-wrap"&gt;
-                    &lt;div class="sizer-result-content"&gt;&lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;</code></pre>
-                                <h3>javascript代码</h3>
-                <pre><code class="javascript">require('../../widgets/sizer/module');
-            var options = {
-                isMultiple: true,
-                dataSource: model.getSizerData,//数据源
-                style: "d-ib" //筛选器自定义class
-            };
-            
-            var sizer = $p.sizer($("#sizer-multiple"), options)
-                            .on('submit', function (selectDatas, allDatas) {
-                                appendSpan("#sizerPanel", selectDatas);
-                                });
-            
-            /**
-            * 选择器
-            * @param selector
-            * @param selectDatas
-            */
-            function appendSpan(selector, selectDatas) {
-                var spans = [];
-                for (var i = 0; i < selectDatas.length; i++) {
-                    spans.push('<span>' + selectDatas[i].name + '</span>');
-                }
-                $(selector).find('.sizer-result-content').empty().append(spans.join(''));
-            }</code></pre>
-                                <h3>JSON 数据</h3>
-                                <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+    <pre><code class="html">&lt;button id="sizer-multiple" type="button" class="btn btn-default sizer-btn w120"&gt;
+    版本
+&lt;/button&gt;
+&lt;div id="sizerPanel" class="sizer-result-wrap w300"&gt;
+    &lt;div class="sizer-result-title"&gt;已选的版本&lt;/div&gt;
+    &lt;div class="sizer-result-content-wrap"&gt;
+        &lt;div class="sizer-result-content"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    <h3>javascript代码</h3>
+    <pre><code class="javascript">require('../../widgets/sizer/module');
+var options = {
+    isMultiple: true,
+    dataSource: model.getSizerData,//数据源
+    style: "d-ib" //筛选器自定义class
+};
+
+var sizer = $p.sizer($("#sizer-multiple"), options)
+                .on('submit', function (selectDatas, allDatas) {
+                    appendSpan("#sizerPanel", selectDatas);
+                    });
+
+/**
+* 选择器
+* @param selector
+* @param selectDatas
+*/
+function appendSpan(selector, selectDatas) {
+    var spans = [];
+    for (var i = 0; i < selectDatas.length; i++) {
+        spans.push('<span>' + selectDatas[i].name + '</span>');
+    }
+    $(selector).find('.sizer-result-content').empty().append(spans.join(''));
+}</code></pre>
+                    <h3>JSON 数据</h3>
+                    <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
+                </div>
+            </div>
+        </div>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -316,7 +316,6 @@
             });
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -332,7 +331,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

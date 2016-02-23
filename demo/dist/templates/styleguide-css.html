@@ -206,283 +206,283 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="page-title">
-                            CSS规范
-                        </h3>
-                    </div>
-                </div>
-            
-                <div class="row">
-                    <div class="col-md-12">
-            
-                        <!--markdown-->
-                        <div class="markdown">
-            
-            
-            
-            
-                            <h3 id="浏览器支持标准">浏览器支持标准</h3>
-            
-                            <table style="width:500px">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>WinXP</th>
-                                    <th>Win7</th>
-                                    <th>OS X</th>
-                                </tr>
-                                </thead>
-                                <tbody><tr>
-                                    <td>IE9</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>IE8</td>
-                                    <td>B</td>
-                                    <td>B</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>IE7</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>IE6</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Chrome16</td>
-                                    <td>A</td>
-                                    <td>B</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Chrome14</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Firefox10</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Firefox9</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>Safari</td>
-                                    <td>B</td>
-                                    <td>B</td>
-                                    <td>B</td>
-                                </tr>
-                                <tr>
-                                    <td>Opera</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                    <td>C</td>
-                                </tr>
-                                </tbody></table>
-            
-            
-                            <p>-   A级－交互和视觉完全符全设计的要求 <br>
-                                -   B级－视觉上允许有所差异，但不破坏页面的整体效果 <br>
-                                -   C级－可忽略设计上的细节，但不防碍使用</p>
-            
-            
-            
-                            <h3 id="css-语言规范">CSS 语言规范</h3>
-            
-                            <ul>
-                                <li>文件编码：utf-8</li>
-                                <li>换行符号：UNIX</li>
-                                <li>缩进格式：使用Tab键盘，Tab宽度为４个空格</li>
-                                <li>每个样式属性后（必须）加 “;”</li>
-                                <li>空格的使用： <br>
-                                    <ul><li>选择器与 { 之前（必须）要有空格</li>
-                                        <li>属性名的 : 后（必须）要有空格</li>
-                                        <li>属性名的 : 前（禁止）加空格</li></ul></li>
-                                <li>使用外部样式表进行定义</li>
-                                <li>使用link 标签优于css中使用@import加载外部css</li>
-                                <li>避免使用通配符’*’</li>
-                                <li>不要在CSS中使用’expression’和’@import’</li>
-                                <li>尽可能不使用!important</li>
-                                <li>尽可能不使用IE滤镜</li>
-                                <li><p>CSS属性定义顺序</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-class">.content</span> <span class="hljs-rules">{
-            
-                    <span class="hljs-comment">/* 定位 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-            
-                    <span class="hljs-comment">/* 盒模型 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">50</span>px</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">50</span>px</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">10</span>px</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1</span>px solid black</span></span>;
-            
-                    <span class="hljs-comment">/* 其他 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#efefef</span></span></span>;
-                <span class="hljs-rule">}</span></span></code></pre>
-            
-                                    <ul><li>定位相关, 常见的有：display position left top float 等</li>
-                                        <li>盒模型相关, 常见的有：width height margin padding border 等</li>
-                                        <li>其他属性</li></ul></li>
-                                <li><p>尽量避免使用CSS Hack, IE Hack推荐用法</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-class">.selector</span> <span class="hljs-rules">{
-                    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;     <span class="hljs-comment">/* 所有浏览器 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">9</span></span></span>;   <span class="hljs-comment">/* 所有IE浏览器 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">0</span></span></span>;   <span class="hljs-comment">/* IE8 */</span>
-                    <span class="hljs-rule">+<span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE7 */</span>
-                    <span class="hljs-rule"><span class="hljs-attribute">_property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE6 */</span>
-                    <span class="hljs-rule">*<span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE6-7 */</span>
-                <span class="hljs-rule">}</span></span></code></pre></li>
-                            </ul>
-            
-            
-            
-                            <h3 id="css-命名规则">CSS 命名规则</h3>
-            
-                            <ul>
-                                <li><p>使用小写、数字和’-’组合命名, 数字尽量只在表明序号时使用</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-class">.page_CANVAS</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.page-wrapper</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
-                    <span class="hljs-class">.page-canvas-0</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
-                    <span class="hljs-class">.carinfo-hover-closebtn</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span></code></pre></li>
-                                <li><p>使用有意义的单词进行命名，不使用短命名</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-class">.MOCS</span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.page-wrapper</span>
-                    /<span class="hljs-tag">page-canvas-0</span>
-                    <span class="hljs-class">.carinfo-hover-closebtn</span></code></pre></li>
-                                <li><p>使用功能和作用进行命名</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-class">.MO-CS</span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.content</span>
-                    <span class="hljs-class">.visible</span>
-                    <span class="hljs-class">.left</span>
-                    <span class="hljs-class">.hover</span></code></pre></li>
-                                <li><p>避免在ID或class前设置多余的元素类型</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-tag">div</span><span class="hljs-class">.contemt</span>
-                    <span class="hljs-tag">p</span><span class="hljs-class">.visible</span>
-                    <span class="hljs-tag">span</span><span class="hljs-id">#test</span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.content</span>
-                    <span class="hljs-class">.left</span>
-                    <span class="hljs-class">.hover</span></code></pre></li>
-                                <li><p>使用命名空间和路径定义的class的组合进行选择，而不是遍历路径选择</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-class">.page-auto-label-car-baseinfo</span> <span class="hljs-class">.note</span> <span class="hljs-class">.content</span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.page-wrapper</span> <span class="hljs-class">.info-note-content</span> // 在<span class="hljs-tag">class</span>定义中表明路径关系</code></pre></li>
-                                <li><p>尽可能使用CSS属性的缩写形式</p>
-            
-                <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
-                    <span class="hljs-class">.content</span> <span class="hljs-rules">{
-                    <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px</span></span>;
-                    <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px</span></span>;
-                <span class="hljs-rule">}</span></span>
-            
-                    <span class="hljs-comment">/* good */</span>
-                    <span class="hljs-class">.content</span> <span class="hljs-rules">{
-                    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px <span class="hljs-number">5</span>px <span class="hljs-number">0</span> <span class="hljs-number">0</span></span></span>;
-                <span class="hljs-rule">}</span></span></code></pre></li>
-                            </ul>
-            
-            
-            
-                            <h3 id="有意义的命名名称参考列表">有意义的命名名称参考列表</h3>
-            
-                            <ul>
-                                <li>表示状态：on, active, selected, hili</li>
-                                <li>表示位置：first, last, main, side</li>
-                                <li>表示结构：hd, bd, ft, col, section</li>
-                                <li>通用元素：tb, frm, nav, list, item, tag, pic, info</li>
-                                <li>容器: container</li>
-                                <li>页头：header</li>
-                                <li>内容：content/container</li>
-                                <li>页面主体：main</li>
-                                <li>页尾：footer</li>
-                                <li>导航：nav</li>
-                                <li>侧栏：sidebar</li>
-                                <li>栏目：column</li>
-                                <li>页面外围控制整体布局宽度：wrapper</li>
-                                <li>左右中：left right center+导航</li>
-                                <li>导航：nav</li>
-                                <li>主导航：mainbav</li>
-                                <li>子导航：subnav</li>
-                                <li>顶导航：topnav</li>
-                                <li>边导航：sidebar</li>
-                                <li>左导航：leftsidebar</li>
-                                <li>右导航：rightsidebar</li>
-                                <li>菜单：menu</li>
-                                <li>子菜单：submenu</li>
-                                <li>标题: title</li>
-                                <li>摘要: summary+功能</li>
-                                <li>标志：logo</li>
-                                <li>广告：banner</li>
-                                <li>登陆：login</li>
-                                <li>登录条：loginbar</li>
-                                <li>注册：regsiter</li>
-                                <li>搜索：search</li>
-                                <li>功能区：shop</li>
-                                <li>标题：title</li>
-                                <li>加入：joinus</li>
-                                <li>状态：status</li>
-                                <li>按钮：btn</li>
-                                <li>滚动：scroll</li>
-                                <li>标签页：tab</li>
-                                <li>文章列表：list</li>
-                                <li>提示信息：msg</li>
-                                <li>当前的: current</li>
-                                <li>小技巧：tips</li>
-                                <li>图标: icon</li>
-                                <li>注释：note</li>
-                                <li>指南：guild</li>
-                                <li>服务：service</li>
-                                <li>热点：hot</li>
-                                <li>新闻：news</li>
-                                <li>下载：download</li>
-                                <li>投票：vote</li>
-                                <li>合作伙伴：partner</li>
-                                <li>友情链接：link</li>
-                                <li>版权：copyright</li>
-                            </ul>
-                        </div>
-                        <!--end markdown-->
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="page-title">
+                CSS规范
+            </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <!--markdown-->
+            <div class="markdown">
+
+
+
+
+                <h3 id="浏览器支持标准">浏览器支持标准</h3>
+
+                <table style="width:500px">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>WinXP</th>
+                        <th>Win7</th>
+                        <th>OS X</th>
+                    </tr>
+                    </thead>
+                    <tbody><tr>
+                        <td>IE9</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>IE8</td>
+                        <td>B</td>
+                        <td>B</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>IE7</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>IE6</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Chrome16</td>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Chrome14</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox10</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Firefox9</td>
+                        <td>A</td>
+                        <td>A</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>Safari</td>
+                        <td>B</td>
+                        <td>B</td>
+                        <td>B</td>
+                    </tr>
+                    <tr>
+                        <td>Opera</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td>C</td>
+                    </tr>
+                    </tbody></table>
+
+
+                <p>-   A级－交互和视觉完全符全设计的要求 <br>
+                    -   B级－视觉上允许有所差异，但不破坏页面的整体效果 <br>
+                    -   C级－可忽略设计上的细节，但不防碍使用</p>
+
+
+
+                <h3 id="css-语言规范">CSS 语言规范</h3>
+
+                <ul>
+                    <li>文件编码：utf-8</li>
+                    <li>换行符号：UNIX</li>
+                    <li>缩进格式：使用Tab键盘，Tab宽度为４个空格</li>
+                    <li>每个样式属性后（必须）加 “;”</li>
+                    <li>空格的使用： <br>
+                        <ul><li>选择器与 { 之前（必须）要有空格</li>
+                            <li>属性名的 : 后（必须）要有空格</li>
+                            <li>属性名的 : 前（禁止）加空格</li></ul></li>
+                    <li>使用外部样式表进行定义</li>
+                    <li>使用link 标签优于css中使用@import加载外部css</li>
+                    <li>避免使用通配符’*’</li>
+                    <li>不要在CSS中使用’expression’和’@import’</li>
+                    <li>尽可能不使用!important</li>
+                    <li>尽可能不使用IE滤镜</li>
+                    <li><p>CSS属性定义顺序</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-class">.content</span> <span class="hljs-rules">{
+
+        <span class="hljs-comment">/* 定位 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">position</span>:<span class="hljs-value"> absolute</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">left</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">top</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+
+        <span class="hljs-comment">/* 盒模型 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">50</span>px</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">50</span>px</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">10</span>px</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">border</span>:<span class="hljs-value"> <span class="hljs-number">1</span>px solid black</span></span>;
+
+        <span class="hljs-comment">/* 其他 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#efefef</span></span></span>;
+    <span class="hljs-rule">}</span></span></code></pre>
+
+                        <ul><li>定位相关, 常见的有：display position left top float 等</li>
+                            <li>盒模型相关, 常见的有：width height margin padding border 等</li>
+                            <li>其他属性</li></ul></li>
+                    <li><p>尽量避免使用CSS Hack, IE Hack推荐用法</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-class">.selector</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;     <span class="hljs-comment">/* 所有浏览器 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">9</span></span></span>;   <span class="hljs-comment">/* 所有IE浏览器 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">property</span>:<span class="hljs-value"> value\<span class="hljs-number">0</span></span></span>;   <span class="hljs-comment">/* IE8 */</span>
+        <span class="hljs-rule">+<span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE7 */</span>
+        <span class="hljs-rule"><span class="hljs-attribute">_property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE6 */</span>
+        <span class="hljs-rule">*<span class="hljs-attribute">property</span>:<span class="hljs-value"> value</span></span>;    <span class="hljs-comment">/* IE6-7 */</span>
+    <span class="hljs-rule">}</span></span></code></pre></li>
+                </ul>
+
+
+
+                <h3 id="css-命名规则">CSS 命名规则</h3>
+
+                <ul>
+                    <li><p>使用小写、数字和’-’组合命名, 数字尽量只在表明序号时使用</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-class">.page_CANVAS</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.page-wrapper</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+        <span class="hljs-class">.page-canvas-0</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span>
+        <span class="hljs-class">.carinfo-hover-closebtn</span><span class="hljs-rules">{<span class="hljs-rule">}</span></span></code></pre></li>
+                    <li><p>使用有意义的单词进行命名，不使用短命名</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-class">.MOCS</span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.page-wrapper</span>
+        /<span class="hljs-tag">page-canvas-0</span>
+        <span class="hljs-class">.carinfo-hover-closebtn</span></code></pre></li>
+                    <li><p>使用功能和作用进行命名</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-class">.MO-CS</span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.content</span>
+        <span class="hljs-class">.visible</span>
+        <span class="hljs-class">.left</span>
+        <span class="hljs-class">.hover</span></code></pre></li>
+                    <li><p>避免在ID或class前设置多余的元素类型</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-tag">div</span><span class="hljs-class">.contemt</span>
+        <span class="hljs-tag">p</span><span class="hljs-class">.visible</span>
+        <span class="hljs-tag">span</span><span class="hljs-id">#test</span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.content</span>
+        <span class="hljs-class">.left</span>
+        <span class="hljs-class">.hover</span></code></pre></li>
+                    <li><p>使用命名空间和路径定义的class的组合进行选择，而不是遍历路径选择</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-class">.page-auto-label-car-baseinfo</span> <span class="hljs-class">.note</span> <span class="hljs-class">.content</span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.page-wrapper</span> <span class="hljs-class">.info-note-content</span> // 在<span class="hljs-tag">class</span>定义中表明路径关系</code></pre></li>
+                    <li><p>尽可能使用CSS属性的缩写形式</p>
+
+    <pre class="prettyprint"><code class="language-css hljs "><span class="hljs-comment">/* bad */</span>
+        <span class="hljs-class">.content</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">margin-top</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px</span></span>;
+        <span class="hljs-rule"><span class="hljs-attribute">margin-right</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px</span></span>;
+    <span class="hljs-rule">}</span></span>
+
+        <span class="hljs-comment">/* good */</span>
+        <span class="hljs-class">.content</span> <span class="hljs-rules">{
+        <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">5</span>px <span class="hljs-number">5</span>px <span class="hljs-number">0</span> <span class="hljs-number">0</span></span></span>;
+    <span class="hljs-rule">}</span></span></code></pre></li>
+                </ul>
+
+
+
+                <h3 id="有意义的命名名称参考列表">有意义的命名名称参考列表</h3>
+
+                <ul>
+                    <li>表示状态：on, active, selected, hili</li>
+                    <li>表示位置：first, last, main, side</li>
+                    <li>表示结构：hd, bd, ft, col, section</li>
+                    <li>通用元素：tb, frm, nav, list, item, tag, pic, info</li>
+                    <li>容器: container</li>
+                    <li>页头：header</li>
+                    <li>内容：content/container</li>
+                    <li>页面主体：main</li>
+                    <li>页尾：footer</li>
+                    <li>导航：nav</li>
+                    <li>侧栏：sidebar</li>
+                    <li>栏目：column</li>
+                    <li>页面外围控制整体布局宽度：wrapper</li>
+                    <li>左右中：left right center+导航</li>
+                    <li>导航：nav</li>
+                    <li>主导航：mainbav</li>
+                    <li>子导航：subnav</li>
+                    <li>顶导航：topnav</li>
+                    <li>边导航：sidebar</li>
+                    <li>左导航：leftsidebar</li>
+                    <li>右导航：rightsidebar</li>
+                    <li>菜单：menu</li>
+                    <li>子菜单：submenu</li>
+                    <li>标题: title</li>
+                    <li>摘要: summary+功能</li>
+                    <li>标志：logo</li>
+                    <li>广告：banner</li>
+                    <li>登陆：login</li>
+                    <li>登录条：loginbar</li>
+                    <li>注册：regsiter</li>
+                    <li>搜索：search</li>
+                    <li>功能区：shop</li>
+                    <li>标题：title</li>
+                    <li>加入：joinus</li>
+                    <li>状态：status</li>
+                    <li>按钮：btn</li>
+                    <li>滚动：scroll</li>
+                    <li>标签页：tab</li>
+                    <li>文章列表：list</li>
+                    <li>提示信息：msg</li>
+                    <li>当前的: current</li>
+                    <li>小技巧：tips</li>
+                    <li>图标: icon</li>
+                    <li>注释：note</li>
+                    <li>指南：guild</li>
+                    <li>服务：service</li>
+                    <li>热点：hot</li>
+                    <li>新闻：news</li>
+                    <li>下载：download</li>
+                    <li>投票：vote</li>
+                    <li>合作伙伴：partner</li>
+                    <li>友情链接：link</li>
+                    <li>版权：copyright</li>
+                </ul>
+            </div>
+            <!--end markdown-->
+        </div>
+    </div>
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -513,7 +513,6 @@
         });
     </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -529,7 +528,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>

@@ -206,87 +206,87 @@
 	<div class="page-content-wrapper">
 
 		<div class="page-content">
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="page-title">
-                                Echarts 地图
-                            </h3>
-                            <div class="tabs-wrap">
-                                <ul  class="nav nav-tabs">
-                                    <li  class="active">
-                                        <a href="echarts-map-world.html" >世界</a>
-                                    </li>
-                                    <li>
-                                        <a href="echarts-map-china.html" >中国</a>
-                                    </li>
-                                    <li>
-                                        <a href="echarts-map-china-city.html" >中国-城市</a>
-                                    </li>
-                                </ul>
-                            </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    Echarts 地图
+                </h3>
+                <div class="tabs-wrap">
+                    <ul  class="nav nav-tabs">
+                        <li  class="active">
+                            <a href="echarts-map-world.html" >世界</a>
+                        </li>
+                        <li>
+                            <a href="echarts-map-china.html" >中国</a>
+                        </li>
+                        <li>
+                            <a href="echarts-map-china-city.html" >中国-城市</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet box default">
+
+                    <div class="portlet-body">
+                        <div  class="chart-default " >
+                            <div class="chart-body chart-map" id="my_chart"></div>
                         </div>
+
                     </div>
-            
-                    <!-- BEGIN PAGE CONTENT-->
-                    <div class="row">
-                        <div class="col-md-12">
-            
-                            <div class="portlet box default">
-            
-                                <div class="portlet-body">
-                                    <div  class="chart-default " >
-                                        <div class="chart-body chart-map" id="my_chart"></div>
-                                    </div>
-            
-                                </div>
-            
-                            </div>
-            
-                        </div>
-            
-                    </div>
-            
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="markdown">
-                                <h3>Javascript</h3>
-                <pre><code class="javascript">require('../../plugins/echarts/module');
-                var chart = $p.echarts("my_chart", {
-                    type: "map",
-                    title: {
-                        text: "浏览量（PV）地域分布图"
-                    }
-                });
-            
-                chart.load({
-                    name: "pv",
-                    mapType: "world",
-                    data: [{
-                        value: 735,
-                        name: 'geo.country.china'
-                    }, {
-                        value: 423,
-                        name: 'United States of America'
-                    }, {
-                        value: 310,
-                        name: 'geo.country.italy'
-                    }, {
-                        value: 300,
-                        name: '俄罗斯'
-                    }]
-                });</code></pre>
-            
-                                <h3>基于版本</h3>
-                                <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
-                                
-                                <h3>更多实例</h3>
-                                <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
-            
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END PAGE CONTENT-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Javascript</h3>
+    <pre><code class="javascript">require('../../plugins/echarts/module');
+    var chart = $p.echarts("my_chart", {
+        type: "map",
+        title: {
+            text: "浏览量（PV）地域分布图"
+        }
+    });
+
+    chart.load({
+        name: "pv",
+        mapType: "world",
+        data: [{
+            value: 735,
+            name: 'geo.country.china'
+        }, {
+            value: 423,
+            name: 'United States of America'
+        }, {
+            value: 310,
+            name: 'geo.country.italy'
+        }, {
+            value: 300,
+            name: '俄罗斯'
+        }]
+    });</code></pre>
+
+                    <h3>基于版本</h3>
+                    <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
+                    
+                    <h3>更多实例</h3>
+                    <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
+
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -322,7 +322,6 @@
 
         </script>
 
-<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -338,7 +337,6 @@
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
--->
 
 </body>
 </html>
