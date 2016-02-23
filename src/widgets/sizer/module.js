@@ -30,14 +30,14 @@ define(function (require, exports, module) {
          */
         var _isFirstClick = true;
 
-        oLanguage.nameStr = _nameStr;
-        oLanguage.id = _id;
-        that.promtText = $.trim($(selector).text());
-        oLanguage.promtText = $.trim($(selector).text());
+        var _oLanguage = $.extend(true, {}, oLanguage);
+        _oLanguage.nameStr = _nameStr;
+        _oLanguage.id = _id;
+        _oLanguage.promtText = $.trim($(selector).text());
         selector = (selector instanceof jQuery) ? selector.selector : selector;
 
         //版本
-        this.version = "2016.2.15.0055";
+        this.version = "2016.2.23.1359";
         //id
         this.sizerName = _nameStr + _id;
         //提示文字
@@ -87,8 +87,8 @@ define(function (require, exports, module) {
                 left: 0
             },
             style: "", //筛选器自定义class
-            processing: oLanguage.processing, //loading默认文字
-            search: oLanguage.search, //搜索框默认文字
+            processing: _oLanguage.processing, //loading默认文字
+            search: _oLanguage.search, //搜索框默认文字
             matchCase: true,
             callbackExpand: null, //面板展开时的回调
             callbackClose: null, //面板关闭时的回调
@@ -127,16 +127,16 @@ define(function (require, exports, module) {
         var drawDom = function (selector) {
             var _sizerWrap = '',
                 _topBtn = that.options.isMultiple ?
-                '<label id="' + _nameStr + '_selectAll' + _id + '"><input type="checkbox">' + oLanguage.chooseAll + '</label>' :
-                '<a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">' + oLanguage.clearSingle + '</a>';
-            oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
-            $(selector).empty().attr('title', oLanguage.promtText).append($p.tpl($(sizerButton).html(), oLanguage));
+                '<label id="' + _nameStr + '_selectAll' + _id + '"><input type="checkbox">' + _oLanguage.chooseAll + '</label>' :
+                '<a href="javascript:;" id="' + _nameStr + '_clean' + _id + '">' + _oLanguage.clearSingle + '</a>';
+            _oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
+            $(selector).empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
             _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
             $(selector).wrap(_sizerWrap);
-            var sizerSelectPanel = $($p.tpl(sizerPanelTpl, oLanguage));
+            var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
             sizerSelectPanel.find(".sizer-btn-group").append(_topBtn);
             if (that.options.isMultiple) {
-                sizerSelectPanel.append($p.tpl(sizerFooterTpl, oLanguage));
+                sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
             }
             $(selector).after(sizerSelectPanel.get(0).outerHTML);
             $("#" + _nameStr + '_select_panel' + _id).css(that.options.position);
@@ -198,6 +198,9 @@ define(function (require, exports, module) {
             //清除选择
             $(document).on('click', "#" + _nameStr + '_clean' + _id, function () {
                 cleanOption(true);
+                if ($.isFunction(that.options.callbackClean)) {
+                    that.options.callbackClean(that._tmpSelectDatas);
+                }
             });
 
             //搜索框事件
@@ -218,15 +221,6 @@ define(function (require, exports, module) {
                 //全选
                 $(document).on('click', "#" + _nameStr + '_selectAll' + _id, function (e) {
                     var _target = e.target;
-                    //if(!_isCanTrigger()){
-                    //    return;
-                    //}
-                    //if(_target.tagName !== "INPUT"){
-                    //    var _$checkBox = $(this).find('[type="checkbox"]');
-                    //    var _checked = _$checkBox.is(':checked') ? false : 'checked';
-                    //    _$checkBox.prop('checked', _checked);
-                    //    _$checkBox.uniform();
-                    //}
                     var _selects = [];
                     var $checkBoxes = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
                     $checkBoxes.each(function () {
@@ -334,7 +328,7 @@ define(function (require, exports, module) {
          * @param text 需要设置的文字
          */
         var singleSetText = function (text) {
-            var title = text !== ( that.promtText && !that.options.isMultiple ) ? oLanguage.promtText + ':' + text : text;
+            var title = ( text !== _oLanguage.promtText && !that.options.isMultiple ) ? (_oLanguage.promtText + ':' + text ) : text;
             $("#" + that.sizerName).find("span.sizer-btn-text").empty().append(text);
             $("#" + that.sizerName).find("button").attr("title", title);
         };
@@ -347,7 +341,7 @@ define(function (require, exports, module) {
         var setData = function (allDatas, chooseDatas) {
             var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
             if (!allDatas || allDatas.length === 0) {
-                var _empty = '<div class="sizer-empty">' + oLanguage.empty + '</div>';
+                var _empty = '<div class="sizer-empty">' + _oLanguage.empty + '</div>';
                 $dataList.append(_empty);
                 return;
             }
@@ -433,7 +427,7 @@ define(function (require, exports, module) {
                 }
                 that.allDatas = _datas;
                 var _chooseDatas = [];
-                if(that.options.isMultiple){
+                if (that.options.isMultiple) {
                     if (chooseDatas === "all") {
                         _chooseDatas = _datas;
                     }
@@ -445,8 +439,8 @@ define(function (require, exports, module) {
                     if ($.isArray(chooseDatas)) {
                         _chooseDatas = chooseDatas;
                     }
-                }else{
-                    if($.isArray(chooseDatas)){
+                } else {
+                    if ($.isArray(chooseDatas)) {
                         _chooseDatas.push(chooseDatas[0]);
                     }
                 }
@@ -471,7 +465,7 @@ define(function (require, exports, module) {
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"]').prop("checked", false);
                 _value = $.isArray(value) ? value[0] : value;
                 $('#' + that.sizerName + ' .sizer-data-list [type="radio"][value="' + _value[that.options.dataMapping.value] + '"]').prop("checked", "checked").uniform();
-                singleSetText(_value[that.options.dataMapping.name] || oLanguage.promtText);
+                singleSetText(_value[that.options.dataMapping.name] || _oLanguage.promtText);
                 that._tmpSelectDatas = that.selectDatas = [_value];
                 return;
             }
@@ -519,17 +513,17 @@ define(function (require, exports, module) {
         this.update = function (params) {
             cleanOption(false);
             if (params !== undefined) {
-                that.params = that.options.dataParams = params;
+                that.params = that.options.dataParams = $.extend({}, that.options.dataParams, params);
             }
             //多选
             if (that.options.isMultiple) {
                 $("#" + that.sizerName).removeClass("sizer-open");
-                this.loadData();
+                that.loadData();
                 return this;
             }
             //单选
-            singleSetText(oLanguage.promtText);
-            this.loadData();
+            singleSetText(_oLanguage.promtText);
+            that.loadData();
             return this;
         };
 
@@ -585,10 +579,7 @@ define(function (require, exports, module) {
             if (!that.options.isMultiple) {
                 $("#" + that.sizerName + " .sizer-data-list-li").removeClass("selected");
                 that.selectDatas = [];
-                singleSetText(oLanguage.promtText);
-                if ($.isFunction(that.options.callbackClean)) {
-                    that.options.callbackClean(that._tmpSelectDatas);
-                }
+                singleSetText(_oLanguage.promtText);
                 closePanel(isCallBackClose);
             }
         }
@@ -701,6 +692,7 @@ define(function (require, exports, module) {
 
         return {
             version: that.version,
+            options: that.options,
             getOption: function () {
                 return that.options;
             },
