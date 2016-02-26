@@ -4,10 +4,10 @@ define(function(require, exports, module) {
 
     function Form(selector, options) {
 
-        this.element = (selector instanceof jQuery) ? selector : $(selector);
+        this.container = (selector instanceof jQuery) ? selector : $(selector);
         this.options = {
             isAjaxRequest: true, //是否ajax请求 默认true
-            submitButton: this.element.find(".btn[type='submit']") //默认submit按钮
+            submitButton: this.container.find(".btn[type='submit']") //默认submit按钮
 
             //submitModelEvent  处理表单提交的API方法
             //submitModelParams 处理表单提交的参数
@@ -33,7 +33,7 @@ define(function(require, exports, module) {
             $btn_submit.click(function() {
 
                 $(this).addClass("disabled");
-                if (!that.element.valid()) {
+                if (!that.container.valid()) {
                     that.complete();
                     return;
                 }
@@ -41,8 +41,8 @@ define(function(require, exports, module) {
                 that.submit();
             });
 
-            //初始化表单验证
-            this.validation();
+            //初始化验证规则
+            this.initValidationRules();
 
             return this;
         };
@@ -53,8 +53,8 @@ define(function(require, exports, module) {
          */
         this.reset = function() {
 
-            this.element.find("input[type='text'],input[type='hidden'],input[type='file'],textarea").val("");
-            this.element.find(".help-block").each(function() {
+            this.container.find("input[type='text'],input[type='hidden'],input[type='file'],textarea").val("");
+            this.container.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
                     $(this).text(tip).addClass("tip");
@@ -95,7 +95,7 @@ define(function(require, exports, module) {
             }
 
 
-            $elements = this.element.find("input,textarea,select");
+            $elements = this.container.find("input,textarea,select");
             $elements.each(function(index) {
                 var $that = $(this);
                 var name = $that.attr("name");
@@ -138,12 +138,12 @@ define(function(require, exports, module) {
         };
 
         /**
-         * 表单验证初始化
+         * 初始化验证规则
          * @return {Object} [this]
          */
-        this.validation = function() {
+        this.initValidationRules = function() {
 
-            if (!this.element.validate) {
+            if (!this.container.validate) {
                 return false;
             }
             var that = this;
@@ -176,7 +176,7 @@ define(function(require, exports, module) {
 
             $.extend(_options, this.options.validate);
 
-            this.element.validate(_options);
+            this.container.validate(_options);
             return this;
         };
 
@@ -190,7 +190,7 @@ define(function(require, exports, module) {
             //表单验证OK？
             var valid = true;
             //表单数据
-            var data = that.element.serializeArray();
+            var data = that.container.serializeArray();
             //处理表单提交的API方法
             var handleSubmit = this.options.submitModelEvent;
             //处理表单提交的参数
@@ -198,7 +198,7 @@ define(function(require, exports, module) {
             //格式化表单提交数据
             var handleDataFormat = this.options.submitDataFormat;
             if ($.isFunction(handleDataFormat)) {
-                data = handleDataFormat(data, that.element);
+                data = handleDataFormat(data, that.container);
             }
             //处理提交失败
             var handleSubmitError = this.options.submitError;
@@ -227,7 +227,7 @@ define(function(require, exports, module) {
 
             //触发自定义表单验证
             if ($.isFunction(that.options.validate.custom)) {
-                valid = that.options.validate.custom(data, that.element);
+                valid = that.options.validate.custom(data, that.container);
             }
 
             //提交表单
@@ -253,7 +253,47 @@ define(function(require, exports, module) {
             return this;
         };
 
-        //表单处理完成
+        /**
+         * 获取表单数据
+         */
+        this.getFormData = function() {
+            var data = this.container.serializeArray();
+            //格式化表单提交数据
+            var handleDataFormat = this.options.submitDataFormat;
+            if ($.isFunction(handleDataFormat)) {
+                data = handleDataFormat(data, this.container);
+            }
+            return data;
+        };
+
+
+        /**
+         * 触发表单验证
+         * @return {bool}     true:验证通过, false:验证失败
+         */
+        this.validate = function(eventName) {
+
+            var valid = this.container.valid();
+
+            if (!valid) {
+                return false;
+            }
+
+            if ($.isFunction(this.options.validate.custom)) {
+                var data = this.container.serializeArray();
+                //格式化表单提交数据
+                var handleDataFormat = this.options.submitDataFormat;
+                if ($.isFunction(handleDataFormat)) {
+                    data = handleDataFormat(data, this.container);
+                }
+                valid = this.options.validate.custom(data, this.container);
+            }
+            return valid;
+        };
+
+        /**
+         * 表单处理完成
+         */
         this.complete = function(data, valid) {
 
             var $btn_submit = this.options.submitButton;
