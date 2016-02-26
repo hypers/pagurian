@@ -5,12 +5,12 @@
  */
 define(function(require, exports, module) {
 
-    //载入依赖的基础插件
-    require('../plugins/bootstrap/js/bootstrap');
-    require('../plugins/uniform/jquery.uniform');
-    require('../plugins/jquery-cookie/jquery-cookie');
-    require('../plugins/jquery-json/2.4/jquery-json');
-    require('../plugins/moment/moment');
+    //载入依赖
+    require('./vendor/bootstrap/js/bootstrap');
+    require('./vendor/uniform/jquery.uniform');
+    require('./vendor/jquery-cookie/jquery-cookie');
+    require('./vendor/jquery-json/2.4/jquery-json');
+    require('./vendor/moment/moment');
 
     //载入基础UI
     require('./com/form');
