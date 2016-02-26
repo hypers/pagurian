@@ -37,6 +37,7 @@
         debug: debug,
         path: {
             api: url + "/test/api/",
+            apiPostfix: ".json",
             app: url + "/demo/" + (debug ? "src" : "dist") + "/"
         },
         call: function() {
