@@ -46,6 +46,14 @@ define(function(require, exports, module) {
             "bServerSide": true,
             "iDisplayLength": pagesize,
             "sDom": '<"top"><"table-scrollable"rt><"bottom"pli><"clear">',
+            "oParamName": {
+                "sPage": "page",
+                "sOrderColumn": "orderColumn",
+                "sOrderType": "orderType",
+                "sPagesize": "pagesize",
+                "sIsDict": "isDict",
+                "sSummary": "summary"
+            },
             "aLengthMenu": [
                 [30, 50, 100],
                 [30, 50, 100]
@@ -53,8 +61,8 @@ define(function(require, exports, module) {
             "fnServerParams": function(aoData) {},
             "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 
-
-                var length = oSettings.oInit.iDisplayLength,
+                var _options = oSettings.oInit;
+                var length = _options.iDisplayLength,
                     //aApiParams 用[] 不用{} 是有原因的，在某些情况下一个参数会传递多个值
                     aApiParams = [],
                     opt = {},
@@ -78,7 +86,7 @@ define(function(require, exports, module) {
                     //页码
                     if (aoData[i].name === "iDisplayStart") {
                         aApiParams.push({
-                            "name": "page",
+                            "name": _options.oParamName.sPage,
                             "value": getPageIndex(aoData[i].value)
                         });
                     }
@@ -88,13 +96,13 @@ define(function(require, exports, module) {
 
                         column = oSettings.aoColumns[aoData[i].value];
                         aApiParams.push({
-                            "name": "orderColumn",
+                            "name": _options.oParamName.sOrderColumn,
                             "value": column.mData
                         });
 
                         if (column.isPinyinSort) {
                             aApiParams.push({
-                                "name": "isDict",
+                                "name": _options.oParamName.sIsDict,
                                 "value": true
                             });
                         }
@@ -104,7 +112,7 @@ define(function(require, exports, module) {
                     //排序类型（升序/降序）
                     if (aoData[i].name === "sSortDir_0") {
                         aApiParams.push({
-                            "name": "orderType",
+                            "name": _options.oParamName.sOrderType,
                             "value": aoData[i].value
                         });
                     }
@@ -114,13 +122,13 @@ define(function(require, exports, module) {
 
                 //每页显示行数
                 aApiParams.push({
-                    "name": "pagesize",
+                    "name": _options.oParamName.sPagesize,
                     "value": length
                 });
 
                 if (that.bShowSummary) {
                     aApiParams.push({
-                        "name": "summary",
+                        "name": _options.oParamName.sSummary,
                         "value": true
                     });
                 }
@@ -142,8 +150,8 @@ define(function(require, exports, module) {
                 });
 
                 //自定义的业务参数
-                if ($.isFunction(oSettings.oInit.fnParams)) {
-                    var params = oSettings.oInit.fnParams(aApiParams) || {};
+                if ($.isFunction(_options.fnParams)) {
+                    var params = _options.fnParams(aApiParams) || {};
 
 
                     for (key in params) {
@@ -167,27 +175,23 @@ define(function(require, exports, module) {
                     }
                 }
 
-                if (oSettings.oInit.bAutoload) {
+                if (_options.bAutoload) {
 
-                    if ($.isFunction(oSettings.oInit.fnOptions)) {
-                        opt = oSettings.oInit.fnOptions();
+                    if ($.isFunction(_options.fnOptions)) {
+                        opt = _options.fnOptions();
                     }
 
                     //兼容老的版本
-                    var fnDataSource = oSettings.oInit.fnDataSource || oSettings.oInit.dataSource;
+                    var fnDataSource = _options.fnDataSource || _options.dataSource;
 
                     if ($.isFunction(fnDataSource)) {
 
                         fnDataSource(aApiParams, function(a, b, c) {
 
-
                             var total = a.page ? a.page.total : 0;
                             var items = $.isArray(a.result) ? a.result : a.result.items || [];
                             var summary = a.result.summary || {};
-                            var columns = oSettings.oInit.aoColumns;
-
-
-
+                            var columns = _options.aoColumns;
 
                             //设置默认值，如果返回的值为空默认为"--"
                             for (var i = 0; i < items.length; i++) {
@@ -221,7 +225,7 @@ define(function(require, exports, module) {
                             fnCallback(data, b, c);
 
                             //生成序号
-                            var bOrderNumbers = oSettings.oInit.bOrderNumbers || oSettings.oInit.isCreateOrder;
+                            var bOrderNumbers = _options.bOrderNumbers || _options.isCreateOrder;
                             if (bOrderNumbers && items.length) {
                                 createOrderNumbers(a.page.current, a.page.pagesize);
                             }
@@ -247,7 +251,7 @@ define(function(require, exports, module) {
 
 
                             //显示细分信息
-                            if (oSettings.oInit.fnExtendDetails && items && items.length) {
+                            if (_options.fnExtendDetails && items && items.length) {
 
                                 var nCloneTh = document.createElement('th');
                                 var nCloneTd = document.createElement('td');
@@ -288,7 +292,7 @@ define(function(require, exports, module) {
                                         oTable.fnOpen(nTr, "<div class='p10 t-a-c'>" + locale.sLoadingRecords + "</div>", 'details');
                                         /* Open this row */
                                         row_details.addClass("row-details-open disabled").removeClass("row-details-close");
-                                        oSettings.oInit.fnExtendDetails(oTable, nTr, function(tb_details) {
+                                        _options.fnExtendDetails(oTable, nTr, function(tb_details) {
 
                                             oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'>" + locale.sEmptyTable + "</div>", 'details');
                                             var ndetails = row_details.parents("tr").next().find(".details");
@@ -323,8 +327,8 @@ define(function(require, exports, module) {
                             }
 
                             //初始化回调
-                            if ($.isFunction(oSettings.oInit.callback)) {
-                                oSettings.oInit.callback(a);
+                            if ($.isFunction(_options.callback)) {
+                                _options.callback(a);
                             }
 
                             that.bLoadFinish = true;

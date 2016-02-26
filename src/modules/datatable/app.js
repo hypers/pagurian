@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    
+
     var app = require("../../lib/app");
     var model = require('./model');
 
@@ -16,6 +16,9 @@ define(function(require, exports, module) {
             ],
             "fnParams": function() {
                 return {};
+            },
+            "oParamName": {
+                "sPage": "currentPage"
             },
             "aoColumns": [{
                 "bSortable": false,
@@ -118,7 +121,7 @@ define(function(require, exports, module) {
                 "bShowSummary": true,
                 "sClass": "t-a-r",
                 "sTitle": "浏览量(PV)",
-                "sSubtitle":"--",
+                "sSubtitle": "--",
                 "mData": "pageViews"
             }, {
                 "sClass": "t-a-r",
@@ -127,13 +130,13 @@ define(function(require, exports, module) {
                     return value + ".00";
                 },
                 "sTitle": "独立访问者(UV)",
-                "sSubtitle":"--",
+                "sSubtitle": "--",
                 "mData": "uniqueVisitors"
             }, {
                 "sClass": "t-a-r",
                 "bShowSummary": true,
                 "sTitle": "访问次数(VV)",
-                "sSubtitle":"副标题",
+                "sSubtitle": "副标题",
                 "mData": "visitViews"
             }]
         });
