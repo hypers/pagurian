@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
-    require("./daterangepicker.js");
+    require("./1.2/daterangepicker.css");
+    require("./1.2/daterangepicker");
 
     var g = window;
 

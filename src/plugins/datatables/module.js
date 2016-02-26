@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     };
     var locale = languages[$p.language || "zh_CN"];
 
+    require('./1.9.4/dataTables.css');
     require('./1.9.4/jquery.dataTables');
 
     require('./extend/options');

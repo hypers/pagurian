@@ -23,7 +23,6 @@
 }
 
 .daterangepicker .ranges {
-  width: 160px;
   text-align: left;
 }
 
@@ -89,7 +88,6 @@
   font-size: 13px;
   background: #f5f5f5;
   border: 1px solid #f5f5f5;
-  color: #08c;
   padding: 3px 12px;
   margin-bottom: 8px;
   -webkit-border-radius: 5px;
@@ -98,11 +96,6 @@
   cursor: pointer;
 }
 
-.daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
-  background: #08c;
-  border: 1px solid #08c;
-  color: #fff;
-}
 
 .daterangepicker .calendar-date {
   border: 1px solid #ddd;
@@ -208,12 +201,6 @@
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-}
-
-.daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #357ebd;
-  border-color: #3071a9;
-  color: #fff;
 }
 
 .daterangepicker td.week, .daterangepicker th.week {
