@@ -37,6 +37,7 @@
         debug: debug,
         path: {
             api: url + "/test/api/",
+            apiPostfix: ".json",
             app: url + "/" + (debug ? "src" : "dist") + "/"
         },
         call: function() {
@@ -104,4 +105,4 @@
 
     global[name] = global.pagurian = pagurian;
 
-})(this, "$p", false);
+})(this, "$p", true);

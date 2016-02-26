@@ -145,7 +145,7 @@ define(function(require, exports, module) {
 
             var data = this.options.data;
             var options = {
-                url: pagurian.path.api + url + ".json",
+                url: pagurian.path.api + url + (pagurian.path.apiPostfix || ""),
                 type: type || "get",
                 dataType: "json",
                 data: data,
