@@ -1,143 +1,115 @@
-/*
- * @fileOverview app基础模块，所有的app模块继承该模块
- * @version 0.1
- *
- */
 define(function(require, exports, module) {
 
 
     var ajax = require('./core/ajax');
-    var service = {
+    var transport = require('./core/transport');
+    var validate = require('./core/validate');
 
+    /**
+     * 验证请求数据
+     */
+    function validateRequest(data) {
+        if (!data) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 追加参数
+     * @param  {Object/Array} params 被追加的对象
+     * @param  {Object} param  追加的对象
+     * @return {Object}       被追加的对象
+     */
+    function appendParam(params, param) {
+        var isEmpty = true;
+        if ($.isPlainObject(params)) {
+            params[param.name] = param.value;
+            return params;
+        }
+        if ($.isArray(params)) {
+            for (var i = 0; i < params.length; i++) {
+                if (params[i].name === param.name) {
+                    params[i].value = param.value;
+                    isEmpty = false;
+                }
+            }
+            if (isEmpty) {
+                params.push(param);
+            }
+        }
+        return params;
+    }
+
+    /**
+     * 对参数值进行编码
+     * @param  {Object} params 编码前的对象
+     * @return {Object}        编码后的对象
+     */
+    function encodeValue(params) {
+
+        if ($.isPlainObject(params)) {
+            for (var key in params) {
+                params[key] = encodeURIComponent(params[key]);
+            }
+            return params;
+        }
+        if ($.isArray(params)) {
+            for (i = 0; i < params.length; i++) {
+                params[i].value = encodeURIComponent(params[i].value);
+            }
+        }
+        return params;
+    }
+
+    module.exports = {
+
+        validateRespone: validate.validateCode,
         get: function(url, params, callback) {
 
             //设置语言
-            if ($.isArray(params)) {
-                var isSetLanguage = false;
-                for (var i = 0; i < params.length; i++) {
-                    if (params[i].name === "locale") {
-                        params[i].value = $p.language;
-                        isSetLanguage = true;
-                    }
-                }
-                if (!isSetLanguage) {
-                    params.push({
-                        name: "locale",
-                        value: $p.language
-                    });
-                }
-            } else {
-                params.locale = $p.language;
-            }
+            appendParam(params, {
+                name: "locale",
+                value: $p.language
+            });
+
+            //设置随机参数
+            appendParam(params, {
+                name: "_ts",
+                value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase()
+            });
+
+            //Encode 参数
+            encodeValue(params);
 
             this.request("get", url, params, callback);
         },
         post: function(url, params, callback) {
+
             this.request("post", url, params, callback);
         },
         request: function(type, url, params, callback) {
-            validateRequest(params);
+            if (!validateRequest(params)) {
+                return;
+            }
 
-            ajax.request(type, url, params, function(resp) {
+            var data = transport.toObject(params);
+            if ($.inArray(type, ["post", "put", "patch"]) > -1) {
+                data = transport.toJSON(data);
+            }
 
-                var valid = validateRespone(resp);
-                if (typeof callback === "function") {
-                    callback(resp, valid);
+            ajax.request({
+                "type": type,
+                "url": url,
+                "params": data
+            }, function(response) {
+                var valid = validate.validateCode(response.code);
+                if ($.isFunction(callback)) {
+                    callback(response, valid);
                 }
-
             });
+
         }
     };
 
-    function validateRequest(data) {
-        return true;
-    }
-
-    function validateRespone(data) {
-
-        if (!data) {
-            return false;
-        }
-
-        switch (data.code) {
-            case "200000":
-                return true;
-            case "200001":
-                $p.alert(data.message, "warning");
-                return false;
-            case "200002":
-
-                var fields = data.fields;
-                var element = {};
-                for (var k in fields) {
-
-                    element = $(".help-block[for^='" + k + "']");
-                    element.removeClass("tip-block");
-                    element.html(fields[k][0].message);
-
-                }
-                return false;
-            case "200403":
-                $p.alert($p.locale.handle_exception, "warning");
-                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403);
-                return false;
-
-            case "200403.11":
-                $p.alert($p.locale.handle_exception, "warning");
-                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_11);
-                return false;
-
-            case "200403.13":
-                $p.alert($p.locale.handle_exception, "warning");
-                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_13);
-                return false;
-
-            case "200403.17":
-                window.location.reload();
-                break;
-            case "200403.18":
-                $p.alert($p.locale.handle_exception, "warning");
-                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error403_18);
-
-                return false;
-
-            case "200404":
-                $p.alert($p.locale.handle_exception, "warning");
-                $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls.error404);
-                return false;
-
-            case 404:
-                $p.alert($p.locale.handle_exception, "error");
-                return false;
-
-            case "100500":
-                $p.alert($p.locale.handle_exception, "warning");
-                return false;
-
-            case 500:
-                $p.alert($p.locale.handle_exception, "error");
-                return false;
-
-            case 400:
-                $p.alert($p.locale.params_error, "error");
-                return false;
-
-            case 0:
-                if (data.result && data.result.statusText === "timeout") {
-                    $p.alert($p.locale.handle_timeout, "error");
-                    return false;
-                }
-                $p.alert($p.locale.handle_exception, "error");
-                return false;
-
-            default:
-                return true;
-        }
-
-        return true;
-    }
-
-    service.validateRespone = validateRespone;
-
-    module.exports = service;
 });

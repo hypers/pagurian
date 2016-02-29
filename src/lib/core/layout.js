@@ -405,7 +405,8 @@ define(function(require, exports, module) {
 
     var callbackQueue = [];
 
-    var layout = {
+    module.exports = {
+
         init: function() {
 
             doInit();
@@ -766,13 +767,11 @@ define(function(require, exports, module) {
 
                 }, 300);
 
-
             });
         };
 
         this.init();
     }
 
-    module.exports = layout;
 
 });
