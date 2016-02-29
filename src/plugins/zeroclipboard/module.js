@@ -1,10 +1,10 @@
 define(function(require, exports, module) {
     var g = window;
 
-    var ZeroClipboard = require("./2.2.0/ZeroClipboard");
+    var ZeroClipboard = require("./2.0.0/ZeroClipboard");
 
     ZeroClipboard.config({
-        swfPath: pagurian.path.app + "plugins/zeroclipboard/2.2.0/ZeroClipboard.swf"
+        swfPath: pagurian.path.app + "plugins/zeroclipboard/2.0.0/ZeroClipboard.swf"
     });
 
     function Copy(selector, options) {

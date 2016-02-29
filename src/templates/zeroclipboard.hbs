@@ -1,0 +1,88 @@
+{{#>layouts/base title=data.page.uploader appId="zeroclipboard" }}
+
+    {{#*inline "pageContent"}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.zeroclipboard}}
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="uploader.html">基础</a>
+                        </li>
+                        <li>
+                            <a href="uploader-options.html">参数说明</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="portlet box default ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            剪切板
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form action="#" id="form_sample_1">
+                            <div class="form-body">
+
+                                <div class="form-group">
+                                    <textarea id="txa_content" rows="3" class="form-control" >快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="btn_copy" class="btn btn-primary">复制</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">&lt;div id=&quot;btn_uploader&quot;&gt;选择文件&lt;/div&gt;</code></pre>
+                    <h3>Javascript代码</h3>
+<pre><code class="javascript">
+
+var uploader = $p.uploader("#btn_uploader", {
+    //上传API地址
+    server: '/src/plugins/uploader/0.1.5/fileupload.php'
+});
+
+//当文件上传成功时触发
+uploader.on('uploadSuccess', function(file) {
+    $(&quot;#table_files&quot;).append([
+        &quot;&lt;tr&gt;&quot;,
+            &quot;&lt;td&gt;&lt;a&gt;&quot; + file.name + &quot;&lt;/a&gt;&lt;/td&gt;&quot;,
+            &quot;&lt;td&gt;&quot; + file.size + &quot;&lt;/td&gt;&quot;,
+        &quot;&lt;/tr&gt;&quot;
+    ].join(&quot;&quot;));
+});
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/zeroclipboard/app", function(app) {
+                app.page.index();
+            });
+        </script>
+        {{/inline}}
+
+{{/layouts/base}}
