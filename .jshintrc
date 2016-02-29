@@ -1,0 +1,10 @@
+{
+    "nonew": true,
+    "eqeqeq": true,
+    "trailing": true,
+    "evil": true,
+    "loopfunc": true,
+    "globals": {
+        "jQuery": true
+    }
+}

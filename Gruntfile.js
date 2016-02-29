@@ -106,10 +106,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-                eqeqeq: true,
-                trailing: true,
-                evil: true,
-                loopfunc: true
+                jshintrc:true
             },
             files: [
                 'src/modules/**/*.js',
