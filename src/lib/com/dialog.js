@@ -68,7 +68,13 @@ define(function(require, exports, module) {
             if (selector) {
                 //给按钮绑定事件
                 $(document).delegate(selector, 'click', function() {
+
+                    if ($(this).hasClass("disabled") || $(this).attr("disabled")) {
+                        return;
+                    }
+
                     var params = $(this).data("params");
+
                     modal.params = eval("(" + params + ")") || {};
                     modal.show();
                     if ($.isFunction(options.initForm)) {
