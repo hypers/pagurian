@@ -1,21 +1,26 @@
-pagurian.call(["lib/app", "lib/service"], function(app, service) {
-    module('Service');
+module('Service');
 
-
-    QUnit.test("测试GET请求", function(assert) {
+test('测试GET请求', function (assert) {
+    pagurian.call(["lib/app", "lib/service"], function (app, service) {
         service.get("../api/succeed", {
             "page": 1,
             "pagesize": 100
-        }, function() {});
-        assert.ok(1 == 1, "OK");
+        }, function () {
+        });
+        assert.ok(1 === 1, "OK");
     });
 
+    ok(true, 'this had better work.');
+});
 
-    QUnit.test("测试POST请求", function(assert) {
+test('测试POST请求', function (assert) {
+
+    pagurian.call(["lib/app", "lib/service"], function (app, service) {
         service.post("../api/succeed", {
             "page": 1,
             "pagesize": 100
-        }, function() {});
+        }, function () {
+        });
 
         service.post("../api/succeed", [
             {
@@ -26,21 +31,25 @@ pagurian.call(["lib/app", "lib/service"], function(app, service) {
                 "name": "foo",
                 "value": "bar2"
             }
-        ], function() {});
+        ], function () {
+        });
 
         service.post("../api/succeed", [{
             "name": "foo",
             "value": "bar",
             "type": "array"
-        }], function() {});
+        }], function () {
+        });
 
         service.post("../api/succeed", {
             "project.id": "1"
-        }, function() {});
+        }, function () {
+        });
 
         service.post("../api/succeed", {
             "project.id": ["1", "2"]
-        }, function() {});
+        }, function () {
+        });
 
 
         service.post({
@@ -49,7 +58,8 @@ pagurian.call(["lib/app", "lib/service"], function(app, service) {
                 "projectId": ["1", "2"],
                 "actions": ["join", "buy", "click"]
             },
-            callback: function() {}
+            callback: function () {
+            }
         });
 
 
@@ -63,36 +73,52 @@ pagurian.call(["lib/app", "lib/service"], function(app, service) {
                 "projectId": ["4", "8"],
                 "actions": ["change"]
             }],
-            callback: function() {}
+            callback: function () {
+            }
         });
 
-        assert.ok(1 == 1, "OK");
+        assert.ok(1 === 1, "OK");
     });
 
-    QUnit.test("测试PUT请求", function(assert) {
+    ok(true, 'this had better work.');
+});
+
+test('测试PUT请求', function (assert) {
+    pagurian.call(["lib/app", "lib/service"], function (app, service) {
         service.request("put", "../api/succeed", {
             "page": 1,
             "pagesize": 100
-        }, function() {});
-        assert.ok(1 == 1, "OK");
+        }, function () {
+        });
+        assert.ok(1 === 1, "OK");
     });
 
-    QUnit.test("测试PATCH请求", function(assert) {
+    ok(true, 'this had better work.');
+});
 
+test('测试PATCH请求', function (assert) {
+    pagurian.call(["lib/app", "lib/service"], function (app, service) {
         service.request("patch", "../api/succeed", {
             "page": 1,
             "pagesize": 100
-        }, function() {});
+        }, function () {
+        });
 
-        assert.ok(1 == 1, "OK");
+        assert.ok(1 === 1, "OK");
     });
 
-    QUnit.test("测试DELETE请求", function(assert) {
+    ok(true, 'this had better work.');
+});
+
+test('测试PUT请求', function (assert) {
+    pagurian.call(["lib/app", "lib/service"], function (app, service) {
         service.request("delete", "../api/succeed", {
             "page": 1,
             "pagesize": 100
-        }, function() {});
-        assert.ok(1 == 1, "OK");
+        }, function (resp) {
+        });
+        assert.ok(1 === 1, "OK");
     });
 
+    ok(true, 'this had better work.');
 });

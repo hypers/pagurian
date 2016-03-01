@@ -1,8 +1,8 @@
-pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
-    module('Transport');
-    //case 1
+module('Transport');
 
-    QUnit.test("transport.toObject", function(assert) {
+//case 1
+test('transport.toObject', function (assert) {
+    pagurian.call(["lib/app", "lib/core/transport"], function (app, transport) {
         var data = transport.toObject([{
             "name": "foo",
             "value": "bar"
@@ -12,10 +12,12 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
         }, "OK");
     });
 
+    ok(true, 'this had better work.');
+});
 
-    //case 2
-
-    QUnit.test("transport.toObject", function(assert) {
+//case 2
+test("transport.toObject", function (assert) {
+    pagurian.call(["lib/app", "lib/core/transport"], function (app, transport) {
         var data2 = transport.toObject([
             {
                 "name": "foo",
@@ -30,11 +32,13 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
             "foo": ["bar", "bar2"]
         }, "OK");
     });
+    ok(true, 'this had better work.');
+});
 
 
-    //case 3
-
-    QUnit.test("transport.toObject", function(assert) {
+//case 3
+test("transport.toObject", function (assert) {
+    pagurian.call(["lib/app", "lib/core/transport"], function (app, transport) {
         var data3 = transport.toObject([{
             "name": "foo",
             "value": "bar",
@@ -44,11 +48,12 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
             "foo": ["bar"]
         }, "OK");
     });
+    ok(true, 'this had better work.');
+});
 
-
-    //case 4
-
-    QUnit.test("transport.toObject", function(assert) {
+//case 4
+test("transport.toObject", function (assert) {
+    pagurian.call(["lib/app", "lib/core/transport"], function (app, transport) {
         var data4 = transport.toObject({
             "project.id": "1"
         });
@@ -58,14 +63,18 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
             }
         }, "OK");
     });
+    ok(true, 'this had better work.');
+});
 
-    //case 5
-    QUnit.test("transport.toObject", function(assert) {
+//case 5
+test("transport.toObject", function (assert) {
+    pagurian.call(["lib/app", "lib/core/transport"], function (app, transport) {
         var data5 = transport.toObject({
             "project.id": ["1", "2"]
         });
-        assert.ok(data5.project[0].id == 1, "OK");
-        assert.ok(data5.project[1].id == 2, "OK");
+        assert.ok(data5.project[0].id === 1, "OK");
+        assert.ok(data5.project[1].id === 2, "OK");
     });
-
+    ok(true, 'this had better work.');
 });
+
