@@ -79,7 +79,7 @@ define(function(require, exports, module) {
                 value = $.trim(value);
             }
 
-            if (keys.length == 1) {
+            if (keys.length === 1) {
                 finishData[key] = value;
                 continue;
             }
