@@ -1,13 +1,12 @@
-module('Transport');
-
 pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
-
+    module('Transport');
     //case 1
-    var data = transport.toObject([{
-        "name": "foo",
-        "value": "bar"
-    }]);
+
     QUnit.test("transport.toObject", function(assert) {
+        var data = transport.toObject([{
+            "name": "foo",
+            "value": "bar"
+        }]);
         assert.deepEqual(data, {
             "foo": "bar"
         }, "OK");
@@ -15,17 +14,18 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
 
 
     //case 2
-    var data2 = transport.toObject([
-        {
-            name: "foo",
-            "value": "bar"
-        },
-        {
-            name: "foo",
-            "value": "bar2"
-        }
-    ]);
+
     QUnit.test("transport.toObject", function(assert) {
+        var data2 = transport.toObject([
+            {
+                "name": "foo",
+                "value": "bar"
+            },
+            {
+                "name": "foo",
+                "value": "bar2"
+            }
+        ]);
         assert.deepEqual(data2, {
             "foo": ["bar", "bar2"]
         }, "OK");
@@ -33,12 +33,13 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
 
 
     //case 3
-    var data3 = transport.toObject([{
-        "name": "foo",
-        "value": "bar",
-        "type": "array"
-    }]);
+
     QUnit.test("transport.toObject", function(assert) {
+        var data3 = transport.toObject([{
+            "name": "foo",
+            "value": "bar",
+            "type": "array"
+        }]);
         assert.deepEqual(data3, {
             "foo": ["bar"]
         }, "OK");
@@ -46,10 +47,11 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
 
 
     //case 4
-    var data4 = transport.toObject({
-        "project.id": "1"
-    });
+
     QUnit.test("transport.toObject", function(assert) {
+        var data4 = transport.toObject({
+            "project.id": "1"
+        });
         assert.deepEqual(data4, {
             "project": {
                 "id": "1"
@@ -58,10 +60,10 @@ pagurian.call(["lib/app", "lib/core/transport"], function(app, transport) {
     });
 
     //case 5
-    var data5 = transport.toObject({
-        "project.id": ["1", "2"]
-    });
     QUnit.test("transport.toObject", function(assert) {
+        var data5 = transport.toObject({
+            "project.id": ["1", "2"]
+        });
         assert.ok(data5.project[0].id == 1, "OK");
         assert.ok(data5.project[1].id == 2, "OK");
     });

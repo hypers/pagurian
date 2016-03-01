@@ -8,11 +8,50 @@ define(function(require, exports, module) {
     /**
      * 验证请求数据
      */
-    function validateRequest(data) {
-        if (!data) {
+    function validateRequest(options) {
+
+        if ($.inArray(options.type, ["get", "delete", "post", "put", "patch"]) === -1) {
+            $p.log("type is undefined");
+            return false;
+        }
+
+        if (!options.url) {
+            $p.log("type is undefined");
+            return false;
+        }
+
+        if (!options.params) {
+            $p.log("params is undefined");
             return false;
         }
         return true;
+    }
+
+    function getOptions() {
+
+        var options = {
+            original: false,
+            bundle: true
+        };
+
+
+        if (arguments.length === 1 && $.isPlainObject(arguments[0])) {
+            return $.extend(options, arguments[0]);
+        }
+        if (arguments.length === 3) {
+            options.url = arguments[0];
+            options.params = arguments[1];
+            options.callback = arguments[2];
+            return options;
+        }
+
+        options.type = arguments[0];
+        options.url = arguments[1];
+        options.params = arguments[2];
+        options.callback = arguments[3];
+
+
+        return options;
     }
 
     /**
@@ -62,53 +101,69 @@ define(function(require, exports, module) {
         return params;
     }
 
-    module.exports = {
 
-        validateRespone: validate.validateCode,
+    /**
+     * 请求数据
+     */
+    function requestDate(options) {
+
+        if (!validateRequest(options)) {
+            return false;
+        }
+
+        if (!options.original) {
+            options.params = transport.toObject(options.params);
+        }
+
+        if (options.bundle && $.inArray(options.type, ["post", "put", "patch"]) > -1) {
+            options.contentType = "application/json";
+            options.params = transport.toJSON(options.params);
+        }
+
+        ajax.request(options, function(response) {
+            var valid = validate.validateCode(response.code);
+            if ($.isFunction(options.callback)) {
+                options.callback(response, valid);
+            }
+        });
+    }
+
+
+
+    module.exports = {
+        validateRespone: function(respone) {
+            return validate.validateCode(respone.code);
+        },
         get: function(url, params, callback) {
 
+            var options = getOptions.apply(this, arguments);
+
             //设置语言
-            appendParam(params, {
+            appendParam(options.params, {
                 name: "locale",
                 value: $p.language
             });
 
             //设置随机参数
-            appendParam(params, {
+            appendParam(options.params, {
                 name: "_ts",
-                value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase()
+                value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5)
             });
 
             //Encode 参数
-            encodeValue(params);
+            encodeValue(options.params);
+            options.type = "get";
+            requestDate(options);
 
-            this.request("get", url, params, callback);
         },
         post: function(url, params, callback) {
-
-            this.request("post", url, params, callback);
+            var options = getOptions.apply(this, arguments);
+            options.type = "post";
+            requestDate(options);
         },
         request: function(type, url, params, callback) {
-            if (!validateRequest(params)) {
-                return;
-            }
-
-            var data = transport.toObject(params);
-            if ($.inArray(type, ["post", "put", "patch"]) > -1) {
-                data = transport.toJSON(data);
-            }
-
-            ajax.request({
-                "type": type,
-                "url": url,
-                "params": data
-            }, function(response) {
-                var valid = validate.validateCode(response.code);
-                if ($.isFunction(callback)) {
-                    callback(response, valid);
-                }
-            });
-
+            var options = getOptions.apply(this, arguments);
+            requestDate(options);
         }
     };
 

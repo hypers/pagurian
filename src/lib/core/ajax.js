@@ -1,12 +1,26 @@
 define(function(require, exports, module) {
 
     var request = {
-        data: [],
         type: "get",
         url: "/",
-        contentType: "application/json",
         formatURL: function() {
+            var params = [];
             this.url = pagurian.path.api + this.url + (pagurian.path.apiPostfix || "");
+            if (this.type === "delete") {
+                if ($.isPlainObject(this.params)) {
+                    for (var key in this.params) {
+                        params.push(key + "=" + this.params[key]);
+                    }
+                }
+
+                if ($.isArray(this.params)) {
+                    for (var i = 0; i < this.params.length; i++) {
+                        params.push(params[i].name + "=" + this.params[i].value);
+                    }
+                }
+                this.url += "?" + params.join("&");
+            }
+
             return this;
         },
         ajaxSend: function(options) {
@@ -19,8 +33,8 @@ define(function(require, exports, module) {
     };
 
     module.exports = {
-        bundle: true,
         send: function(callback) {
+
             return request.ajaxSend({
                 dataType: "json",
                 timeout: 30000,
@@ -47,7 +61,6 @@ define(function(require, exports, module) {
         request: function(options, callback) {
 
             $.extend(request, options).formatURL();
-
             this.send(function() {
                 if ($.isFunction(callback)) {
                     callback.apply(this, arguments);

@@ -26,6 +26,11 @@ define(function(require, exports, module) {
             return data;
         }
 
+        if (!$.isArray(data)) {
+            $p.log("Data is not an array");
+            return null;
+        }
+
         for (var i = 0; i < data.length; i++) {
 
             //如此临时对象重已经存在这个属性，就更新这个属性
@@ -101,17 +106,14 @@ define(function(require, exports, module) {
 
         toObject: function(data) {
 
-
-
             var tempData = handleArrayToObject(data);
             var finishData = handleObjectStructuredKey(tempData);
-
 
             return finishData;
         },
         toJSON: function(data) {
             return $.toJSON({
-                data: this.data
+                data: data
             });
         }
     };
