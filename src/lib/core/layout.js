@@ -243,11 +243,13 @@ define(function(require, exports, module) {
             e.stopPropagation();
         });
 
-        $("[data-type='select']").on("click", " .dropdown-menu a", function() {
+        $(document).delegate("[data-type='select'] .dropdown-menu a", 'click', function() {
             var text = $(this).text();
             var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
             $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
         });
+
+
 
     };
 

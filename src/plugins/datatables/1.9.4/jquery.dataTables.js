@@ -2412,40 +2412,46 @@
                              return null;
                          }
 
+                         var sStdDropMenu = [
+                             '<div class="btn-group btn-dropdown btn-select" data-type="select" id="' + oSettings.sTableId + '_length">',
+                             '<button data-toggle="dropdown" type="button" class="btn btn-default  dropdown-toggle w-unset">30 <i class="fa fa-angle-down"></i></button>',
+                             '<ul role="menu" class="dropdown-menu">'
+                         ];
+
                          /* This can be overruled by not using the _MENU_ var/macro in the language variable */
-                         var sName = 'name="' + oSettings.sTableId + '_length"';
-                         var sStdMenu = '<select size="1" ' + sName + '>';
                          var i, iLen;
                          var aLengthMenu = oSettings.aLengthMenu;
 
                          if (aLengthMenu.length == 2 && typeof aLengthMenu[0] === 'object' &&
                              typeof aLengthMenu[1] === 'object') {
                              for (i = 0, iLen = aLengthMenu[0].length; i < iLen; i++) {
-                                 sStdMenu += '<option value="' + aLengthMenu[0][i] + '">' + aLengthMenu[1][i] + '</option>';
+
+                                 sStdDropMenu.push('<li><a data-id="' + aLengthMenu[0][i] + '" href="javascript:;">' + aLengthMenu[0][i] + '</a></li>');
                              }
                          } else {
                              for (i = 0, iLen = aLengthMenu.length; i < iLen; i++) {
-                                 sStdMenu += '<option value="' + aLengthMenu[i] + '">' + aLengthMenu[i] + '</option>';
+                                 sStdDropMenu.push('<li><a data-id="' + aLengthMenu[0][i] + '" href="javascript:;">' + aLengthMenu[0][i] + '</a></li>');
                              }
                          }
-                         sStdMenu += '</select>';
+
+                         sStdDropMenu.push('</ul></div>');
 
                          var nLength = document.createElement('div');
                          if (!oSettings.aanFeatures.l) {
                              nLength.id = oSettings.sTableId + '_length';
                          }
                          nLength.className = oSettings.oClasses.sLength;
-                         nLength.innerHTML = '<label>' + oSettings.oLanguage.sLengthMenu.replace('_MENU_', sStdMenu) + '</label>';
+                         nLength.innerHTML = '<label>' + oSettings.oLanguage.sLengthMenu.replace('_MENU_', sStdDropMenu.join("")) + '</label>';
 
                          /*
                           * Set the length to the current display length - thanks to Andrea Pavlovic for this fix,
                           * and Stefan Skopnik for fixing the fix!
                           */
-                         $('select option[value="' + oSettings._iDisplayLength + '"]', nLength).attr("selected", true);
 
-                         $('select', nLength).bind('change.DT', function(e) {
-                             var iVal = $(this).val();
+                         $("#" + oSettings.sTableId + "_length button", nLength).html(oSettings._iDisplayLength + ' <i class="fa fa-angle-down"></i>');
 
+                         $("#" + oSettings.sTableId + "_length a", nLength).bind("click",function(){
+                             var iVal=$(this).data("id");
                              /* Update all other length options for the new display */
                              var n = oSettings.aanFeatures.l;
                              for (i = 0, iLen = n.length; i < iLen; i++) {
