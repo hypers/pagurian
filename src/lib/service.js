@@ -121,18 +121,16 @@ define(function(require, exports, module) {
         }
 
         ajax.request(options, function(response) {
-            var valid = validate.validateCode(response.code);
+            var valid = validate.check(response);
             if ($.isFunction(options.callback)) {
                 options.callback(response, valid);
             }
         });
     }
 
-
-
     module.exports = {
         validateRespone: function(respone) {
-            return validate.validateCode(respone.code);
+            return validate.check(respone);
         },
         get: function(url, params, callback) {
 
