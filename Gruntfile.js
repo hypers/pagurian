@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -10,13 +10,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template-html');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     var transport = require('grunt-cmd-transport');
 
     var style = transport.style.init(grunt);
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
-
+    //connect端口
+    var connectPort = 9000;
 
     require('time-grunt')(grunt);
 
@@ -106,7 +109,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-                jshintrc:true
+                jshintrc: true
             },
             files: [
                 'src/modules/**/*.js',
@@ -198,6 +201,25 @@ module.exports = function(grunt) {
                     ext: '.html'
                 }]
             }
+        },
+        // Create a local web server for testing http:// URIs.
+        connect: {
+            root_server: {
+                options: {
+                    port: connectPort,
+                    base: '.',
+                }
+            }
+        },
+        // Unit tests.
+        qunit: {
+            allTest: {
+                options: {
+                    urls: [
+                        'http://localhost:' + connectPort + '/test/index.html'
+                    ]
+                }
+            }
         }
     };
 
@@ -217,7 +239,7 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('seajs', ['uglify:seajs']);
-    grunt.registerTask('check', ['jshint']);
+    grunt.registerTask('check', ['jshint', 'connect', 'qunit']);
     grunt.registerTask('css', ['less:build', 'cssmin:build', 'postcss', 'copy:all']);
     grunt.registerTask('tpl', ['template', "copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
