@@ -9,10 +9,12 @@ define(function(require, exports, module) {
         this.container = $(selector);
         this.container.jstree($.extend({
             initedCallback: function() {
-                var spinnerOptions = options.added ? options.added.numberSpinner : {};
-                $p.numberSpinner(".jstree-input", $.extend({
-                    verticalbuttons: false
-                }, spinnerOptions));
+                var spinnerOptions = options.added ? options.added.numberSpinner : false;
+                if (spinnerOptions) {
+                    $p.numberSpinner($(selector).find(".jstree-input"), $.extend({
+                        verticalbuttons: false
+                    }, spinnerOptions));
+                }
             }
         }, options));
 

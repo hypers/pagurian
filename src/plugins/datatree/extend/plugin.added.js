@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-    
+
     var input = document.createElement('input');
     input.className = 'jstree-input form-control ';
     input.setAttribute('type', 'text');
@@ -35,11 +35,11 @@ define(function(require, exports, module) {
                 return parent.load_node.apply(this, arguments);
             };
             this.trigger = function() {
-
                 var action = arguments[0];
-                var spinnerOptions = options.numberSpinner || {};
-                if (action === "open_node") {
-                    $p.numberSpinner(".jstree-input", $.extend({
+                var spinnerOptions = options.numberSpinner || false;
+
+                if (action === "open_node" && spinnerOptions) {
+                    $p.numberSpinner($("#" + arguments[1].node.id + " .jstree-input"), $.extend({
                         verticalbuttons: false
                     }, spinnerOptions));
                 }

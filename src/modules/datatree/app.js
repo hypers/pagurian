@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    
+
     var app = require("../../lib/app");
 
     require('../../plugins/number-spinner/module');
@@ -69,7 +69,10 @@ define(function(require, exports, module) {
                 numberSpinner: {
                     decimals: 2,
                     min: -10,
-                    max: 100
+                    max: 100,
+                    change: function(data, entity) {
+                        console.log(data);
+                    }
                 }
             },
             change: function(e, node) {
