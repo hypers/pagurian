@@ -8,34 +8,31 @@
  */
 
 .bootstrap-touchspin .input-group-btn-vertical {
-  position: relative;
-  white-space: nowrap;
-  vertical-align: middle;
-  display: table-cell;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
 }
-
 .bootstrap-touchspin .input-group-btn-vertical > .btn {
-  display: block;
-  float: none;
-  width: 100%;
-  max-width: 100%;
-  padding: 8px 10px;
-  margin-left: -1px;
-  position: relative;
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 10px;
+    margin-left: -1px;
+    position: relative;
+    border: 1px solid #ddd;
 }
-
 .bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-up {
-  border-radius: 0;
+    border-radius: 0;
 }
-
 .bootstrap-touchspin .input-group-btn-vertical .bootstrap-touchspin-down {
-  border-radius: 0;
+    border-radius: 0;
 }
-
 .bootstrap-touchspin .input-group-btn-vertical i {
-  position: absolute;
-  top: 0px;
-  left: 5px;
-  font-size: 9px;
-  font-weight: normal;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    font-size: 9px;
+    font-weight: normal;
 }

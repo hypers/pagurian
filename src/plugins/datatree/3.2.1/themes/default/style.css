@@ -327,6 +327,7 @@
     line-height: 24px;
     margin-left: 24px;
     min-width: 24px;
+    overflow: hidden;
 }
 .jstree-default .jstree-anchor {
     line-height: 24px;
@@ -458,7 +459,7 @@
     background-position: -100px -68px no-repeat;
 }
 .jstree-default .jstree-folder {
-    background-position:-260px -4px no-repeat;
+    background-position: -260px -4px no-repeat;
 }
 .jstree-default > .jstree-container-ul > .jstree-node {
     margin-left: 0;
@@ -491,6 +492,7 @@
     margin-top: -5px;
     padding: 1px 4px;
     height: 22px;
+    border: 1px solid #ddd;
 }
 .jstree-node .bootstrap-touchspin .input-group-btn i {
     font-size: 12px;

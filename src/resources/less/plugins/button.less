@@ -6,27 +6,9 @@ Buttons & Dropdown Buttons
     padding: 7px 18px;
     font-size: 14px;
     outline: none !important;
-    -webkit-box-shadow: none !important;
-    -moz-box-shadow: none !important;
     box-shadow: none !important;
-    -webkit-border-radius: 0 !important;
-    -moz-border-radius: 0 !important;
     border-radius: 0 !important;
     text-shadow: none;
-}
-/* fix jumping group buttons */
-.btn-group.btn-group-solid .btn + .btn,
-.btn-group.btn-group-solid .btn + .btn-group.btn-group-solid,
-.btn-group.btn-group-solid .btn-group.btn-group-solid + .btn,
-.btn-group.btn-group-solid .btn-group.btn-group-solid + .btn-group.btn-group-solid {
-    margin-left: 0;
-}
-.btn-group-vertical.btn-group-solid > .btn + .btn,
-.btn-group-vertical.btn-group-solid > .btn + .btn-group,
-.btn-group-vertical.btn-group-solid > .btn-group + .btn,
-.btn-group-vertical.btn-group-solid > .btn-group + .btn-group {
-    margin-top: 0;
-    margin-left: 0;
 }
 .btn-default {
     border-width: 1px;
@@ -248,12 +230,10 @@ Buttons & Dropdown Buttons
     border-width: 1px;
     font-size: 14px;
 }
-.btn[disabled] {
-    background: @B100 !important;
-}
 .btn-default {
-    border: 1px solid @B300;
+    border: 1px solid @B050;
     color: inherit;
+    background: @B050;
     &:hover,
     &.btn-default-hover {
         border-color: @B300;
@@ -266,6 +246,15 @@ Buttons & Dropdown Buttons
     &:focus {
         border-color: @B300;
         background: @B300;
+    }
+    i {
+        color: @B900;
+    }
+    &[disabled],
+    &.disabled {
+        border-color: @B100 !important;
+        background: @B100 !important;
+        color: @B500;
     }
 }
 .btn-link {
@@ -295,17 +284,12 @@ Buttons & Dropdown Buttons
         background: @H700;
         color: @B000;
     }
+    &[disabled],
     &.disabled {
         border-color: @H100 !important;
         background: @H100 !important;
         color: @B000;
     }
-}
-.btn-primary[disabled],
-.btn-ok[disabled] {
-    border-color: @H200 !important;
-    background: @H200 !important;
-    color: @B000;
 }
 .btn-select {
     &.open > .dropdown-menu {
@@ -405,17 +389,18 @@ Buttons & Dropdown Buttons
     display: none;
 }
 .btn-radio {
-    .btn-active {
+    .btn-active,
+    .btn:hover {
         border-color: @B300;
-        border-bottom: 2px solid @H700;
-        background: @B000;
+        border-bottom: 2px solid @H500;
+        background: @B300;
+        padding-bottom: 6px;
         color: @B900;
     }
     .btn:hover {
-        border-color: @B300;
-        border-bottom: 2px solid @H700;
-        background: @B000;
-        color: @B900;
+        border-color: @B100;
+        border-bottom: 2px solid @H200;
+        background: @B100;
     }
 }
 .btn-icon {
