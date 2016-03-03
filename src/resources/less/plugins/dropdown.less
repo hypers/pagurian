@@ -236,18 +236,14 @@ Dropdown Menu
     padding: 0;
     margin: 0;
     background-color: #fff;
-    -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    .box-shadow(0 1px 8px rgba(0, 0, 0, 0.1));
     font-size: 14px;
     border: 1px solid #ddd;
 }
 
 .header .dropdown-menu {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border: 1px solid @H500;
+    .box-shadow();
+    border: none;
     overflow: hidden;
 }
 
@@ -287,7 +283,7 @@ Dropdown Menu
         margin: 0;
         background-color: #fff;
         font-size: 14px;
-        border: 1px solid @H500;
+        .box-shadow();
         &.dropdown-level-first {
             left: 0;
             border-top: none;

@@ -397,8 +397,8 @@ Page breadcrumb
 }
 .page-container {
     min-width: @page-min-width;
-    overflow: hidden;
     zoom: 1;
+    margin-top: 50px;
 }
 .page-content-wrapper {
     position: relative !important;
@@ -426,11 +426,12 @@ Page breadcrumb
 }
 .page-sidebar-wrapper {
     width: 200px;
-    float: left;
-    position: absolute;
-    padding-bottom: 10000px;
-    margin-bottom: -10000px;
+    position: fixed;;
     background-color: @B050 !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    bottom: 0;
+    top: 50px;
 }
 .page-sidebar {
     width: 100% !important;

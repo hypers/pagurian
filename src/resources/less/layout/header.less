@@ -159,8 +159,9 @@ Language Bar
     min-height: 40px;
     line-height: 40px;
     background-color: @H500 !important;
-    position: relative;
+    position: fixed;
     min-width: @page-min-width;
+    .box-shadow();
     .header-inner {
         position: relative;
     }
@@ -274,6 +275,7 @@ Language Bar
     .nav {
         li {
             .dropdown-menu {
+                
                 min-width: inherit;
                 &:before {
                     border: 0;
