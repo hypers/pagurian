@@ -248,9 +248,6 @@ define(function(require, exports, module) {
             var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
             $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
         });
-
-
-
     };
 
     /**
@@ -343,40 +340,6 @@ define(function(require, exports, module) {
     };
 
 
-    /**
-     * 处理 Theme Settings
-     */
-    var doTheme = function() {
-
-        var panel = $('.theme-panel');
-
-        var setColor = function(color) {
-            $("#style_themes").attr("href", pagurian.path.app + "resources/css/themes-" + (color || "default") + ".css");
-            $.cookie('style_color', color);
-        };
-
-        $('.toggler', panel).click(function() {
-            $('.toggler').hide();
-            $('.toggler-close').show();
-            $('.theme-panel > .theme-options').show();
-        });
-
-        $('.toggler-close', panel).click(function() {
-            $('.toggler').show();
-            $('.toggler-close').hide();
-            $('.theme-panel > .theme-options').hide();
-        });
-
-        $('.theme-colors > ul > li', panel).click(function() {
-            var color = $(this).attr("data-style");
-            setColor(color);
-
-            $('ul > li', panel).removeClass("current");
-            $(this).addClass("current");
-        });
-
-    };
-
     var doHighlightCode = function() {
         if (!window.hljs) {
             return;
@@ -425,7 +388,6 @@ define(function(require, exports, module) {
             doTooltips();
             doPopovers();
             doTabs();
-            doTheme();
             doHighlightCode();
         },
 
@@ -436,7 +398,7 @@ define(function(require, exports, module) {
             callbackQueue.push(callback);
         },
         initDropdownMenu: function() {
-            var dropdown = new Dropdown("#dropdown_pro_menu");
+            var dropdown = new DropdownMenu("#dropdown_pro_menu");
             callbackQueue.push(function() {
                 dropdown.update();
             });
@@ -466,7 +428,7 @@ define(function(require, exports, module) {
         }
     };
 
-    function Dropdown(selector, options) {
+    function DropdownMenu(selector, options) {
 
         this.windowHeight = $(window).height();
         this.isExpandSubMenu = 0;
@@ -774,6 +736,5 @@ define(function(require, exports, module) {
 
         this.init();
     }
-
 
 });
