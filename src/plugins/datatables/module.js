@@ -45,6 +45,7 @@ define(function(require, exports, module) {
             "sPaginationType": "bootstrap_full_number",
             "bServerSide": true,
             "iDisplayLength": pagesize,
+            "sClass": "",
             "sDom": '<"top"><"table-scrollable"rt><"bottom"pli><"clear">',
             "oParamName": {
                 "sPage": "page",
@@ -425,8 +426,7 @@ define(function(require, exports, module) {
                 });
             }
 
-            $(selector).addClass("table-custom table  table-hover  " + options.sClass);
-
+            this.container.addClass("table table-hover table-custom " + this.options.sClass);
             this.table = oTable = $(selector).dataTable(this.options);
 
             if (that.bShowSummary) {
