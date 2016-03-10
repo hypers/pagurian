@@ -156,7 +156,7 @@ div.DTFC_LeftFootWrapper table {
 
 .dataTables_processing {
 	position: absolute;
-	top: 50%;
+	top: 0;
 	left: 50%;
 	width: 180px;
 	height: 40px;
@@ -165,4 +165,5 @@ div.DTFC_LeftFootWrapper table {
 	text-align: center;
 	color: #333;
 	font-size: 16px;
+    background: #ddd;
 }
