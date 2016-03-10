@@ -35,11 +35,15 @@ define(function(require, exports, module) {
                 return parent.load_node.apply(this, arguments);
             };
             this.trigger = function() {
+                
                 var action = arguments[0];
                 var spinnerOptions = options.numberSpinner || false;
 
                 if (action === "open_node" && spinnerOptions) {
-                    $p.numberSpinner($("#" + arguments[1].node.id + " .jstree-input"), $.extend({
+                    
+                    console.log(arguments[1].node.id);
+
+                    $p.numberSpinner($("#" + arguments[1].node.id + " .jstree-children .jstree-input"), $.extend({
                         verticalbuttons: false
                     }, spinnerOptions));
                 }

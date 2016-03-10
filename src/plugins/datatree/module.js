@@ -45,17 +45,21 @@ define(function(require, exports, module) {
          * 获取所有被选择的ID
          */
         this.getSelectedNodes = function() {
-            var nodes = $.jstree.reference(this.container).get_selected() || [];
+            var _temp_nodes = $.jstree.reference(this.container).get_selected() || [];
+            var nodes = [];
+            for (var i = 0; i < _temp_nodes.length; i++) {
+                nodes.push(_temp_nodes[i].split("-")[1]);
+            }
             return nodes;
         };
 
         this.getSelectedNodeValues = function() {
-            var nodes = this.getSelectedNodes(),
+            var _temp_nodes = $.jstree.reference(this.container).get_selected() || [],
                 $input, values = [];
-            for (var i = 0; i < nodes.length; i++) {
-                $input = this.container.find(".jstree-input[name='" + nodes[i] + "']");
+            for (var i = 0; i < _temp_nodes.length; i++) {
+                $input = this.container.find(".jstree-input[name='" + _temp_nodes[i] + "']");
                 values.push({
-                    name: nodes[i],
+                    name: _temp_nodes[i].split("-")[1],
                     value: $input.val()
                 });
             }
@@ -89,7 +93,6 @@ define(function(require, exports, module) {
         this.deselectAll = function() {
             $.jstree.reference(this.container).deselect_all();
         };
-
 
 
 

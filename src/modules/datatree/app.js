@@ -70,6 +70,7 @@ define(function(require, exports, module) {
                     decimals: 2,
                     min: -10,
                     max: 100,
+                    step: 0.1,
                     change: function(data, entity) {
                         console.log(data);
                     }
