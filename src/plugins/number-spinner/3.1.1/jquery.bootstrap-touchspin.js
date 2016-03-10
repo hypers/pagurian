@@ -551,8 +551,7 @@ define(function(require, exports, module) {
                     }
 
                     returnval = _forcestepdivisibility(returnval);
-
-                    if (Number(val).toString() !== returnval.toString()) {
+                    if (val !== returnval.toString()) {
                         originalinput.val(returnval);
                         originalinput.trigger('change');
                     }

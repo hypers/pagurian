@@ -18,6 +18,7 @@ define(function(require, exports, module) {
         };
 
         if ($.isFunction(options.change)) {
+            
             this.container.on("change", function(entity) {
                 var data = $(entity.target).val();
                 options.change(data, entity);
