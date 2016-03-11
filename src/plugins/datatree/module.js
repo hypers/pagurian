@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
     require('./3.2.1/themes/default/style.css');
     require('./3.2.1/jstree');
+    require('../number-spinner/module');
     var g = window;
 
 
