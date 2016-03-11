@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 
 
     function DataTree(selector, options) {
-
+        var _this = this;
         this.container = $(selector);
         this.container.jstree($.extend({
             initedCallback: function() {
@@ -16,6 +16,8 @@ define(function(require, exports, module) {
                         verticalbuttons: false
                     }, spinnerOptions));
                 }
+
+                options.onInited && options.onInited();
             }
         }, options));
 
@@ -37,7 +39,10 @@ define(function(require, exports, module) {
         //绑定Node Change事件
         this.container.on('changed.jstree', function(e, node) {
             if ($.isFunction(options.change)) {
-                options.change(e, node);
+                if (_this._disableOnTreeChange) return;
+                if (node.action === 'select_node' || node.action === 'deselect_node') {
+                    options.change(e, node);
+                }
             }
         });
 
@@ -53,6 +58,19 @@ define(function(require, exports, module) {
             }
             return nodes;
         };
+
+        this.setSelectedNodes = function (nodes) {
+            // 因为 jstree ™ 通过 API 改变选中状态，它仍然会触发change事件，这是不应该做的事情
+            this._disableOnTreeChange = true;
+            var tree = $.jstree.reference(this.container);
+            tree.deselect_all();
+            nodes.forEach(function (v) {
+                tree.select_node(v.id);
+            });
+            this._disableOnTreeChange = false;
+
+        };
+
 
         this.getSelectedNodeValues = function() {
             var _temp_nodes = $.jstree.reference(this.container).get_selected() || [],
