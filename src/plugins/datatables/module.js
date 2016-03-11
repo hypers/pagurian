@@ -14,12 +14,13 @@ define(function(require, exports, module) {
     require('./extend/functions');
     require('./extend/pagination');
     require('./extend/compatibility');
+    var seachbox = require('./extend/seachbox');
 
     function DataTables(selector, options) {
 
 
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
-        var that = this;
+        var self = this;
 
         this.id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         this.bLoadFinish = false;
@@ -130,7 +131,7 @@ define(function(require, exports, module) {
                         _options.callback(a);
                     }
 
-                    that.bLoadFinish = true;
+                    self.bLoadFinish = true;
                 }
             },
 
@@ -160,7 +161,7 @@ define(function(require, exports, module) {
 
             for (var i = 0; i < aoColumns.length; i++) {
 
-                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>" + that.options.sDefaultValue + "</p>";
+                var summary = "<p class='table-summary' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_" + aoColumns[i].mData + "'>" + self.options.sDefaultValue + "</p>";
                 var subtitle = "<p class='table-subtitle' data-field='" + aoColumns[i].mData + "' id='" + this.id + "_subtitle_" + aoColumns[i].mData + "'>" + aoColumns[i].sSubtitle + "</p>";
 
                 //表头副标题
@@ -179,12 +180,12 @@ define(function(require, exports, module) {
                     } else {
                         $(selector + " thead th:eq(" + i + ")").append(summary);
                     }
-                    that.bShowSummary = true;
+                    self.bShowSummary = true;
                 }
 
             }
 
-            if (that.bShowSummary) {
+            if (self.bShowSummary) {
                 $(selector + '_wrapper').addClass("table-summary-wrapper");
             }
         }
@@ -192,43 +193,43 @@ define(function(require, exports, module) {
         //处理搜索框
         function _initSearchBox() {
 
-            var searchId = that.options.oSearch.sInput;
-            var searchWord = that.options.oSearch.sParamName;
-            var searchInputPlaceholder = $(searchId).attr("placeholder");
+            var searchId = self.options.oSearch.sInput;
+            var searchWord = self.options.oSearch.sParamName;
+            var placeholder = $(searchId).attr("placeholder");
             var searchInitVal = $.trim($(searchId).val());
 
+            var filterParamName = self.options.oSearch.oFilter.sParamName;
+
+            if (!searchId) {
+                return;
+            }
+
             //如果搜索框中的值等于placeholder则关键词设为空
-            if (searchInitVal === searchInputPlaceholder) {
+            if (searchInitVal === placeholder) {
                 searchInitVal = "";
             }
-            that.aApiParams[searchWord] = searchInitVal;
+            self.aApiParams[searchWord] = searchInitVal;
 
-            $(searchId).prop("disabled", false);
-            $(searchId).keyup(function(e) {
-
-                var $input = $(this);
-
-                if ((e.which === 13 || that.bLoadFinish)) {
-                    setTimeout(function() {
-
-                        var word = $.trim($input.val());
-
-                        //如果搜索框中的值等于placeholder则关键词设为空
-                        if (word === searchInputPlaceholder) {
-                            word = "";
-                        }
-
-                        that.aApiParams[searchWord] = word;
-                        that.update();
-                        if (typeof that.options.oSearch.fnCallback === "function") {
-                            that.options.oSearch.fnCallback(word);
-                        }
-
-                    }, 500);
-                    that.bLoadFinish = false;
-                    return;
+            //创建一个搜索框
+            seachbox.create($.extend(self.options.oSearch, {
+                //过滤条件发生改变的时候触发
+                filterChange: function(value) {
+                    self.aApiParams[filterParamName] = value;
+                    self.update();
+                    if ($.isFunction(self.options.oSearch.oFilter.fnChange)) {
+                        self.options.oSearch.oFilter.fnChange(word);
+                    }
+                },
+                //输入关键字的时候触发
+                search: function(word) {
+                    self.aApiParams[searchWord] = word;
+                    self.update();
+                    if ($.isFunction(self.options.oSearch.fnCallback)) {
+                        self.options.oSearch.fnCallback(word);
+                    }
                 }
-            });
+            }));
+
         }
 
         //设置默认值
@@ -237,7 +238,7 @@ define(function(require, exports, module) {
             for (var i = 0; i < items.length; i++) {
                 for (var o in items[i]) {
                     if (!items[i][o] && items[i][o] !== 0) {
-                        items[i][o] = that.options.sDefaultValue;
+                        items[i][o] = self.options.sDefaultValue;
                     }
                 }
                 for (var j = 0; j < columns.length; j++) {
@@ -246,7 +247,7 @@ define(function(require, exports, module) {
                     }
                     //如果Table中的列在后端没有返回，则初始为"--"
                     if (items[i][columns[j].mData] === undefined) {
-                        items[i][columns[j].mData] = that.options.sDefaultValue;
+                        items[i][columns[j].mData] = self.options.sDefaultValue;
                     }
                 }
             }
@@ -259,12 +260,8 @@ define(function(require, exports, module) {
                 path: '/'
             });
         }
-        /**
-         * [_getApiParams description]
-         * @param  {[type]} aoData     [description]
-         * @param  {[type]} oSettings  [description]
-         * @return {[type]}            [description]
-         */
+
+        //获取所有的API参数
         function _getApiParams(aoData, oSettings) {
 
             var _options = oSettings.oInit;
@@ -325,18 +322,18 @@ define(function(require, exports, module) {
                 "value": length
             });
 
-            if (that.bShowSummary) {
+            if (self.bShowSummary) {
                 aApiParams.push({
                     "name": _options.oParamName.sSummary,
                     "value": true
                 });
             }
 
-            for (var key in that.aApiParams) {
-                if (that.aApiParams[key] !== "") {
+            for (var key in self.aApiParams) {
+                if (self.aApiParams[key] !== "") {
                     aApiParams.push({
                         name: key,
-                        value: that.aApiParams[key]
+                        value: self.aApiParams[key]
                     });
                 }
             }
@@ -417,7 +414,7 @@ define(function(require, exports, module) {
                     }
                 }
                 if ($p.tool.isNull(summary_value) || summary_value === undefined) {
-                    summary_value = that.options.sDefaultValue;
+                    summary_value = self.options.sDefaultValue;
                 }
                 $(this).html(summary_value);
             });
@@ -486,7 +483,7 @@ define(function(require, exports, module) {
 
         //清空表格数据
         this.clearTable = function() {
-            $(selector + " .table-summary").html(that.options.sDefaultValue);
+            $(selector + " .table-summary").html(self.options.sDefaultValue);
         };
 
         //销毁表格
