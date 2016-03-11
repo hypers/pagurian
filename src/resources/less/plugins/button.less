@@ -291,7 +291,8 @@ Buttons & Dropdown Buttons
         color: @B000;
     }
 }
-.btn-select {
+.btn-select,
+[data-type='select'] {
     &.open > .dropdown-menu {
         display: block;
     }
@@ -329,7 +330,10 @@ Buttons & Dropdown Buttons
     .dropdown-menu {
         min-width: inherit;
         overflow: hidden;
-        width: 100%;
+        width: auto !important;
+        li > a {
+            padding: 6px 30px 6px 18px;
+        }
     }
     .btn-default {
         min-width: 200px;
@@ -464,7 +468,6 @@ button {
     .dropdown-menu {
         min-width: inherit;
         overflow: hidden;
-        width: 100%;
     }
     .dropdown-toggle {
         min-width: 200px;
@@ -489,7 +492,6 @@ button {
         }
         .dropdown-menu {
             border-color: @B300;
-            top: 32px;
             min-height: 50px;
         }
         .dropdown-toggle {
