@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
     var added = require('../extend/plugin.added');
-
+    
     /*globals jQuery, define, module, exports, require, window, document, postMessage */
 
     /*!
@@ -471,7 +471,6 @@ define(function(require, exports, module) {
          * @trigger init.jstree, loading.jstree, loaded.jstree, ready.jstree, changed.jstree
          */
         init: function(el, options) {
-            this.identity = '_' + (Math.random() * 1E18).toString(36).slice(0, 8);
             this._model = {
                 data: {},
                 changed: [],
@@ -706,7 +705,28 @@ define(function(require, exports, module) {
                             e.preventDefault();
                             this.element.find('.jstree-anchor').filter(':visible').last().focus();
                             break;
-
+                            /*!
+                            // delete
+                            case 46:
+                            	e.preventDefault();
+                            	o = this.get_node(e.currentTarget);
+                            	if(o && o.id && o.id !== $.jstree.root) {
+                            		o = this.is_selected(o) ? this.get_selected() : o;
+                            		this.delete_node(o);
+                            	}
+                            	break;
+                            // f2
+                            case 113:
+                            	e.preventDefault();
+                            	o = this.get_node(e.currentTarget);
+                            	if(o && o.id && o.id !== $.jstree.root) {
+                            		// this.edit(o);
+                            	}
+                            	break;
+                            default:
+                            	// console.log(e.which);
+                            	break;
+                            */
                     }
                 }, this))
                 .on("load_node.jstree", $.proxy(function(e, data) {
@@ -976,8 +996,6 @@ define(function(require, exports, module) {
          * @return {Object|jQuery}
          */
         get_node: function(obj, as_dom) {
-
-
             if (obj && obj.id) {
                 obj = obj.id;
             }
@@ -998,7 +1016,6 @@ define(function(require, exports, module) {
                 }
 
                 if (as_dom) {
-
                     obj = obj.id === $.jstree.root ? this.element : $('#' + obj.id.replace($.jstree.idregex, '\\$&'), this.element);
                 }
                 return obj;
@@ -1581,9 +1598,6 @@ define(function(require, exports, module) {
          * @trigger model.jstree, changed.jstree
          */
         _append_json_data: function(dom, data, cb, force_processing) {
-
-            var identity = this.identity;
-
             if (this.element === null) {
                 return;
             }
@@ -1608,11 +1622,9 @@ define(function(require, exports, module) {
                     'm': this._model.data,
                     't_id': this._id,
                     't_cnt': this._cnt,
-                    'sel': this._data.core.selected,
-                    "identity": identity,
+                    'sel': this._data.core.selected
                 },
-                func = function(data, undefined, identity) {
-
+                func = function(data, undefined) {
                     if (data.data) {
                         data = data.data;
                     }
@@ -1628,7 +1640,6 @@ define(function(require, exports, module) {
                         p = m[par],
                         sel = data.sel,
                         tmp, i, j, rslt,
-                        identity = data.identity,
                         parse_flat = function(d, p, ps) {
                             if (!ps) {
                                 ps = [];
@@ -1726,7 +1737,6 @@ define(function(require, exports, module) {
                             return tmp.id;
                         },
                         parse_nest = function(d, p, ps) {
-
                             if (!ps) {
                                 ps = [];
                             } else {
@@ -1738,7 +1748,7 @@ define(function(require, exports, module) {
                             var tid = false,
                                 i, j, c, e, tmp;
                             do {
-                                tid = identity+'-j' + t_id + '_' + (++t_cnt);
+                                tid = 'j' + t_id + '_' + (++t_cnt);
                             } while (m[tid]);
 
                             tmp = {
@@ -1765,7 +1775,7 @@ define(function(require, exports, module) {
                                 }
                             }
                             if (d && d.id) {
-                                tmp.id = identity+"-"+d.id.toString();
+                                tmp.id = d.id.toString();
                             }
                             if (d && d.text) {
                                 tmp.text = d.text;
@@ -1965,7 +1975,7 @@ define(function(require, exports, module) {
                     if (this._wrk === null) {
                         this._wrk = window.URL.createObjectURL(
                             new window.Blob(
-                                ['self.onmessage = ' + func.toString()], {
+								['self.onmessage = ' + func.toString()], {
                                     type: "text/javascript"
                                 }
                             )
@@ -2584,7 +2594,6 @@ define(function(require, exports, module) {
             if (last_sibling === obj.id) {
                 c += ' jstree-last';
             }
-            //console.log(obj.id);
             node.id = obj.id;
             node.className = c;
             c = (obj.state.selected ? ' jstree-clicked' : '') + (obj.state.disabled ? ' jstree-disabled' : '');
@@ -6858,6 +6867,7 @@ define(function(require, exports, module) {
                             e.preventDefault();
                             break;
                         default:
+                            //console.log(e.which);
                             break;
                     }
                 })
@@ -8829,6 +8839,7 @@ define(function(require, exports, module) {
             });
         } catch (ignore) {}
     }
+
 
 
 
