@@ -40,9 +40,6 @@ define(function(require, exports, module) {
                 var spinnerOptions = options.numberSpinner || false;
 
                 if (action === "open_node" && spinnerOptions) {
-                    
-                    console.log(arguments[1].node.id);
-
                     $p.numberSpinner($("#" + arguments[1].node.id + " .jstree-children .jstree-input"), $.extend({
                         verticalbuttons: false
                     }, spinnerOptions));
