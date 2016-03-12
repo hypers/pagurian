@@ -131,6 +131,93 @@ define(function(require, exports, module) {
             var n = Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
             return this.toDecimal(n);
 
+        },
+        /**
+         * @author {@link https://github.com/jashkenas/underscore underscorejs}.
+         * @version 1.7.0
+         * @see {@link http://underscorejs.org/#throttle underscore.throttle(function, wait, [immediate])}
+         * @param func
+         * @param wait
+         * @param options
+         * @returns {throttled}
+         */
+        throttle: function(func, wait, options) {
+            var context, args, result;
+            var timeout = null;
+            var previous = 0;
+            var _now = Date.now || function() {
+                return new Date().getTime();
+            };
+            if (!options) options = {};
+            var later = function() {
+                previous = options.leading === false ? 0 : _now();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) context = args = null;
+            };
+            return function() {
+                var now = _now();
+                if (!previous && options.leading === false) previous = now;
+                var remaining = wait - (now - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                    }
+                    previous = now;
+                    result = func.apply(context, args);
+                    if (!timeout) context = args = null;
+                } else if (!timeout && options.trailing !== false) {
+                    timeout = setTimeout(later, remaining);
+                }
+                return result;
+            };
+        },
+
+        /**
+         * @author {@link https://github.com/jashkenas/underscore underscorejs}.
+         * @version 1.7.0
+         * @see {@link http://underscorejs.org/#debounce underscore.debounce(function, wait, [immediate])}
+         * @param func
+         * @param wait
+         * @param immediate
+         * @returns {*}
+         */
+        debounce: function(func, wait, immediate) {
+
+            var timeout, args, context, timestamp, result;
+
+            var _now = Date.now || function() {
+                return new Date().getTime();
+            };
+
+            var later = function() {
+                var last = _now() - timestamp;
+                if (last < wait && last >= 0) {
+                    timeout = setTimeout(later, wait - last);
+                } else {
+                    timeout = null;
+                    if (!immediate) {
+                        result = func.apply(context, args);
+                        if (!timeout) context = args = null;
+                    }
+                }
+            };
+            
+            return function() {
+                context = this;
+                args = arguments;
+                timestamp = _now();
+                var callNow = immediate && !timeout;
+                if (!timeout) timeout = setTimeout(later, wait);
+                if (callNow) {
+                    result = func.apply(context, args);
+                    context = args = null;
+                }
+                return result;
+            };
         }
     };
 

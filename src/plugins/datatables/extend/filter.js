@@ -1,15 +1,13 @@
 define(function(require, exports, module) {
+
     module.exports = {
         settings: {
             delay: 500,
         },
-        _resetTimer: function(timer) {
-            if (timer) clearTimeout(timer);
-        },
         _isEmpty: function() {
             var value = this.container.val();
             var placeholder = this.container.attr("placeholder");
-            if (value == placeholder) {
+            if (value === placeholder) {
                 return true;
             }
             if (!$.trim(value)) {
@@ -33,21 +31,14 @@ define(function(require, exports, module) {
         _search: function() {
             var self = this;
             var placeholder = self.container.attr("placeholder");
-            self.container.keyup(function(e) {
-                var $input = $(this);
-                if ($input.val() != this.previousValue) {
-                    self._resetTimer(this.timer);
-                    this.timer = setTimeout(function() {
-                        var word = $.trim($input.val());
-                        //如果搜索框中的值等于placeholder则关键词设为空
-                        if (word === placeholder) {
-                            word = "";
-                        }
-                        self.settings.search(word);
-                    }, self.settings.delay);
+            self.container.keyup($p.tool.debounce(function() {
+                var word = $.trim(self.container.val());
+                //如果搜索框中的值等于placeholder则关键词设为空
+                if (word === placeholder) {
+                    word = "";
                 }
-                this.previousValue = $input.val();
-            });
+                self.settings.search(word);
+            }, self.settings.delay));
         },
         create: function(options) {
             var self = this;
@@ -58,4 +49,5 @@ define(function(require, exports, module) {
             self._filter();
         }
     };
+
 });

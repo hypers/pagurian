@@ -14,7 +14,7 @@ define(function(require, exports, module) {
     require('./extend/functions');
     require('./extend/pagination');
     require('./extend/compatibility');
-    var seachbox = require('./extend/seachbox');
+    var filter = require('./extend/filter');
 
     function DataTables(selector, options) {
 
@@ -193,12 +193,13 @@ define(function(require, exports, module) {
         //处理搜索框
         function _initSearchBox() {
 
-            var searchId = self.options.oSearch.sInput;
-            var searchWord = self.options.oSearch.sParamName;
+            var oSearch = self.options.oSearch;
+            var searchId = oSearch.sInput;
+            var searchWord = oSearch.sParamName;
             var placeholder = $(searchId).attr("placeholder");
             var searchInitVal = $.trim($(searchId).val());
 
-            var filterParamName = self.options.oSearch.oFilter.sParamName;
+
 
             if (!searchId) {
                 return;
@@ -211,21 +212,22 @@ define(function(require, exports, module) {
             self.aApiParams[searchWord] = searchInitVal;
 
             //创建一个搜索框
-            seachbox.create($.extend(self.options.oSearch, {
+            filter.create($.extend(oSearch, {
                 //过滤条件发生改变的时候触发
                 filterChange: function(value) {
+                    var filterParamName = oSearch.oFilter.sParamName;
                     self.aApiParams[filterParamName] = value;
                     self.update();
-                    if ($.isFunction(self.options.oSearch.oFilter.fnChange)) {
-                        self.options.oSearch.oFilter.fnChange(word);
+                    if ($.isFunction(oSearch.oFilter.fnChange)) {
+                        oSearch.oFilter.fnChange(word);
                     }
                 },
                 //输入关键字的时候触发
                 search: function(word) {
                     self.aApiParams[searchWord] = word;
                     self.update();
-                    if ($.isFunction(self.options.oSearch.fnCallback)) {
-                        self.options.oSearch.fnCallback(word);
+                    if ($.isFunction(oSearch.fnCallback)) {
+                        oSearch.fnCallback(word);
                     }
                 }
             }));
