@@ -75,27 +75,17 @@ define(function(require, exports, module) {
         var resize;
         if (isIE8) {
             var currheight;
-            $(window).resize(function() {
+            $(window).resize($p.tool.debounce(function() {
                 if (currheight === document.documentElement.clientHeight) {
                     return; //quite event since only body resized not window.
                 }
-                if (resize) {
-                    clearTimeout(resize);
-                }
-                resize = setTimeout(function() {
-                    doResponsive();
-                }, 50); // wait 50ms until window resize finishes.
-                currheight = document.documentElement.clientHeight; // store last body client height
-            });
+                doResponsive();
+                currheight = document.documentElement.clientHeight;
+            }, 50));
         } else {
-            $(window).resize(function() {
-                if (resize) {
-                    clearTimeout(resize);
-                }
-                resize = setTimeout(function() {
-                    doResponsive();
-                }, 50); // wait 50ms until window resize finishes.
-            });
+            $(window).resize($p.tool.debounce(function() {
+                doResponsive();
+            }, 50));
         }
     };
 
