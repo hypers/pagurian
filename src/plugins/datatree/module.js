@@ -36,8 +36,9 @@ define(function(require, exports, module) {
                         verticalbuttons: false
                     }, spinnerOptions));
                 }
-
-                options.onInited && options.onInited();
+                if($.isFunction(options.onInited)){
+                    options.onInited();
+                }
             }
         }, options));
 
@@ -105,7 +106,7 @@ define(function(require, exports, module) {
                     _this.container.find('.jstree-input[name='+id+']').val(v[valueField] || defaultValue);
                 }
             });
-        }
+        };
 
 
         this.getSelectedNodeValues = function() {
@@ -179,7 +180,7 @@ define(function(require, exports, module) {
 
 
     function guid() {
-        return '_'+(Math.random()*10e8|0).toString(36) + (+ new Date).toString(36).slice(3);
+        return '_'+(Math.random()*10e8|0).toString(36) + (+ new Date()).toString(36).slice(3);
     }
 
 
