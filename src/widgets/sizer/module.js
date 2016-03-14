@@ -11,11 +11,11 @@ define(function (require, exports, module) {
 
     /**
      * [Sizer 筛选器类]
-     * @param {[string|jQuery]} selector [选择器]
+     * @param {[string|jQuery]} sizerBtnSelector [选择器]
      * @param {[array]} options [参数]
      * @param {string} chooseDatas [选中的选项]
      */
-    function Sizer(selector, options, chooseDatas) {
+    function Sizer(sizerBtnSelector, options, chooseDatas) {
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -34,11 +34,11 @@ define(function (require, exports, module) {
          * @private
          */
         var _isFirstClick = true;
-        var $selector = $(selector);
+        var $sizerBtn = $(sizerBtnSelector);
         var _oLanguage = $.extend(true, {}, oLanguage);
         _oLanguage.nameStr = _nameStr;
         _oLanguage.id = _id;
-        _oLanguage.promtText = $.trim($selector.text());
+        _oLanguage.promtText = $.trim($sizerBtn.text());
 
         //版本
         this.version = "2016.2.23.1359";
@@ -136,18 +136,18 @@ define(function (require, exports, module) {
                 '<a id="' + _nameStr + '_cleanAll' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>' :
                 '<a id="' + _nameStr + '_clean' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>';
             _oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
-            $selector.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
+            $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
             _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
-            $selector.wrap(_sizerWrap);
+            $sizerBtn.wrap(_sizerWrap);
             var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
             sizerSelectPanel.find(".sizer-btn-group").append(_topBtn);
             if (that.options.isMultiple) {
                 sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
             }
-            $selector.after(sizerSelectPanel.get(0).outerHTML);
+            $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
             $("#" + _nameStr + '_select_panel' + _id).css(that.options.position);
             if (that.container === null) {
-                that.container = $selector.parent(".sizer-wrap");
+                that.container = $sizerBtn.parent(".sizer-wrap");
             }
             uniForm();
         };
@@ -158,14 +158,14 @@ define(function (require, exports, module) {
          * @param options
          */
         var bindEvent = function () {
-            var $eventRegisterDom = $selector.parent().length > 0 ? $selector.parent() : $(document);
+            var $sizerWrapDom = $sizerBtn.parents('.sizer-wrap');
             var _isMultiple = that.options.isMultiple;
-            $selector.on('click', function () {
+            $sizerBtn.on('click', function () {
                 that.expandPanel();
             });
 
             //选项点击事件
-            $eventRegisterDom.on('click', ' .sizer-data-list-li [type]', function (event) {
+            $sizerWrapDom.find('.sizer-data-list').on('click', ' .sizer-data-list-li [type]', function (event) {
                 if (!_isCanTrigger()) {
                     return;
                 }
@@ -173,7 +173,9 @@ define(function (require, exports, module) {
                     $checkBox = $(this);
                 var _dataName = that.options.dataMapping.name,
                     _dataValue = that.options.dataMapping.value,
-                    _data = new SizerData($checkBox.data("key"), $checkBox.val());
+                    _data = {};
+                _data[_dataName] = $checkBox.data("key");
+                _data[_dataValue] = isNaN($checkBox.val()) ? $checkBox.val() : +$checkBox.val();
                 //单选
                 if (!that.options.isMultiple) {
                     singleSetText(_data[_dataName]);
@@ -203,7 +205,7 @@ define(function (require, exports, module) {
             });
 
             //清除选择
-            $eventRegisterDom.on('click', "#" + _nameStr + '_clean' + _id, function () {
+            $sizerWrapDom.on('click', "#" + _nameStr + '_clean' + _id, function () {
                 cleanOption(true);
                 if ($.isFunction(that.options.callbackClean)) {
                     that.options.callbackClean(that._tmpSelectDatas);
@@ -211,7 +213,7 @@ define(function (require, exports, module) {
             });
 
             //搜索框事件
-            $eventRegisterDom.on('keyup', "#" + _nameStr + '_search' + _id, function () {
+            $sizerWrapDom.on('keyup', "#" + _nameStr + '_search' + _id, function () {
                 if (_isFirstClick) {
                     _isFirstClick = false;
                     that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
@@ -234,7 +236,10 @@ define(function (require, exports, module) {
                     var $checkBoxes = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
                     $checkBoxes.each(function () {
                         var $o = $(this);
-                        _selects.push(new SizerData($o.data("key"), $o.val()));
+                        var _o = {};
+                        _o[that.options.dataMapping.name] = $o.data("key");
+                        _o[that.options.dataMapping.value] = $o.val();
+                        _selects.push(_o);
                     });
                     if (_isFirstClick) {
                         _isFirstClick = false;
@@ -265,17 +270,17 @@ define(function (require, exports, module) {
                 };
 
                 //全选
-                $eventRegisterDom.on('click', "#" + _nameStr + '_selectAll' + _id, function () {
+                $sizerWrapDom.on('click', "#" + _nameStr + '_selectAll' + _id, function () {
                     checkAll(true);
                 });
 
                 //清除选择
-                $eventRegisterDom.on('click', "#" + _nameStr + '_cleanAll' + _id, function () {
+                $sizerWrapDom.on('click', "#" + _nameStr + '_cleanAll' + _id, function () {
                     checkAll(false);
                 });
 
                 //确定
-                $eventRegisterDom.on('click', "#" + _nameStr + '_btnSubmit' + _id, function () {
+                $sizerWrapDom.on('click', "#" + _nameStr + '_btnSubmit' + _id, function () {
                     if (_isFirstClick) {
                         _isFirstClick = false;
                         that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
@@ -289,7 +294,10 @@ define(function (require, exports, module) {
                         var _key = that.selectDatas[_i][_keyName],
                             _value = that.selectDatas[_i][_valueName];
                         $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                        that._tmpSelectDatas.push(new SizerData(_key, _value));
+                        var _o = {};
+                        _o[that.options.dataMapping.name] = _key;
+                        _o[that.options.dataMapping.value] = _value;
+                        that._tmpSelectDatas.push(_o);
                     }
                     if ($.isFunction(that.options.callbackSubmit)) {
                         that.options.callbackSubmit(that.selectDatas, that.allDatas);
@@ -300,7 +308,7 @@ define(function (require, exports, module) {
                 });
 
                 //取消
-                $eventRegisterDom.on('click', "#" + _nameStr + '_btnCancel' + _id, function () {
+                $sizerWrapDom.on('click', "#" + _nameStr + '_btnCancel' + _id, function () {
                     that._tmpSelectDatas = [];
                     var _keyName = that.options.dataMapping.name,
                         _valueName = that.options.dataMapping.value;
@@ -309,7 +317,10 @@ define(function (require, exports, module) {
                         var _key = that.selectDatas[_i][_keyName],
                             _value = that.selectDatas[_i][_valueName];
                         $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                        that._tmpSelectDatas.push(new SizerData(_key, _value));
+                        var _o = {};
+                        _o[that.options.dataMapping.name] = _key;
+                        _o[that.options.dataMapping.val] = _value;
+                        that._tmpSelectDatas.push(_o);
                     }
                     if ($.isFunction(that.options.callbackCancel)) {
                         that.options.callbackCancel();
@@ -337,7 +348,10 @@ define(function (require, exports, module) {
                 var _key = that.selectDatas[_i][_keyName],
                     _value = that.selectDatas[_i][_valueName];
                 $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                that._tmpSelectDatas.push(new SizerData(_key, _value));
+                var _o = {};
+                _o[that.options.dataMapping.name] = _key;
+                _o[that.options.dataMapping.value] = _value;
+                that._tmpSelectDatas.push(_o);
             }
             searchData("");
             if (isCallBack && $.isFunction(that.options.callbackClose)) {
@@ -434,7 +448,7 @@ define(function (require, exports, module) {
             //打开面板时执行的方法
             $sizerWrap.addClass("sizer-open");
             if (that.needLoad) {
-                that.loadData();
+                that._loadData();
             }
             if ($.isFunction(that.options.callbackExpand)) {
                 that.options.callbackExpand(that.selectDatas);
@@ -444,8 +458,10 @@ define(function (require, exports, module) {
 
         /**
          * 载入数据
+         * @returns {Sizer}
+         * @private
          */
-        this.loadData = function () {
+        this._loadData = function () {
             var $listWrap = $("#" + _nameStr + "_listwrap" + _id);
             var _dataParams = that.options.dataParams;
             that.params = $.isFunction(_dataParams) ? _dataParams() : _dataParams;
@@ -478,6 +494,17 @@ define(function (require, exports, module) {
                     }
                 }
                 setData(_datas, _chooseDatas);
+                var _selectVals = [];
+                var _selectDatas = [];
+                _chooseDatas.forEach(function (data) {
+                    _selectVals.push(data[that.options.dataMapping.value]);
+                });
+                _datas.forEach(function (data) {
+                    if (_selectVals.indexOf(data[that.options.dataMapping.value]) > -1) {
+                        _selectDatas.push(data);
+                    }
+                });
+                that.selectDatas = _selectDatas;
                 that.needLoad = false;
                 if ($.isFunction(that.options.callbackLoadData)) {
                     that.options.callbackLoadData(that.selectDatas, that.allDatas);
@@ -553,12 +580,12 @@ define(function (require, exports, module) {
             //多选
             if (that.options.isMultiple) {
                 $("#" + that.sizerName).removeClass("sizer-open");
-                that.loadData();
+                that._loadData();
                 return this;
             }
             //单选
             singleSetText(_oLanguage.promtText);
-            that.loadData();
+            that._loadData();
             return this;
         };
 
@@ -686,22 +713,6 @@ define(function (require, exports, module) {
                 _attr.push(argument);
             }
             return _attr;
-        }
-
-        /**
-         * sizer数据对象
-         * @param name
-         * @param value
-         * @returns {{}}
-         * @constructor
-         */
-        function SizerData(name, value) {
-            this.name = name;
-            this.value = value;
-            var _o = {};
-            _o[that.options.dataMapping.name] = name;
-            _o[that.options.dataMapping.value] = value;
-            return _o;
         }
 
         /**
