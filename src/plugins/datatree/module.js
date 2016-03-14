@@ -179,8 +179,11 @@ define(function(require, exports, module) {
             if ($.isArray(data)) {
                 return data.map(convertId);
             }
+            if (typeof data==='string') {
+                data = {text:data};
+            }
             var d = $.extend({},data);
-            d.id = encodeId(d.id);
+            d.id = encodeId(typeof d.id === 'undefined' ? guid() : d.id);
             if (d.children) {
                 d.children = d.children.map(convertId);
             }
