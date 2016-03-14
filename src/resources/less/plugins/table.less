@@ -117,7 +117,7 @@ Datatables Plugin(in v1.3)
         }
         .open {
             .dropdown-toggle {
-                border-color: @B300 !important;
+                border-color: @B200 !important;
                 border-bottom: none !important;
                 padding-bottom: 8px;
                 background: @B000;
@@ -130,6 +130,9 @@ Datatables Plugin(in v1.3)
             background: none;
             &:hover {
                 background: @B100;
+            }
+            &:active {
+                background: @B200;
             }
         }
         .dataTables_info {
@@ -386,7 +389,7 @@ Bootstrap Tables
     }
     .open {
         .dropdown-toggle {
-            border-color: @B300 !important;
+            border-color: @B200 !important;
             border-bottom: none !important;
         }
         .btn-default:hover {
@@ -397,6 +400,9 @@ Bootstrap Tables
         background: none;
         &:hover {
             background: @B100;
+        }
+        &:active{
+            background: @B200;
         }
     }
     .right {
@@ -419,18 +425,18 @@ Bootstrap Tables
         margin: 0;
     }
     .btn-radio {
-        .btn-active,.btn:hover{
+        .btn-active{
             border-color: @B050;
             border-bottom: 2px solid @H700;
             padding-bottom: 6px;
             background: none;
             color: @B900;
         }
-        .btn-active {
-
-        }
         .btn:hover {
             background: @B100;
+        }
+        .btn:active {
+            background: @B200;
         }
     }
 }
