@@ -111,12 +111,12 @@ Sizer.update(params);</code></pre>
                         <td><mark>dataSource</mark></td>
                         <td>--</td>
                         <td>function</td>
-                        <td>一个方法，定义dataListview显示的数据源</td>
+                        <td>定义dataListview显示的数据源的方法</td>
                     </tr>
                     <tr>
                         <td><mark>dataParams</mark></td>
                         <td>--</td>
-                        <td>function</td>
+                        <td>object|function</td>
                         <td>设置自定义请求参数</td>
                     </tr>
                     <tr>
@@ -184,6 +184,12 @@ Sizer.update(params);</code></pre>
                         <td>function([<code>data</code>]){}</td>
                         <td>点击清除按钮时的回调<br/><code>data</code>:选择的数据</td>
                     </tr>
+                    <tr>
+                        <td><mark>[callbackLoadData]</mark></td>
+                        <td>--</td>
+                        <td>function([<code>data</code>,<code>data</code>]){}</td>
+                        <td>点击清除按钮时的回调<br/><code>data</code>:选择的数据</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -207,13 +213,13 @@ Sizer.update(params);</code></pre>
                         <td><mark>[callbackSelectAll]</mark></td>
                         <td>--</td>
                         <td>function([<code>data</code>]){}</td>
-                        <td>点击全选按钮时的回调<br/><code>data</code>:全部数据</td>
+                        <td>搜索框输入时的回调<br/><code>data</code>:符合搜索条件的数据</td>
                     </tr>
                     <tr>
                         <td><mark>[callbackSubmit]</mark></td>
                         <td>--</td>
-                        <td>function([<code>data</code>]){}</td>
-                        <td>点击全选按钮时的回调<br/><code>data</code>:全部数据</td>
+                        <td>function([<code>selectData</code>,<code>allData</code>]){}</td>
+                        <td>点击确定按钮时的回调<br/><code>selectData</code>:选中数据<br/><code>allData</code>:全部数据</td>
                     </tr>
                     <tr>
                         <td><mark>[callbackCancel]</mark></td>
@@ -285,7 +291,7 @@ Sizer.update(params);</code></pre>
 ...
 ]或者
 "all","null"</pre>
-                            如果<code>name</code>不为空则使用<code>name</code>的值覆盖原先按钮的提示问题
+                            如果<code>name</code>不为空则使用<code>name</code>的值覆盖原默认提示文字
                         </td>
                     </tr>
                     </tbody>
