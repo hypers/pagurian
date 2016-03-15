@@ -594,7 +594,7 @@ define(function (require, exports, module) {
          * @param eventName 事件名称
          * @param call 回调事件 如果没有 则为解绑
          */
-        this.manageEvent = function (eventName, call) {
+        this._manageEvent = function (eventName, call) {
             if (Object.prototype.toString.call(eventName) !== "[object String]") {
                 return;
             }
@@ -736,38 +736,40 @@ define(function (require, exports, module) {
 
         init();
 
-        return {
-            version: that.version,
-            options: that.options,
-            getOption: function () {
-                return that.options;
-            },
-            getAllDatas: function () {
-                return that.allDatas;
-            },
-            getSelectDatas: function () {
-                return that.selectDatas;
-            },
-            chooseData: function (data) {
-                that.chooseData(data);
-                return this;
-            },
-            on: function (eventName, call) {
-                that.manageEvent(eventName, call);
-                return this;
-            },
-            unBind: function (eventName) {
-                that.manageEvent(eventName);
-                return this;
-            },
-            //销毁
-            destroy: function () {
-                $('#' + that.sizerName).remove();
-            },
-            expandPanel: that.expandPanel,
-            update: that.update
-        };
     }
+
+    Sizer.prototype = {
+        constructor:Sizer,
+        //version: this.version,
+        //options: this.options,
+        getOption: function () {
+            return this.options;
+        },
+        getAllDatas: function () {
+            return this.allDatas;
+        },
+        getSelectDatas: function () {
+            return this.selectDatas;
+        },
+        chooseData: function (data) {
+            this.chooseData(data);
+            return this;
+        },
+        on: function (eventName, call) {
+            this._manageEvent(eventName, call);
+            return this;
+        },
+        unBind: function (eventName) {
+            this._manageEvent(eventName);
+            return this;
+        },
+        //销毁
+        destroy: function () {
+            $('#' + this.sizerName).remove();
+        }
+        //expandPanel: this.expandPanel,
+        //update: this.update
+    };
 
     /**
      * [Sizer 筛选器类]
