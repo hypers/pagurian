@@ -41,7 +41,7 @@ define(function (require, exports, module) {
         _oLanguage.promtText = $.trim($sizerBtn.text());
 
         //版本
-        this.version = "2016.2.23.1359";
+        this.version = "2016.03.15.1021";
         //id
         this.sizerName = _nameStr + _id;
         //提示文字
