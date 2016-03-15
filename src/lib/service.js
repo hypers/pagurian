@@ -19,11 +19,7 @@ define(function(require, exports, module) {
             $p.log("url is undefined");
             return false;
         }
-
-        if (!options.params) {
-            $p.log("params is undefined");
-            return false;
-        }
+        
         return true;
     }
 
