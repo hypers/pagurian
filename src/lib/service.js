@@ -16,7 +16,7 @@ define(function(require, exports, module) {
         }
 
         if (!options.url) {
-            $p.log("type is undefined");
+            $p.log("url is undefined");
             return false;
         }
 
@@ -40,18 +40,44 @@ define(function(require, exports, module) {
         }
         if (arguments.length === 3) {
             options.url = arguments[0];
-            options.params = arguments[1];
+            options.params = filterParams(arguments[1]);
             options.callback = arguments[2];
             return options;
         }
 
         options.type = arguments[0];
         options.url = arguments[1];
-        options.params = arguments[2];
+        options.params = filterParams(arguments[2]);
         options.callback = arguments[3];
 
 
         return options;
+    }
+
+    //过滤请求参数
+    function filterParams(params) {
+        var data = $.isArray(params) ? [] : {};
+
+        function push(key, value) {
+            if ($.isArray(data)) {
+                data.push({
+                    name: key,
+                    value: value
+                });
+                return data;
+            }
+            return (data[key] = value);
+        }
+
+        $.each(params, function(index, value) {
+            if ($.isPlainObject(value)) {
+                push(value.name, value.value);
+            } else if (!$.isFunction(value)) {
+                push(index, value);
+            }
+        });
+
+        return data;
     }
 
     /**
@@ -80,27 +106,6 @@ define(function(require, exports, module) {
         return params;
     }
 
-    /**
-     * 对参数值进行编码
-     * @param  {Object} params 编码前的对象
-     * @return {Object}        编码后的对象
-     */
-    function encodeValue(params) {
-
-        if ($.isPlainObject(params)) {
-            for (var key in params) {
-                params[key] = encodeURIComponent(params[key]);
-            }
-            return params;
-        }
-        if ($.isArray(params)) {
-            for (i = 0; i < params.length; i++) {
-                params[i].value = encodeURIComponent(params[i].value);
-            }
-        }
-        return params;
-    }
-
 
     /**
      * 请求数据
@@ -110,14 +115,15 @@ define(function(require, exports, module) {
         if (!validateRequest(options)) {
             return false;
         }
+        if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
 
-        if (!options.original) {
-            options.params = transport.toObject(options.params);
-        }
-
-        if (options.bundle && $.inArray(options.type, ["post", "put", "patch"]) > -1) {
-            options.contentType = "application/json";
-            options.params = transport.toJSON(options.params);
+            if (!options.original) {
+                options.params = transport.toObject(options.params);
+            }
+            if (options.bundle) {
+                options.contentType = "application/json";
+                options.params = transport.toJSON(options.params);
+            }
         }
 
         ajax.request(options, function(response) {
@@ -148,8 +154,8 @@ define(function(require, exports, module) {
                 value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5)
             });
 
-            //Encode 参数
-            encodeValue(options.params);
+            //Encode
+            options.params=$.param(params, true);
             options.type = "get";
             requestDate(options);
 
