@@ -5,10 +5,10 @@ define(function(require, exports, module) {
     var g = window;
 
     /**
-    @options onInited:Function
-    @options change:Function   当选择或取消选择时触发的事件回调
-    @options added.numberSpinner.change:Function(value:String,event,nodeId:String,tree:DataTree)
-    */
+     @options onInited:Function
+     @options change:Function   当选择或取消选择时触发的事件回调
+     @options added.numberSpinner.change:Function(value:String,event,nodeId:String,tree:DataTree)
+     */
     function DataTree(container, options) {
         var _this = this;
 
@@ -37,7 +37,9 @@ define(function(require, exports, module) {
                     }, spinnerOptions));
                 }
 
-                options.onInited && options.onInited();
+                if($.isFunction(options.onInited)){
+                    options.onInited();
+                }
             }
         }, options));
 
@@ -78,9 +80,9 @@ define(function(require, exports, module) {
         };
 
         /**
-        @param {[NodeID]}
-        type NodeID = IDString | {id:IDString}
-        */
+         @param {[NodeID]}
+             type NodeID = IDString | {id:IDString}
+         */
         this.setSelectedNodes = function (nodes) {
             // 因为 jstree ™ 通过 API 改变选中状态，它仍然会触发change事件，这是不应该做的事情
             this._disableOnTreeChange = true;
@@ -89,7 +91,7 @@ define(function(require, exports, module) {
             tree.deselect_all();
 
             var ids = nodes.map(function (v) {
-                return encodeId(typeof v==='object'?v.id:v)
+                return encodeId(typeof v==='object'?v.id:v);
             });
             tree.select_node(ids,true,true);
             setTimeout(function () { // must delay the close operation after select_node
@@ -129,7 +131,7 @@ define(function(require, exports, module) {
             },0);
 
             this._disableOnTreeChange = false;
-        }
+        };
 
 
         this.getSelectedNodeValues = function() {
@@ -206,7 +208,7 @@ define(function(require, exports, module) {
 
 
     function guid() {
-        return '_'+(Math.random()*10e8|0).toString(36) + (+ new Date).toString(36).slice(3);
+        return '_'+(Math.random()*10e8|0).toString(36) + (+ new Date()).toString(36).slice(3);
     }
 
 
