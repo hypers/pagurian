@@ -1,10 +1,13 @@
 define(function(require, exports, module) {
 
     function handleServerCheck(code) {
-
-        var postfix = ((code + "").match(/\.\d*/)[0] || "").substr(1);
+        var dot = (code + "").match(/\.\d*/);
+        var postfix = "error_200403";
+        if (dot) {
+            postfix += "_" + dot[0].substr(1);
+        }
         $p.alert($p.locale.handle_exception, "warning");
-        $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.api.urls[error + (postfix ? "_" + postfix : "")]);
+        $p.url.forward(CONFIG.ctxPath() + "/" + $p.lib.route[postfix]);
         return false;
     }
 
