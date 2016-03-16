@@ -312,10 +312,10 @@ Buttons & Dropdown Buttons
         margin: 0;
         background-color: @B000;
         font-size: 14px;
-        border: 1px solid @B500;
+        border: 1px solid @B200;
         width: 100%;
         overflow: auto;
-        top: 40px;
+        top: 34px;
         .dropdown-menu {
             display: block;
             position: relative;
@@ -352,17 +352,33 @@ Buttons & Dropdown Buttons
             line-height: normal !important;
         }
     }
-    &.open {
-        .btn {
-            background: @B000;
-            border-bottom: none;
-            z-index: 1001;
-        }
-        .dropdown-menu {
-            top: 35px;
-            min-height: 32px;
+    &.dropdown,&.btn-dropdown{
+        &.open {
+            .btn {
+                background: @B000;
+                border-bottom: none;
+                z-index: 1001;
+            }
+
+            .dropdown-menu {
+                top: 35px;
+                min-height: 32px;
+            }
         }
     }
+    &.dropup,&.btn-dropup{
+        &.open {
+            .btn {
+                background: @B000;
+                border-top: none;
+                z-index: 1001;
+            }
+            .dropdown-menu {
+                bottom: 36px;
+            }
+        }
+    }
+
     &.btn-select-sm {
         button {
             height: 30px;
@@ -459,6 +475,17 @@ button {
     padding: 4px 10px;
 }
 .input-group-btn {
+    border: 1px solid @B200;
+    &.open{
+        .dropdown-toggle{
+            border-color: @B000;
+            z-index: 1002;
+        }
+        .dropdown-menu{
+            left: -1px;
+            top: 33px;
+        }
+    }
     button,
     li a {
         font-size: 13px;
