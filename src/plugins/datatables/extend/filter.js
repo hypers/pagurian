@@ -21,17 +21,15 @@ define(function(require, exports, module) {
             }
             var self = this;
             var $filter = $(self.settings.oFilter.sButton);
-            $filter.find("a").click(function() {
+            $filter.find("a").unbind("click").click(function() {
                 var id = $(this).data("id");
-                if (!self._isEmpty()) {
-                    self.settings.filterChange(id);
-                }
+                self.settings.filterChange(id, self._isEmpty());
             });
         },
         _search: function() {
             var self = this;
             var placeholder = self.container.attr("placeholder");
-            self.container.keyup($p.tool.debounce(function() {
+            self.container.unbind("keyup").keyup($p.tool.debounce(function() {
                 var word = $.trim(self.container.val());
                 //如果搜索框中的值等于placeholder则关键词设为空
                 if (word === placeholder) {
