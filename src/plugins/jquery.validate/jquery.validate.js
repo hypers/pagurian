@@ -98,18 +98,18 @@ define(function(require, exports, module) {
             },
             // http://docs.jquery.com/Plugins/Validation/valid
             valid: function() {
-                this.find(".help-block").removeClass("tip");
+                var valid;
                 if ($(this[0]).is('form')) {
-                    return this.validate().form();
+                    valid = this.validate().form();
                 } else {
-                    var valid = true;
+                    valid = true;
                     var validator = $(this[0].form).validate();
                     this.each(function() {
                         valid &= validator.element(this);
                     });
-                    return valid;
                 }
-
+                this.find(".help-block").removeClass("tip");
+                return valid;
             },
             // attributes: space seperated list of attributes to retrieve and remove
             removeAttrs: function(attributes) {
@@ -441,7 +441,7 @@ define(function(require, exports, module) {
                 },
 
                 valid: function() {
-                    return this.size() === 0;
+                    return this.size() == 0;
                 },
 
                 size: function() {
@@ -451,10 +451,11 @@ define(function(require, exports, module) {
                 focusInvalid: function() {
                     if (this.settings.focusInvalid) {
                         try {
-                            $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []).
-                            filter(":visible").focus().trigger("focusout");
-                            // manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
-                            //.trigger("focusin");
+                            $(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
+                                .filter(":visible")
+                                //.focus()
+                                // manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+                                //.trigger("focusin");
                         } catch (e) {
                             // ignore IE throwing errors when focusing hidden elements
                         }
@@ -702,7 +703,6 @@ define(function(require, exports, module) {
                 },
 
                 idOrName: function(element) {
-                    return element.name || element.id;
                     return this.groups[element.name] || (this.checkable(element) ? element.name : element.id || element.name);
                 },
 
@@ -755,8 +755,7 @@ define(function(require, exports, module) {
 
                 optional: function(element) {
                     var value = $.trim(element.value);
-                    //bugfix:https://github.com/hypers/pagurian/issues/35
-                    $(".help-block[for='" + ($(element).attr("id") || element.name) + "']").removeClass("tip");
+
                     return !$.validator.methods.required.call(this, value, element) && "dependency-mismatch";
                 },
                 startRequest: function(element) {
