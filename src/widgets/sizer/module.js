@@ -17,6 +17,8 @@ define(function (require, exports, module) {
      * @param {string} chooseDatas [选中的选项]
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
+        //版本
+        var version = "2016.03.16.1603";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -41,12 +43,8 @@ define(function (require, exports, module) {
         _oLanguage.id = _id;
         _oLanguage.promtText = $.trim($sizerBtn.text());
 
-        //版本
-        this.version = "2016.03.16.1057";
         //id
         this.sizerName = _nameStr + _id;
-        //提示文字
-        this.promtText = "";
         //参数
         this.params = {};
         //全部可用数据
@@ -94,7 +92,7 @@ define(function (require, exports, module) {
             style: "", //筛选器自定义class
             processing: _oLanguage.processing, //loading默认文字
             search: _oLanguage.search, //搜索框默认文字
-            matchCase: true,
+            matchCase: true,//忽略大小写匹配
             callbackExpand: null, //面板展开时的回调
             callbackClose: null, //面板关闭时的回调
             callbackOption: null, //点击选项的回调
@@ -131,19 +129,27 @@ define(function (require, exports, module) {
 
         //绘制组件
         var drawDom = function () {
-            var _sizerWrap = '',
-                _topBtn = that.options.isMultiple ?
-                '<a id="' + _nameStr + '_selectAll' + _id + '" href="javascript:;">' + _oLanguage.chooseAll + '</a>' +
-                '<a id="' + _nameStr + '_cleanAll' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>' :
-                '<a id="' + _nameStr + '_clean' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>';
             _oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
-            $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
-            _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
-            $sizerBtn.wrap(_sizerWrap);
+
+            var $sizerWrap = $('<div class="sizer-wrap"></div>');
+            var $selectAll = $('<a></a>');
+            var $clearAll = $('<a></a>');
+            var $clearSingle = $('<a></a>');
             var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
-            sizerSelectPanel.find(".sizer-btn-group").append(_topBtn);
+
+            $sizerWrap.attr('id', that.sizerName).addClass(that.options.style);
+            $selectAll.prop('href', 'javascript:;').attr('id', _nameStr + '_selectAll' + _id).append(_oLanguage.chooseAll);
+            $clearAll.prop('href', 'javascript:;').attr('id', _nameStr + '_cleanAll' + _id).append(_oLanguage.clearSingle);
+            $clearSingle.prop('href', 'javascript:;').attr('id', _nameStr + '_clean' + _id).append(_oLanguage.clearSingle);
+            $sizerBtn.wrap($sizerWrap);
+
+            $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
+
             if (that.options.isMultiple) {
+                sizerSelectPanel.find(".sizer-btn-group").append($selectAll).append($clearAll);
                 sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
+            } else {
+                sizerSelectPanel.find(".sizer-btn-group").append($clearSingle);
             }
             $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
             $("#" + _nameStr + '_select_panel' + _id).css(that.options.position);
@@ -176,7 +182,8 @@ define(function (require, exports, module) {
                     _dataValue = that.options.dataMapping.value,
                     _data = {};
                 _data[_dataName] = $checkBox.data("key");
-                _data[_dataValue] = isNaN($checkBox.val()) ? $checkBox.val() : +$checkBox.val();
+                var _checkVal = $checkBox.val();
+                _data[_dataValue] = isNaN(_checkVal) ? _checkVal : +_checkVal;
                 //单选
                 if (!that.options.isMultiple) {
                     singleSetText(_data[_dataName]);
@@ -290,11 +297,14 @@ define(function (require, exports, module) {
                     that._tmpSelectDatas = [];
                     var _keyName = that.options.dataMapping.name,
                         _valueName = that.options.dataMapping.value;
-                    $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
+                    var $checkboxs = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
+                    $checkboxs.prop('checked', false);
                     for (var _i = 0; _i < that.selectDatas.length; _i++) {
                         var _key = that.selectDatas[_i][_keyName],
                             _value = that.selectDatas[_i][_valueName];
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
+                        $checkboxs.filter(function (index) {
+                            return "" + $checkboxs[index].value === "" + _value;
+                        }).prop('checked', 'checked');
                         var _o = {};
                         _o[that.options.dataMapping.name] = _key;
                         _o[that.options.dataMapping.value] = _value;
@@ -313,11 +323,14 @@ define(function (require, exports, module) {
                     that._tmpSelectDatas = [];
                     var _keyName = that.options.dataMapping.name,
                         _valueName = that.options.dataMapping.value;
-                    $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
+                    var $checkboxs = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
+                    $checkboxs.prop('checked', false);
                     for (var _i = 0; _i < that.selectDatas.length; _i++) {
                         var _key = that.selectDatas[_i][_keyName],
                             _value = that.selectDatas[_i][_valueName];
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
+                        $checkboxs.filter(function (index) {
+                            return "" + $checkboxs[index].value === "" + _value;
+                        }).prop('checked', 'checked');
                         var _o = {};
                         _o[that.options.dataMapping.name] = _key;
                         _o[that.options.dataMapping.val] = _value;
@@ -335,8 +348,9 @@ define(function (require, exports, module) {
 
         /**
          * 关闭面板
+         * @param excuteCallBack [boolean] 是否执行关闭面板回调
          */
-        var closePanel = function (isCallBack) {
+        var closePanel = function (excuteCallBack) {
             _isFirstClick = true;
             var $sizerWrap = $("#" + that.sizerName);
             $sizerWrap.removeClass("sizer-open");
@@ -344,18 +358,26 @@ define(function (require, exports, module) {
             that._tmpSelectDatas = [];
             var _keyName = that.options.dataMapping.name,
                 _valueName = that.options.dataMapping.value;
-            $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
+            var $checkboxs = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
+
+            $checkboxs.prop('checked', false);
+
             for (var _i = 0; _i < that.selectDatas.length; _i++) {
                 var _key = that.selectDatas[_i][_keyName],
                     _value = that.selectDatas[_i][_valueName];
-                $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
+
+                $checkboxs.filter(function (index) {
+                    return "" + $checkboxs[index].value === "" + _value;
+                }).prop('checked', 'checked');
+
                 var _o = {};
                 _o[that.options.dataMapping.name] = _key;
                 _o[that.options.dataMapping.value] = _value;
                 that._tmpSelectDatas.push(_o);
             }
+
             searchData("");
-            if (isCallBack && $.isFunction(that.options.callbackClose)) {
+            if (excuteCallBack && $.isFunction(that.options.callbackClose)) {
                 that.options.callbackClose(that.selectDatas, that.allDatas);
             }
         };
@@ -396,26 +418,30 @@ define(function (require, exports, module) {
             for (var i = 0, len = allDatas.length; i < len; i++) {
                 var _type = that.options.isMultiple ? "checkbox" : "radio";
                 var _dataKey = "" + allDatas[i][_keyName];
-                //对key值进行encode处理
-                var _encodeDataKey = $p.tool.encodeHtml(_dataKey);
                 var _dataValue = allDatas[i][_valueName];
 
-                var _tpl = '';
                 var _liCls = ((i + 1) % 2 === 0 ) ? 'mr-n' : '';
                 _liCls += i <= 1 ? ' mt-n' : '';
 
-                _tpl += '<li class="sizer-data-list-li ' + _liCls + '">';
-                _tpl += '<label title="' + _encodeDataKey + '"><input type="' + _type + '" value="' + _dataValue + '" data-key="' + _encodeDataKey + '"';
+                var $li = $('<li class="sizer-data-list-li "></li>');
+                var $label = $('<label></label>');
+                var $input = $('<input/>');
+
+                $li.addClass(_liCls);
+                $label.prop('title', _dataKey);
+                $input.prop('type', _type);
+                $input.val(_dataValue);
+                $input.attr('data-key', _dataKey);
                 if (chooseDatas) {
                     for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
                         if ("" + _dataValue === "" + chooseDatas[j][_valueName]) {
-                            _tpl += 'checked=checked ';
+                            $input.prop('checked', 'checked');
                         }
                     }
                 }
-                _tpl += '>' + _encodeDataKey + '</label></li>';
-
-                $dataList.append(_tpl);
+                $label.append($input).append(_dataKey);
+                $li.append($label);
+                $dataList.append($li);
             }
             uniForm();
         };
@@ -450,20 +476,29 @@ define(function (require, exports, module) {
             $('[id^="' + _nameStr + '"].sizer-wrap').removeClass("sizer-open");
             //判断是否展开如果展开则关闭
             if (_isExpand) {
-                //关闭面板时执行的方法
-                $sizerWrap.removeClass("sizer-open");
-                closePanel(true);
+                that.close();
                 return this;
             }
-            //打开面板时执行的方法
-            $sizerWrap.addClass("sizer-open");
-            if (that.needLoad) {
-                that._loadData();
-            }
+            that.open();
+            console.log(that._tmpSelectDatas);
             if ($.isFunction(that.options.callbackExpand)) {
                 that.options.callbackExpand(that.selectDatas);
             }
             return this;
+        };
+
+        //打开面板
+        this.open = function () {
+            $("#" + that.sizerName).addClass("sizer-open");
+            if (that.needLoad) {
+                that._loadData();
+            }
+        };
+
+        //关闭面板
+        this.close = function () {
+            $("#" + that.sizerName).removeClass("sizer-open");
+            closePanel(true);
         };
 
         /**
@@ -517,6 +552,7 @@ define(function (require, exports, module) {
                 });
                 that.selectDatas = _selectDatas;
                 that.needLoad = false;
+                
                 if ($.isFunction(that.options.callbackLoadData)) {
                     that.options.callbackLoadData(that.selectDatas, that.allDatas);
                 }
@@ -526,40 +562,65 @@ define(function (require, exports, module) {
 
         /**
          * 选中数据
-         * @param value {array|string|obj}
+         * @param values {array|string|obj}
          * array:[{name:"2.1.12.3",value:1},...]
          * obj:{name:"2.1.12.3",value:1},
          * string:"all"全选,"null"全不选
          */
-        this.chooseData = function (value) {
+        this.chooseData = function (values) {
             var $container = $('#' + that.sizerName),
                 _value;
+            var _type = that.options.isMultiple ? "checkbox" : "radio";
+
+            var $checkboxs = $('#' + that.sizerName + ' .sizer-data-list [type="' + _type + '"]');
+
             if (!that.options.isMultiple) {
-                $('#' + that.sizerName + ' .sizer-data-list [type="radio"]').prop("checked", false);
-                _value = $.isArray(value) ? value[0] : value;
-                $('#' + that.sizerName + ' .sizer-data-list [type="radio"][value="' + _value[that.options.dataMapping.value] + '"]').prop("checked", "checked").uniform();
+                $checkboxs.prop("checked", false);
+                _value = $.isArray(values) ? values[0] : values;
+
+                $checkboxs.filter(function (index) {
+                    return "" + $checkboxs[index].value === "" + _value[that.options.dataMapping.value];
+                }).prop("checked", "checked").uniform();
+
                 singleSetText(_value[that.options.dataMapping.name] || _oLanguage.promtText);
                 that._tmpSelectDatas = that.selectDatas = [_value];
                 return;
             }
-            if (value === "all") {
+
+            if (values === "all") {
                 $container.find('.sizer-data-list [type="checkbox"]').prop('checked', 'checked');
                 that.selectDatas = that._tmpSelectDatas = that.allDatas;
             }
 
-            if (value === "null") {
+            if (values === "null") {
                 $container.find('.sizer-data-list [type="checkbox"]').prop('checked', false);
                 that.selectDatas = that._tmpSelectDatas = [];
             }
 
-            if ($.isArray(value)) {
-                $container.find('.sizer-data-list [type="checkbox"]').prop('checked', false);
+            if ($.isArray(values)) {
+                $checkboxs.prop('checked', false).uniform();
                 var _valueStr = that.options.dataMapping.value,
                     _selectDatas = [];
+                var objAllData = {};
+                var _values = [];
 
-                for (var i = 0; i < value.length; i++) {
-                    _value = value[i];
-                    $('#' + that.sizerName + ' .sizer-data-list [type="checkbox"][value="' + _value[_valueStr] + '"]').prop("checked", "checked");
+                that.allDatas.forEach(function (data) {
+                    objAllData[data[_valueStr]] = true;
+                });
+
+                values.forEach(function (data) {
+                    if(objAllData[data[_valueStr]]){
+                       _values.push(data);
+                    }
+                });
+
+                for (var i = 0; i < _values.length; i++) {
+                    _value = _values[i];
+
+                    $checkboxs.filter(function (index) {
+                        return "" + $checkboxs[index].value === "" + _value[_valueStr];
+                    }).prop("checked", "checked").uniform();
+
                     _selectDatas.push(_getData(_value[_valueStr]));
                 }
                 that.selectDatas = that._tmpSelectDatas = _selectDatas;

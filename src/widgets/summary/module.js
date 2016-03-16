@@ -9,6 +9,7 @@ define(function (require, exports, module) {
             locale = {};
         locale.zh_CN = require('./locale/zh_CN');
         locale.en_US = require('./locale/en_US');
+        var settingPanel = require('./tpl/settingPanel.tpl');
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
         /**
@@ -253,34 +254,29 @@ define(function (require, exports, module) {
              * @param options
              */
             var drawDom = function () {
-                var _summaryPanelTpl = "",
-                    _settingPanelTpl = "",
+                var $summaryPanelTpl = $('<div class="summary-div-ul li"></div>'),
                     _classBorder = that.options.canChoose ? "border-bottom" : "";
-                _summaryPanelTpl += '<div id="' + getTagId("div_ul") + '" class="summary-div-ul li' + _showNum + ' ' + _classBorder + '">';
-                _summaryPanelTpl += '</div>';
+
+                $summaryPanelTpl.attr('id', getTagId("div_ul"));
+                $summaryPanelTpl.addClass(_showNum).addClass(_classBorder);
+
                 if (that.showSetting) {
-                    _settingPanelTpl += '<div id="' + getTagId("setting_wrap") + '" class="summary-setting-wrap">';
-                    _settingPanelTpl += '    <a id="' + getTagId("setting_icon") + '" class="summary-setting-icon" href="javascript:;"><i class="fa fa-cog "></i></a>';
-                    _settingPanelTpl += '    <div id="' + getTagId("setting_panel") + '" class="summary-setting-panel">';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-arrows"></div>';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-body">';
-                    _settingPanelTpl += '            <div class="summary-setting-panel-text">';
-                    _settingPanelTpl += '                <span>' + oLanguage.maxNum.replace("{0}", that.maxNum) + '</span>';
-                    _settingPanelTpl += '                <a class="summary-reset" href="javascript:;">' + oLanguage.resetDefault + '</a>';
-                    _settingPanelTpl += '            </div>';
-                    _settingPanelTpl += '            <ul id="' + getTagId("setting_ul") + '" class="summary-setting-ul">';
-                    _settingPanelTpl += '            </ul>';
-                    _settingPanelTpl += '        </div>';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-footer">';
-                    _settingPanelTpl += '            <button id="' + getTagId("btn_submit") + '" class="btn btn-primary" type="button">' + oLanguage.btnSubmit + '</button>';
-                    _settingPanelTpl += '            <button id="' + getTagId("btn_cancel") + '" class="btn btn-default" type="button">' + oLanguage.btnCancel + '</button>';
-                    _settingPanelTpl += '        </div>';
-                    _settingPanelTpl += '    </div>';
-                    _settingPanelTpl += '</div>';
+
+                    oLanguage.maxNum = oLanguage.maxNum.replace("{0}", that.maxNum);
+                    oLanguage.settingWrapId = getTagId("setting_wrap");
+                    oLanguage.settingIconId = getTagId("setting_icon");
+                    oLanguage.settingPannelId = getTagId("setting_panel");
+                    oLanguage.settingUlId = getTagId("setting_ul");
+                    oLanguage.btnSubmitId = getTagId("btn_submit");
+                    oLanguage.btnCancelId = getTagId("btn_cancel");
+
+                    settingPanel = $p.tpl(settingPanel, oLanguage);
                 }
 
-                $(selector).append(_summaryPanelTpl).append(_settingPanelTpl);
-
+                $(selector).append($summaryPanelTpl);
+                if(that.options.showSetting){
+                    $(selector).append(settingPanel);
+                }
                 drawInitDom();
                 drawData();
             };
@@ -319,7 +315,7 @@ define(function (require, exports, module) {
                         if ($.isFunction(that.options.callbackSubmit)) {
                             that.options.callbackSubmit(that.showColumns, that.allDatas);
                         }
-                        if(_needClick){
+                        if (_needClick) {
                             $('.jsSummary' + _id + '_content[data-name="' + that.chooseColumns + '"]').trigger('click');
                         }
                     });
@@ -447,21 +443,30 @@ define(function (require, exports, module) {
                     var _columnsName = that.showColumns[i];
                     var _columnsConfig = getColumnConfig(_columnsName);
                     var _clickStr = that.options.callBackPanel ? "canClick" : "";
-                    var _div_li_tpl = '';
-                    _div_li_tpl += '<div class="summary-div-li">';
-                    _div_li_tpl += '    <ul data-name="' + _columnsConfig.cName + '" class="jsSummary' + _id + '_content ' + _clickStr + '">';
+
+                    var $div_li = $('<div class="summary-div-li"></div>');
+                    var $div_li_ul = $('<ul></ul>');
+                    var $triangle = $('<div class="summary-triangle"></div>');
+
+                    $div_li_ul.attr('data-name', _columnsConfig.cName);
+                    $div_li_ul.addClass('jsSummary' + _id + '_content ' + _clickStr);
                     for (var k = 0; k < _allRows.length; k++) {
                         var _class = _allRows[k].klass ? _allRows[k].klass : "",
                             _text = _allRows[k].tpl ? _allRows[k].tpl.replace("{0}", "--") : "--";
                         _text = _allRows[k].isTitle ? _columnsConfig.title : _text;
-                        _div_li_tpl += ' <li class="' + _class + '" data-name="' + _allRows[k].dataName + '">' + _text + '</li>';
+                        var $li = $('<li></li>');
+                        $li.addClass(_class);
+                        $li.attr('data-name', _allRows[k].dataName);
+                        $li.append(_text);
+                        $div_li_ul.append($li);
                     }
-                    _div_li_tpl += '    </ul>';
+                    $div_li.append($div_li_ul);
                     if (that.canChoose) {
-                        _div_li_tpl += '<div class="summary-triangle"></div>';
+                        $div_li.append('<div class="summary-triangle"></div>');
                     }
-                    _div_li_tpl += '</div>';
-                    obj.append(_div_li_tpl);
+
+
+                    obj.append($div_li);
                 }
                 if (that.canChoose) {
                     var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + that.chooseColumns + '"]');
