@@ -214,12 +214,14 @@ define(function(require, exports, module) {
             //创建一个搜索框
             filter.create($.extend(oSearch, {
                 //过滤条件发生改变的时候触发
-                filterChange: function(value) {
+                filterChange: function(value, isEmpty) {
                     var filterParamName = oSearch.oFilter.sParamName;
                     self.aApiParams[filterParamName] = value;
-                    self.update();
+                    if (!isEmpty) {
+                        self.update();
+                    }
                     if ($.isFunction(oSearch.oFilter.fnChange)) {
-                        oSearch.oFilter.fnChange(word);
+                        oSearch.oFilter.fnChange(value);
                     }
                 },
                 //输入关键字的时候触发
