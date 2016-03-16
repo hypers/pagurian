@@ -193,26 +193,33 @@ define(function (require, exports, module) {
 
                 //选项中展示的列
                 var _arrOptionShowColumns = [];
-                var _objOptionShowColumns = {};
-                for (i = 0; i < that.maxNum; i++) {
+                //标识全部列
+                var _objAllColumns = {};
+                //标识展示的列
+                var _objShowColumns = {};
+                for (i = 0; i < _allColumns.length; i++) {
                     var _columnsName = _allColumns[i][that.options.cName];
-                    _arrOptionShowColumns.push(_columnsName);
-                    _objOptionShowColumns[_columnsName] = true;
+                    _objAllColumns[_columnsName] = true;
+                    if (i < that.maxNum) {
+                        _arrOptionShowColumns.push(_columnsName);
+                    }
                 }
                 //cookie中展示的列
                 var cookieShowColumns = params.get(_cookieName);
-                var _arrCookieShowColumns = cookieChooseColumns ? cookieShowColumns.split(",") : [];
+                var _arrCookieShowColumns = cookieShowColumns ? cookieShowColumns.split(",") : [];
                 //如果cookie中储存的展示列为0 或者 储存的展示列与配置项不一致则使用配置项中的展示列
                 that.showColumns = (_arrCookieShowColumns.length === 0 || !_columnsValidate(_arrCookieShowColumns)) ? _arrOptionShowColumns : _arrCookieShowColumns;
                 params.set(_cookieName, that.showColumns.join(","));
-
+                that.showColumns.forEach(function (showColumn) {
+                    _objShowColumns[showColumn] = true;
+                });
                 //cookie中选中的列
 
                 //如果可以切换则设置已选择的列
                 if (that.canChoose) {
                     var cookieChooseColumns = params.get(_cookieName + ".chooseColumns");
                     //如果cookie不存在 或者 cookie中所存的展示字段不存在 则默认选中第一列
-                    if (!cookieChooseColumns || !_objOptionShowColumns[cookieChooseColumns]) {
+                    if (!cookieChooseColumns || !_objShowColumns[cookieChooseColumns]) {
                         that.chooseColumns = that.showColumns[0];
                     } else {
                         that.chooseColumns = cookieChooseColumns;
@@ -225,14 +232,14 @@ define(function (require, exports, module) {
 
 
                 /**
-                 *
+                 * 校验列明是否在配置中
                  * @param colunms
                  * @returns {boolean}
                  * @private
                  */
                 function _columnsValidate(colunms) {
                     for (var _i = 0; _i < colunms.length; _i++) {
-                        if (!_objOptionShowColumns[colunms[_i]]) {
+                        if (!_objAllColumns[colunms[_i]]) {
                             return false;
                         }
                     }
@@ -296,14 +303,24 @@ define(function (require, exports, module) {
                      * setting submit按钮
                      */
                     $(selector).on('click', " #" + getTagId("btn_submit"), function () {
+                        var _needClick = false;
                         expandSettingPanel();
                         that.showColumns = that._showColumns;
                         params.set(_cookieName, that.showColumns.join(","));
+                        if (that.canChoose && that.showColumns.indexOf(that.chooseColumns) < 0) {
+                            _needClick = true;
+                            var _chooseColumns = that.showColumns[0];
+                            that.chooseColumns = _chooseColumns;
+                            params.set(_cookieName + ".chooseColumns", _chooseColumns);
+                        }
                         drawPanel($div_ul);
                         setData(that.allDatas);
                         adjustHeight();
                         if ($.isFunction(that.options.callbackSubmit)) {
                             that.options.callbackSubmit(that.showColumns, that.allDatas);
+                        }
+                        if(_needClick){
+                            $('.jsSummary' + _id + '_content[data-name="' + that.chooseColumns + '"]').trigger('click');
                         }
                     });
 
@@ -451,8 +468,6 @@ define(function (require, exports, module) {
                     $chooseColumns.parent().addClass("choose");
                 }
                 adjustHeight();
-
-
             }
 
             /**
