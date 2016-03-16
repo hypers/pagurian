@@ -92,43 +92,15 @@ define(function(require, exports, module) {
     /**
      * 设置适当的高度，侧边栏和内容。内容和侧边栏的高度必须始终同步。
      */
-    var doSidebarAndContentHeight = function() {
-        var content = $('.page-content');
-        var sidebar = $('.page-sidebar');
-        var sidebarMenu = $('.page-sidebar-menu');
-        var container = $('.page-container');
-        var body = $('body');
-        var height;
-        var available_height;
-        var side_height;
+     var doSidebarAndContentHeight = function() {
+         var container = $('.page-container');
 
-        if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
-            available_height = $(window).height() - $('.footer').outerHeight();
-            if (content.height() < available_height) {
-                content.css("min-height", available_height + 'px');
-            }
-        } else {
-
-            if ($('.footer').hasClass("fixed")) {
-                $('.footer').removeClass("fixed");
-            }
-            if (body.hasClass('page-sidebar-fixed')) {
-                height = _calculateFixedSidebarViewportHeight();
-            } else {
-                available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
-                side_height = sidebarMenu.height();
-                if (content.height() < available_height) {
-                    if (available_height < side_height) {
-                        available_height = side_height;
-                    }
-                    container.css("min-height", available_height + 'px');
-                }
-
-            }
-
-
-        }
-    };
+         if ($('.footer').hasClass("fixed")) {
+             $('.footer').removeClass("fixed");
+         }
+         var available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
+         container.css("min-height", available_height + 'px');
+     };
 
     /**
      * 设置Modal的滚动高度
