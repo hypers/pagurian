@@ -1,6 +1,7 @@
 /**
- * Created by hypers-godfery on 2015/10/14.
- * Update by hypers-godfery on 2016/1/27 重构组件
+ * Created by hypers-YangGuo on 2015/10/14.
+ * Update by hypers-YangGuo on 2016/1/27 重构组件
+ * Updata by hypers-YangGuo on 2016/3/16 bugfix
  */
 define(function (require, exports, module) {
     var g = window,
@@ -41,7 +42,7 @@ define(function (require, exports, module) {
         _oLanguage.promtText = $.trim($sizerBtn.text());
 
         //版本
-        this.version = "2016.03.15.1021";
+        this.version = "2016.03.16.1057";
         //id
         this.sizerName = _nameStr + _id;
         //提示文字
@@ -376,9 +377,11 @@ define(function (require, exports, module) {
          */
         var setData = function (allDatas, chooseDatas) {
             var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
-            var $dataListWrap = $dataList.parents('.sizer-list-wrap');
+            var _valueName = that.options.dataMapping.value;
+            var _keyName = that.options.dataMapping.name;
 
             //暂时不在搜索的时候处理滚动条
+            //var $dataListWrap = $dataList.parents('.sizer-list-wrap');
             //if (allDatas.length >= MAX_SHOW_SCROLL_LENGTH) {
             //    $dataListWrap.addClass('scollbar');
             //} else {
@@ -392,19 +395,26 @@ define(function (require, exports, module) {
             }
             for (var i = 0, len = allDatas.length; i < len; i++) {
                 var _type = that.options.isMultiple ? "checkbox" : "radio";
+                var _dataKey = "" + allDatas[i][_keyName];
+                //对key值进行encode处理
+                var _encodeDataKey = $p.tool.encodeHtml(_dataKey);
+                var _dataValue = allDatas[i][_valueName];
+
                 var _tpl = '';
                 var _liCls = ((i + 1) % 2 === 0 ) ? 'mr-n' : '';
                 _liCls += i <= 1 ? ' mt-n' : '';
+
                 _tpl += '<li class="sizer-data-list-li ' + _liCls + '">';
-                _tpl += '<label title="' + allDatas[i][that.options.dataMapping.name] + '"><input type="' + _type + '" value="' + allDatas[i][that.options.dataMapping.value] + '" data-key="' + allDatas[i][that.options.dataMapping.name] + '"';
+                _tpl += '<label title="' + _encodeDataKey + '"><input type="' + _type + '" value="' + _dataValue + '" data-key="' + _encodeDataKey + '"';
                 if (chooseDatas) {
                     for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
-                        if ("" + allDatas[i][that.options.dataMapping.value] === "" + chooseDatas[j][that.options.dataMapping.value]) {
+                        if ("" + _dataValue === "" + chooseDatas[j][_valueName]) {
                             _tpl += 'checked=checked ';
                         }
                     }
                 }
-                _tpl += '>' + allDatas[i][that.options.dataMapping.name] + '</label></li>';
+                _tpl += '>' + _encodeDataKey + '</label></li>';
+
                 $dataList.append(_tpl);
             }
             uniForm();
@@ -474,6 +484,7 @@ define(function (require, exports, module) {
                 if (_datas.length >= MAX_SHOW_SCROLL_LENGTH) {
                     $listWrap.addClass("scollbar");
                 }
+
                 that.allDatas = _datas;
                 var _chooseDatas = [];
                 if (that.options.isMultiple) {
@@ -594,9 +605,9 @@ define(function (require, exports, module) {
          * @param eventName 事件名称
          * @param call 回调事件 如果没有 则为解绑
          */
-        this.manageEvent = function (eventName, call) {
+        this._manageEvent = function (eventName, call) {
             if (Object.prototype.toString.call(eventName) !== "[object String]") {
-                return;
+                throw "manageEvent exception: type of eventName error";
             }
             var _eventName = 'callback' + eventName.split("")[0].toUpperCase() + eventName.substr(1, eventName.length - 1);
             if (arguments.length === 1) {
@@ -736,38 +747,40 @@ define(function (require, exports, module) {
 
         init();
 
-        return {
-            version: that.version,
-            options: that.options,
-            getOption: function () {
-                return that.options;
-            },
-            getAllDatas: function () {
-                return that.allDatas;
-            },
-            getSelectDatas: function () {
-                return that.selectDatas;
-            },
-            chooseData: function (data) {
-                that.chooseData(data);
-                return this;
-            },
-            on: function (eventName, call) {
-                that.manageEvent(eventName, call);
-                return this;
-            },
-            unBind: function (eventName) {
-                that.manageEvent(eventName);
-                return this;
-            },
-            //销毁
-            destroy: function () {
-                $('#' + that.sizerName).remove();
-            },
-            expandPanel: that.expandPanel,
-            update: that.update
-        };
     }
+
+    Sizer.prototype = {
+        constructor: Sizer,
+        //version: this.version,
+        //options: this.options,
+        getOption: function () {
+            return this.options;
+        },
+        getAllDatas: function () {
+            return this.allDatas;
+        },
+        getSelectDatas: function () {
+            return this.selectDatas;
+        },
+        chooseData: function (data) {
+            this.chooseData(data);
+            return this;
+        },
+        on: function (eventName, call) {
+            this._manageEvent(eventName, call);
+            return this;
+        },
+        unBind: function (eventName) {
+            this._manageEvent(eventName);
+            return this;
+        },
+        //销毁
+        destroy: function () {
+            $('#' + this.sizerName).remove();
+        }
+        //expandPanel: this.expandPanel,
+        //update: this.update
+    };
 
     /**
      * [Sizer 筛选器类]
