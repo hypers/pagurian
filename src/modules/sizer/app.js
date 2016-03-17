@@ -93,14 +93,59 @@ define(function (require, exports, module) {
                 console.log(allData);
             }
         };
-        var sizer = $p.sizer($("#sizer-multiple"), options, selectDatas);
-        var sizer2 = $p.sizer($("#sizer2"), options, selectDatas);
+        var sizer = $p.sizer($("#sizer-multiple"), options);
         //使用on绑定事件
         sizer.on("option", function (data, status) {
             console.log(data, status);
         });
 
+        sizer.chooseData(selectDatas);
         window.s = sizer;
+
+        function cycleData() {
+            var i = cycleData._i % 2;
+            cycleData._i++;
+
+            var data1 = [
+                {id:1,name:"A"},
+                {id:2,name:"B"},
+            ];
+            var data2 = [
+                {id:1,name:"C"},
+                {id:2,name:"D"},
+                {id:3,name:"E"}
+            ];
+
+            var data =[data1,data2];
+            return data[i];
+        }
+
+        cycleData._i = 0;
+
+        var BTN = '<button type="button" class="btn btn-default sizer-btn w120">选择</button>';
+
+        var btn = $(BTN);
+        var div = $(document.createElement('div'));
+        div.css({width:180,height:40,border:"2px ridge blue"})
+        div.append(btn);
+        $('.portlet.box.default.sizer-demo-wrap-mul').prepend(div);
+        var sizer2 = $p.sizer(btn, {
+            isMultiple: true,
+            dataSource: function (_,callback) {
+                callback({
+                    result: {items:cycleData()}
+                });
+            },
+            callbackSubmit:function () {
+                console.log(sizer2.getSelectDatas());
+                setTimeout(function () {
+                    sizer2.update();
+                },0);
+            }
+        });
+
+        sizer2.update();
+        sizer2.chooseData([{id:1}]);
     };
 
     /**

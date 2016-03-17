@@ -18,7 +18,7 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          */
         function Summary(selector, options) {
-            var that = this;
+            var _this = this;
             //前缀名
             var _nameStr = options.name ? options.name : "summary";
             //随机id
@@ -176,21 +176,21 @@ define(function (require, exports, module) {
              * 初始化组件
              */
             var init = function () {
-                that.options = $.extend(true, {}, that.options, options);
+                _this.options = $.extend(true, {}, _this.options, options);
 
-                _allColumns = $.isArray(that.options.allColumns) ? that.options.allColumns : [];
-                _allRows = that.options.allRows;
-                that.maxNum = that.options.maxNum ? that.options.maxNum : _allColumns.length;
-                that.minNum = that.options.minNum ? that.options.minNum : MIN_COLUMN_NUM;
-                that.canChoose = that.options.canChoose;
-                that.showSetting = that.options.showSetting;
+                _allColumns = $.isArray(_this.options.allColumns) ? _this.options.allColumns : [];
+                _allRows = _this.options.allRows;
+                _this.maxNum = _this.options.maxNum ? _this.options.maxNum : _allColumns.length;
+                _this.minNum = _this.options.minNum ? _this.options.minNum : MIN_COLUMN_NUM;
+                _this.canChoose = _this.options.canChoose;
+                _this.showSetting = _this.options.showSetting;
                 //判断并设置最大展示数和展示数
-                that.maxNum = that.maxNum <= _allColumns.length ? that.maxNum : _allColumns.length;
-                if (that.maxNum > _allColumns.length) {
+                _this.maxNum = _this.maxNum <= _allColumns.length ? _this.maxNum : _allColumns.length;
+                if (_this.maxNum > _allColumns.length) {
                     _showNum = _allColumns.length;
                 }
                 //设置展示的列
-                _cookieName = _nameStr + '.' + that.selectorStr;
+                _cookieName = _nameStr + '.' + _this.selectorStr;
 
                 //选项中展示的列
                 var _arrOptionShowColumns = [];
@@ -199,9 +199,9 @@ define(function (require, exports, module) {
                 //标识展示的列
                 var _objShowColumns = {};
                 for (i = 0; i < _allColumns.length; i++) {
-                    var _columnsName = _allColumns[i][that.options.cName];
+                    var _columnsName = _allColumns[i][_this.options.cName];
                     _objAllColumns[_columnsName] = true;
-                    if (i < that.maxNum) {
+                    if (i < _this.maxNum) {
                         _arrOptionShowColumns.push(_columnsName);
                     }
                 }
@@ -209,23 +209,23 @@ define(function (require, exports, module) {
                 var cookieShowColumns = params.get(_cookieName);
                 var _arrCookieShowColumns = cookieShowColumns ? cookieShowColumns.split(",") : [];
                 //如果cookie中储存的展示列为0 或者 储存的展示列与配置项不一致则使用配置项中的展示列
-                that.showColumns = (_arrCookieShowColumns.length === 0 || !_columnsValidate(_arrCookieShowColumns)) ? _arrOptionShowColumns : _arrCookieShowColumns;
-                params.set(_cookieName, that.showColumns.join(","));
-                that.showColumns.forEach(function (showColumn) {
+                _this.showColumns = (_arrCookieShowColumns.length === 0 || !_columnsValidate(_arrCookieShowColumns)) ? _arrOptionShowColumns : _arrCookieShowColumns;
+                params.set(_cookieName, _this.showColumns.join(","));
+                _this.showColumns.forEach(function (showColumn) {
                     _objShowColumns[showColumn] = true;
                 });
                 //cookie中选中的列
 
                 //如果可以切换则设置已选择的列
-                if (that.canChoose) {
+                if (_this.canChoose) {
                     var cookieChooseColumns = params.get(_cookieName + ".chooseColumns");
                     //如果cookie不存在 或者 cookie中所存的展示字段不存在 则默认选中第一列
                     if (!cookieChooseColumns || !_objShowColumns[cookieChooseColumns]) {
-                        that.chooseColumns = that.showColumns[0];
+                        _this.chooseColumns = _this.showColumns[0];
                     } else {
-                        that.chooseColumns = cookieChooseColumns;
+                        _this.chooseColumns = cookieChooseColumns;
                     }
-                    params.set(_cookieName + ".chooseColumns", that.chooseColumns);
+                    params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
                 }
 
                 bindEvent();
@@ -255,14 +255,14 @@ define(function (require, exports, module) {
              */
             var drawDom = function () {
                 var $summaryPanelTpl = $('<div class="summary-div-ul li"></div>'),
-                    _classBorder = that.options.canChoose ? "border-bottom" : "";
+                    _classBorder = _this.options.canChoose ? "border-bottom" : "";
 
                 $summaryPanelTpl.attr('id', getTagId("div_ul"));
                 $summaryPanelTpl.addClass(_showNum).addClass(_classBorder);
 
-                if (that.showSetting) {
+                if (_this.showSetting) {
 
-                    oLanguage.maxNum = oLanguage.maxNum.replace("{0}", that.maxNum);
+                    oLanguage.maxNum = oLanguage.maxNum.replace("{0}", _this.maxNum);
                     oLanguage.settingWrapId = getTagId("setting_wrap");
                     oLanguage.settingIconId = getTagId("setting_icon");
                     oLanguage.settingPannelId = getTagId("setting_panel");
@@ -274,7 +274,7 @@ define(function (require, exports, module) {
                 }
 
                 $(selector).append($summaryPanelTpl);
-                if(that.options.showSetting){
+                if (_this.options.showSetting) {
                     $(selector).append(settingPanel);
                 }
                 drawInitDom();
@@ -287,65 +287,101 @@ define(function (require, exports, module) {
              * @param options
              */
             var bindEvent = function () {
-                if (that.showSetting) {
+                if (_this.showSetting) {
                     /**
                      * 设置按钮
                      */
-                    $(selector).on('click', " #" + getTagId("setting_icon"), function () {
+                    $(selector).on('click', " .summary-setting-icon", function () {
                         expandSettingPanel();
                     });
 
                     /**
                      * setting submit按钮
                      */
-                    $(selector).on('click', " #" + getTagId("btn_submit"), function () {
+                    $(selector).on('click', " .summary-setting-wrap .btn-primary", function () {
                         var _needClick = false;
                         expandSettingPanel();
-                        that.showColumns = that._showColumns;
-                        params.set(_cookieName, that.showColumns.join(","));
-                        if (that.canChoose && that.showColumns.indexOf(that.chooseColumns) < 0) {
+                        _this.showColumns = _this._showColumns;
+                        params.set(_cookieName, _this.showColumns.join(","));
+                        if (_this.canChoose && _this.showColumns.indexOf(_this.chooseColumns) < 0) {
                             _needClick = true;
-                            var _chooseColumns = that.showColumns[0];
-                            that.chooseColumns = _chooseColumns;
+                            var _chooseColumns = _this.showColumns[0];
+                            _this.chooseColumns = _chooseColumns;
                             params.set(_cookieName + ".chooseColumns", _chooseColumns);
                         }
                         drawPanel($div_ul);
-                        setData(that.allDatas);
+                        setData(_this.allDatas);
                         adjustHeight();
-                        if ($.isFunction(that.options.callbackSubmit)) {
-                            that.options.callbackSubmit(that.showColumns, that.allDatas);
+                        if ($.isFunction(_this.options.callbackSubmit)) {
+                            _this.options.callbackSubmit(_this.showColumns, _this.allDatas);
                         }
                         if (_needClick) {
-                            $('.jsSummary' + _id + '_content[data-name="' + that.chooseColumns + '"]').trigger('click');
+                            $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]').trigger('click');
                         }
                     });
 
                     /**
                      * setting cancel按钮
                      */
-                    $(selector).on('click', " #" + getTagId("btn_cancel"), function () {
+                    $(selector).on('click', " .summary-setting-wrap .btn-default", function () {
                         var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]');
                         $allCheckBoxes.prop("checked", false);
-                        for (var _i = 0; _i < that.showColumns.length; _i++) {
-                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="' + that.showColumns[_i] + '"]')
+                        for (var _i = 0; _i < _this.showColumns.length; _i++) {
+                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="' + _this.showColumns[_i] + '"]')
                                 .prop("checked", "checked");
                         }
                         updateCheckbox();
                         expandSettingPanel();
-                        if (that.options.callbackCancel) {
-                            that.options.callbackCancel();
+                        if (_this.options.callbackCancel) {
+                            _this.options.callbackCancel();
                         }
                     });
 
                     /**
                      * setting 中的checkbox
                      */
-                    $(selector).on('click', ' #' + getTagId("setting_ul") + ' [type="checkbox"]', function () {
+                    $(selector).on('click', '.summary-setting-ul [type="checkbox"]', function () {
                         var $selectCheckBoxes = updateCheckbox();
-                        that._showColumns = [];
+                        _this._showColumns = [];
                         $selectCheckBoxes.each(function () {
-                            that._showColumns.push($(this).val());
+                            _this._showColumns.push($(this).val());
                         });
+                    });
+
+                    /**
+                     * setting 中的reset
+                     */
+                    $(selector).on('click', '.summary-setting-panel .summary-reset', function () {
+                        var _needClick = false;
+                        var _showColunms = [];
+                        var checkBoxs = $(selector).find('.summary-setting-ul [type="checkbox"]');
+                        checkBoxs.prop('checked', false).prop('disabled', false);
+                        expandSettingPanel();
+                        _this.allDatas.forEach(function (data, index) {
+                            if (index < _this.options.maxNum) {
+                                _showColunms.push(data.cName);
+                            }
+                        });
+                        checkBoxs.each(function (index, checkBox) {
+                            if (_showColunms.indexOf(checkBox.value) > -1) {
+                                $(checkBox).prop('checked', 'checked');
+                            } else {
+                                $(checkBox).prop('disabled', 'disabled');
+                            }
+                        });
+                        checkBoxs.uniform();
+
+                        _this.showColumns = _showColunms;
+                        params.set(_cookieName, _this.showColumns.join(","));
+                        var _chooseColumns = _this.showColumns[0];
+                        _this.chooseColumns = _chooseColumns;
+                        params.set(_cookieName + ".chooseColumns", _chooseColumns);
+                        drawPanel($div_ul);
+                        setData(_this.allDatas);
+                        adjustHeight();
+                        if (_needClick) {
+                            $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]').trigger('click');
+                        }
                     });
 
                     /**
@@ -357,7 +393,7 @@ define(function (require, exports, module) {
                             _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
                             _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
                         var checkNum = _$selectCheckBoxes.length;
-                        if (checkNum >= that.maxNum) {
+                        if (checkNum >= _this.maxNum) {
                             _$selectCheckBoxes.removeAttr("disabled");
                             _$unselectCheckBoxes.attr("disabled", "disabled");
                             if ($.uniform) {
@@ -369,7 +405,7 @@ define(function (require, exports, module) {
                                 _$allCheckBoxes.uniform.update();
                             }
                         }
-                        if (checkNum === that.minNum) {
+                        if (checkNum === _this.minNum) {
                             _$selectCheckBoxes.attr("disabled", "disabled");
                             if ($.uniform) {
                                 _$allCheckBoxes.uniform.update();
@@ -387,16 +423,16 @@ define(function (require, exports, module) {
                 $(selector).on('click', ' .jsSummary' + _id + '_content', function () {
                     var _columnName = $(this).data("name"),
                         _columnData = getColumnData(_columnName),
-                        _columnsData = that.allDatas;
+                        _columnsData = _this.allDatas;
 
-                    if (that.canChoose) {
-                        that.chooseColumns = _columnName;
-                        params.set(_cookieName + ".chooseColumns", that.chooseColumns);
+                    if (_this.canChoose) {
+                        _this.chooseColumns = _columnName;
+                        params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
                         $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
                         $(this).parent().addClass("choose");
                     }
-                    if ($.isFunction(that.options.callBackPanel)) {
-                        that.options.callBackPanel(_columnName, _columnData, _columnsData);
+                    if ($.isFunction(_this.options.callBackPanel)) {
+                        _this.options.callBackPanel(_columnName, _columnData, _columnsData);
                     }
                 });
 
@@ -404,15 +440,15 @@ define(function (require, exports, module) {
                     var $ul = $(this).find('ul[data-name]');
                     var _columnName = $ul.data("name"),
                         _columnData = getColumnData(_columnName),
-                        _columnsData = that.allDatas;
-                    if (that.canChoose) {
-                        that.chooseColumns = _columnName;
-                        params.set(_cookieName + ".chooseColumns", that.chooseColumns);
+                        _columnsData = _this.allDatas;
+                    if (_this.canChoose) {
+                        _this.chooseColumns = _columnName;
+                        params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
                         $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
                         $(this).addClass("choose");
                     }
-                    if ($.isFunction(that.options.callBackPanel)) {
-                        that.options.callBackPanel(_columnName, _columnData, _columnsData);
+                    if ($.isFunction(_this.options.callBackPanel)) {
+                        _this.options.callBackPanel(_columnName, _columnData, _columnsData);
                     }
                 });
             };
@@ -438,11 +474,11 @@ define(function (require, exports, module) {
                 obj.attr('class', function (i, cls) {
                     return cls.replace(/li\d+/, '');
                 });
-                obj.addClass("li" + that.showColumns.length);
-                for (i = 0; i < that.showColumns.length; i++) {
-                    var _columnsName = that.showColumns[i];
+                obj.addClass("li" + _this.showColumns.length);
+                for (i = 0; i < _this.showColumns.length; i++) {
+                    var _columnsName = _this.showColumns[i];
                     var _columnsConfig = getColumnConfig(_columnsName);
-                    var _clickStr = that.options.callBackPanel ? "canClick" : "";
+                    var _clickStr = _this.options.callBackPanel ? "canClick" : "";
 
                     var $div_li = $('<div class="summary-div-li"></div>');
                     var $div_li_ul = $('<ul></ul>');
@@ -461,15 +497,15 @@ define(function (require, exports, module) {
                         $div_li_ul.append($li);
                     }
                     $div_li.append($div_li_ul);
-                    if (that.canChoose) {
+                    if (_this.canChoose) {
                         $div_li.append('<div class="summary-triangle"></div>');
                     }
 
 
                     obj.append($div_li);
                 }
-                if (that.canChoose) {
-                    var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + that.chooseColumns + '"]');
+                if (_this.canChoose) {
+                    var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]');
                     $chooseColumns.parent().addClass("choose");
                 }
                 adjustHeight();
@@ -484,9 +520,9 @@ define(function (require, exports, module) {
                     var _setting_option_tpl = '',
                         _mr = i % 2 === 0 ? 'mr' : '';
                     _setting_option_tpl += ' <li class="summary-setting-li ' + _mr + '"><label>';
-                    _setting_option_tpl += '      <input type="checkbox" value="' + _allColumns[i][that.options.cName] + '"';
-                    for (var j = 0; j < that.showColumns.length; j++) {
-                        if (_allColumns[i][that.options.cName] === that.showColumns[j]) {
+                    _setting_option_tpl += '      <input type="checkbox" value="' + _allColumns[i][_this.options.cName] + '"';
+                    for (var j = 0; j < _this.showColumns.length; j++) {
+                        if (_allColumns[i][_this.options.cName] === _this.showColumns[j]) {
                             _setting_option_tpl += 'checked = "checked"';
                         }
                     }
@@ -497,10 +533,10 @@ define(function (require, exports, module) {
                 }
                 var $selectCheckBoxes = obj.find('[type="checkbox"]:checked'),
                     $unselectCheckBoxes = obj.find('[type="checkbox"]:not(:checked)');
-                if ($selectCheckBoxes.length >= that.maxNum) {
+                if ($selectCheckBoxes.length >= _this.maxNum) {
                     $unselectCheckBoxes.attr("disabled", "disabled");
                 }
-                if ($selectCheckBoxes.length <= that.minNum) {
+                if ($selectCheckBoxes.length <= _this.minNum) {
                     $selectCheckBoxes.attr("disabled", "disabled");
                 }
                 var $checkboxes = obj.find('[type="checkbox"]');
@@ -514,53 +550,53 @@ define(function (require, exports, module) {
              */
             function drawData() {
                 var _datas = [];
-                if (!that.options.dataSource) {
-                    var _allColumns = that.options.allColumns;
+                if (!_this.options.dataSource) {
+                    var _allColumns = _this.options.allColumns;
                     for (i = 0; i < _allColumns.length; i++) {
-                        var _dataName = _allColumns[i][that.options.cName],
+                        var _dataName = _allColumns[i][_this.options.cName],
                             _columnConfig = getColumnConfig(_dataName),
                             _o = {
                                 "cName": _dataName
                             };
-                        _o[that.options.cName + "Title"] = _columnConfig.title;
+                        _o[_this.options.cName + "Title"] = _columnConfig.title;
                         _datas.push(_o);
                     }
-                    that.allDatas = _datas;
+                    _this.allDatas = _datas;
                     setData(_datas);
                     adjustHeight();
-                    if (that.canChoose) {
-                        var _chooseColumnsData = getColumnData(that.chooseColumns);
-                        if ($.isFunction(that.options.callBackGetData)) {
-                            that.options.callBackGetData(that.chooseColumns, _chooseColumnsData, that.allDatas);
+                    if (_this.canChoose) {
+                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
+                        if ($.isFunction(_this.options.callBackGetData)) {
+                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
                         }
                         return;
                     }
-                    if ($.isFunction(that.options.callBackGetData)) {
-                        that.options.callBackGetData(that.allDatas);
+                    if ($.isFunction(_this.options.callBackGetData)) {
+                        _this.options.callBackGetData(_this.allDatas);
                     }
                     return;
                 }
 
-                that.options.dataSource(that.options.dataParams, function (resp) {
+                _this.options.dataSource(_this.options.dataParams, function (resp) {
                     var _result = resp.result || {};
                     _datas = $.isArray(_result) ? _result : _result.items || [];
                     for (i = 0; i < _datas.length; i++) {
-                        var _dataName = _datas[i][that.options.cName],
+                        var _dataName = _datas[i][_this.options.cName],
                             _columnConfig = getColumnConfig(_dataName);
-                        _datas[i][that.options.cName + "Title"] = _columnConfig.title;
+                        _datas[i][_this.options.cName + "Title"] = _columnConfig.title;
                     }
-                    that.allDatas = _datas;
+                    _this.allDatas = _datas;
                     setData(_datas);
                     adjustHeight();
-                    if (that.canChoose) {
-                        var _chooseColumnsData = getColumnData(that.chooseColumns);
-                        if ($.isFunction(that.options.callBackGetData)) {
-                            that.options.callBackGetData(that.chooseColumns, _chooseColumnsData, that.allDatas);
+                    if (_this.canChoose) {
+                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
+                        if ($.isFunction(_this.options.callBackGetData)) {
+                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
                         }
                         return;
                     }
-                    if ($.isFunction(that.options.callBackGetData)) {
-                        that.options.callBackGetData(that.allDatas);
+                    if ($.isFunction(_this.options.callBackGetData)) {
+                        _this.options.callBackGetData(_this.allDatas);
                     }
                 });
             }
@@ -629,12 +665,12 @@ define(function (require, exports, module) {
 
                 $settingPanel.addClass("open");
                 var $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked');
-                that._showColumns = [];
+                _this._showColumns = [];
                 $selectCheckBoxes.each(function () {
-                    that._showColumns.push($(this).val());
+                    _this._showColumns.push($(this).val());
                 });
-                if ($.isFunction(that.options.callbackOpen)) {
-                    that.options.callbackOpen();
+                if ($.isFunction(_this.options.callbackOpen)) {
+                    _this.options.callbackOpen();
                 }
             }
 
@@ -645,9 +681,9 @@ define(function (require, exports, module) {
              */
             function getColumnData(cName) {
                 var columnData = {};
-                for (var _i = 0; _i < that.allDatas.length; _i++) {
-                    if (cName === that.allDatas[_i][that.options.cName]) {
-                        columnData = that.allDatas[_i];
+                for (var _i = 0; _i < _this.allDatas.length; _i++) {
+                    if (cName === _this.allDatas[_i][_this.options.cName]) {
+                        columnData = _this.allDatas[_i];
                         break;
                     }
                 }
@@ -662,7 +698,7 @@ define(function (require, exports, module) {
             function getColumnConfig(cName) {
                 var columnData = {};
                 for (var _i = 0; _i < _allColumns.length; _i++) {
-                    if (cName === _allColumns[_i][that.options.cName]) {
+                    if (cName === _allColumns[_i][_this.options.cName]) {
                         columnData = _allColumns[_i];
                         break;
                     }
