@@ -92,30 +92,6 @@ Page sidebar
     right: auto;
     left: 0;
 }
-.page-sidebar ul > li > a > .arrow:before {
-    float: right;
-    margin-top: 0;
-    margin-right: 5px;
-    display: inline;
-    font-size: 16px;
-    font-family: FontAwesome;
-    height: auto;
-    content: "\f104";
-    font-weight: 300;
-    text-shadow: none;
-}
-.page-sidebar-menu > li > a > .arrow.open:before {
-    float: right;
-    margin-top: 0;
-    margin-right: 3px;
-    display: inline;
-    font-family: FontAwesome;
-    height: auto;
-    font-size: 16px;
-    content: "\f107";
-    font-weight: 300;
-    text-shadow: none;
-}
 /* bagin: sidebar menu badges */
 .page-sidebar-menu li > a > .badge {
     float: right;
@@ -427,6 +403,25 @@ Page breadcrumb
     }
 }
 .page-sidebar-menu {
+    & > li > a > .arrow {
+        &:before {
+            float: right;
+            margin-top: 0;
+            margin-right: 5px;
+            display: inline;
+            font-size: 16px;
+            font-family: FontAwesome;
+            height: auto;
+            content: "\f104";
+            font-weight: 300;
+            text-shadow: none;
+        }
+    }
+    & > li.open > a > .arrow {
+        &:before {
+            content: "\f107";
+        }
+    }
     li {
         .fa-angle-down {
             position: absolute;
@@ -494,14 +489,14 @@ Page breadcrumb
     }
 }
 .page-sidebar-spanner {
-    height: 30px;
+    height: 50px;
     position: fixed;
     bottom: 0;
     width: 200px;
     text-align: center;
     cursor: pointer;
     background: @B050;
-    padding: 5px;
+    padding: 15px 0;
     &:hover {
         border-color: @B100;
         background: @B100;
@@ -513,11 +508,20 @@ Page breadcrumb
     &.over {
         box-shadow: 0 1px 10px rgba(0, 0, 0, 0.28);
     }
+    i {
+        font-size: 16px;
+    }
     i:before {
         content: "\f104";
     }
 }
 .sidebar-hide {
+    .page-sidebar-menu {
+        pointer-events: none;
+        li .sub-menu .active a {
+            background: none !important;
+        }
+    }
     .page-sidebar-wrapper {
         width: 18px;
         overflow: hidden;
@@ -525,6 +529,7 @@ Page breadcrumb
     .page-sidebar-spanner {
         width: 18px;
         box-shadow: none !important;
+        background: @B200;
         i:before {
             content: "\f105";
         }

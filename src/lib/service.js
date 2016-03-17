@@ -19,7 +19,7 @@ define(function(require, exports, module) {
             $p.log("url is undefined");
             return false;
         }
-        
+
         return true;
     }
 
@@ -151,7 +151,7 @@ define(function(require, exports, module) {
             });
 
             //Encode
-            options.params=$.param(params, true);
+            options.params = $.param(params, true);
             options.type = "get";
             requestDate(options);
 
@@ -161,6 +161,32 @@ define(function(require, exports, module) {
             options.type = "post";
             requestDate(options);
         },
+        /**
+        restful 请求
+
+        params 参数支持两种格式
+        - [{"foo":"bar"},{"foo2":"bar2"}]
+        - {"foo":"bar","foo2":"bar2"}
+
+        最终都会转化为以下格式提交给数据库:
+        {"data":{"foo":"bar","foo2":"bar2"}}
+
+        CASE 1:
+        service.request("put","user/update/1",{name:"foobar"},function(){});
+
+        如果你需要把已定义好数据传递到服务端，比如：
+        {"data":[{"foo":"bar"},{"foo2":"bar2"},{"foo3":[1,2,3,4]}]
+        需要采用CASE 2的方式,把original设置为true
+
+        CASE 2:
+        service.request({
+               type:"put",
+               original:true,
+               url:user/update/1",
+               params:{name:"foobar"},
+               callback:function(){}
+        });
+        */
         request: function(type, url, params, callback) {
             var options = getOptions.apply(this, arguments);
             requestDate(options);

@@ -313,26 +313,26 @@ define(function(require, exports, module) {
         }
     }
 
+    function doSidebarOver() {
+        var menuHeight = $(".page-sidebar-menu").height();
+        var sidebarHeight = $(".page-sidebar-wrapper").height();
+        var spanner = $(".page-sidebar-spanner");
+        var top = $(".page-sidebar-wrapper").scrollTop();
+        if ((top - 50 + sidebarHeight) >= menuHeight) {
+            spanner.removeClass("over");
+        } else {
+            spanner.addClass("over");
+        }
+    }
+
     //处理左侧菜单滚动事件
     function doSidebarScroll() {
 
-        function over() {
-            var menuHeight = $(".page-sidebar-menu").height();
-            var sidebarHeight = $(".page-sidebar-wrapper").height();
-            var spanner = $(".page-sidebar-spanner");
-            var top = $(".page-sidebar-wrapper").scrollTop();
-            if ((top - 50 + sidebarHeight) >= menuHeight) {
-                spanner.removeClass("over");
-            } else {
-                spanner.addClass("over");
-            }
-        }
-
-        resizeEventQueue.push(over);
+        resizeEventQueue.push(doSidebarOver);
         $(".page-sidebar-wrapper").scroll(function() {
-            over();
+            doSidebarOver();
         });
-        over();
+        doSidebarOver();
     }
 
     //处理左侧菜单隐藏显示
@@ -342,8 +342,8 @@ define(function(require, exports, module) {
             return;
         }
 
-        var display = $.cookie("sidebar-display") || 1;
-        if (display === "1") {
+        var display = $.cookie("sidebar-display") || "show";
+        if (display === "show") {
             show();
         } else {
             hide();
@@ -352,33 +352,59 @@ define(function(require, exports, module) {
         function setCookie(value) {
             display = value;
             $.cookie("sidebar-display", value, {
-                expires: 7,
                 path: '/'
             });
         }
 
         function hide() {
             $("body").addClass("sidebar-hide");
-            setCookie("2");
         }
 
         function show() {
             $("body").removeClass("sidebar-hide");
-            setCookie("1");
         }
 
         function toggle() {
-            if (display === "1") {
+            if (display === "show") {
                 hide();
+                setCookie("hide");
                 return;
             }
             show();
+            setCookie("show");
         }
 
         $(".page-sidebar-spanner").click(function() {
             toggle();
         });
 
+    }
+
+    //更新菜单状态
+    function doSidebarMenuStatus() {
+
+        var status = $.cookie("menu-status");
+        status = status ? status.split(",") : [];
+
+        $(".page-sidebar-menu>li").each(function(index) {
+            if ($.inArray(index.toString(), status)>=0) {
+                $(this).removeClass("open");
+            } else {
+                $(this).addClass("open");
+            }
+        });
+
+        return function() {
+            var status = [];
+            $(".page-sidebar-menu>li").each(function(index) {
+                if (!$(this).hasClass("open")) {
+                    status.push(index);
+                }
+            });
+            $.cookie("menu-status", status, {
+                path: '/'
+            });
+        };
     }
 
     var resizeEventQueue = [];
@@ -430,8 +456,10 @@ define(function(require, exports, module) {
         },
         custom: function() {
 
-            $(".page-sidebar-menu>li>a").on("click", function() {
-                var $li = $(this).parents("li");
+            var _doSidebarMenuStatus = doSidebarMenuStatus();
+            $(".page-sidebar-menu>li>a").on("click", function(e) {
+
+                var $li = $(this).parent();
                 if ($li.hasClass("open")) {
                     $li.removeClass("open");
                     $li.find(".arrow").removeClass("open");
@@ -439,6 +467,8 @@ define(function(require, exports, module) {
                     $li.addClass("open");
                     $li.find(".arrow").addClass("open");
                 }
+                _doSidebarMenuStatus();
+                doSidebarOver();
             });
         }
     };

@@ -64,12 +64,12 @@ define(function(require, exports, module) {
             "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
 
                 var _options = oSettings.oInit;
-                var length = _options.iDisplayLength;
 
                 //aApiParams 用[] 不用{} 是有原因的，在某些情况下一个参数会传递多个值
                 var aApiParams = _getApiParams(aoData, oSettings);
 
-                _setCookie("params.pagesize", length);
+
+
 
                 if (!_options.bAutoload) {
                     fnCallback({
@@ -270,6 +270,7 @@ define(function(require, exports, module) {
 
             var _options = oSettings.oInit;
             var aApiParams = [];
+            var length = _options.iDisplayLength;
 
             function getPageIndex(total) {
                 for (var i = 0; i < aoData.length; i++) {
@@ -297,7 +298,7 @@ define(function(require, exports, module) {
                 //排序字段
                 if (aoData[i].name === "iSortCol_0" && oSettings.aoColumns[aoData[i].value].mData) {
 
-                    column = oSettings.aoColumns[aoData[i].value];
+                    var column = oSettings.aoColumns[aoData[i].value];
                     aApiParams.push({
                         "name": _options.oParamName.sOrderColumn,
                         "value": column.mData
@@ -319,6 +320,8 @@ define(function(require, exports, module) {
                     });
                 }
             }
+
+            _setCookie("params.pagesize", length);
 
             //每页显示行数
             aApiParams.push({
