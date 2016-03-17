@@ -18,6 +18,9 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          */
         function Summary(selector, options) {
+            //版本
+            var _version = "2016.3.17.2205";
+
             var _this = this;
             //前缀名
             var _nameStr = options.name ? options.name : "summary";
@@ -31,26 +34,31 @@ define(function (require, exports, module) {
             var $div_ul, $setting_ul, i, l, j;
             //最小列数
             var MIN_COLUMN_NUM = 1;
+            //是否保存状态到cookie
+            var _saveState = false;
 
             //cookie设置及获取
             var params = {
                 set: function (key, value) {
                     this[key] = value;
-                    $.cookie('params.' + key, value, {
-                        expires: 7,
-                        path: _getCookiePath()
-                    });
+                    if (_saveState) {
+                        $.cookie('params.' + key, value, {
+                            expires: 7,
+                            path: _getCookiePath()
+                        });
+                    }
                 },
                 get: function (key) {
-                    return this[key] || $.cookie('params.' + key);
+                    if (_saveState) {
+                        return this[key] || $.cookie('params.' + key);
+                    }
+                    return this[key];
                 }
             };
             //展示数
             var _showNum = 0;
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
-            //版本
-            this.version = "2015.12.06.0028";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -69,6 +77,8 @@ define(function (require, exports, module) {
             this._showColumns = [];
             //全部数据
             this.allDatas = [];
+            //标题行
+            this.titlesRows = [];
             /**
              * 选项
              *{
@@ -116,6 +126,8 @@ define(function (require, exports, module) {
             this.options = {
                 //数据源data cName的key
                 "cName": "cName",
+                //保存状态
+                "saveState": false,
                 //所有的列
                 "allColumns": [],
                 //所有的行
@@ -159,8 +171,8 @@ define(function (require, exports, module) {
             /**
              * 更新数据 并刷新组件
              */
-            this.update = function () {
-                drawData();
+            this.update = function (params) {
+                drawData(params);
                 return this;
             };
 
@@ -177,7 +189,7 @@ define(function (require, exports, module) {
              */
             var init = function () {
                 _this.options = $.extend(true, {}, _this.options, options);
-
+                _saveState = _this.options.saveState;
                 _allColumns = $.isArray(_this.options.allColumns) ? _this.options.allColumns : [];
                 _allRows = _this.options.allRows;
                 _this.maxNum = _this.options.maxNum ? _this.options.maxNum : _allColumns.length;
@@ -191,6 +203,12 @@ define(function (require, exports, module) {
                 }
                 //设置展示的列
                 _cookieName = _nameStr + '.' + _this.selectorStr;
+
+                _this.options.allRows.forEach(function (row) {
+                    if (row.isTitle) {
+                        _this.titlesRows.push(row.dataName);
+                    }
+                });
 
                 //选项中展示的列
                 var _arrOptionShowColumns = [];
@@ -278,7 +296,7 @@ define(function (require, exports, module) {
                     $(selector).append(settingPanel);
                 }
                 drawInitDom();
-                drawData();
+                drawData(_this.options.dataParams);
             };
 
             /**
@@ -548,8 +566,9 @@ define(function (require, exports, module) {
             /**
              * 绘制数据
              */
-            function drawData() {
+            function drawData(params) {
                 var _datas = [];
+                var _params = $.extend({}, params);
                 if (!_this.options.dataSource) {
                     var _allColumns = _this.options.allColumns;
                     for (i = 0; i < _allColumns.length; i++) {
@@ -577,7 +596,7 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                _this.options.dataSource(_this.options.dataParams, function (resp) {
+                _this.options.dataSource(_params, function (resp) {
                     var _result = resp.result || {};
                     _datas = $.isArray(_result) ? _result : _result.items || [];
                     for (i = 0; i < _datas.length; i++) {
@@ -607,6 +626,12 @@ define(function (require, exports, module) {
              */
             function setData(_datas) {
                 var $summaryContents = $('.jsSummary' + _id + '_content');
+                var $summaryContentLi = $summaryContents.find('li');
+                $summaryContentLi.filter(function (index) {
+                    return _this.titlesRows.indexOf($($summaryContentLi[index]).attr('data-name')) < 0;
+                }).each(function (index, summaryContent) {
+                    $(summaryContent).html('--');
+                });
                 for (i = 0; i < $summaryContents.length; i++) {
                     var $summaryContent = $($summaryContents[i]),
                         _data = getColumnData($summaryContent.data("name"));
