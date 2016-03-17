@@ -12,7 +12,7 @@ define(function(require, exports, module) {
      * 获取可视范围的高度，宽度
      * @return {Object} [{width,height}]
      */
-    var _getViewPort = function() {
+    function _getViewPort() {
         var e = window,
             a = 'inner';
         if (!('innerWidth' in window)) {
@@ -23,12 +23,12 @@ define(function(require, exports, module) {
             width: e[a + 'Width'],
             height: e[a + 'Height']
         };
-    };
+    }
 
     /**
      * 初始化主要设置
      */
-    var doInit = function() {
+    function doInit() {
 
         if ($('body').css('direction') === 'rtl') {
             isRTL = true;
@@ -45,32 +45,30 @@ define(function(require, exports, module) {
         if (isIE10 || isIE9 || isIE8) {
             $('html').addClass('ie'); // detect IE10 version
         }
-
-
-    };
+    }
 
 
     /**
      * 重新初始化上的窗口大小调整布局
      */
-    var doResponsive = function() {
+    function doResponsive() {
 
         doSidebarAndContentHeight();
         doAppResizeEvent();
         doModalHeight();
-    };
+    }
 
     /**
      *  在初始化页面加载布局
      */
-    var doResponsiveOnInit = function() {
+    function doResponsiveOnInit() {
         doSidebarAndContentHeight();
-    };
+    }
 
     /**
      *  处理窗口大小调整布局初始化
      */
-    var doResponsiveOnResize = function() {
+    function doResponsiveOnResize() {
 
         var resize;
         if (isIE8) {
@@ -87,53 +85,24 @@ define(function(require, exports, module) {
                 doResponsive();
             }, 50));
         }
-    };
+    }
 
     /**
      * 设置适当的高度，侧边栏和内容。内容和侧边栏的高度必须始终同步。
      */
-    var doSidebarAndContentHeight = function() {
+    function doSidebarAndContentHeight() {
         var content = $('.page-content');
-        var sidebar = $('.page-sidebar');
-        var sidebarMenu = $('.page-sidebar-menu');
-        var container = $('.page-container');
-        var body = $('body');
-        var height;
-        var available_height;
-        var side_height;
-
-        if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
-            available_height = $(window).height() - $('.footer').outerHeight();
-            if (content.height() < available_height) {
-                content.css("min-height", available_height + 'px');
-            }
-        } else {
-
-            if ($('.footer').hasClass("fixed")) {
-                $('.footer').removeClass("fixed");
-            }
-            if (body.hasClass('page-sidebar-fixed')) {
-                height = _calculateFixedSidebarViewportHeight();
-            } else {
-                available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
-                side_height = sidebarMenu.height();
-                if (content.height() < available_height) {
-                    if (available_height < side_height) {
-                        available_height = side_height;
-                    }
-                    container.css("min-height", available_height + 'px');
-                }
-
-            }
-
-
+        var available_height = $(window).height() - $('.footer').outerHeight() - $('.header').outerHeight();
+        if ($('.footer').hasClass("fixed")) {
+            $('.footer').removeClass("fixed");
         }
-    };
+        content.css("min-height", available_height + 'px');
+    }
 
     /**
      * 设置Modal的滚动高度
      */
-    var doModalHeight = function() {
+    function doModalHeight() {
 
         var modal_body = $(".modal:visible .modal-body");
 
@@ -158,27 +127,13 @@ define(function(require, exports, module) {
         } else {
             modal_body.css("max-height", "none");
         }
-
-    };
-
-    /**
-     * 辅助函数来计算侧边栏高度固定侧边栏布局。
-     */
-    var _calculateFixedSidebarViewportHeight = function() {
-        var sidebarHeight = $(window).height() - $('.header').height() + 1;
-        if ($('body').hasClass("page-footer-fixed")) {
-            sidebarHeight = sidebarHeight - $('.footer').outerHeight();
-        }
-
-        return sidebarHeight;
-    };
-
+    }
 
 
     /**
      * 把手portlet的工具和行动
      */
-    var doPortletTools = function() {
+    function doPortletTools() {
         $('body').on('click', '.portlet > .portlet-title > .tools > a.remove', function(e) {
             e.preventDefault();
             $(this).closest(".portlet").remove();
@@ -195,12 +150,12 @@ define(function(require, exports, module) {
                 el.slideDown(200);
             }
         });
-    };
+    }
 
     /**
      * 处理使用jQuery插件统一定制的复选框和收音机
      */
-    var doUniform = function() {
+    function doUniform() {
         if (!jQuery().uniform) {
             return;
         }
@@ -213,21 +168,21 @@ define(function(require, exports, module) {
                 }
             });
         }
-    };
+    }
 
 
 
     /**
      * 处理 Bootstrap Tooltips.
      */
-    var doTooltips = function() {
+    function doTooltips() {
         $('.tooltips').tooltip();
-    };
+    }
 
     /**
      * 处理 Bootstrap Dropdowns
      */
-    var doDropdowns = function() {
+    function doDropdowns() {
 
         $('body').on('click', '.dropdown-menu.hold-on-click', function(e) {
             e.stopPropagation();
@@ -238,39 +193,39 @@ define(function(require, exports, module) {
             var icon = $(this).parents(".btn-group").find("button>i").prop("outerHTML");
             $(this).parents(".dropdown-menu").prev().html(text + ' ' + icon);
         });
-    };
+    }
 
     /**
      * 处理 Hower Dropdowns
      */
-    var doDropdownHover = function() {
+    function doDropdownHover() {
         if ($.fn.dropdownHover) {
             $('[data-hover="dropdown"]').dropdownHover();
         }
-    };
+    }
 
     /**
      * 处理 Alerts
      */
-    var doAlerts = function() {
+    function doAlerts() {
         $('body').on('click', '[data-close="alert"]', function(e) {
             $(this).parent('.alert').hide();
             e.preventDefault();
         });
-    };
+    }
 
 
     /**
      * 处理 popovers
      */
-    var doPopovers = function() {
+    function doPopovers() {
         $('.popovers').popover();
-    };
+    }
 
     /**
      * 处理 Tabs
      */
-    var doTabs = function() {
+    function doTabs() {
 
         $('body').on('shown.bs.tab', '.nav.nav-tabs', function() {
             doSidebarAndContentHeight();
@@ -284,13 +239,13 @@ define(function(require, exports, module) {
             });
             $('a[href="#' + tabid + '"]').click();
         }
-    };
+    }
 
 
     /**
      * 解决IE8和IE9的Placeholder问题
      */
-    var doFixInputPlaceholderForIE = function() {
+    function doFixInputPlaceholderForIE() {
         if (isIE8 || isIE9) {
             $('input[placeholder]:not(.placeholder-no-fix), textarea[placeholder]:not(.placeholder-no-fix)').each(function() {
 
@@ -313,24 +268,24 @@ define(function(require, exports, module) {
                 });
             });
         }
-    };
+    }
 
 
 
     /**
      * 处理 Select2 Dropdowns
      */
-    var doSelect2 = function() {
+    function doSelect2() {
         if (jQuery().select2) {
             $('.select2me').select2({
                 placeholder: "Select",
                 allowClear: true
             });
         }
-    };
+    }
 
 
-    var doHighlightCode = function() {
+    function doHighlightCode() {
         if (!window.hljs) {
             return;
         }
@@ -347,18 +302,86 @@ define(function(require, exports, module) {
         $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });
-    };
+    }
 
     //处理APP回调事件
-    var doAppResizeEvent = function() {
-        for (var i = 0, len = callbackQueue.length; i < len; i++) {
-            if ("function" === typeof callbackQueue[i]) {
-                callbackQueue[i]();
+    function doAppResizeEvent() {
+        for (var i = 0, len = resizeEventQueue.length; i < len; i++) {
+            if ("function" === typeof resizeEventQueue[i]) {
+                resizeEventQueue[i]();
             }
         }
-    };
+    }
 
-    var callbackQueue = [];
+    //处理左侧菜单滚动事件
+    function doSidebarScroll() {
+
+        function over() {
+            var menuHeight = $(".page-sidebar-menu").height();
+            var sidebarHeight = $(".page-sidebar-wrapper").height();
+            var spanner = $(".page-sidebar-spanner");
+            var top = $(".page-sidebar-wrapper").scrollTop();
+            if ((top - 50 + sidebarHeight) >= menuHeight) {
+                spanner.removeClass("over");
+            } else {
+                spanner.addClass("over");
+            }
+        }
+
+        resizeEventQueue.push(over);
+        $(".page-sidebar-wrapper").scroll(function() {
+            over();
+        });
+        over();
+    }
+
+    //处理左侧菜单隐藏显示
+    function doSidebarToggle() {
+
+        if (!$(".page-sidebar-wrapper").length) {
+            return;
+        }
+
+        var display = $.cookie("sidebar-display") || 1;
+        if (display === "1") {
+            show();
+        } else {
+            hide();
+        }
+
+        function setCookie(value) {
+            display = value;
+            $.cookie("sidebar-display", value, {
+                expires: 7,
+                path: '/'
+            });
+        }
+
+        function hide() {
+            $("body").addClass("sidebar-hide");
+            setCookie("2");
+        }
+
+        function show() {
+            $("body").removeClass("sidebar-hide");
+            setCookie("1");
+        }
+
+        function toggle() {
+            if (display === "1") {
+                hide();
+                return;
+            }
+            show();
+        }
+
+        $(".page-sidebar-spanner").click(function() {
+            toggle();
+        });
+
+    }
+
+    var resizeEventQueue = [];
 
     module.exports = {
 
@@ -379,17 +402,19 @@ define(function(require, exports, module) {
             doPopovers();
             doTabs();
             doHighlightCode();
+            doSidebarScroll();
+            doSidebarToggle();
         },
 
         fixContentHeight: function() {
             doSidebarAndContentHeight();
         },
         resize: function(callback) {
-            callbackQueue.push(callback);
+            resizeEventQueue.push(callback);
         },
         initDropdownMenu: function() {
             var dropdown = new DropdownMenu("#dropdown_pro_menu");
-            callbackQueue.push(function() {
+            resizeEventQueue.push(function() {
                 dropdown.update();
             });
             this.dropdown = dropdown;
