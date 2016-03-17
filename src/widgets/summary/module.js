@@ -613,7 +613,7 @@ define(function (require, exports, module) {
                     for (var _name in _data) {
                         var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
                             _rowConfig = getRowConfig(_name);
-                        if (_rowConfig.render) {
+                        if ($.isFunction(_rowConfig.render)) {
                             $contentLi.html(_rowConfig.render(_data[_name], _datas));
                         } else if (_rowConfig.tpl) {
                             $contentLi.html(_rowConfig.tpl.replace("{0}", _data[_name]));
