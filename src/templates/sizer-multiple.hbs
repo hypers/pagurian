@@ -77,11 +77,13 @@ var options = {
         console.log(allData);
     }
 };
-var sizer = $p.sizer($("#sizer-multiple"), options, selectDatas);
+var sizer = $p.sizer($("#sizer-multiple"), options);
 //使用on方法绑定事件
 sizer.on("option", function (data, status) {
     console.log(data, status);
-});</code></pre>
+});
+//默认选中数据
+sizer.chooseData(selectDatas);</code></pre>
                     <h3>JSON 数据</h3>
                     <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
                 </div>
