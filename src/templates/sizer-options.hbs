@@ -14,7 +14,12 @@
             <div class="col-md-12">
 
                 <div class="markdown">
-                    <pre><code class="javascript">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                    <pre><code class="javascript">/**
+* @param {[String|jQuery|Dom]} sizerBtnSelector [选择器] 必须唯一
+* @param {[Array]} options [配置参数]
+* @param {String} chooseDatas [初始选中的选项] 兼容老版本不推荐使用
+*/
+$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
                 </div>
 
             </div>
@@ -41,12 +46,12 @@ Sizer.getAllDatas();
 Sizer.getSelectDatas();
 /**
 * 选中数据
-* @param data {array|string|obj}
+* @param values {array|string|obj}
 * array:[{name:"2.1.12.3",value:1},...]
 * obj:{name:"2.1.12.3",value:1},
-* string:"all"全选,"null"全不选
-* @return Sizer;
-**/
+* string:"all"全选,"null"全不选 ,如果为单选则接受直接传入value进行选中
+* return sizer
+*/
 Sizer.chooseData(data);
 /**
 * 动态绑定事件
@@ -62,7 +67,7 @@ Sizer.on(functionName,callback);
 * expand,close,option,search,clean,submit,cancel
 * @return Sizer;
 **/
-Sizer.unBind(functionName);
+Sizer.off(functionName);
 /**
 * 销毁插件
 */
@@ -71,6 +76,14 @@ Sizer.destroy();
 * 切换面板状态
 */
 Sizer.expandPanel();
+/**
+* 打开面板
+*/
+Sizer.open();
+/**
+* 关闭面板
+*/
+Sizer.close();
 /**
 * 更新数据
 * @param params{Object}

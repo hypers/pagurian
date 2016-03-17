@@ -12,15 +12,17 @@ define(function (require, exports, module) {
 
     /**
      * [Sizer 筛选器类]
-     * @param {[string|jQuery]} sizerBtnSelector [选择器]
-     * @param {[array]} options [参数]
-     * @param {string} chooseDatas [选中的选项]
+     * @param {[string|jQuery|Dom]} sizerBtnSelector [选择器] 必须唯一
+     * @param {[array]} options [配置参数]
+     * @param {string} chooseDatas [初始选中的选项] 兼容老版本不推荐使用
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
+        //版本
+        var version = "2016.03.17.1308";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
-        var that = this;
+        var _this = this;
         var _nameStr = "sizer";
         var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         /**
@@ -41,12 +43,8 @@ define(function (require, exports, module) {
         _oLanguage.id = _id;
         _oLanguage.promtText = $.trim($sizerBtn.text());
 
-        //版本
-        this.version = "2016.03.16.1057";
         //id
         this.sizerName = _nameStr + _id;
-        //提示文字
-        this.promtText = "";
         //参数
         this.params = {};
         //全部可用数据
@@ -57,6 +55,9 @@ define(function (require, exports, module) {
         this.needLoad = true;
         //父级容器
         this.container = null;
+        //数据载入promise
+        this.p_loadData = $.Deferred();
+
         /**
          *
          * @type {
@@ -94,7 +95,7 @@ define(function (require, exports, module) {
             style: "", //筛选器自定义class
             processing: _oLanguage.processing, //loading默认文字
             search: _oLanguage.search, //搜索框默认文字
-            matchCase: true,
+            matchCase: true,//忽略大小写匹配
             callbackExpand: null, //面板展开时的回调
             callbackClose: null, //面板关闭时的回调
             callbackOption: null, //点击选项的回调
@@ -107,334 +108,13 @@ define(function (require, exports, module) {
             callbackCancel: null //取消按钮回调
         };
 
-        //初始化组件
-        var init = function () {
-            that.options = $.extend(that.options, options);
-            that.matchCase = that.options.matchCase;
-            if (that.options.isMultiple) {
-                that._tmpSelectDatas = []; //暂存数据
-                that.isFirstClick = true; //是否为第一次点击
-                that.isFirstSearch = true; //是否为第一次搜索
-            }
-            drawDom();
-            bindEvent();
-            if (that.options.isExpand) {
-                that.expandPanel();
-            }
-            if (chooseDatas) {
-                if (!that.options.isMultiple && chooseDatas[0][that.options.dataMapping.name]) {
-                    singleSetText(chooseDatas[0][that.options.dataMapping.name]);
-                }
-                that.selectDatas = chooseDatas;
-            }
-        };
-
-        //绘制组件
-        var drawDom = function () {
-            var _sizerWrap = '',
-                _topBtn = that.options.isMultiple ?
-                '<a id="' + _nameStr + '_selectAll' + _id + '" href="javascript:;">' + _oLanguage.chooseAll + '</a>' +
-                '<a id="' + _nameStr + '_cleanAll' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>' :
-                '<a id="' + _nameStr + '_clean' + _id + '" href="javascript:;">' + _oLanguage.clearSingle + '</a>';
-            _oLanguage.multipleClass = that.options.isMultiple ? "sizer-multiple" : "";
-            $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
-            _sizerWrap += '<div id="' + that.sizerName + '"class="sizer-wrap ' + that.options.style + '"></div>';
-            $sizerBtn.wrap(_sizerWrap);
-            var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
-            sizerSelectPanel.find(".sizer-btn-group").append(_topBtn);
-            if (that.options.isMultiple) {
-                sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
-            }
-            $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
-            $("#" + _nameStr + '_select_panel' + _id).css(that.options.position);
-            if (that.container === null) {
-                that.container = $sizerBtn.parent(".sizer-wrap");
-            }
-            uniForm();
-        };
-
-        /**
-         * 绑定事件
-         * @param selector
-         * @param options
-         */
-        var bindEvent = function () {
-            var $sizerWrapDom = $sizerBtn.parents('.sizer-wrap');
-            var _isMultiple = that.options.isMultiple;
-            $sizerBtn.on('click', function () {
-                that.expandPanel();
-            });
-
-            //选项点击事件
-            $sizerWrapDom.find('.sizer-data-list').on('click', ' .sizer-data-list-li [type]', function (event) {
-                if (!_isCanTrigger()) {
-                    return;
-                }
-                var type = that.options.isMultiple ? 'checkbox' : 'radio',
-                    $checkBox = $(this);
-                var _dataName = that.options.dataMapping.name,
-                    _dataValue = that.options.dataMapping.value,
-                    _data = {};
-                _data[_dataName] = $checkBox.data("key");
-                _data[_dataValue] = isNaN($checkBox.val()) ? $checkBox.val() : +$checkBox.val();
-                //单选
-                if (!that.options.isMultiple) {
-                    singleSetText(_data[_dataName]);
-                    that._tmpSelectDatas = that.selectDatas = [_data];
-                    if ($.isFunction(that.options.callbackOption)) {
-                        that.options.callbackOption(_data);
-                    }
-                    closePanel(true);
-                }
-
-                //多选
-                if (that.options.isMultiple) {
-                    if (_isFirstClick) {
-                        _isFirstClick = false;
-                        that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
-                    }
-                    that._tmpSelectDatas = uniqueDatas(concatArray(that._tmpSelectDatas, _data));
-                    if (!$checkBox.is(":checked")) {
-                        that._tmpSelectDatas = $.grep(that._tmpSelectDatas, function (o) {
-                            return "" + _data[_dataValue] !== "" + o[_dataValue];
-                        });
-                    }
-                    if ($.isFunction(that.options.callbackOption)) {
-                        that.options.callbackOption(_data, $checkBox.is(":checked"));
-                    }
-                }
-            });
-
-            //清除选择
-            $sizerWrapDom.on('click', "#" + _nameStr + '_clean' + _id, function () {
-                cleanOption(true);
-                if ($.isFunction(that.options.callbackClean)) {
-                    that.options.callbackClean(that._tmpSelectDatas);
-                }
-            });
-
-            //搜索框事件
-            $sizerWrapDom.on('keyup', "#" + _nameStr + '_search' + _id, function () {
-                if (_isFirstClick) {
-                    _isFirstClick = false;
-                    that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
-                }
-                var resultDatas = searchData($(this).val());
-                resetSelectAll();
-                if ($.isFunction(that.options.callbackSearch)) {
-                    that.options.callbackSearch(resultDatas);
-                }
-            });
-
-            //多选筛选器独有事件
-            if (_isMultiple) {
-                /**
-                 * 全选或全不选
-                 * @param isChecked
-                 */
-                var checkAll = function (isChecked) {
-                    var _selects = [];
-                    var $checkBoxes = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]');
-                    $checkBoxes.each(function () {
-                        var $o = $(this);
-                        var _o = {};
-                        _o[that.options.dataMapping.name] = $o.data("key");
-                        _o[that.options.dataMapping.value] = $o.val();
-                        _selects.push(_o);
-                    });
-                    if (_isFirstClick) {
-                        _isFirstClick = false;
-                        that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
-                    }
-                    if (isChecked) {
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]:not(:checked)').prop('checked', 'checked');
-                        that._tmpSelectDatas = uniqueDatas(concatArray(that._tmpSelectDatas, _selects));
-                    } else {
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]:checked').prop('checked', false);
-                        var _oldSelectDatas = that._tmpSelectDatas,
-                            _newSelectDats = [];
-                        for (var i = 0; i < _oldSelectDatas.length; i++) {
-                            var isAdd = true,
-                                valueStr = that.options.dataMapping.value;
-                            for (var j = 0; j < _selects.length; j++) {
-                                if ("" + _selects[j][valueStr] === "" + _oldSelectDatas[i][valueStr]) {
-                                    isAdd = false;
-                                }
-                            }
-                            if (isAdd) {
-                                _newSelectDats.push(_oldSelectDatas[i]);
-                            }
-                        }
-                        that._tmpSelectDatas = _newSelectDats;
-                    }
-                    uniForm();
-                };
-
-                //全选
-                $sizerWrapDom.on('click', "#" + _nameStr + '_selectAll' + _id, function () {
-                    checkAll(true);
-                });
-
-                //清除选择
-                $sizerWrapDom.on('click', "#" + _nameStr + '_cleanAll' + _id, function () {
-                    checkAll(false);
-                });
-
-                //确定
-                $sizerWrapDom.on('click', "#" + _nameStr + '_btnSubmit' + _id, function () {
-                    if (_isFirstClick) {
-                        _isFirstClick = false;
-                        that._tmpSelectDatas = uniqueDatas(concatArray(that.selectDatas, that._tmpSelectDatas));
-                    }
-                    that.selectDatas = that._tmpSelectDatas;
-                    that._tmpSelectDatas = [];
-                    var _keyName = that.options.dataMapping.name,
-                        _valueName = that.options.dataMapping.value;
-                    $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
-                    for (var _i = 0; _i < that.selectDatas.length; _i++) {
-                        var _key = that.selectDatas[_i][_keyName],
-                            _value = that.selectDatas[_i][_valueName];
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                        var _o = {};
-                        _o[that.options.dataMapping.name] = _key;
-                        _o[that.options.dataMapping.value] = _value;
-                        that._tmpSelectDatas.push(_o);
-                    }
-                    if ($.isFunction(that.options.callbackSubmit)) {
-                        that.options.callbackSubmit(that.selectDatas, that.allDatas);
-                    }
-                    uniForm();
-                    resetSelectAll();
-                    closePanel(true);
-                });
-
-                //取消
-                $sizerWrapDom.on('click', "#" + _nameStr + '_btnCancel' + _id, function () {
-                    that._tmpSelectDatas = [];
-                    var _keyName = that.options.dataMapping.name,
-                        _valueName = that.options.dataMapping.value;
-                    $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
-                    for (var _i = 0; _i < that.selectDatas.length; _i++) {
-                        var _key = that.selectDatas[_i][_keyName],
-                            _value = that.selectDatas[_i][_valueName];
-                        $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                        var _o = {};
-                        _o[that.options.dataMapping.name] = _key;
-                        _o[that.options.dataMapping.val] = _value;
-                        that._tmpSelectDatas.push(_o);
-                    }
-                    if ($.isFunction(that.options.callbackCancel)) {
-                        that.options.callbackCancel();
-                    }
-                    uniForm();
-                    resetSelectAll();
-                    closePanel(true);
-                });
-            }
-        };
-
-        /**
-         * 关闭面板
-         */
-        var closePanel = function (isCallBack) {
-            _isFirstClick = true;
-            var $sizerWrap = $("#" + that.sizerName);
-            $sizerWrap.removeClass("sizer-open");
-            $("#" + _nameStr + '_search' + _id).val("");
-            that._tmpSelectDatas = [];
-            var _keyName = that.options.dataMapping.name,
-                _valueName = that.options.dataMapping.value;
-            $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]').prop('checked', false);
-            for (var _i = 0; _i < that.selectDatas.length; _i++) {
-                var _key = that.selectDatas[_i][_keyName],
-                    _value = that.selectDatas[_i][_valueName];
-                $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"][value="' + _value + '"]').prop('checked', 'checked');
-                var _o = {};
-                _o[that.options.dataMapping.name] = _key;
-                _o[that.options.dataMapping.value] = _value;
-                that._tmpSelectDatas.push(_o);
-            }
-            searchData("");
-            if (isCallBack && $.isFunction(that.options.callbackClose)) {
-                that.options.callbackClose(that.selectDatas, that.allDatas);
-            }
-        };
-
-        /**
-         * 为单选按钮设置文字
-         * @param text 需要设置的文字
-         */
-        var singleSetText = function (text) {
-            var title = ( text !== _oLanguage.promtText && !that.options.isMultiple ) ? (_oLanguage.promtText + ':' + text ) : text;
-            $("#" + that.sizerName).find("span.sizer-btn-text").empty().append(text);
-            $("#" + that.sizerName).find("button").attr("title", title);
-        };
-
-        /**
-         * 设置数据
-         * @param allDatas
-         * @param chooseDatas
-         */
-        var setData = function (allDatas, chooseDatas) {
-            var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
-            var _valueName = that.options.dataMapping.value;
-            var _keyName = that.options.dataMapping.name;
-
-            //暂时不在搜索的时候处理滚动条
-            //var $dataListWrap = $dataList.parents('.sizer-list-wrap');
-            //if (allDatas.length >= MAX_SHOW_SCROLL_LENGTH) {
-            //    $dataListWrap.addClass('scollbar');
-            //} else {
-            //    $dataListWrap.removeClass('scollbar');
-            //}
-
-            if (!allDatas || allDatas.length === 0) {
-                var _empty = '<div class="sizer-empty">' + _oLanguage.empty + '</div>';
-                $dataList.append(_empty);
-                return;
-            }
-            for (var i = 0, len = allDatas.length; i < len; i++) {
-                var _type = that.options.isMultiple ? "checkbox" : "radio";
-                var _dataKey = "" + allDatas[i][_keyName];
-                //对key值进行encode处理
-                var _encodeDataKey = $p.tool.encodeHtml(_dataKey);
-                var _dataValue = allDatas[i][_valueName];
-
-                var _tpl = '';
-                var _liCls = ((i + 1) % 2 === 0 ) ? 'mr-n' : '';
-                _liCls += i <= 1 ? ' mt-n' : '';
-
-                _tpl += '<li class="sizer-data-list-li ' + _liCls + '">';
-                _tpl += '<label title="' + _encodeDataKey + '"><input type="' + _type + '" value="' + _dataValue + '" data-key="' + _encodeDataKey + '"';
-                if (chooseDatas) {
-                    for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
-                        if ("" + _dataValue === "" + chooseDatas[j][_valueName]) {
-                            _tpl += 'checked=checked ';
-                        }
-                    }
-                }
-                _tpl += '>' + _encodeDataKey + '</label></li>';
-
-                $dataList.append(_tpl);
-            }
-            uniForm();
-        };
-
-        /**
-         * 初始化表单组件样式
-         */
-        var uniForm = function () {
-            that.container.find("input[type='checkbox']").uniform();
-            that.container.find("input[type='radio']").uniform();
-        };
-
-        var getSelectDatas = function () {
+        this.getSelectDatas = function () {
             var _selectDatas = [];
-            var allCheckBox = $('#' + that.sizerName + ' .sizer-data-list input[type="checkbox"]:checked');
+            var allCheckBox = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]:checked');
             allCheckBox.each(function () {
                 var oValue = {};
-                oValue[that.options.dataMapping.value] = "" + $(this).val();
-                oValue[that.options.dataMapping.name] = $(this).data("key");
+                oValue[_this.options.dataMapping.value] = "" + $(this).val();
+                oValue[_this.options.dataMapping.name] = $(this).data("key");
                 _selectDatas.push(oValue);
             });
             return _selectDatas;
@@ -444,26 +124,195 @@ define(function (require, exports, module) {
          * 打开面板
          */
         this.expandPanel = function () {
-            var $sizerWrap = $("#" + that.sizerName),
+            var $sizerWrap = _this.container,
                 _isExpand = $sizerWrap.hasClass("sizer-open");
             //关闭所有已展开的面板
             $('[id^="' + _nameStr + '"].sizer-wrap').removeClass("sizer-open");
             //判断是否展开如果展开则关闭
             if (_isExpand) {
-                //关闭面板时执行的方法
-                $sizerWrap.removeClass("sizer-open");
-                closePanel(true);
+                _this.close();
                 return this;
             }
-            //打开面板时执行的方法
-            $sizerWrap.addClass("sizer-open");
-            if (that.needLoad) {
-                that._loadData();
-            }
-            if ($.isFunction(that.options.callbackExpand)) {
-                that.options.callbackExpand(that.selectDatas);
+            _this.open();
+            if ($.isFunction(_this.options.callbackExpand)) {
+                _this.options.callbackExpand(_this.selectDatas);
             }
             return this;
+        };
+
+        //打开面板
+        this.open = function () {
+            _this.container.addClass("sizer-open");
+            if (_this.needLoad) {
+                _this.needLoad = false;
+
+                var _promise = _this._loadData();
+                if (_this.p_loadData) {
+                    _this.p_loadData.reject();
+                }
+                _this.p_loadData = _promise;
+                $.when(_this.p_loadData).done(function (resp) {
+                    _this._renderData(resp, true);
+                });
+            }
+        };
+
+        //关闭面板
+        this.close = function () {
+            _this.container.removeClass("sizer-open");
+            closePanel(true);
+        };
+
+        /**
+         * 选中数据
+         * @param values {array|string|obj}
+         * array:[{name:"2.1.12.3",value:1},...]
+         * obj:{name:"2.1.12.3",value:1},
+         * string:"all"全选,"null"全不选 ,如果为单选则接受直接传入value进行选中
+         */
+        this.chooseData = function (values) {
+            $.when(_this.p_loadData).done(function (data) {
+                chooseData(values);
+            });
+
+
+            function chooseData(values) {
+                var $container = _this.container,
+                    _value;
+                var _type = _this.options.isMultiple ? "checkbox" : "radio";
+                var _valueStr = _this.options.dataMapping.value;
+                var objAllData = {};
+
+                _this.allDatas.forEach(function (data) {
+                    objAllData[data[_valueStr]] = true;
+                });
+
+                var $checkboxs = _this.container.find('.sizer-data-list [type="' + _type + '"]');
+
+                if (!_this.options.isMultiple) {
+                    $checkboxs.prop("checked", false).uniform();
+                    _value = $.isArray(values) ? values[0] : values;
+                    _value = $p.tool.isObject(_value) ? "" + _value[_this.options.dataMapping.value] : "" + _value;
+                    if (!objAllData[_value]) {
+                        $p.log('value is not fonud');
+                        return;
+                    }
+                    $checkboxs.filter(function (index) {
+                        return "" + $checkboxs[index].value === _value;
+                    }).prop("checked", "checked").uniform();
+
+                    singleSetText(_value[_this.options.dataMapping.name] || _oLanguage.promtText);
+                    _this._tmpSelectDatas = _this.selectDatas = [_value];
+                    return;
+                }
+
+                if (values === "all") {
+                    $container.find('.sizer-data-list [type="checkbox"]').prop('checked', 'checked');
+                    _this.selectDatas = _this._tmpSelectDatas = _this.allDatas;
+                }
+
+                if (values === "null") {
+                    $container.find('.sizer-data-list [type="checkbox"]').prop('checked', false);
+                    _this.selectDatas = _this._tmpSelectDatas = [];
+                }
+
+                if ($.isArray(values)) {
+                    $checkboxs.prop('checked', false).uniform();
+                    //var _valueStr = _this.options.dataMapping.value,
+                    var _selectDatas = [];
+                    //var objAllData = {};
+                    var _values = [];
+
+                    //_this.allDatas.forEach(function (data) {
+                    //    objAllData[data[_valueStr]] = true;
+                    //});
+
+                    values.forEach(function (data) {
+                        if (objAllData[data[_valueStr]]) {
+                            _values.push(data);
+                        }
+                    });
+
+                    for (var i = 0; i < _values.length; i++) {
+                        _value = _values[i];
+
+                        $checkboxs.filter(function (index) {
+                            return "" + $checkboxs[index].value === "" + _value[_valueStr];
+                        }).prop("checked", "checked").uniform();
+
+                        _selectDatas.push(_getData(_value[_valueStr]));
+                    }
+                    _this.selectDatas = _this._tmpSelectDatas = _selectDatas;
+                }
+
+                /**
+                 * 通过id获取已选中的对象
+                 * @param id
+                 * @returns {*}
+                 * @private
+                 */
+                function _getData(id) {
+                    return $.grep(_this.allDatas, function (value) {
+                        return "" + id === "" + value[_valueStr];
+                    })[0];
+                }
+
+                uniForm();
+            }
+        };
+
+        /**
+         * 重新拉取数据
+         */
+        this.update = function (params) {
+            _this.needLoad = false;
+            //$("#" + _nameStr + "_listwrap" + _id).addClass("loading");
+            //$("#" + _nameStr + "_datalist" + _id).empty();
+            _this.container.find('.sizer-list-wrap').addClass("loading");
+            _this.container.find('.sizer-data-list').empty();
+            _this.selectDatas = [];
+            _this._tmpSelectDatas = [];
+            var _promise;
+            //cleanOption(false);
+            if (params !== undefined) {
+                _this.params = _this.options.dataParams = $.extend({}, _this.options.dataParams, params);
+            }
+            //多选
+            if (_this.options.isMultiple) {
+                //$("#" + _this.sizerName).removeClass("sizer-open");
+            } else {
+                singleSetText(_oLanguage.promtText);
+            }
+            _promise = _this._loadData();
+            if (_this.p_loadData) {
+                _this.p_loadData.reject();
+            }
+            _this.p_loadData = _promise;
+            $.when(_this.p_loadData).done(function (resp) {
+                _this._renderData(resp);
+            });
+            return this;
+        };
+
+        /**
+         * 绑定、解绑事件
+         * @param eventName 事件名称
+         * @param call 回调事件 如果没有 则为解绑
+         */
+        this._manageEvent = function (eventName, call) {
+            if (Object.prototype.toString.call(eventName) !== "[object String]") {
+                throw "manageEvent exception: type of eventName error";
+            }
+            var _eventName = 'callback' + eventName.split("")[0].toUpperCase() + eventName.substr(1, eventName.length - 1);
+            if (arguments.length === 1) {
+                if ($.isFunction(_this.options[_eventName])) {
+                    _this.options[_eventName] = null;
+                }
+                return;
+            }
+            if ($.isFunction(_this.options[_eventName]) || _this.options[_eventName] === null) {
+                _this.options[_eventName] = call;
+            }
         };
 
         /**
@@ -472,22 +321,36 @@ define(function (require, exports, module) {
          * @private
          */
         this._loadData = function () {
-            var $listWrap = $("#" + _nameStr + "_listwrap" + _id);
-            var _dataParams = that.options.dataParams;
-            that.params = $.isFunction(_dataParams) ? _dataParams() : _dataParams;
-            that.options.dataSource(that.params, function (resp) {
-                if ($listWrap.hasClass("loading")) {
-                    $listWrap.removeClass("loading");
-                }
-                var _result = resp.result || {};
-                var _datas = $.isArray(_result) ? _result : _result.items || [];
-                if (_datas.length >= MAX_SHOW_SCROLL_LENGTH) {
-                    $listWrap.addClass("scollbar");
-                }
+            var _dataParams = _this.options.dataParams;
+            _this.params = $.isFunction(_dataParams) ? _dataParams() : _dataParams;
+            var _promise = $.Deferred();
+            _this.options.dataSource(_this.params, function (resp) {
+                _promise.resolve(resp);
+            });
+            return _promise;
+        };
 
-                that.allDatas = _datas;
-                var _chooseDatas = [];
-                if (that.options.isMultiple) {
+        /**
+         * 渲染dom
+         * @param resp
+         * @param loadConfig 是否读取构造参数中的chooseDatas
+         * @private
+         */
+        this._renderData = function (resp, loadConfig) {
+            var $listWrap = _this.container.find("#" + _nameStr + "_listwrap" + _id);
+            if ($listWrap.hasClass("loading")) {
+                $listWrap.removeClass("loading");
+            }
+            var _result = resp.result || {};
+            var _datas = $.isArray(_result) ? _result : _result.items || [];
+            if (_datas.length >= MAX_SHOW_SCROLL_LENGTH) {
+                $listWrap.addClass("scollbar");
+            }
+
+            _this.allDatas = _datas;
+            var _chooseDatas = [];
+            if (loadConfig) {
+                if (_this.options.isMultiple) {
                     if (chooseDatas === "all") {
                         _chooseDatas = _datas;
                     }
@@ -504,134 +367,468 @@ define(function (require, exports, module) {
                         _chooseDatas.push(chooseDatas[0]);
                     }
                 }
-                setData(_datas, _chooseDatas);
-                var _selectVals = [];
-                var _selectDatas = [];
-                _chooseDatas.forEach(function (data) {
-                    _selectVals.push(data[that.options.dataMapping.value]);
-                });
-                _datas.forEach(function (data) {
-                    if (_selectVals.indexOf(data[that.options.dataMapping.value]) > -1) {
-                        _selectDatas.push(data);
-                    }
-                });
-                that.selectDatas = _selectDatas;
-                that.needLoad = false;
-                if ($.isFunction(that.options.callbackLoadData)) {
-                    that.options.callbackLoadData(that.selectDatas, that.allDatas);
+            }
+            setData(_datas, _chooseDatas);
+            var _selectVals = [];
+            var _selectDatas = [];
+            _chooseDatas.forEach(function (data) {
+                _selectVals.push(data[_this.options.dataMapping.value]);
+            });
+            _datas.forEach(function (data) {
+                if (_selectVals.indexOf(data[_this.options.dataMapping.value]) > -1) {
+                    _selectDatas.push(data);
                 }
             });
-            return this;
+            _this.selectDatas = _selectDatas;
+            _this.needLoad = false;
+
+            _this.p_loadData.resolve(_datas);
+            if ($.isFunction(_this.options.callbackLoadData)) {
+                _this.options.callbackLoadData(_this.selectDatas, _this.allDatas);
+            }
+        };
+        /**
+         * 载入数据
+         * @returns {Sizer}
+         * @private
+         */
+        this._loadData = function () {
+            var _dataParams = _this.options.dataParams;
+            _this.params = $.isFunction(_dataParams) ? _dataParams() : _dataParams;
+            var _promise = $.Deferred();
+            _this.options.dataSource(_this.params, function (resp) {
+                _promise.resolve(resp);
+            });
+            return _promise;
         };
 
         /**
-         * 选中数据
-         * @param value {array|string|obj}
-         * array:[{name:"2.1.12.3",value:1},...]
-         * obj:{name:"2.1.12.3",value:1},
-         * string:"all"全选,"null"全不选
+         * 渲染dom
+         * @param resp
+         * @param loadConfig 是否读取构造参数中的chooseDatas
+         * @private
          */
-        this.chooseData = function (value) {
-            var $container = $('#' + that.sizerName),
-                _value;
-            if (!that.options.isMultiple) {
-                $('#' + that.sizerName + ' .sizer-data-list [type="radio"]').prop("checked", false);
-                _value = $.isArray(value) ? value[0] : value;
-                $('#' + that.sizerName + ' .sizer-data-list [type="radio"][value="' + _value[that.options.dataMapping.value] + '"]').prop("checked", "checked").uniform();
-                singleSetText(_value[that.options.dataMapping.name] || _oLanguage.promtText);
-                that._tmpSelectDatas = that.selectDatas = [_value];
-                return;
+        this._renderData = function (resp, loadConfig) {
+            var $listWrap = _this.container.find("#" + _nameStr + "_listwrap" + _id);
+            if ($listWrap.hasClass("loading")) {
+                $listWrap.removeClass("loading");
             }
-            if (value === "all") {
-                $container.find('.sizer-data-list [type="checkbox"]').prop('checked', 'checked');
-                that.selectDatas = that._tmpSelectDatas = that.allDatas;
+            var _result = resp.result || {};
+            var _datas = $.isArray(_result) ? _result : _result.items || [];
+            if (_datas.length >= MAX_SHOW_SCROLL_LENGTH) {
+                $listWrap.addClass("scollbar");
             }
 
-            if (value === "null") {
-                $container.find('.sizer-data-list [type="checkbox"]').prop('checked', false);
-                that.selectDatas = that._tmpSelectDatas = [];
-            }
+            _this.allDatas = _datas;
+            var _chooseDatas = [];
+            if (loadConfig) {
+                if (_this.options.isMultiple) {
+                    if (chooseDatas === "all") {
+                        _chooseDatas = _datas;
+                    }
 
-            if ($.isArray(value)) {
-                $container.find('.sizer-data-list [type="checkbox"]').prop('checked', false);
-                var _valueStr = that.options.dataMapping.value,
-                    _selectDatas = [];
+                    if (chooseDatas === "null") {
+                        _chooseDatas = [];
+                    }
 
-                for (var i = 0; i < value.length; i++) {
-                    _value = value[i];
-                    $('#' + that.sizerName + ' .sizer-data-list [type="checkbox"][value="' + _value[_valueStr] + '"]').prop("checked", "checked");
-                    _selectDatas.push(_getData(_value[_valueStr]));
+                    if ($.isArray(chooseDatas)) {
+                        _chooseDatas = chooseDatas;
+                    }
+                } else {
+                    if ($.isArray(chooseDatas)) {
+                        _chooseDatas.push(chooseDatas[0]);
+                    }
                 }
-                that.selectDatas = that._tmpSelectDatas = _selectDatas;
             }
+            setData(_datas, _chooseDatas);
+            var _selectVals = [];
+            var _selectDatas = [];
+            _chooseDatas.forEach(function (data) {
+                _selectVals.push(data[_this.options.dataMapping.value]);
+            });
+            _datas.forEach(function (data) {
+                if (_selectVals.indexOf(data[_this.options.dataMapping.value]) > -1) {
+                    _selectDatas.push(data);
+                }
+            });
+            _this.selectDatas = _selectDatas;
+            _this.needLoad = false;
 
-            /**
-             * 通过id获取已选中的对象
-             * @param id
-             * @returns {*}
-             * @private
-             */
-            function _getData(id) {
-                return $.grep(that.allDatas, function (value) {
-                    return "" + id === "" + value[_valueStr];
-                })[0];
+            _this.p_loadData.resolve(_datas);
+            if ($.isFunction(_this.options.callbackLoadData)) {
+                _this.options.callbackLoadData(_this.selectDatas, _this.allDatas);
             }
+        };
 
+        /**
+         * 初始化组件
+         */
+        function init() {
+            if ($sizerBtn.length === 0) {
+                throw  "Selector dom is not found";
+            }
+            _this.options = $.extend(_this.options, options);
+            _this.matchCase = _this.options.matchCase;
+            if (_this.options.isMultiple) {
+                _this._tmpSelectDatas = []; //暂存数据
+                _this.isFirstClick = true; //是否为第一次点击
+                _this.isFirstSearch = true; //是否为第一次搜索
+            }
+            drawDom();
+            bindEvent();
+            if (_this.options.isExpand) {
+                _this.open();
+            }
+            if (chooseDatas) {
+                if (!_this.options.isMultiple && chooseDatas[0][_this.options.dataMapping.name]) {
+                    singleSetText(chooseDatas[0][_this.options.dataMapping.name]);
+                }
+                _this.selectDatas = chooseDatas;
+            }
+        }
+
+        /**
+         * 绘制组件
+         */
+        function drawDom() {
+            _oLanguage.multipleClass = _this.options.isMultiple ? "sizer-multiple" : "";
+
+            var $sizerWrap = $('<div class="sizer-wrap"></div>');
+            var $selectAll = $('<a></a>');
+            var $clearAll = $('<a></a>');
+            var $clearSingle = $('<a></a>');
+            var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
+
+            $sizerWrap.attr('id', _this.sizerName).addClass(_this.options.style);
+            $selectAll.prop('href', 'javascript:;').attr('id', _nameStr + '_selectAll' + _id).append(_oLanguage.chooseAll);
+            $clearAll.prop('href', 'javascript:;').attr('id', _nameStr + '_cleanAll' + _id).append(_oLanguage.clearSingle);
+            $clearSingle.prop('href', 'javascript:;').attr('id', _nameStr + '_clean' + _id).append(_oLanguage.clearSingle);
+            $sizerBtn.wrap($sizerWrap);
+
+            $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
+
+            if (_this.options.isMultiple) {
+                sizerSelectPanel.find(".sizer-btn-group").append($selectAll).append($clearAll);
+                sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
+            } else {
+                sizerSelectPanel.find(".sizer-btn-group").append($clearSingle);
+            }
+            $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
+            $("#" + _nameStr + '_select_panel' + _id).css(_this.options.position);
+            if (_this.container === null) {
+                _this.container = $sizerBtn.parent(".sizer-wrap");
+            }
             uniForm();
-        };
+        }
 
         /**
-         * 重新拉取数据
+         * 绑定事件
+         * @param selector
+         * @param options
          */
-        this.update = function (params) {
-            cleanOption(false);
-            if (params !== undefined) {
-                that.params = that.options.dataParams = $.extend({}, that.options.dataParams, params);
-            }
-            //多选
-            if (that.options.isMultiple) {
-                $("#" + that.sizerName).removeClass("sizer-open");
-                that._loadData();
-                return this;
-            }
-            //单选
-            singleSetText(_oLanguage.promtText);
-            that._loadData();
-            return this;
-        };
+        function bindEvent() {
+            var _isMultiple = _this.options.isMultiple;
+            $sizerBtn.on('click', function () {
+                _this.expandPanel();
+            });
 
-        /**
-         * 绑定、解绑事件
-         * @param eventName 事件名称
-         * @param call 回调事件 如果没有 则为解绑
-         */
-        this._manageEvent = function (eventName, call) {
-            if (Object.prototype.toString.call(eventName) !== "[object String]") {
-                throw "manageEvent exception: type of eventName error";
-            }
-            var _eventName = 'callback' + eventName.split("")[0].toUpperCase() + eventName.substr(1, eventName.length - 1);
-            if (arguments.length === 1) {
-                if ($.isFunction(that.options[_eventName])) {
-                    that.options[_eventName] = null;
+            //选项点击事件
+            _this.container.find('.sizer-data-list').on('click', ' .sizer-data-list-li [type]', function (event) {
+                if (!_isCanTrigger()) {
+                    return;
                 }
+                var type = _this.options.isMultiple ? 'checkbox' : 'radio',
+                    $checkBox = $(this);
+                var _dataName = _this.options.dataMapping.name,
+                    _dataValue = _this.options.dataMapping.value,
+                    _data = {};
+                _data[_dataName] = $checkBox.data("key");
+                var _checkVal = $checkBox.val();
+                _data[_dataValue] = isNaN(_checkVal) ? _checkVal : +_checkVal;
+                //单选
+                if (!_this.options.isMultiple) {
+                    singleSetText(_data[_dataName]);
+                    _this._tmpSelectDatas = _this.selectDatas = [_data];
+                    if ($.isFunction(_this.options.callbackOption)) {
+                        _this.options.callbackOption(_data);
+                    }
+                    closePanel(true);
+                }
+
+                //多选
+                if (_this.options.isMultiple) {
+                    if (_isFirstClick) {
+                        _isFirstClick = false;
+                        _this._tmpSelectDatas = uniqueDatas(concatArray(_this.selectDatas, _this._tmpSelectDatas));
+                    }
+                    _this._tmpSelectDatas = uniqueDatas(concatArray(_this._tmpSelectDatas, _data));
+                    if (!$checkBox.is(":checked")) {
+                        _this._tmpSelectDatas = $.grep(_this._tmpSelectDatas, function (o) {
+                            return "" + _data[_dataValue] !== "" + o[_dataValue];
+                        });
+                    }
+                    if ($.isFunction(_this.options.callbackOption)) {
+                        _this.options.callbackOption(_data, $checkBox.is(":checked"));
+                    }
+                }
+            });
+
+            //清除选择
+            _this.container.on('click', "#" + _nameStr + '_clean' + _id, function () {
+                cleanOption(true);
+                if ($.isFunction(_this.options.callbackClean)) {
+                    _this.options.callbackClean(_this._tmpSelectDatas);
+                }
+            });
+
+            //搜索框事件
+            _this.container.on('keyup', "#" + _nameStr + '_search' + _id, $p.tool.debounce(function () {
+                if (_isFirstClick) {
+                    _isFirstClick = false;
+                    _this._tmpSelectDatas = uniqueDatas(concatArray(_this.selectDatas, _this._tmpSelectDatas));
+                }
+                var resultDatas = searchData($(this).val());
+                //resetSelectAll();
+                if ($.isFunction(_this.options.callbackSearch)) {
+                    _this.options.callbackSearch(resultDatas);
+                }
+            }, 200));
+
+
+            //多选筛选器独有事件
+            if (_isMultiple) {
+                /**
+                 * 全选或全不选
+                 * @param isChecked
+                 */
+                var checkAll = function (isChecked) {
+                    var _selects = [];
+                    var $checkBoxes = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]');
+                    $checkBoxes.each(function () {
+                        var $o = $(this);
+                        var _o = {};
+                        _o[_this.options.dataMapping.name] = $o.data("key");
+                        _o[_this.options.dataMapping.value] = $o.val();
+                        _selects.push(_o);
+                    });
+                    if (_isFirstClick) {
+                        _isFirstClick = false;
+                        _this._tmpSelectDatas = uniqueDatas(concatArray(_this.selectDatas, _this._tmpSelectDatas));
+                    }
+                    if (isChecked) {
+                        $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]:not(:checked)').prop('checked', 'checked');
+                        _this._tmpSelectDatas = uniqueDatas(concatArray(_this._tmpSelectDatas, _selects));
+                    } else {
+                        $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]:checked').prop('checked', false);
+                        var _oldSelectDatas = _this._tmpSelectDatas,
+                            _newSelectDats = [];
+                        for (var i = 0; i < _oldSelectDatas.length; i++) {
+                            var isAdd = true,
+                                valueStr = _this.options.dataMapping.value;
+                            for (var j = 0; j < _selects.length; j++) {
+                                if ("" + _selects[j][valueStr] === "" + _oldSelectDatas[i][valueStr]) {
+                                    isAdd = false;
+                                }
+                            }
+                            if (isAdd) {
+                                _newSelectDats.push(_oldSelectDatas[i]);
+                            }
+                        }
+                        _this._tmpSelectDatas = _newSelectDats;
+                    }
+                    uniForm();
+                };
+
+                //全选
+                _this.container.on('click', "#" + _nameStr + '_selectAll' + _id, function () {
+                    checkAll(true);
+                });
+
+                //清除选择
+                _this.container.on('click', "#" + _nameStr + '_cleanAll' + _id, function () {
+                    checkAll(false);
+                });
+
+                //确定
+                _this.container.on('click', "#" + _nameStr + '_btnSubmit' + _id, function () {
+                    if (_isFirstClick) {
+                        _isFirstClick = false;
+                        _this._tmpSelectDatas = uniqueDatas(concatArray(_this.selectDatas, _this._tmpSelectDatas));
+                    }
+                    _this.selectDatas = _this._tmpSelectDatas;
+                    _this._tmpSelectDatas = [];
+                    var _keyName = _this.options.dataMapping.name,
+                        _valueName = _this.options.dataMapping.value;
+                    var $checkboxs = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]');
+                    $checkboxs.prop('checked', false);
+                    for (var _i = 0; _i < _this.selectDatas.length; _i++) {
+                        var _key = _this.selectDatas[_i][_keyName],
+                            _value = _this.selectDatas[_i][_valueName];
+                        $checkboxs.filter(function (index) {
+                            return "" + $checkboxs[index].value === "" + _value;
+                        }).prop('checked', 'checked');
+                        var _o = {};
+                        _o[_this.options.dataMapping.name] = _key;
+                        _o[_this.options.dataMapping.value] = _value;
+                        _this._tmpSelectDatas.push(_o);
+                    }
+                    if ($.isFunction(_this.options.callbackSubmit)) {
+                        _this.options.callbackSubmit(_this.selectDatas, _this.allDatas);
+                    }
+                    uniForm();
+                    //resetSelectAll();
+                    closePanel(true);
+                });
+
+                //取消
+                _this.container.on('click', "#" + _nameStr + '_btnCancel' + _id, function () {
+                    _this._tmpSelectDatas = [];
+                    var _keyName = _this.options.dataMapping.name,
+                        _valueName = _this.options.dataMapping.value;
+                    var $checkboxs = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]');
+                    $checkboxs.prop('checked', false);
+                    for (var _i = 0; _i < _this.selectDatas.length; _i++) {
+                        var _key = _this.selectDatas[_i][_keyName],
+                            _value = _this.selectDatas[_i][_valueName];
+                        $checkboxs.filter(function (index) {
+                            return "" + $checkboxs[index].value === "" + _value;
+                        }).prop('checked', 'checked');
+                        var _o = {};
+                        _o[_this.options.dataMapping.name] = _key;
+                        _o[_this.options.dataMapping.val] = _value;
+                        _this._tmpSelectDatas.push(_o);
+                    }
+                    if ($.isFunction(_this.options.callbackCancel)) {
+                        _this.options.callbackCancel();
+                    }
+                    uniForm();
+                    //resetSelectAll();
+                    closePanel(true);
+                });
+            }
+        }
+
+        /**
+         * 关闭面板
+         * @param excuteCallBack [boolean] 是否执行关闭面板回调
+         */
+        function closePanel(excuteCallBack) {
+            _isFirstClick = true;
+            var $sizerWrap = _this.container;
+            $sizerWrap.removeClass("sizer-open");
+            $("#" + _nameStr + '_search' + _id).val("");
+            _this._tmpSelectDatas = [];
+            var _keyName = _this.options.dataMapping.name,
+                _valueName = _this.options.dataMapping.value;
+            var $checkboxs = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]');
+
+            $checkboxs.prop('checked', false);
+
+            for (var _i = 0; _i < _this.selectDatas.length; _i++) {
+                var _key = _this.selectDatas[_i][_keyName],
+                    _value = _this.selectDatas[_i][_valueName];
+
+                $checkboxs.filter(function (index) {
+                    return "" + $checkboxs[index].value === "" + _value;
+                }).prop('checked', 'checked');
+
+                var _o = {};
+                _o[_this.options.dataMapping.name] = _key;
+                _o[_this.options.dataMapping.value] = _value;
+                _this._tmpSelectDatas.push(_o);
+            }
+
+            searchData("");
+            if (excuteCallBack && $.isFunction(_this.options.callbackClose)) {
+                _this.options.callbackClose(_this.selectDatas, _this.allDatas);
+            }
+        }
+
+        /**
+         * 为单选按钮设置文字
+         * @param text 需要设置的文字
+         */
+        function singleSetText(text) {
+            var title = ( text !== _oLanguage.promtText && !_this.options.isMultiple ) ? (_oLanguage.promtText + ':' + text ) : text;
+            $("#" + _this.sizerName).find("span.sizer-btn-text").empty().append(text);
+            $("#" + _this.sizerName).find("button").attr("title", title);
+        }
+
+        /**
+         * 设置数据
+         * @param allDatas
+         * @param chooseDatas
+         */
+        function setData(allDatas, chooseDatas) {
+            //var $dataList = $("#" + _nameStr + "_datalist" + _id).empty();
+            var $dataList = _this.container.find('.sizer-data-list').empty();
+            var _valueName = _this.options.dataMapping.value;
+            var _keyName = _this.options.dataMapping.name;
+
+            //暂时不在搜索的时候处理滚动条
+            //var $dataListWrap = $dataList.parents('.sizer-list-wrap');
+            //if (allDatas.length >= MAX_SHOW_SCROLL_LENGTH) {
+            //    $dataListWrap.addClass('scollbar');
+            //} else {
+            //    $dataListWrap.removeClass('scollbar');
+            //}
+
+            if (!allDatas || allDatas.length === 0) {
+                var _empty = '<div class="sizer-empty">' + _oLanguage.empty + '</div>';
+                $dataList.append(_empty);
                 return;
             }
-            if ($.isFunction(that.options[_eventName]) || that.options[_eventName] === null) {
-                that.options[_eventName] = call;
+            for (var i = 0, len = allDatas.length; i < len; i++) {
+                var _type = _this.options.isMultiple ? "checkbox" : "radio";
+                var _dataKey = "" + allDatas[i][_keyName];
+                var _dataValue = allDatas[i][_valueName];
+
+                var _liCls = ((i + 1) % 2 === 0 ) ? 'mr-n' : '';
+                _liCls += i <= 1 ? ' mt-n' : '';
+
+                var $li = $('<li class="sizer-data-list-li "></li>');
+                var $label = $('<label></label>');
+                var $input = $('<input/>');
+
+                $li.addClass(_liCls);
+                $label.prop('title', _dataKey);
+                $input.prop('type', _type);
+                $input.val(_dataValue);
+                $input.attr('data-key', _dataKey);
+                if (chooseDatas) {
+                    for (var j = 0, lenJ = chooseDatas.length; j < lenJ; j++) {
+                        if ("" + _dataValue === "" + chooseDatas[j][_valueName]) {
+                            $input.prop('checked', 'checked');
+                        }
+                    }
+                }
+                $label.append($input).append(_dataKey);
+                $li.append($label);
+                $dataList.append($li);
             }
-        };
+            uniForm();
+        }
+
+        /**
+         * 初始化表单组件样式
+         */
+        function uniForm() {
+            _this.container.find("input[type='checkbox']").uniform();
+            _this.container.find("input[type='radio']").uniform();
+        }
 
         /**
          * 清除选中选项
          * @param isCallBackClose 是否执行关闭面板时的回调
          */
         function cleanOption(isCallBackClose) {
+            var $dataLis = _this.container.find('sizer-data-list-li');
             //多选
-            if (that.options.isMultiple) {
-                if (that.isFirstClick) {
-                    that.isFirstClick = false;
+            if (_this.options.isMultiple) {
+                if (_this.isFirstClick) {
+                    _this.isFirstClick = false;
                 }
-                var $dataLis = $("#" + that.sizerName + " .sizer-data-list-li");
+                //var $dataLis =$("#" + _this.sizerName + " .sizer-data-list-li")
                 $dataLis.each(function () {
                     if ($(this).hasClass("selected")) {
                         $(this).click();
@@ -643,15 +840,15 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if ($.isFunction(that.options.callbackClean)) {
-                    that.options.callbackClean(that._tmpSelectDatas);
+                if ($.isFunction(_this.options.callbackClean)) {
+                    _this.options.callbackClean(_this._tmpSelectDatas);
                 }
             }
 
             //单选
-            if (!that.options.isMultiple) {
-                $("#" + that.sizerName + " .sizer-data-list-li").removeClass("selected");
-                that.selectDatas = [];
+            if (!_this.options.isMultiple) {
+                $dataLis.removeClass("selected");
+                _this.selectDatas = [];
                 singleSetText(_oLanguage.promtText);
                 closePanel(isCallBackClose);
             }
@@ -663,27 +860,28 @@ define(function (require, exports, module) {
          * @returns {Array} 搜索到的数据
          */
         function searchData(text) {
-            var _selectDatas = getSelectDatas(),
+            var _selectDatas = _this.getSelectDatas(),
                 word = text,
-                _datas = that.allDatas,
+                _datas = _this.allDatas,
                 _tempDatas = [],
                 _tempSelectDatas = [];
-            word = that.matchCase ? $.trim(word).toUpperCase() : $.trim(word);
-            $("#" + _nameStr + "_datalist" + _id).empty();
+            word = _this.matchCase ? $.trim(word).toUpperCase() : $.trim(word);
+            //$("#" + _nameStr + "_datalist" + _id).empty();
+            _this.container.find('.sizer-data-list').empty();
             for (var i = 0, len = _datas.length; i < len; i++) {
-                var _str = that.matchCase ? _datas[i][that.options.dataMapping.name].toUpperCase() : _datas[i][that.options.dataMapping.name];
+                var _str = _this.matchCase ? _datas[i][_this.options.dataMapping.name].toUpperCase() : _datas[i][_this.options.dataMapping.name];
                 if (_str.indexOf(word) <= -1) {
                     continue;
                 }
                 _tempDatas.push(_datas[i]);
                 for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                    if ("" + _datas[i][that.options.dataMapping.value] === _selectDatas[j][that.options.dataMapping.value]) {
+                    if ("" + _datas[i][_this.options.dataMapping.value] === _selectDatas[j][_this.options.dataMapping.value]) {
                         _tempSelectDatas.push(_datas[i]);
                     }
                 }
             }
-            setData(_tempDatas, that._tmpSelectDatas);
-            resetSelectAll();
+            setData(_tempDatas, _this._tmpSelectDatas);
+            //resetSelectAll();
             return _tempDatas;
         }
 
@@ -695,7 +893,7 @@ define(function (require, exports, module) {
         function uniqueDatas(arr) {
             var _o = {},
                 _attr = [],
-                _dataValue = that.options.dataMapping.value;
+                _dataValue = _this.options.dataMapping.value;
             for (var i = 0, len = arr.length; i < len; i++) {
                 if (!_o[arr[i][_dataValue]]) {
                     _attr.push(arr[i]);
@@ -729,9 +927,9 @@ define(function (require, exports, module) {
         /**
          * 重置全选按钮
          */
-        function resetSelectAll() {
-            $('#' + _nameStr + '_selectAll' + _id + ' [type="checkbox"]').prop("checked", false).uniform();
-        }
+        //function resetSelectAll() {
+        //    $('#' + _nameStr + '_selectAll' + _id + ' [type="checkbox"]').prop("checked", false).uniform();
+        //}
 
         /**
          * 判断是否可以触发事件
@@ -746,21 +944,12 @@ define(function (require, exports, module) {
         }
 
         init();
-
     }
 
     Sizer.prototype = {
         constructor: Sizer,
-        //version: this.version,
-        //options: this.options,
         getOption: function () {
             return this.options;
-        },
-        getAllDatas: function () {
-            return this.allDatas;
-        },
-        getSelectDatas: function () {
-            return this.selectDatas;
         },
         chooseData: function (data) {
             this.chooseData(data);
@@ -770,16 +959,14 @@ define(function (require, exports, module) {
             this._manageEvent(eventName, call);
             return this;
         },
-        unBind: function (eventName) {
+        off: function (eventName) {
             this._manageEvent(eventName);
             return this;
         },
         //销毁
         destroy: function () {
-            $('#' + this.sizerName).remove();
+            this.container.remove();
         }
-        //expandPanel: this.expandPanel,
-        //update: this.update
     };
 
     /**

@@ -4,6 +4,7 @@
     "trailing": true,
     "evil": true,
     "loopfunc": true,
+    "scripturl":true,
     "globals": {
         "jQuery": true
     }
