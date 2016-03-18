@@ -515,9 +515,7 @@ define(function (require, exports, module) {
             }
             $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
             $("#" + _nameStr + '_select_panel' + _id).css(_this.options.position);
-            if (_this.container === null) {
-                _this.container = $sizerBtn.parent(".sizer-wrap");
-            }
+            _this.container = $sizerBtn.parent(".sizer-wrap");
             uniForm();
         }
 
