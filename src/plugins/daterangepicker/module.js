@@ -77,34 +77,49 @@ define(function(require, exports, module) {
 
         this.options = _options[pagurian.language || "zh_CN"];
 
+        this.setValue = function(startDate, endDate) {
+
+            var value = [
+                startDate.format(this.options.textForamt),
+                this.options.separator,
+                endDate.format(this.options.textForamt)
+            ].join("");
+
+            if (this.container.find("input[type='text']").length) {
+                this.container.find("input[type='text']").val(value);
+            } else if (this.container.is("input[type='button']")) {
+                this.container.val(value);
+            } else {
+                this.container.text(value);
+            }
+        };
+
         this.init = function() {
 
+            var self = this;
             if (!jQuery().daterangepicker) {
                 return;
             }
 
+            this.container = $(selector);
             $.extend(true, this.options, options);
 
-            var _options = this.options;
-
             //今天 昨天 最近一周，最近一个月，最近三个月，最近半年
-            $(selector).daterangepicker(this.options, function(start, end) {
-                $(this).foramt = _options.textForamt;
-                $(selector).find('input').val(start.format(_options.textForamt) + _options.separator + end.format(_options.textForamt));
-                if ("function" === typeof callback) callback(start.format(_options.format), end.format(_options.format));
+            this.container.daterangepicker(this.options, function(start, end) {
+                $(this).foramt = self.options.textForamt;
+                self.setValue(start, end);
+                if ($.isFunction(callback)) {
+                    callback(start.format(self.options.format), end.format(self.options.format));
+                }
             });
 
-
-            if (_options.defaultDate) {
-                if($(selector).find('input').length){
-                    $(selector).find('input').val(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
-                }else{
-                    $(selector).text(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
-                }
+            //设置默认值
+            if (this.options.defaultDate) {
+                this.setValue(momentStartDate, momentEndDate);
             }
-            
-            $(selector).find('input').prop("readonly", true);
 
+            //文本框设置为只读
+            $(selector).find('input[type=text]').prop("readonly", true);
             return this;
         };
 
@@ -112,9 +127,7 @@ define(function(require, exports, module) {
 
 
     g[PagurianAlias].dateRangePicker = function(selector, options, callback) {
-        var picker = new DateRangePicker(selector, options, callback);
-        picker.init();
-        return picker;
+        return new DateRangePicker(selector, options, callback).init();
     };
 
 });
