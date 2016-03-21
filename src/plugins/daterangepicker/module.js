@@ -96,8 +96,13 @@ define(function(require, exports, module) {
 
 
             if (_options.defaultDate) {
-                $(selector).find('input').val(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
+                if($(selector).find('input').length){
+                    $(selector).find('input').val(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
+                }else{
+                    $(selector).text(momentStartDate.format(_options.textForamt) + ' -- ' + momentEndDate.format(_options.textForamt));
+                }
             }
+            
             $(selector).find('input').prop("readonly", true);
 
             return this;
