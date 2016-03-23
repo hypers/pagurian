@@ -19,7 +19,6 @@ define(function(require, exports, module) {
             $p.log("url is undefined");
             return false;
         }
-
         return true;
     }
 
@@ -34,6 +33,7 @@ define(function(require, exports, module) {
         if (arguments.length === 1 && $.isPlainObject(arguments[0])) {
             return $.extend(options, arguments[0]);
         }
+
         if (arguments.length === 3) {
             options.url = arguments[0];
             options.params = filterParams(arguments[1]);
@@ -46,12 +46,12 @@ define(function(require, exports, module) {
         options.params = filterParams(arguments[2]);
         options.callback = arguments[3];
 
-
         return options;
     }
 
     //过滤请求参数
     function filterParams(params) {
+
         var data = $.isArray(params) ? [] : {};
 
         function push(key, value) {
@@ -72,8 +72,11 @@ define(function(require, exports, module) {
                 push(index, value);
             }
         });
-
         return data;
+    }
+
+    function encode(data) {
+        return encodeURI(data);
     }
 
     /**
@@ -111,7 +114,10 @@ define(function(require, exports, module) {
         if (!validateRequest(options)) {
             return false;
         }
-        if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
+
+        if (options.type === "get") {
+            options.params = encode($.param(options.params, true));
+        } else if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
 
             if (!options.original) {
                 options.params = transport.toObject(options.params);
@@ -121,6 +127,7 @@ define(function(require, exports, module) {
                 options.params = transport.toJSON(options.params);
             }
         }
+
 
         ajax.request(options, function(response) {
             var valid = validate.check(response);
@@ -149,9 +156,6 @@ define(function(require, exports, module) {
                 name: "_ts",
                 value: "_" + (Math.random() * 1E18).toString(36).slice(0, 5)
             });
-
-            //Encode
-            options.params = $.param(params, true);
             options.type = "get";
             requestDate(options);
 

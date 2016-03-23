@@ -342,7 +342,7 @@ define(function(require, exports, module) {
             return;
         }
 
-        var display = $.cookie("sidebar-display") || "show";
+        var display = $.cookie("sidebar_display") || "show";
         if (display === "show") {
             show();
         } else {
@@ -351,7 +351,7 @@ define(function(require, exports, module) {
 
         function setCookie(value) {
             display = value;
-            $.cookie("sidebar-display", value, {
+            $.cookie("sidebar_display", value, {
                 path: '/'
             });
         }
@@ -383,11 +383,13 @@ define(function(require, exports, module) {
     //更新菜单状态
     function doSidebarMenuStatus() {
 
-        var status = $.cookie("menu-status");
-        status = status ? status.split(",") : [];
+        var menuId = $(".page-sidebar-menu").attr("id") || "menu";
+        var items = $.cookie(menuId + "_close_items");
+        items = items ? items.split(",") : [];
 
         $(".page-sidebar-menu>li").each(function(index) {
-            if ($.inArray(index.toString(), status)>=0) {
+            index = $(this).data("id");
+            if ($.inArray(index, items) >= 0) {
                 $(this).removeClass("open");
             } else {
                 $(this).addClass("open");
@@ -395,13 +397,13 @@ define(function(require, exports, module) {
         });
 
         return function() {
-            var status = [];
+            var items = [];
             $(".page-sidebar-menu>li").each(function(index) {
                 if (!$(this).hasClass("open")) {
-                    status.push(index);
+                    items.push($(this).data("id"));
                 }
             });
-            $.cookie("menu-status", status, {
+            $.cookie(menuId + "_close_items", items, {
                 path: '/'
             });
         };
@@ -467,6 +469,7 @@ define(function(require, exports, module) {
                     $li.addClass("open");
                     $li.find(".arrow").addClass("open");
                 }
+
                 _doSidebarMenuStatus();
                 doSidebarOver();
             });
@@ -781,5 +784,4 @@ define(function(require, exports, module) {
 
         this.init();
     }
-
 });

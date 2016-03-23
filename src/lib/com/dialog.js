@@ -34,14 +34,14 @@ define(function(require, exports, module) {
         this.language = {
             zh_CN: {
                 title: "提示信息",
-                btn_submit: "确定",
-                btn_cancel: "取消",
+                buttonSubmit: "确定",
+                buttonCancel: "取消",
                 body: "你好，我是一个模式对话框。"
             },
             en_US: {
                 title: 'Title',
-                btn_submit: "Confirm",
-                btn_cancel: "Cancel",
+                buttonSubmit: "Confirm",
+                buttonCancel: "Cancel",
                 body: "Hello, I am a dialog ."
             }
         };
