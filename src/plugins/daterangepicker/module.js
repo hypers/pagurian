@@ -97,9 +97,6 @@ define(function(require, exports, module) {
         this.init = function() {
 
             var self = this;
-            if (!jQuery().daterangepicker) {
-                return;
-            }
 
             this.container = $(selector);
             $.extend(true, this.options, options);

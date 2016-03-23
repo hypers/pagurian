@@ -76,6 +76,10 @@ define(function(require, exports, module) {
         return data;
     }
 
+    function encode(data) {
+        return encodeURI(data);
+    }
+
     /**
      * 追加参数
      * @param  {Object/Array} params 被追加的对象
@@ -103,6 +107,8 @@ define(function(require, exports, module) {
     }
 
 
+
+
     /**
      * 请求数据
      */
@@ -111,7 +117,10 @@ define(function(require, exports, module) {
         if (!validateRequest(options)) {
             return false;
         }
-        if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
+
+        if (options.type === "get") {
+            options.params = encode($.param(options.params, true));
+        } else if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
 
             if (!options.original) {
                 options.params = transport.toObject(options.params);
@@ -121,6 +130,7 @@ define(function(require, exports, module) {
                 options.params = transport.toJSON(options.params);
             }
         }
+
 
         ajax.request(options, function(response) {
             var valid = validate.check(response);
