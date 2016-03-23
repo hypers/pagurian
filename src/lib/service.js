@@ -66,12 +66,13 @@ define(function(require, exports, module) {
         }
 
         $.each(params, function(index, value) {
-            if ($.isPlainObject(value)) {
+            if ($p.tool.isNumber(index) && $.isPlainObject(value)) {
                 push(value.name, value.value);
             } else if (!$.isFunction(value)) {
                 push(index, value);
             }
         });
+
         return data;
     }
 
