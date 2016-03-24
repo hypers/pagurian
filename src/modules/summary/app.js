@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     var summaryDemo;
 
     app.events.resize = function () {
-        summaryDemo.autoHeight();
+        summaryDemo.resize();
     };
 
     app.page.summary = function () {

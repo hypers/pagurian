@@ -19,7 +19,7 @@ define(function (require, exports, module) {
          */
         function Summary(selector, options) {
             //版本
-            var _version = "2016.3.17.2205";
+            var _version = "2016.3.18.1841";
 
             var _this = this;
             //前缀名
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
             /**
              *  调整组件高度
              */
-            this.autoHeight = function () {
+            this.resize = function () {
                 adjustHeight();
                 return this;
             };
@@ -627,24 +627,42 @@ define(function (require, exports, module) {
             function setData(_datas) {
                 var $summaryContents = $('.jsSummary' + _id + '_content');
                 var $summaryContentLi = $summaryContents.find('li');
-                $summaryContentLi.filter(function (index) {
-                    return _this.titlesRows.indexOf($($summaryContentLi[index]).attr('data-name')) < 0;
-                }).each(function (index, summaryContent) {
-                    $(summaryContent).html('--');
+                var _rowConfigs = {};
+                _this.options.allRows.forEach(function (row) {
+                    _rowConfigs[row.dataName] = row;
                 });
+
+                $summaryContentLi.each(function (index, summaryContent) {
+                    var _dataName = $(summaryContent).data('name');
+                    if (_rowConfigs[_dataName].isTitle) {
+                        return;
+                    }
+                    var _html = "--";
+                    if ($p.tool.isString(_rowConfigs[_dataName].tpl)) {
+                        _html = $p.str.format(_rowConfigs[_dataName].tpl, '--');
+                    }
+                    $(summaryContent).html(_html);
+                });
+
                 for (i = 0; i < $summaryContents.length; i++) {
                     var $summaryContent = $($summaryContents[i]),
                         _data = getColumnData($summaryContent.data("name"));
                     for (var _name in _data) {
                         var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
                             _rowConfig = getRowConfig(_name);
-                        if ($.isFunction(_rowConfig.render)) {
-                            $contentLi.html(_rowConfig.render(_data[_name], _datas));
-                        } else if (_rowConfig.tpl) {
-                            $contentLi.html(_rowConfig.tpl.replace("{0}", _data[_name]));
-                        } else {
-                            $contentLi.html(_data[_name]);
+                        var _html = "";
+                        if (_data[_name] === null || _data[_name] === undefined) {
+                            continue;
                         }
+                        if ($.isFunction(_rowConfig.render)) {
+                            _html = _rowConfig.render(_data[_name], _datas);
+                        } else if (_rowConfig.tpl) {
+                            _html = $p.str.format(_rowConfig.tpl, _data[_name]);
+                        } else {
+                            _html = _data[_name];
+                        }
+
+                        $contentLi.html(_html);
                     }
                 }
             }

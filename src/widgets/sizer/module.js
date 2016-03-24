@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
         //版本
-        var version = "2016.03.17.1308";
+        var version = "2016.03.18.1841";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -143,18 +143,6 @@ define(function (require, exports, module) {
         //打开面板
         this.open = function () {
             _this.container.addClass("sizer-open");
-            if (_this.needLoad) {
-                _this.needLoad = false;
-
-                var _promise = _this._loadData();
-                if (_this.p_loadData) {
-                    _this.p_loadData.reject();
-                }
-                _this.p_loadData = _promise;
-                $.when(_this.p_loadData).done(function (resp) {
-                    _this._renderData(resp, true);
-                });
-            }
         };
 
         //关闭面板
@@ -182,7 +170,9 @@ define(function (require, exports, module) {
                 var _type = _this.options.isMultiple ? "checkbox" : "radio";
                 var _valueStr = _this.options.dataMapping.value;
                 var objAllData = {};
-
+                if ($.isFunction(values)) {
+                    values = values();
+                }
                 _this.allDatas.forEach(function (data) {
                     objAllData[data[_valueStr]] = true;
                 });
@@ -259,13 +249,14 @@ define(function (require, exports, module) {
 
                 uniForm();
             }
+
+            return this;
         };
 
         /**
          * 重新拉取数据
          */
         this.update = function (params) {
-            _this.needLoad = false;
             //$("#" + _nameStr + "_listwrap" + _id).addClass("loading");
             //$("#" + _nameStr + "_datalist" + _id).empty();
             _this.container.find('.sizer-list-wrap').addClass("loading");
@@ -372,91 +363,18 @@ define(function (require, exports, module) {
             var _selectVals = [];
             var _selectDatas = [];
             _chooseDatas.forEach(function (data) {
-                _selectVals.push(data[_this.options.dataMapping.value]);
+                _selectVals.push("" + data[_this.options.dataMapping.value]);
             });
             _datas.forEach(function (data) {
-                if (_selectVals.indexOf(data[_this.options.dataMapping.value]) > -1) {
+                if (_selectVals.indexOf("" + data[_this.options.dataMapping.value]) > -1) {
                     _selectDatas.push(data);
                 }
             });
             _this.selectDatas = _selectDatas;
-            _this.needLoad = false;
 
             _this.p_loadData.resolve(_datas);
             if ($.isFunction(_this.options.callbackLoadData)) {
-                _this.options.callbackLoadData(_this.selectDatas, _this.allDatas);
-            }
-        };
-        /**
-         * 载入数据
-         * @returns {Sizer}
-         * @private
-         */
-        this._loadData = function () {
-            var _dataParams = _this.options.dataParams;
-            _this.params = $.isFunction(_dataParams) ? _dataParams() : _dataParams;
-            var _promise = $.Deferred();
-            _this.options.dataSource(_this.params, function (resp) {
-                _promise.resolve(resp);
-            });
-            return _promise;
-        };
-
-        /**
-         * 渲染dom
-         * @param resp
-         * @param loadConfig 是否读取构造参数中的chooseDatas
-         * @private
-         */
-        this._renderData = function (resp, loadConfig) {
-            var $listWrap = _this.container.find("#" + _nameStr + "_listwrap" + _id);
-            if ($listWrap.hasClass("loading")) {
-                $listWrap.removeClass("loading");
-            }
-            var _result = resp.result || {};
-            var _datas = $.isArray(_result) ? _result : _result.items || [];
-            if (_datas.length >= MAX_SHOW_SCROLL_LENGTH) {
-                $listWrap.addClass("scollbar");
-            }
-
-            _this.allDatas = _datas;
-            var _chooseDatas = [];
-            if (loadConfig) {
-                if (_this.options.isMultiple) {
-                    if (chooseDatas === "all") {
-                        _chooseDatas = _datas;
-                    }
-
-                    if (chooseDatas === "null") {
-                        _chooseDatas = [];
-                    }
-
-                    if ($.isArray(chooseDatas)) {
-                        _chooseDatas = chooseDatas;
-                    }
-                } else {
-                    if ($.isArray(chooseDatas)) {
-                        _chooseDatas.push(chooseDatas[0]);
-                    }
-                }
-            }
-            setData(_datas, _chooseDatas);
-            var _selectVals = [];
-            var _selectDatas = [];
-            _chooseDatas.forEach(function (data) {
-                _selectVals.push(data[_this.options.dataMapping.value]);
-            });
-            _datas.forEach(function (data) {
-                if (_selectVals.indexOf(data[_this.options.dataMapping.value]) > -1) {
-                    _selectDatas.push(data);
-                }
-            });
-            _this.selectDatas = _selectDatas;
-            _this.needLoad = false;
-
-            _this.p_loadData.resolve(_datas);
-            if ($.isFunction(_this.options.callbackLoadData)) {
-                _this.options.callbackLoadData(_this.selectDatas, _this.allDatas);
+                _this.options.callbackLoadData(_this.allDatas);
             }
         };
 
@@ -476,6 +394,16 @@ define(function (require, exports, module) {
             }
             drawDom();
             bindEvent();
+
+            var _promise = _this._loadData();
+            if (_this.p_loadData) {
+                _this.p_loadData.reject();
+            }
+            _this.p_loadData = _promise;
+            $.when(_this.p_loadData).done(function (resp) {
+                _this._renderData(resp, true);
+            });
+
             if (_this.options.isExpand) {
                 _this.open();
             }
@@ -948,6 +876,9 @@ define(function (require, exports, module) {
         constructor: Sizer,
         getOption: function () {
             return this.options;
+        },
+        getAllDatas: function () {
+            return this.allDatas;
         },
         chooseData: function (data) {
             this.chooseData(data);
