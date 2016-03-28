@@ -390,7 +390,7 @@ define(function(require, exports, module) {
                 var status_text = "";
 
                 if (resp.result.statusText === "timeout") {
-                    status_text = locale.timeout;
+                    status_text = locale.sTimeout;
                 } else {
                     status_text = resp.message;
                 }

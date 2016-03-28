@@ -99,6 +99,7 @@ define(function(require, exports, module) {
             // http://docs.jquery.com/Plugins/Validation/valid
             valid: function() {
                 var valid;
+
                 if ($(this[0]).is('form')) {
                     valid = this.validate().form();
                 } else {
@@ -108,7 +109,7 @@ define(function(require, exports, module) {
                         valid &= validator.element(this);
                     });
                 }
-                this.find(".help-block").removeClass("tip");
+
                 return valid;
             },
             // attributes: space seperated list of attributes to retrieve and remove
@@ -522,6 +523,9 @@ define(function(require, exports, module) {
 
                     var rules = $(element).rules();
                     var dependencyMismatch = false;
+
+                    var helpBlock = $(".help-block[for='" + element.name + "']");
+
                     for (var method in rules) {
                         var rule = {
                             method: method,
@@ -529,9 +533,12 @@ define(function(require, exports, module) {
                         };
                         try {
                             var value = element.value.replace(/\r/g, "");
+
+                            //这个后来加的
                             if ($(element).attr("placeholder") === value) {
                                 value = "";
                             }
+
                             var result = $.validator.methods[method].call(this, value, element, rule.parameters);
 
                             // if a method indicates that the field is optional and therefore valid,
@@ -549,6 +556,7 @@ define(function(require, exports, module) {
 
                             if (!result) {
                                 this.formatAndAdd(element, rule);
+                                helpBlock.removeClass("tip");
                                 return false;
                             }
                         } catch (e) {
@@ -560,6 +568,8 @@ define(function(require, exports, module) {
                         return;
                     if (this.objectLength(rules))
                         this.successList.push(element);
+
+                    helpBlock.addClass("tip").text(helpBlock.data("tip"));
                     return true;
                 },
 

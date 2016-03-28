@@ -39,7 +39,7 @@ module.exports = function (grunt) {
                 }, {
                     expand: true,
                     cwd: 'src/lib',
-                    src: ['**/sea.js', '**/jquery*.js'],
+                    src: ['**/sea.js', '**/jquery*.js', '**/es5*.*'],
                     dest: 'dist/lib'
                 }, {
                     expand: true,
