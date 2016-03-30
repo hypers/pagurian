@@ -100,9 +100,6 @@ define(function(require, exports, module) {
 
                     self.params = eval("(" + params + ")") || {};
                     self.show();
-                    if ($.isFunction(options.initForm)) {
-                        options.initForm(self, $form, self.params);
-                    }
                 });
             }
 
@@ -116,7 +113,7 @@ define(function(require, exports, module) {
                 var failA = false;
                 if ($form.length) {
                     data = $form.serializeArray();
-                    failA = !$form.valid();
+                    if ($.isFunction($form.valid)) failA = !$form.valid();
                 }
                 //自定义验证
                 var failB = ($.isFunction(options.validate) && !options.validate(self, data, self.params));
@@ -159,6 +156,10 @@ define(function(require, exports, module) {
 
             this.reset();
             this.container.modal('show');
+
+            if ($.isFunction(options.initForm)) {
+                options.initForm(self, self.form, self.params);
+            }
 
             //调整Modal的高度
             setTimeout(function() {

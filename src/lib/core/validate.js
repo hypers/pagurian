@@ -17,11 +17,10 @@ define(function(require, exports, module) {
 
     function checkFields(data) {
         var fields = data.fields;
-        var element = {};
         for (var k in fields) {
-            element = $(".help-block[for^='" + k + "']");
-            element.removeClass("tip-block");
-            element.html(fields[k][0].message);
+            $element = $(".help-block[for^='" + k + "']");
+            $element.removeClass("tip");
+            $element.html(fields[k][0].message);
         }
         return false;
     }
