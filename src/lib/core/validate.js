@@ -3,6 +3,10 @@ define(function(require, exports, module) {
     function handleServerCheck(code) {
         var dot = (code + "").match(/\.\d*/);
         var postfix = "error_200403";
+        if (dot[0] === ".17") {
+            $p.url.reload();
+            return;
+        }
         if (dot) {
             postfix += "_" + dot[0].substr(1);
         }
@@ -13,11 +17,10 @@ define(function(require, exports, module) {
 
     function checkFields(data) {
         var fields = data.fields;
-        var element = {};
         for (var k in fields) {
-            element = $(".help-block[for^='" + k + "']");
-            element.removeClass("tip-block");
-            element.html(fields[k][0].message);
+            $element = $(".help-block[for^='" + k + "']");
+            $element.removeClass("tip");
+            $element.html(fields[k][0].message);
         }
         return false;
     }

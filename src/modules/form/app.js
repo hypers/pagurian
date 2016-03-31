@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-    
+
 
     var app = require("../../lib/app");
     var model = require('./model');
@@ -49,7 +49,13 @@ define(function(require, exports, module) {
                     }
                 },
                 //自定义验证
-                custom: function(form, data) {
+                custom: function(data, $form) {
+
+                    var $occupation = $form.find("[name='occupation']");
+                    var $occupationBlock = $form.find("[for='occupation']");
+                    if ($occupation.val().length > 10) {
+                        $occupationBlock.text("该字段不能大于10个字符").removeClass("tip");
+                    }
                     return true;
                 }
             }
@@ -88,8 +94,15 @@ define(function(require, exports, module) {
                     }
                 },
                 //自定义验证
-                custom: function(data, form) {
-                    $p.log("自定义验证");
+                custom: function(data, $form) {
+
+                    var $textarea = $form.find("[name='textarea']");
+                    var $textareaBlock = $form.find(".help-block[for='textarea']");
+
+                    if ($textarea.val().length > 10) {
+                        $textareaBlock.html("该字段不能大于10个字符啊~~~").removeClass("tip");
+                        return false;
+                    }
                     return true;
                 }
             },

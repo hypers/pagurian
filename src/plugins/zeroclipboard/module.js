@@ -17,13 +17,13 @@ define(function(require, exports, module) {
 
             //复制的执行的方法，把复制内容存储到剪切板
             that.client.on('copy', function(event) {
-                event.clipboardData.setData('text/plain', $.isFunction(options.copy) ? options.copy(event) : function() {});
+                event.clipboardData.setData('text/plain', $.isFunction(options.copy) ? options.copy(event, $selector) : function() {});
             });
 
             //复制完成执行的回调方法
             that.client.on('aftercopy', function(event) {
                 if ($.isFunction(options.afterCopy)) {
-                    options.afterCopy(event);
+                    options.afterCopy(event, $selector);
                 }
             });
 
