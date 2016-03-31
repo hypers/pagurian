@@ -40,6 +40,7 @@
                                 <div>
                                     <textarea name="textarea" class="form-control"></textarea>
                                 </div>
+                                <span for="textarea"  class="help-block tip" data-tip="该字段不能大于10个字符" ></span>
                             </div>
                             <div class="form-group">
                                 <label>Select</label>
@@ -89,7 +90,7 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="button" id="btn_submit" class="btn green">Submit</button>
+                            <button type="submit" id="btn_submit" class="btn green">Submit</button>
                             <button type="button" class="btn default">Cancel</button>
                         </div>
                     </form>
@@ -114,10 +115,17 @@
                 required: true
             }
         },
-            //自定义验证
-        custom: function(data, form) {
-                $p.log("自定义验证");
-                return true;
+        //自定义验证
+        custom: function(data, $form) {
+
+            var $textarea = $form.find("[name='textarea']");
+            var $textareaBlock = $form.find(".help-block[for='textarea']");
+
+            if ($textarea.val().length > 10) {
+                $textareaBlock.html("该字段不能大于10个字符啊~~~").removeClass("tip");
+                return false;
+            }
+            return true;
         }
     },
     //提交按钮

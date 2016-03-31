@@ -9,6 +9,18 @@ define(function(require, exports, module) {
         var timer; //定时器，定时关闭消息提示
         var self = this;
 
+        function resize() {
+            var $dialogBody = self.container.find(".modal-body");
+            var scrollHeight = $dialogBody.height(); //modal 滚动高度
+            var overHeight = 214; //footer:50,  header:50, custom:114
+            var contentHeight = $(window).height() - overHeight; //内容区域高度
+
+            if (scrollHeight >= contentHeight) {
+                $dialogBody.css("max-height", contentHeight);
+            }
+            $dialogBody.scrollTop(0);
+        }
+
         this.id = $p.tool.newId();
         this.language = {
             zh_CN: {
@@ -28,28 +40,21 @@ define(function(require, exports, module) {
         this.reset = function() {
 
             var $form = this.form;
-            var $elements = $form.find("input,textarea");
-
-            $elements.each(function() {
-                if ($(this).attr('type') === "text" || $(this).attr('type') === "hidden" || $(this).get(0).tagName === "TEXTAREA") {
-                    $(this).val("");
-                }
-            });
-
+            $form.find(":text,:hidden,textarea").val("");
             $form.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
                     $(this).text(tip).addClass("tip");
                 } else {
-                    $(this).text("");
+                    $(this).empty();
                 }
             });
 
-            this.container.find(".submit-waiting").html("");
-            this.container.find(".modal-message").html("");
+            this.container.find(".submit-waiting").empty();
+            this.container.find(".modal-message").empty();
             this.container.find(".btn").removeClass("disabled").removeAttr("disabled");
             this.container.find(".form-group").removeClass("has-error");
-            this.whisper.html("").show();
+            this.whisper.empty().show();
         };
 
 
@@ -72,22 +77,58 @@ define(function(require, exports, module) {
             );
 
             $("body").append(this.htmlTpl);
+
             this.container = $("#modal" + this.id);
             this.whisper = $("#whisper" + this.id);
             this.form = this.container.find("form");
+            this.submitButton = $("#btn_submit" + this.id);
+            this.cancelButton = $("#btn_cancel" + this.id);
             this.container.addClass(options.className);
             this.initEvent();
 
-            if ($.isFunction(options.preload)) {
-                options.preload(this);
-            }
+            if (options.preload !== undefined) options.preload(this);
 
             return this;
         };
 
 
-        this.initEvent = function() {
+        this.showLoading = function() {
+            this.submitButton.addClass("disabled").prop("disabled", true);
+            this.container.find(".submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
+            return this;
+        };
 
+        this.hideLoading = function() {
+            this.submitButton.removeClass("disabled").removeAttr("disabled");
+            this.container.find(".submit-waiting").empty();
+            return this;
+        };
+
+        this.submitForm = function() {
+
+            var $form = self.form;
+            var data = [];
+
+            //jquery.validate 验证
+            var failA = false;
+            if ($form.length) {
+                data = $form.serializeArray();
+                if ($form.valid !== undefined) failA = !$form.valid();
+            }
+
+            //自定义验证
+            var failB = (options.validate !== undefined) && !options.validate(self, data, self.params);
+
+            if (failA || failB) return false;
+            //提交表单数据
+            if (options.submit !== undefined) options.submit(self, $form.serializeArray() || [], self.params);
+
+            this.showLoading();
+
+            return this;
+        };
+
+        this.initEvent = function() {
 
             if (selector) {
                 //给按钮绑定事件
@@ -103,38 +144,19 @@ define(function(require, exports, module) {
                 });
             }
 
-            //提交按钮绑定事件
-            $("#btn_submit" + this.id).click(function() {
-
-                var $form = self.form;
-                var data = [];
-
-                //jquery.validate 验证
-                var failA = false;
-                if ($form.length) {
-                    data = $form.serializeArray();
-                    if ($.isFunction($form.valid)) failA = !$form.valid();
-                }
-                //自定义验证
-                var failB = ($.isFunction(options.validate) && !options.validate(self, data, self.params));
-
-                if (failA || failB) {
-                    return false;
-                }
-                //提交表单数据
-                if ($.isFunction(options.submit)) {
-                    $(this).addClass("disabled").prop("disabled", true);
-                    self.container.find(".submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
-                    options.submit(self, $form.serializeArray() || [], self.params);
-                }
+            this.form.submit(function() {
+                self.submitForm();
+                return false;
             });
 
+            //提交按钮绑定事件
+            this.submitButton.click(function() {
+                self.submitForm();
+            });
 
             //取消按钮绑定事件
-            $("#btn_cancel" + this.id).click(function() {
-                if ($.isFunction(options.cancel)) {
-                    options.cancel(self, self.params);
-                }
+            this.cancelButton.click(function() {
+                if (options.cancel !== undefined) options.cancel(self, self.params);
             });
         };
         /**
@@ -143,8 +165,7 @@ define(function(require, exports, module) {
          * @return {Object}  Dialog
          */
         this.complete = function() {
-            this.container.find(".submit-waiting").html('');
-            this.container.find(".btn").removeClass("disabled").removeAttr("disabled");
+            this.hideLoading();
             return this;
         };
 
@@ -157,28 +178,13 @@ define(function(require, exports, module) {
             this.reset();
             this.container.modal('show');
 
-            if ($.isFunction(options.initForm)) {
-                options.initForm(self, self.form, self.params);
-            }
-
+            if (options.initForm !== undefined) options.initForm(this, this.form, this.params);
             //调整Modal的高度
-            setTimeout(function() {
-                var modalBody = self.container.find(".modal-body");
-                var availableHeight = modalBody.height(); //modal 滚动高度
-                var customHeight = 114;
-                var footerHeight = 50;
-                var headerHeight = 50;
-
-                //页面的工作区域高度
-                var contentHeight = $(window).height() - footerHeight - headerHeight - customHeight;
-                if (availableHeight >= contentHeight) {
-                    modalBody.css("max-height", contentHeight);
-                }
-
-                modalBody.scrollTop(0);
-            }, 200);
+            setTimeout(resize, 200);
             return this;
         };
+
+
 
         /**
          * 隐藏Dialog
@@ -206,7 +212,7 @@ define(function(require, exports, module) {
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
             clearTimeout(timer);
             timer = setTimeout(function() {
-                $whisper.html("").hide();
+                $whisper.empty().hide();
             }, 3000);
 
             return this;

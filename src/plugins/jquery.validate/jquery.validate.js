@@ -438,9 +438,8 @@ define(function(require, exports, module) {
                 },
 
                 hideErrors: function() {
-                    this.addWrapper(this.toHide).text("");
+                    this.addWrapper(this.toHide);
                 },
-
                 valid: function() {
                     return this.size() == 0;
                 },
@@ -570,6 +569,7 @@ define(function(require, exports, module) {
                         this.successList.push(element);
 
                     helpBlock.addClass("tip").text(helpBlock.data("tip"));
+
                     return true;
                 },
 
