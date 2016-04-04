@@ -8,13 +8,14 @@ define(function(require, exports, module) {
         var self = this;
         var $button = $(selector); //触发复制的按钮
         var $cache = $("<textarea></textarea>"); //缓存区：textarea
+        var $container = $(".modal-body:visible").length ? $(".modal-body:visible") : $("body");
         var data; //复制的值
         var css = {
             "position": "fixed",
             "top": "0px",
             "left": "0px",
-            "width": "2em",
-            "height": "2em",
+            "width": "0px",
+            "height": "0px",
             "padding": 0,
             "border": "none",
             "outline": "none",
@@ -32,7 +33,7 @@ define(function(require, exports, module) {
 
             $cache.css(css);
             $cache.val(data);
-            $("body").append($cache);
+            $container.append($cache);
             $cache.select();
 
             try {
