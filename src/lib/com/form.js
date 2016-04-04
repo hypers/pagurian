@@ -62,7 +62,8 @@ define(function(require, exports, module) {
         this.reset = function() {
 
             this.hideLoading();
-            this.container.find(":text,:hidden,textarea").val("");
+            if (this.container[0].reset !== undefined) this.container[0].reset();
+            
             this.container.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {

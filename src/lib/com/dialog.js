@@ -40,7 +40,8 @@ define(function(require, exports, module) {
         this.reset = function() {
 
             var $form = this.form;
-            $form.find(":text,:hidden,textarea").val("");
+            if ($form[0].reset !== undefined) $form[0].reset();
+
             $form.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
