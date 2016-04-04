@@ -34,7 +34,7 @@
         "spinner": "Number Spinner",
         "datatree": "DataTree",
         "uploader": "Uploader",
-        "zeroclipboard": "ZeroClipboard"
+        "clipboard": "Clipboard"
     },
     "menu": [{
         "name": "theme",
@@ -105,6 +105,10 @@
         "title": "插件",
         "icon": "fa fa-puzzle-piece",
         "items": [{
+            "name": "clipboard",
+            "title": "Clipboard",
+            "url": "clipboard.html"
+        },{
             "name": "datatables",
             "title": "DataTables",
             "url": "datatable.html",
@@ -131,10 +135,6 @@
             "name": "uploader",
             "title": "Uploader",
             "url": "uploader.html"
-        }, {
-            "name": "zeroclipboard",
-            "title": "ZeroClipboard",
-            "url": "zeroclipboard.html"
         }]
     }, {
         "name": "chart",

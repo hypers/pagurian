@@ -1,11 +1,11 @@
-{{#>layouts/base title=data.page.zeroclipboard appId="zeroclipboard" }}
+{{#>layouts/base title=data.page.clipboard appId="clipboard" }}
 
     {{#*inline "pageContent"}}
 
         <div class="row">
             <div class="col-md-12">
                 <h3 class="page-title">
-                    {{data.page.zeroclipboard}}
+                    {{data.page.clipboard}}
                 </h3>
             </div>
         </div>
@@ -25,10 +25,10 @@
                             <div class="form-body">
 
                                 <div class="form-group">
-                                    <textarea id="txa_content" rows="3" class="form-control" >快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。</textarea>
+                                    <textarea id="txt_content" rows="3" class="form-control" >快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button id="btn_copy" class="btn btn-primary">复制</button>
+                                    <button id="btn_copy" class="btn btn-primary" type="button">复制</button>
                                 </div>
                             </div>
 
@@ -41,7 +41,7 @@
                     <h3>HTML代码</h3>
                     <pre><code class="html">
 &lt;div class=&quot;form-group&quot;&gt;
-    &lt;textarea id=&quot;txa_content&quot; rows=&quot;3&quot; class=&quot;form-control&quot; &gt;快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。
+    &lt;textarea id=&quot;txt_content&quot; rows=&quot;3&quot; class=&quot;form-control&quot; &gt;快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。
     &lt;/textarea&gt;
 &lt;/div&gt;
 &lt;div class=&quot;form-group&quot;&gt;
@@ -50,12 +50,11 @@
                     </code></pre>
                     <h3>Javascript代码</h3>
 <pre><code class="javascript">
-$p.copy("#btn_copy", {
+$p.clipboard("#btn_copy", {
     copy: function(event) {
-        return $("#txa_content").val();
+        return $("#txt_content").val();
     },
-    afterCopy: function(event) {
-        var data = event.data["text/plain"];
+    afterCopy: function(data) {
         $p.log(data);
     }
 });
@@ -69,7 +68,7 @@ $p.copy("#btn_copy", {
 
         {{#*inline "appScript"}}
         <script type="text/javascript">
-            pagurian.call("modules/zeroclipboard/app", function(app) {
+            pagurian.call("modules/clipboard/app", function(app) {
                 app.page.index();
             });
         </script>
