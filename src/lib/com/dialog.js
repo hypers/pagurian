@@ -11,9 +11,18 @@ define(function(require, exports, module) {
 
         function resize() {
             var $dialogBody = self.container.find(".modal-body");
+            var $content = self.container.find('.modal-content');
             var scrollHeight = $dialogBody.height(); //modal 滚动高度
             var overHeight = 214; //footer:50,  header:50, custom:114
             var contentHeight = $(window).height() - overHeight; //内容区域高度
+
+
+            if (options.width) {
+                //body.width(options.width);
+                var padding = 36; // content css padding left + right
+                $content.width(options.width + padding);
+                $content.parent().width(options.width + padding);
+            }
 
             if (scrollHeight >= contentHeight) {
                 $dialogBody.css("max-height", contentHeight);
@@ -40,7 +49,7 @@ define(function(require, exports, module) {
         this.reset = function() {
 
             var $form = this.form;
-            if ($form[0].reset !== undefined) $form[0].reset();
+            if ($form[0] && $form[0].reset !== undefined) $form[0].reset();
 
             $form.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
@@ -67,9 +76,14 @@ define(function(require, exports, module) {
          */
         this.init = function() {
 
-            options.id = this.id;
+            var dialogBody;
+            if (!$p.tool.isString(options.body)) { // jQueryElement or Node
+                dialogBody = options.body;
+                options.body = '';
+            }
 
             //初始化模版
+            options.id = this.id;
             this.htmlTpl = $p.tpl(template,
                 $.extend(
                     this.language[$p.language || "zh_CN"],
@@ -78,6 +92,9 @@ define(function(require, exports, module) {
             );
 
             $("body").append(this.htmlTpl);
+            if (dialogBody) {
+                this.container.find('.modal-body').append(dialogBody);
+            }
 
             this.container = $("#modal" + this.id);
             this.whisper = $("#whisper" + this.id);
