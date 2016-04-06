@@ -10,24 +10,21 @@ define(function(require, exports, module) {
         var self = this;
 
         function resize() {
-            var $dialogBody = self.container.find(".modal-body");
-            var $content = self.container.find('.modal-content');
-            var scrollHeight = $dialogBody.height(); //modal 滚动高度
+            var scrollHeight = self.body.height(); //modal 滚动高度
             var overHeight = 214; //footer:50,  header:50, custom:114
             var contentHeight = $(window).height() - overHeight; //内容区域高度
-
 
             if (options.width) {
                 //body.width(options.width);
                 var padding = 36; // content css padding left + right
-                $content.width(options.width + padding);
-                $content.parent().width(options.width + padding);
+                self.content.width(options.width + padding);
+                self.content.parent().width(options.width + padding);
             }
 
             if (scrollHeight >= contentHeight) {
-                $dialogBody.css("max-height", contentHeight);
+                self.body.css("max-height", contentHeight);
             }
-            $dialogBody.scrollTop(0);
+            self.body.scrollTop(0);
         }
 
         this.id = $p.tool.newId();
@@ -48,17 +45,17 @@ define(function(require, exports, module) {
 
         this.reset = function() {
 
-            var $form = this.form;
-            if ($form[0] && $form[0].reset !== undefined) $form[0].reset();
-
-            $form.find(".help-block").each(function() {
-                var tip = $(this).data("tip");
-                if (tip) {
-                    $(this).text(tip).addClass("tip");
-                } else {
-                    $(this).empty();
-                }
-            });
+            if (this.form) {
+                this.form[0].reset();
+                this.form.find(".help-block").each(function() {
+                    var tip = $(this).data("tip");
+                    if (tip) {
+                        $(this).text(tip).addClass("tip");
+                    } else {
+                        $(this).empty();
+                    }
+                });
+            }
 
             this.container.find(".submit-waiting").empty();
             this.container.find(".modal-message").empty();
@@ -90,20 +87,23 @@ define(function(require, exports, module) {
                     options
                 )
             );
-
             $("body").append(this.htmlTpl);
-            if (dialogBody) {
-                this.container.find('.modal-body').append(dialogBody);
-            }
+
 
             this.container = $("#modal" + this.id);
             this.whisper = $("#whisper" + this.id);
-            this.form = this.container.find("form");
+            this.form = this.container.find("form").length ? this.container.find("form") : null;
+            this.body = this.container.find('.modal-body');
+            this.content = this.container.find('.modal-content');
             this.submitButton = $("#btn_submit" + this.id);
             this.cancelButton = $("#btn_cancel" + this.id);
             this.container.addClass(options.className);
-            this.initEvent();
 
+            if (dialogBody) {
+                this.body.append(dialogBody);
+            }
+
+            this.initEvent();
             if (options.preload !== undefined) options.preload(this);
 
             return this;
@@ -124,25 +124,22 @@ define(function(require, exports, module) {
 
         this.submitForm = function() {
 
-            var $form = self.form;
-            var data = [];
+            var data;
 
-            //jquery.validate 验证
-            var failA = false;
-            if ($form.length) {
-                data = $form.serializeArray();
-                if ($form.valid !== undefined) failA = !$form.valid();
+            if (self.form) {
+                data = self.form.serializeArray();
+                //jquery.validate 验证
+                var failA = (self.form.valid !== undefined) ? !self.form.valid() : false;
+                //自定义验证
+                var failB = (options.validate !== undefined) && !options.validate(self, data, self.params);
+
+                if (failA || failB) return this;
             }
 
-            //自定义验证
-            var failB = (options.validate !== undefined) && !options.validate(self, data, self.params);
-
-            if (failA || failB) return false;
             //提交表单数据
-            if (options.submit !== undefined) options.submit(self, $form.serializeArray() || [], self.params);
+            if (options.submit !== undefined) options.submit(self, data, self.params);
 
             this.showLoading();
-
             return this;
         };
 
@@ -162,10 +159,12 @@ define(function(require, exports, module) {
                 });
             }
 
-            this.form.submit(function() {
-                self.submitForm();
-                return false;
-            });
+            if (this.form) {
+                this.form.submit(function() {
+                    self.submitForm();
+                    return false;
+                });
+            }
 
             //提交按钮绑定事件
             this.submitButton.click(function() {
