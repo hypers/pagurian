@@ -376,6 +376,7 @@ define(function(require, exports, module) {
 
         $(".page-sidebar-spanner").click(function() {
             toggle();
+            doAppResizeEvent();
         });
 
     }

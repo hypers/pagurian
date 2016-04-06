@@ -132,9 +132,8 @@ define(function(require, exports, module) {
 
         ajax.request(options, function(response) {
             var valid = validate.check(response);
-            if ($.isFunction(options.callback)) {
-                options.callback(response, valid);
-            }
+            response.result = response.result || {};
+            options.callback(response, valid);
         });
     }
 

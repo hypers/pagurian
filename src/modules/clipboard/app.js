@@ -1,17 +1,14 @@
 define(function(require, exports, module) {
 
     var app = require("../../lib/app");
-    require('../../plugins/zeroclipboard/module');
+    require('../../plugins/clipboard/module');
 
     app.page.index = function() {
-
-
-        $p.copy("#btn_copy", {
+        $p.clipboard("#btn_copy", {
             copy: function(event) {
-                return $("#txa_content").val();
+                return $("#txt_content").val();
             },
-            afterCopy: function(event) {
-                var data = event.data["text/plain"];
+            afterCopy: function(data) {
                 $p.log(data);
             }
         });
