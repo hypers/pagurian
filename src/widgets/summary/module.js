@@ -19,7 +19,7 @@ define(function (require, exports, module) {
          */
         function Summary(selector, options) {
             //版本
-            var _version = "2016.3.18.1841";
+            var _version = "2016.4.6.1749";
 
             var _this = this;
             //前缀名
@@ -172,6 +172,7 @@ define(function (require, exports, module) {
              * 更新数据 并刷新组件
              */
             this.update = function (params) {
+                _this.options = $.extend(true, {}, _this.options, options);
                 drawData(params);
                 return this;
             };
@@ -375,17 +376,14 @@ define(function (require, exports, module) {
                         var checkBoxs = $(selector).find('.summary-setting-ul [type="checkbox"]');
                         checkBoxs.prop('checked', false).prop('disabled', false);
                         expandSettingPanel();
-                        _this.allDatas.forEach(function (data, index) {
+                        _allColumns.forEach(function (data, index) {
                             if (index < _this.options.maxNum) {
                                 _showColunms.push(data.cName);
                             }
                         });
                         checkBoxs.each(function (index, checkBox) {
-                            if (_showColunms.indexOf(checkBox.value) > -1) {
-                                $(checkBox).prop('checked', 'checked');
-                            } else {
-                                $(checkBox).prop('disabled', 'disabled');
-                            }
+                            var checkedStatus = _showColunms.indexOf(checkBox.value) > -1 ? 'checked' : 'disabled';
+                            $(checkBox).prop(checkedStatus, checkedStatus);
                         });
                         checkBoxs.uniform();
 
@@ -407,9 +405,10 @@ define(function (require, exports, module) {
                      * @returns {jQuery|HTMLElement} 已选中的checkboxes
                      */
                     var updateCheckbox = function () {
-                        var _$allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
-                            _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
-                            _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
+                        var _$setting_ul = $(selector).find('.summary-setting-ul');
+                        var _$allCheckBoxes = _$setting_ul.find('[type="checkbox"]'),
+                            _$selectCheckBoxes = _$setting_ul.find('[type="checkbox"]:checked'),
+                            _$unselectCheckBoxes = _$setting_ul.find('[type="checkbox"]:not(:checked)');
                         var checkNum = _$selectCheckBoxes.length;
                         if (checkNum >= _this.maxNum) {
                             _$selectCheckBoxes.removeAttr("disabled");
@@ -568,7 +567,7 @@ define(function (require, exports, module) {
              */
             function drawData(params) {
                 var _datas = [];
-                var _params = $.extend({}, params);
+                var _params = $.isFunction(params) ? $.extend(true, {}, params()) : $.extend(true, {}, params);
                 if (!_this.options.dataSource) {
                     var _allColumns = _this.options.allColumns;
                     for (i = 0; i < _allColumns.length; i++) {
@@ -581,18 +580,7 @@ define(function (require, exports, module) {
                         _datas.push(_o);
                     }
                     _this.allDatas = _datas;
-                    setData(_datas);
-                    adjustHeight();
-                    if (_this.canChoose) {
-                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
-                        if ($.isFunction(_this.options.callBackGetData)) {
-                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
-                        }
-                        return;
-                    }
-                    if ($.isFunction(_this.options.callBackGetData)) {
-                        _this.options.callBackGetData(_this.allDatas);
-                    }
+                    renderData(_datas);
                     return;
                 }
 
@@ -605,6 +593,12 @@ define(function (require, exports, module) {
                         _datas[i][_this.options.cName + "Title"] = _columnConfig.title;
                     }
                     _this.allDatas = _datas;
+                    renderData(_datas);
+                });
+
+
+                //渲染数据到页面
+                function renderData(_datas) {
                     setData(_datas);
                     adjustHeight();
                     if (_this.canChoose) {
@@ -617,7 +611,7 @@ define(function (require, exports, module) {
                     if ($.isFunction(_this.options.callBackGetData)) {
                         _this.options.callBackGetData(_this.allDatas);
                     }
-                });
+                }
             }
 
             /**
