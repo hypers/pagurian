@@ -82,7 +82,6 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                console.log(aApiParams);
 
                 //兼容老的版本dataSource
                 var fnDataSource = _options.fnDataSource || _options.dataSource;
