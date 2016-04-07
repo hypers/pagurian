@@ -119,6 +119,8 @@ define(function(require, exports, module) {
             return false;
         }
 
+        options.url = [$p.path.api, options.url, $p.lib.apiPostfix].join("");
+
         if (options.type === "get") {
             options.data = encode($.param(options.data, true));
         } else if (options.type === "delete") {

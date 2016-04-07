@@ -38,15 +38,14 @@ define(function(require, exports, module) {
 
     pagurian.lib = {
         service: require('./service'),
-        route: require('../conf/route'),
-        api: {}
+        route: require('../conf/route')
     };
 
     //载入API配置
     var api = require('../conf/api');
-    $.each(api.items, function(key, value) {
-        pagurian.lib.api[key] = pagurian.path.api + value + api.postfix;
-    });
+
+    pagurian.lib.api = api.items || {};
+    pagurian.lib.apiPostfix = api.postfix;
 
     //日志
     pagurian.log = function() {
