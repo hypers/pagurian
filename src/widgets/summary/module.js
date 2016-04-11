@@ -19,7 +19,7 @@ define(function (require, exports, module) {
          */
         function Summary(selector, options) {
             //版本
-            var _version = "2016.3.18.1841";
+            var _version = "2016.4.6.1749";
 
             var _this = this;
             //前缀名
@@ -57,10 +57,12 @@ define(function (require, exports, module) {
             };
             //展示数
             var _showNum = 0;
+            //container
+            this.containner = $(selector);
             //selectorStr
-            this.selectorStr = selector.substring(1, selector.length);
+            this.selectorStr = this.containner.selector ? this.containner.selector.substring(1, selector.length) : undefined;
             //id
-            this.summaryName = _nameStr + _id;
+            //this.summaryName = _nameStr + _id;
             //参数
             this.params = {};
             //最大展示数
@@ -172,6 +174,7 @@ define(function (require, exports, module) {
              * 更新数据 并刷新组件
              */
             this.update = function (params) {
+                _this.options = $.extend(true, {}, _this.options, options);
                 drawData(params);
                 return this;
             };
@@ -189,7 +192,7 @@ define(function (require, exports, module) {
              */
             var init = function () {
                 _this.options = $.extend(true, {}, _this.options, options);
-                _saveState = _this.options.saveState;
+                _saveState = _this.options.saveState && _this.selectorStr;
                 _allColumns = $.isArray(_this.options.allColumns) ? _this.options.allColumns : [];
                 _allRows = _this.options.allRows;
                 _this.maxNum = _this.options.maxNum ? _this.options.maxNum : _allColumns.length;
@@ -291,9 +294,9 @@ define(function (require, exports, module) {
                     settingPanel = $p.tpl(settingPanel, oLanguage);
                 }
 
-                $(selector).append($summaryPanelTpl);
+                _this.containner.append($summaryPanelTpl);
                 if (_this.options.showSetting) {
-                    $(selector).append(settingPanel);
+                    _this.containner.append(settingPanel);
                 }
                 drawInitDom();
                 drawData(_this.options.dataParams);
@@ -309,14 +312,14 @@ define(function (require, exports, module) {
                     /**
                      * 设置按钮
                      */
-                    $(selector).on('click', " .summary-setting-icon", function () {
+                    _this.containner.on('click', " .summary-setting-icon", function () {
                         expandSettingPanel();
                     });
 
                     /**
                      * setting submit按钮
                      */
-                    $(selector).on('click', " .summary-setting-wrap .btn-primary", function () {
+                    _this.containner.on('click', " .summary-setting-wrap .btn-primary", function () {
                         var _needClick = false;
                         expandSettingPanel();
                         _this.showColumns = _this._showColumns;
@@ -341,7 +344,7 @@ define(function (require, exports, module) {
                     /**
                      * setting cancel按钮
                      */
-                    $(selector).on('click', " .summary-setting-wrap .btn-default", function () {
+                    _this.containner.on('click', " .summary-setting-wrap .btn-default", function () {
                         var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]');
                         $allCheckBoxes.prop("checked", false);
                         for (var _i = 0; _i < _this.showColumns.length; _i++) {
@@ -358,7 +361,7 @@ define(function (require, exports, module) {
                     /**
                      * setting 中的checkbox
                      */
-                    $(selector).on('click', '.summary-setting-ul [type="checkbox"]', function () {
+                    _this.containner.on('click', '.summary-setting-ul [type="checkbox"]', function () {
                         var $selectCheckBoxes = updateCheckbox();
                         _this._showColumns = [];
                         $selectCheckBoxes.each(function () {
@@ -369,23 +372,20 @@ define(function (require, exports, module) {
                     /**
                      * setting 中的reset
                      */
-                    $(selector).on('click', '.summary-setting-panel .summary-reset', function () {
+                    _this.containner.on('click', '.summary-setting-panel .summary-reset', function () {
                         var _needClick = false;
                         var _showColunms = [];
-                        var checkBoxs = $(selector).find('.summary-setting-ul [type="checkbox"]');
+                        var checkBoxs = _this.containner.find('.summary-setting-ul [type="checkbox"]');
                         checkBoxs.prop('checked', false).prop('disabled', false);
                         expandSettingPanel();
-                        _this.allDatas.forEach(function (data, index) {
+                        _allColumns.forEach(function (data, index) {
                             if (index < _this.options.maxNum) {
                                 _showColunms.push(data.cName);
                             }
                         });
                         checkBoxs.each(function (index, checkBox) {
-                            if (_showColunms.indexOf(checkBox.value) > -1) {
-                                $(checkBox).prop('checked', 'checked');
-                            } else {
-                                $(checkBox).prop('disabled', 'disabled');
-                            }
+                            var checkedStatus = _showColunms.indexOf(checkBox.value) > -1 ? 'checked' : 'disabled';
+                            $(checkBox).prop(checkedStatus, checkedStatus);
                         });
                         checkBoxs.uniform();
 
@@ -407,9 +407,10 @@ define(function (require, exports, module) {
                      * @returns {jQuery|HTMLElement} 已选中的checkboxes
                      */
                     var updateCheckbox = function () {
-                        var _$allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]'),
-                            _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
-                            _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
+                        var _$setting_ul = _this.containner.find('.summary-setting-ul');
+                        var _$allCheckBoxes = _$setting_ul.find('[type="checkbox"]'),
+                            _$selectCheckBoxes = _$setting_ul.find('[type="checkbox"]:checked'),
+                            _$unselectCheckBoxes = _$setting_ul.find('[type="checkbox"]:not(:checked)');
                         var checkNum = _$selectCheckBoxes.length;
                         if (checkNum >= _this.maxNum) {
                             _$selectCheckBoxes.removeAttr("disabled");
@@ -438,7 +439,7 @@ define(function (require, exports, module) {
                 /**
                  * 面板点击回调
                  */
-                $(selector).on('click', ' .jsSummary' + _id + '_content', function () {
+                _this.containner.on('click', ' .jsSummary' + _id + '_content', function () {
                     var _columnName = $(this).data("name"),
                         _columnData = getColumnData(_columnName),
                         _columnsData = _this.allDatas;
@@ -454,7 +455,7 @@ define(function (require, exports, module) {
                     }
                 });
 
-                $(selector).on('click', ' .summary-div-li', function () {
+                _this.containner.on('click', ' .summary-div-li', function () {
                     var $ul = $(this).find('ul[data-name]');
                     var _columnName = $ul.data("name"),
                         _columnData = getColumnData(_columnName),
@@ -568,7 +569,7 @@ define(function (require, exports, module) {
              */
             function drawData(params) {
                 var _datas = [];
-                var _params = $.extend({}, params);
+                var _params = $.isFunction(params) ? $.extend(true, {}, params()) : $.extend(true, {}, params);
                 if (!_this.options.dataSource) {
                     var _allColumns = _this.options.allColumns;
                     for (i = 0; i < _allColumns.length; i++) {
@@ -581,18 +582,7 @@ define(function (require, exports, module) {
                         _datas.push(_o);
                     }
                     _this.allDatas = _datas;
-                    setData(_datas);
-                    adjustHeight();
-                    if (_this.canChoose) {
-                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
-                        if ($.isFunction(_this.options.callBackGetData)) {
-                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
-                        }
-                        return;
-                    }
-                    if ($.isFunction(_this.options.callBackGetData)) {
-                        _this.options.callBackGetData(_this.allDatas);
-                    }
+                    renderData(_datas);
                     return;
                 }
 
@@ -605,6 +595,12 @@ define(function (require, exports, module) {
                         _datas[i][_this.options.cName + "Title"] = _columnConfig.title;
                     }
                     _this.allDatas = _datas;
+                    renderData(_datas);
+                });
+
+
+                //渲染数据到页面
+                function renderData(_datas) {
                     setData(_datas);
                     adjustHeight();
                     if (_this.canChoose) {
@@ -617,7 +613,7 @@ define(function (require, exports, module) {
                     if ($.isFunction(_this.options.callBackGetData)) {
                         _this.options.callBackGetData(_this.allDatas);
                     }
-                });
+                }
             }
 
             /**

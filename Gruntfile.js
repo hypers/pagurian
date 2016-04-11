@@ -216,7 +216,8 @@ module.exports = function (grunt) {
             allTest: {
                 options: {
                     urls: [
-                        'http://localhost:' + connectPort + '/test/index.html'
+                        'http://localhost:' + connectPort + '/test/index.html',
+                        'http://localhost:' + connectPort + '/test/sizer.html',
                     ]
                 }
             }

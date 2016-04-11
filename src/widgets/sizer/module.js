@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
         //版本
-        var version = "2016.03.18.1841";
+        var version = "2016.03.24.1327";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -110,10 +110,12 @@ define(function (require, exports, module) {
 
         this.getSelectDatas = function () {
             var _selectDatas = [];
-            var allCheckBox = $('#' + _this.sizerName + ' .sizer-data-list input[type="checkbox"]:checked');
+            var _type = _this.options.isMultiple ? "checkbox" : "radio";
+            var allCheckBox = $('#' + _this.sizerName + ' .sizer-data-list input[type="' + _type + '"]:checked');
             allCheckBox.each(function () {
                 var oValue = {};
-                oValue[_this.options.dataMapping.value] = "" + $(this).val();
+                var _value = $p.tool.isNumber($(this).val()) ? +$(this).val() : $(this).val();
+                oValue[_this.options.dataMapping.value] = _value;
                 oValue[_this.options.dataMapping.name] = $(this).data("key");
                 _selectDatas.push(oValue);
             });
@@ -190,9 +192,9 @@ define(function (require, exports, module) {
                     $checkboxs.filter(function (index) {
                         return "" + $checkboxs[index].value === _value;
                     }).prop("checked", "checked").uniform();
-
-                    singleSetText(_value[_this.options.dataMapping.name] || _oLanguage.promtText);
-                    _this._tmpSelectDatas = _this.selectDatas = [_value];
+                    var valueObj = _getData(_value);
+                    _this.selectDatas = _this._tmpSelectDatas = [valueObj];
+                    singleSetText(valueObj[_this.options.dataMapping.name] || _oLanguage.promtText);
                     return;
                 }
 
@@ -383,7 +385,7 @@ define(function (require, exports, module) {
          */
         function init() {
             if ($sizerBtn.length === 0) {
-                throw  "Selector dom is not found";
+                $p.log("Selector dom is not found");
             }
             _this.options = $.extend(_this.options, options);
             _this.matchCase = _this.options.matchCase;
@@ -801,7 +803,7 @@ define(function (require, exports, module) {
                 }
                 _tempDatas.push(_datas[i]);
                 for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                    if ("" + _datas[i][_this.options.dataMapping.value] === _selectDatas[j][_this.options.dataMapping.value]) {
+                    if ("" + _datas[i][_this.options.dataMapping.value] === "" + _selectDatas[j][_this.options.dataMapping.value]) {
                         _tempSelectDatas.push(_datas[i]);
                     }
                 }
