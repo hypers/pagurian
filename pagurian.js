@@ -11,7 +11,7 @@
     var CONFIG = GLOBAL.CONFIG || {};
     var PROTOCOL = ("https:" === location.protocol) ? "https://" : "http://"; //协议
     var DOMAIN = location.hostname || "/"; //域名
-    var PORT = location.port || ""; //端口
+    var PORT = location.port ? ":" + location.port : ""; //端口
     var PATH = CONFIG.rootPath || ""; //路径
     var URL = [PROTOCOL, DOMAIN, PORT, PATH].join(""); //完整URL
 
@@ -75,5 +75,5 @@
     })("seajs");
 
     GLOBAL[NAME] = GLOBAL.pagurian = pagurian;
-
+    
 })(this, "$p", true);
