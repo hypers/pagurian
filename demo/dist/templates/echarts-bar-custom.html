@@ -6,22 +6,27 @@
 <!--<![endif]-->
 
 <head>
-	<title>Echarts 柱状图</title>
-	<meta charset="utf-8" />
+	<title>Echarts 柱状图 - Pagurian</title>
+	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 	<meta content="" name="description"/>
 	<meta content="" name="author"/>
 	<meta name="MobileOptimized" content="320">
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="favicon.ico"/>
 	<link href="../resources/css/public.css" rel="stylesheet" type="text/css"/>
 	<link id="style_themes" href="../resources/css/themes-green.css" rel="stylesheet" type="text/css"/>
 	
 	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/8.8.0/styles/default.min.css">
 	
+	<!--[if lt IE 9]>
+	    <script src="//cdn.bootcss.com/es5-shim/4.5.7/es5-shim.min.js"></script>
+	<![endif]-->
 	<!--[if !IE]><!-->
 	<script src="http://cdn.bootcss.com/highlight.js/8.8.0/highlight.min.js"></script>
 	<!--<![endif]-->
+	
+	
 </head>
 <body>
 
@@ -79,7 +84,7 @@
 	    <div class="page-sidebar navbar-collapse collapse">
 	        <!-- BEGIN SIDEBAR MENU -->
 	        <ul class="page-sidebar-menu">
-	                <li class="open">
+	                <li class="open" data-id="theme">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-picture-o"></i>
 	                        <span class="title">基础UI</span>
@@ -112,7 +117,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="com">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-briefcase"></i>
 	                        <span class="title">组件</span>
@@ -130,13 +135,16 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="plugin">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-puzzle-piece"></i>
 	                        <span class="title">插件</span>
 	                        <span class="arrow open"></span>
 	                    </a>
 	                    <ul class="sub-menu">
+	                            <li data-id="clipboard">
+	                                <a href="clipboard.html">Clipboard</a>
+	                            </li>
 	                            <li data-id="datatables">
 	                                <a href="datatable.html">DataTables</a>
 	                            </li>
@@ -157,7 +165,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="chart">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-bar-chart-o"></i>
 	                        <span class="title">图表</span>
@@ -184,7 +192,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="page">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-pagelines"></i>
 	                        <span class="title">单页</span>
@@ -198,13 +206,16 @@
 	                </li>
 	
 	        </ul>
+	
+	        <div class="page-sidebar-spanner">
+	            <i class="fa"></i>
+	        </div>
 	        <!-- END SIDEBAR MENU -->
 	    </div>
 	</div>
 
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-
 		<div class="page-content">
         <div class="row">
             <div class="col-md-12">
@@ -288,24 +299,24 @@ return option; });</code></pre>
         </div>
         <!-- END PAGE CONTENT-->
 		</div>
+        <div class="footer fixed">
+            <span class="copyright">© 2016 Hypers, Inc.</span>
+        
+        
+            <div class="link">
+                <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
+            </div>
+        </div>
+        <script src="../../pagurian.js" ></script>
+        
+        <!--[if lt IE 9]>
+            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 
-<div class="footer fixed">
-    <span class="copyright">© 2016 Hypers, Inc.</span>
-
-
-    <div class="link">
-        <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
-    </div>
-</div>
-<script src="../../pagurian.js" ></script>
-
-<!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 <script type="text/javascript">
     window.CONFIG = {
         appId: "echarts_bar"
@@ -320,6 +331,7 @@ return option; });</code></pre>
             });
         </script>
 
+<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -335,6 +347,7 @@ return option; });</code></pre>
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
+-->
 
 </body>
 </html>

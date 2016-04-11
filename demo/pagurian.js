@@ -55,7 +55,7 @@
         base: pagurian.path.app,
         alias: {
             "app": "lib/app",
-            "jquery": "lib/vendor/jquery.1.9.1.min",
+            "jquery": "lib/vendor/jquery-1.11.3.min",
             "echarts": "plugins/echarts/module",
             "datatables": "plugins/datatables/module",
             "datepicker": "plugins/datepicker/module",

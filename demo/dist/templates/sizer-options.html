@@ -6,22 +6,27 @@
 <!--<![endif]-->
 
 <head>
-	<title>筛选器 Sizer</title>
-	<meta charset="utf-8" />
+	<title>筛选器 Sizer - Pagurian</title>
+	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 	<meta content="" name="description"/>
 	<meta content="" name="author"/>
 	<meta name="MobileOptimized" content="320">
-	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="shortcut icon" href="favicon.ico"/>
 	<link href="../resources/css/public.css" rel="stylesheet" type="text/css"/>
 	<link id="style_themes" href="../resources/css/themes-green.css" rel="stylesheet" type="text/css"/>
 	
 	<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/8.8.0/styles/default.min.css">
 	
+	<!--[if lt IE 9]>
+	    <script src="//cdn.bootcss.com/es5-shim/4.5.7/es5-shim.min.js"></script>
+	<![endif]-->
 	<!--[if !IE]><!-->
 	<script src="http://cdn.bootcss.com/highlight.js/8.8.0/highlight.min.js"></script>
 	<!--<![endif]-->
+	
+	
 </head>
 <body>
 
@@ -79,7 +84,7 @@
 	    <div class="page-sidebar navbar-collapse collapse">
 	        <!-- BEGIN SIDEBAR MENU -->
 	        <ul class="page-sidebar-menu">
-	                <li class="open">
+	                <li class="open" data-id="theme">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-picture-o"></i>
 	                        <span class="title">基础UI</span>
@@ -112,7 +117,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="com">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-briefcase"></i>
 	                        <span class="title">组件</span>
@@ -130,13 +135,16 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="plugin">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-puzzle-piece"></i>
 	                        <span class="title">插件</span>
 	                        <span class="arrow open"></span>
 	                    </a>
 	                    <ul class="sub-menu">
+	                            <li data-id="clipboard">
+	                                <a href="clipboard.html">Clipboard</a>
+	                            </li>
 	                            <li data-id="datatables">
 	                                <a href="datatable.html">DataTables</a>
 	                            </li>
@@ -157,7 +165,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="chart">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-bar-chart-o"></i>
 	                        <span class="title">图表</span>
@@ -184,7 +192,7 @@
 	                            </li>
 	                    </ul>
 	                </li>
-	                <li class="open">
+	                <li class="open" data-id="page">
 	                    <a href="javascript:;">
 	                        <i class="fa fa-pagelines"></i>
 	                        <span class="title">单页</span>
@@ -198,13 +206,16 @@
 	                </li>
 	
 	        </ul>
+	
+	        <div class="page-sidebar-spanner">
+	            <i class="fa"></i>
+	        </div>
 	        <!-- END SIDEBAR MENU -->
 	    </div>
 	</div>
 
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-
 		<div class="page-content">
         <div class="row">
             <div class="col-md-12">
@@ -234,7 +245,12 @@
             <div class="col-md-12">
 
                 <div class="markdown">
-                    <pre><code class="javascript">$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
+                    <pre><code class="javascript">/**
+* @param {[String|jQuery|Dom]} sizerBtnSelector [选择器] 必须唯一
+* @param {[Array]} options [配置参数]
+* @param {String} chooseDatas [初始选中的选项] 兼容老版本不推荐使用
+*/
+$p.sizer(Seletor, Options,[SelectDatas]);</code></pre>
                 </div>
 
             </div>
@@ -261,12 +277,12 @@ Sizer.getAllDatas();
 Sizer.getSelectDatas();
 /**
 * 选中数据
-* @param data {array|string|obj}
+* @param values {array|string|obj}
 * array:[{name:"2.1.12.3",value:1},...]
 * obj:{name:"2.1.12.3",value:1},
-* string:"all"全选,"null"全不选
-* @return Sizer;
-**/
+* string:"all"全选,"null"全不选 ,如果为单选则接受直接传入value进行选中
+* return sizer
+*/
 Sizer.chooseData(data);
 /**
 * 动态绑定事件
@@ -282,7 +298,7 @@ Sizer.on(functionName,callback);
 * expand,close,option,search,clean,submit,cancel
 * @return Sizer;
 **/
-Sizer.unBind(functionName);
+Sizer.off(functionName);
 /**
 * 销毁插件
 */
@@ -291,6 +307,14 @@ Sizer.destroy();
 * 切换面板状态
 */
 Sizer.expandPanel();
+/**
+* 打开面板
+*/
+Sizer.open();
+/**
+* 关闭面板
+*/
+Sizer.close();
 /**
 * 更新数据
 * @param params{Object}
@@ -331,12 +355,12 @@ Sizer.update(params);</code></pre>
                         <td><mark>dataSource</mark></td>
                         <td>--</td>
                         <td>function</td>
-                        <td>一个方法，定义dataListview显示的数据源</td>
+                        <td>定义dataListview显示的数据源的方法</td>
                     </tr>
                     <tr>
                         <td><mark>dataParams</mark></td>
                         <td>--</td>
-                        <td>function</td>
+                        <td>object|function</td>
                         <td>设置自定义请求参数</td>
                     </tr>
                     <tr>
@@ -404,6 +428,12 @@ Sizer.update(params);</code></pre>
                         <td>function([<code>data</code>]){}</td>
                         <td>点击清除按钮时的回调<br/><code>data</code>:选择的数据</td>
                     </tr>
+                    <tr>
+                        <td><mark>[callbackLoadData]</mark></td>
+                        <td>--</td>
+                        <td>function([<code>data</code>,<code>data</code>]){}</td>
+                        <td>点击清除按钮时的回调<br/><code>data</code>:选择的数据</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -427,13 +457,13 @@ Sizer.update(params);</code></pre>
                         <td><mark>[callbackSelectAll]</mark></td>
                         <td>--</td>
                         <td>function([<code>data</code>]){}</td>
-                        <td>点击全选按钮时的回调<br/><code>data</code>:全部数据</td>
+                        <td>搜索框输入时的回调<br/><code>data</code>:符合搜索条件的数据</td>
                     </tr>
                     <tr>
                         <td><mark>[callbackSubmit]</mark></td>
                         <td>--</td>
-                        <td>function([<code>data</code>]){}</td>
-                        <td>点击全选按钮时的回调<br/><code>data</code>:全部数据</td>
+                        <td>function([<code>selectData</code>,<code>allData</code>]){}</td>
+                        <td>点击确定按钮时的回调<br/><code>selectData</code>:选中数据<br/><code>allData</code>:全部数据</td>
                     </tr>
                     <tr>
                         <td><mark>[callbackCancel]</mark></td>
@@ -505,7 +535,7 @@ Sizer.update(params);</code></pre>
 ...
 ]或者
 "all","null"</pre>
-                            如果<code>name</code>不为空则使用<code>name</code>的值覆盖原先按钮的提示问题
+                            如果<code>name</code>不为空则使用<code>name</code>的值覆盖原默认提示文字
                         </td>
                     </tr>
                     </tbody>
@@ -516,24 +546,24 @@ Sizer.update(params);</code></pre>
 
         <!-- END PAGE CONTENT-->
 		</div>
+        <div class="footer fixed">
+            <span class="copyright">© 2016 Hypers, Inc.</span>
+        
+        
+            <div class="link">
+                <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
+            </div>
+        </div>
+        <script src="../../pagurian.js" ></script>
+        
+        <!--[if lt IE 9]>
+            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 
-<div class="footer fixed">
-    <span class="copyright">© 2016 Hypers, Inc.</span>
-
-
-    <div class="link">
-        <a href="https://github.com/hypers/pagurian/issues" target="_blank">问题反馈</a>
-    </div>
-</div>
-<script src="../../pagurian.js" ></script>
-
-<!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 <script type="text/javascript">
     window.CONFIG = {
         appId: "sizer"
@@ -545,6 +575,7 @@ Sizer.update(params);</code></pre>
             });
         </script>
 
+<!--
 <script>
     (function(i,d,t,o,u,h,c,p){i[t]=i[t]||[],i[t].push(h);i[h] = i[h]||function()
     {return (i[h].q=i[h].q||[]).push(arguments)};i[h].end?i[h]("track",h,c,p):(function(s,f)
@@ -560,6 +591,7 @@ Sizer.update(params);</code></pre>
 <div style="display:none">
     <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254744731'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254744731' type='text/javascript'%3E%3C/script%3E"));</script>
 </div>
+-->
 
 </body>
 </html>

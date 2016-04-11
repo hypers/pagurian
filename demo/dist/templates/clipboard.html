@@ -6,7 +6,7 @@
 <!--<![endif]-->
 
 <head>
-	<title>Echarts 饼图 - Pagurian</title>
+	<title>Clipboard - Pagurian</title>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -217,96 +217,69 @@
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content">
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="page-title">
-                Echarts 饼图
-            </h3>
-            <div class="tabs-wrap">
-                <ul  class="nav nav-tabs">
 
-                    <li>
-                        <a href="echarts-pie.html" >标准饼图</a>
-                    </li>
-                    <li  class="active">
-                        <a href="echarts-pie-loop.html" >环形图</a>
-                    </li>
-
-                </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    Clipboard
+                </h3>
             </div>
-
         </div>
-    </div>
 
-    <!-- BEGIN PAGE CONTENT-->
-    <div class="row">
-        <div class="col-md-12">
+        <div class="row">
 
-            <div class="portlet box default">
+            <div class="col-md-12">
 
-                <div class="portlet-body">
-                    <div  class="chart-default " >
-                        <div class="chart-body" id="my_chart"></div>
+                <div class="portlet box default ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            剪切板
+                        </div>
                     </div>
+                    <div class="portlet-body form">
+                        <form action="#" id="form_sample_1">
+                            <div class="form-body">
 
+                                <div class="form-group">
+                                    <textarea id="txt_content" rows="3" class="form-control" >快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="btn_copy" class="btn btn-primary" type="button">复制</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
                 </div>
 
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="markdown">
-                <h3>Javascript</h3>
-<pre><code class="javascript">require('../../plugins/echarts/module');
-
-var chart = $p.echarts("my_chart", {
-    type: "pie",
-    title: {
-        text: '来源分析'
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;textarea id=&quot;txt_content&quot; rows=&quot;3&quot; class=&quot;form-control&quot; &gt;快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。
+    &lt;/textarea&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;button id=&quot;btn_copy&quot; class=&quot;btn btn-primary&quot;&gt;复制&lt;/button&gt;
+&lt;/div&gt;
+                    </code></pre>
+                    <h3>Javascript代码</h3>
+<pre><code class="javascript">
+$p.clipboard("#btn_copy", {
+    copy: function(event) {
+        return $("#txt_content").val();
+    },
+    afterCopy: function(data) {
+        $p.log(data);
     }
 });
-
-chart.load({
-    name: '访问来源',
-    radius : ['50%', '70%'],
-    data: [{
-        value: 735,
-        name: '百度'
-    }, {
-        value: 310,
-        name: '谷歌'
-    }, {
-        value: 234,
-        name: '360搜索'
-    }, {
-        value: 135,
-        name: '搜狗'
-    }, {
-        value: 548,
-        name: '必应'
-    }, {
-        value: 148,
-        name: '雅虎'
-    }, {
-        value: 114,
-        name: '网易有道'
-    }],
-});</code></pre>
-
-                <h3>基于版本</h3>
-                <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
-                
-                <h3>更多实例</h3>
-                <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
-
+</code></pre>
+                </div>
             </div>
+
         </div>
-    </div>
-    <!-- END PAGE CONTENT-->
+
 		</div>
         <div class="footer fixed">
             <span class="copyright">© 2016 Hypers, Inc.</span>
@@ -328,19 +301,14 @@ chart.load({
 
 <script type="text/javascript">
     window.CONFIG = {
-        appId: "echarts_pie"
+        appId: "clipboard"
     };
 </script>
-    <script type="text/javascript">
-
-        pagurian.call([
-            "modules/echarts-pie/app",
-            "plugins/echarts/loader"
-        ], function(app) {
-            app.page.loop();
-        });
-
-    </script>
+        <script type="text/javascript">
+            pagurian.call("modules/clipboard/app", function(app) {
+                app.page.index();
+            });
+        </script>
 
 <!--
 <script>
