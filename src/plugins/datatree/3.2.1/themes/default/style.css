@@ -472,7 +472,7 @@
     background: transparent;
 }
 .jstree-node .jstree-input {
-    padding: 2px 4px;
+    padding: 2px 8px;
     font-size: 12px;
     height: 22px;
 }
@@ -493,6 +493,9 @@
     padding: 1px 4px;
     height: 22px;
     border: 1px solid #ddd;
+}
+.jstree-node .bootstrap-touchspin .input-group-btn{
+    border: none;
 }
 .jstree-node .bootstrap-touchspin .input-group-btn i {
     font-size: 12px;

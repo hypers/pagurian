@@ -5,6 +5,7 @@
     "evil": true,
     "loopfunc": true,
     "scripturl":true,
+    "esnext":true,
     "globals": {
         "jQuery": true
     }

@@ -82,6 +82,7 @@ define(function(require, exports, module) {
                     return;
                 }
 
+
                 //兼容老的版本dataSource
                 var fnDataSource = _options.fnDataSource || _options.dataSource;
 
@@ -241,7 +242,7 @@ define(function(require, exports, module) {
 
             for (var i = 0; i < items.length; i++) {
                 for (var o in items[i]) {
-                    if (!items[i][o] && items[i][o] !== 0) {
+                    if (items[i][o] === undefined) {
                         items[i][o] = self.options.sDefaultValue;
                     }
                 }

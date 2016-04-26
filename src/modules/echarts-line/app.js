@@ -1,8 +1,9 @@
 define(function(require, exports, module) {
-    
+
     var app = require("../../lib/app");
     require("../../plugins/echarts/module");
     var chart = {};
+
     app.page.line = function() {
 
         chart = $p.echarts("my_chart", {
@@ -34,7 +35,21 @@ define(function(require, exports, module) {
                 }]
         });
 
-
+        $("#btn_demo").click(function(){
+            var $portlet=$(".portlet");
+            var $chart=$("#my_chart");
+            var height=$(window).height();
+            if($portlet.hasClass("demo")){
+                $portlet.removeClass("demo");
+                $chart.css("height","350px")
+                $(this).html('<i class="fa fa-laptop"></i> 演示');
+            }else{
+                $portlet.addClass("demo");
+                $chart.css("height",height-100);
+                $(this).html('<i class="fa fa-laptop"></i> 退出演示');
+            }
+            chart.chart.resize();
+        });
     };
 
     app.page.stack = function() {

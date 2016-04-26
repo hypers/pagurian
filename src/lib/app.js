@@ -1,7 +1,6 @@
 /*
  * @fileOverview app基础模块，所有的app模块继承该模块
  * @version 0.1
- *
  */
 define(function(require, exports, module) {
 
@@ -34,14 +33,19 @@ define(function(require, exports, module) {
         zh_CN: require('../conf/locale.zh_CN'),
         en_US: require('../conf/locale.en_US')
     };
-
     pagurian.locale = locale[pagurian.language];
+
 
     pagurian.lib = {
         service: require('./service'),
-        api: require('../conf/api'),
         route: require('../conf/route')
     };
+
+    //载入API配置
+    var api = require('../conf/api');
+
+    pagurian.lib.api = api.items || {};
+    pagurian.lib.apiPostfix = api.postfix;
 
     //日志
     pagurian.log = function() {
@@ -49,41 +53,12 @@ define(function(require, exports, module) {
             return;
         }
         if (arguments.length === 1) {
-            console.log(arguments[0]);
+            console.error(arguments[0]);
         }
         if (arguments.length === 2) {
             console[arguments[1]](arguments[0]);
         }
     };
-
-    /**
-     * 兼容1.5以前的版本
-     */
-    function compatible() {
-
-        pagurian.com = {
-            alert: pagurian.alert,
-            dialog: pagurian.dialog,
-            checkboxs: pagurian.checkboxs,
-            form: pagurian.form,
-            portlet: pagurian.portlet,
-            select: pagurian.select,
-        };
-
-        pagurian.plugin = {
-            dataListView: pagurian.dataListView,
-            sizer: pagurian.sizer,
-            summary: pagurian.summary,
-            dataTable: pagurian.dataTable,
-            datePicker: pagurian.datePicker,
-            dateRangePicker: pagurian.datePicker,
-            dateTimePicker: pagurian.datePicker,
-            echarts: pagurian.datePicker,
-            slider: pagurian.slider
-        };
-
-    }
-
 
 
     //module中的app父对象
@@ -97,9 +72,6 @@ define(function(require, exports, module) {
             layout.activateCurrentMenu();
         },
         init: function() {
-
-            //版本兼容处理
-            compatible();
 
             //初始化页面布局
             layout.init();

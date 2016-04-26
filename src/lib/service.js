@@ -26,24 +26,27 @@ define(function(require, exports, module) {
 
         var options = {
             original: false,
-            bundle: true
+            bundle: true,
+            data: {}
         };
 
-
+        // (options);
         if (arguments.length === 1 && $.isPlainObject(arguments[0])) {
             return $.extend(options, arguments[0]);
         }
 
+        // (url,data,callback)
         if (arguments.length === 3) {
             options.url = arguments[0];
-            options.params = filterParams(arguments[1]);
+            options.data = filterParams(arguments[1]);
             options.callback = arguments[2];
             return options;
         }
 
+        // (type,url,data,callback)
         options.type = arguments[0];
         options.url = arguments[1];
-        options.params = filterParams(arguments[2]);
+        options.data = filterParams(arguments[2]);
         options.callback = arguments[3];
 
         return options;
@@ -116,21 +119,23 @@ define(function(require, exports, module) {
             return false;
         }
 
-        if (options.type === "get") {
-            options.params = encode($.param(options.params, true));
-        } else if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
+        options.url = [$p.path.api, options.url, $p.lib.apiPostfix].join("");
 
+        if (options.type === "get") {
+            options.data = encode($.param(options.data, true));
+        } else if (options.type === "delete") {
+            options.url = options.url + "?" + encode($.param(options.data, true));
+        } else if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
             if (!options.original) {
-                options.params = transport.toObject(options.params);
+                options.data = transport.toObject(options.data);
             }
             if (options.bundle) {
                 options.contentType = "application/json";
-                options.params = transport.toJSON(options.params);
+                options.data = transport.toJSON(options.data);
             }
         }
 
-
-        ajax.request(options, function(response) {
+        ajax.getJSON(options, function(response) {
             var valid = validate.check(response);
             response.result = response.result || {};
             options.callback(response, valid);
@@ -158,7 +163,6 @@ define(function(require, exports, module) {
             });
             options.type = "get";
             requestDate(options);
-
         },
         post: function(url, params, callback) {
             var options = getOptions.apply(this, arguments);

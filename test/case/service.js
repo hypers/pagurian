@@ -1,28 +1,28 @@
 module('Service');
 
-test('测试GET请求', function (assert) {
-    pagurian.call(["lib/app", "lib/service"], function (app, service) {
-        service.get("../api/succeed", {
+var apiURL = "../test/api/succeed.json";
+
+test('测试GET请求', function(assert) {
+    pagurian.call(["lib/app", "lib/service"], function(app, service) {
+        service.get(apiURL, {
             "page": 1,
             "pagesize": 100
-        }, function () {
-        });
+        }, function() {});
         assert.ok(1 === 1, "OK");
     });
 
     ok(true, 'this had better work.');
 });
 
-test('测试POST请求', function (assert) {
+test('测试POST请求', function(assert) {
 
-    pagurian.call(["lib/app", "lib/service"], function (app, service) {
-        service.post("../api/succeed", {
+    pagurian.call(["lib/app", "lib/service"], function(app, service) {
+        service.post(apiURL, {
             "page": 1,
             "pagesize": 100
-        }, function () {
-        });
+        }, function() {});
 
-        service.post("../api/succeed", [
+        service.post(apiURL, [
             {
                 "name": "foo",
                 "value": "bar"
@@ -31,40 +31,35 @@ test('测试POST请求', function (assert) {
                 "name": "foo",
                 "value": "bar2"
             }
-        ], function () {
-        });
+        ], function() {});
 
-        service.post("../api/succeed", [{
+        service.post(apiURL, [{
             "name": "foo",
             "value": "bar",
             "type": "array"
-        }], function () {
-        });
+        }], function() {});
 
-        service.post("../api/succeed", {
+        service.post(apiURL, {
             "project.id": "1"
-        }, function () {
-        });
+        }, function() {});
 
-        service.post("../api/succeed", {
+        service.post(apiURL, {
             "project.id": ["1", "2"]
-        }, function () {
-        });
+        }, function() {});
 
 
         service.post({
-            url: "../api/succeed",
+            url: apiURL,
             params: {
                 "projectId": ["1", "2"],
                 "actions": ["join", "buy", "click"]
             },
-            callback: function () {
-            }
+            callback: function() {}
         });
 
 
         service.post({
-            url: "../api/succeed",
+            url: apiURL,
             original: true,
             params: [{
                 "projectId": ["1", "2"],
@@ -73,8 +68,23 @@ test('测试POST请求', function (assert) {
                 "projectId": ["4", "8"],
                 "actions": ["change"]
             }],
-            callback: function () {
-            }
+            callback: function() {}
+        });
+
+        service.post({
+            url: apiURL,
+            original: true,
+            headers:{
+                "user":"abc",
+            },
+            params: [{
+                "projectId": ["1", "2"],
+                "actions": ["join", "buy", "click"]
+            }, {
+                "projectId": ["4", "8"],
+                "actions": ["change"]
+            }],
+            callback: function() {}
         });
 
         assert.ok(1 === 1, "OK");
@@ -83,26 +93,24 @@ test('测试POST请求', function (assert) {
     ok(true, 'this had better work.');
 });
 
-test('测试PUT请求', function (assert) {
-    pagurian.call(["lib/app", "lib/service"], function (app, service) {
-        service.request("put", "../api/succeed", {
+test('测试PUT请求', function(assert) {
+    pagurian.call(["lib/app", "lib/service"], function(app, service) {
+        service.request("put", apiURL, {
             "page": 1,
             "pagesize": 100
-        }, function () {
-        });
+        }, function() {});
         assert.ok(1 === 1, "OK");
     });
 
     ok(true, 'this had better work.');
 });
 
-test('测试PATCH请求', function (assert) {
-    pagurian.call(["lib/app", "lib/service"], function (app, service) {
-        service.request("patch", "../api/succeed", {
+test('测试PATCH请求', function(assert) {
+    pagurian.call(["lib/app", "lib/service"], function(app, service) {
+        service.request("patch", apiURL, {
             "page": 1,
             "pagesize": 100
-        }, function () {
-        });
+        }, function() {});
 
         assert.ok(1 === 1, "OK");
     });
@@ -110,13 +118,12 @@ test('测试PATCH请求', function (assert) {
     ok(true, 'this had better work.');
 });
 
-test('测试PUT请求', function (assert) {
-    pagurian.call(["lib/app", "lib/service"], function (app, service) {
-        service.request("delete", "../api/succeed", {
+test('测试PUT请求', function(assert) {
+    pagurian.call(["lib/app", "lib/service"], function(app, service) {
+        service.request("delete", apiURL, {
             "page": 1,
             "pagesize": 100
-        }, function (resp) {
-        });
+        }, function(resp) {});
         assert.ok(1 === 1, "OK");
     });
 
