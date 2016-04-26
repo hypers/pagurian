@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
         //版本
-        var version = "2016.03.24.1327";
+        var version = "2016.04.26.1501";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -114,8 +114,7 @@ define(function (require, exports, module) {
             var allCheckBox = $('#' + _this.sizerName + ' .sizer-data-list input[type="' + _type + '"]:checked');
             allCheckBox.each(function () {
                 var oValue = {};
-                var _value = $p.tool.isNumber($(this).val()) ? +$(this).val() : $(this).val();
-                oValue[_this.options.dataMapping.value] = _value;
+                oValue[_this.options.dataMapping.value] = "" + $(this).val();
                 oValue[_this.options.dataMapping.name] = $(this).data("key");
                 _selectDatas.push(oValue);
             });
@@ -803,7 +802,7 @@ define(function (require, exports, module) {
                 }
                 _tempDatas.push(_datas[i]);
                 for (var j = 0, lenJ = _selectDatas.length; j < lenJ; j++) {
-                    if ("" + _datas[i][_this.options.dataMapping.value] === "" + _selectDatas[j][_this.options.dataMapping.value]) {
+                    if ("" + _datas[i][_this.options.dataMapping.value] === _selectDatas[j][_this.options.dataMapping.value]) {
                         _tempSelectDatas.push(_datas[i]);
                     }
                 }
