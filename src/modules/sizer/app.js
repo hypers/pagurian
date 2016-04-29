@@ -60,17 +60,14 @@ define(function (require, exports, module) {
             isMultiple: true,//是否为多选 默认为false
             isExpand: true,//是否默认展开 默认为false
             dataSource: model.getSizerData,//数据源
-            style: "d-ib", //筛选器自定义class
-            callbackExpand: function () {//面板展开时的回调
-                console.log("Expand");
+            dataParams: {
+                timeStamp: +new Date()
             },
+            style: "d-ib", //筛选器自定义class
             callbackClose: function (datas, allDatas) {//面板关闭时的回掉
                 console.log("Close");
                 console.log(datas);
                 console.log(allDatas);
-            },
-            callbackOption: function (data) {//点击选项的回调
-                console.log(data);
             },
             callbackSearch: function (datas) {//搜索框录入回调
                 console.log(datas);
@@ -89,12 +86,20 @@ define(function (require, exports, module) {
             },
             callbackCancel: function () {//取消按钮回调
                 console.log("Cancel");
+            },
+            callbackLoadData: function (selectData, allData) {//数据加载完成回调
+                console.log('数据加载完成');
+                console.log(selectData);
+                console.log(allData);
             }
         };
-        var sizer = $p.sizer($("#sizer-multiple"), options, selectDatas);
-        sizer.on("option", function (data) {
-            console.log(data);
+        var sizer = $p.sizer($("#sizer-multiple"), options);
+        //使用on绑定事件
+        sizer.on("option", function (data, status) {
+            console.log(data, status);
         });
+
+        sizer.chooseData(selectDatas);
     };
 
     /**
@@ -122,7 +127,7 @@ define(function (require, exports, module) {
             for (var i = 0; i < selectDatas.length; i++) {
                 spans.push('<span>' + selectDatas[i].name + '</span>');
             }
-            $(selector).find('.sizer-result-content').empty().append(spans.join(''));
+            $(selector).find('.sizer-result-content').empty().append(spans.join('') || "选择为空");
         }
     };
 

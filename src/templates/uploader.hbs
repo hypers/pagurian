@@ -1,0 +1,95 @@
+{{#>layouts/base title=data.page.uploader appId="uploader" }}
+
+    {{#*inline "pageContent"}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.uploader}}
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="uploader.html">基础</a>
+                        </li>
+                        <li>
+                            <a href="uploader-options.html">参数说明</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="portlet box default ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            文件上传
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form action="#" id="form_sample_1">
+                            <div class="form-body">
+
+                                <div class="form-group">
+                                    <div id="btn_uploader">选择文件</div>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+                <div class="table-scrollable ">
+                    <table class="table table-bordered table-custom  table-hover" id="table_files">
+                        <thead>
+                            <tr>
+                                <th>文件名</th>
+                                <th>大小</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">&lt;div id=&quot;btn_uploader&quot;&gt;选择文件&lt;/div&gt;</code></pre>
+                    <h3>Javascript代码</h3>
+<pre><code class="javascript">
+
+var uploader = $p.uploader("#btn_uploader", {
+    //上传API地址
+    server: '/src/plugins/uploader/0.1.5/fileupload.php'
+});
+
+//当文件上传成功时触发
+uploader.on('uploadSuccess', function(file) {
+    $(&quot;#table_files&quot;).append([
+        &quot;&lt;tr&gt;&quot;,
+            &quot;&lt;td&gt;&lt;a&gt;&quot; + file.name + &quot;&lt;/a&gt;&lt;/td&gt;&quot;,
+            &quot;&lt;td&gt;&quot; + file.size + &quot;&lt;/td&gt;&quot;,
+        &quot;&lt;/tr&gt;&quot;
+    ].join(&quot;&quot;));
+});
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/uploader/app", function(app) {
+                app.page.index();
+            });
+        </script>
+        {{/inline}}
+
+{{/layouts/base}}

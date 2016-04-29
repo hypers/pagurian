@@ -1,4 +1,4 @@
-{{#>base title=data.page.form}}
+{{#>layouts/base title=data.page.form appId="form"}}
 
 {{#*inline "pageContent"}}
 
@@ -40,6 +40,7 @@
                                 <div>
                                     <textarea name="textarea" class="form-control"></textarea>
                                 </div>
+                                <span for="textarea"  class="help-block tip" data-tip="该字段不能大于10个字符" ></span>
                             </div>
                             <div class="form-group">
                                 <label>Select</label>
@@ -89,7 +90,7 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="button" id="btn_submit" class="btn green">Submit</button>
+                            <button type="submit" id="btn_submit" class="btn green">Submit</button>
                             <button type="button" class="btn default">Cancel</button>
                         </div>
                     </form>
@@ -99,67 +100,74 @@
             <div class="markdown">
                 <h3>Javascript代码</h3>
     <pre><code class="javascript">$p.com.form("#form_sample_1", {
-//表单验证
-validate: {
-    rules: {
-        text: {
-            maxlength: 128,
-            required: true,
-            validString: true
+    //表单验证
+    validate: {
+        rules: {
+            text: {
+                maxlength: 128,
+                required: true,
+                validString: true
+            },
+            radio: {
+                required: true
+            },
+            checkbox: {
+                required: true
+            }
         },
-        radio: {
-            required: true
-        },
-        checkbox: {
-            required: true
+        //自定义验证
+        custom: function(data, $form) {
+
+            var $textarea = $form.find("[name='textarea']");
+            var $textareaBlock = $form.find(".help-block[for='textarea']");
+
+            if ($textarea.val().length > 10) {
+                $textareaBlock.html("该字段不能大于10个字符啊~~~").removeClass("tip");
+                return false;
+            }
+            return true;
         }
     },
-        //自定义验证
-    custom: function(data, form) {
-            $p.log("自定义验证");
-            return true;
-    }
-},
-//提交按钮
-submitButton: "#btn_submit",
-//提交接口
-submitModelEvent: model.add,
-//接口参数
-submitModelParams: function(params, callback) {
-    //新增参数项，回调函数
-    return [params, callback];
-},
-//数据格式化
-submitDataFormat: function(data, form) {
-    var _data = [];
-    //格式化后的数据
-    for (var i = 0; i < data.length; i++) {
-    if (data[i].name == 'checkbox') {
-        _data.push({
-            name: "checkboxes",
-            value: {
-                id: data[i].value,
-                title: data[i].name
-            },
-            //当checkbox只选中一项的时候,提交的时候会当做Object{}处理
-            //属性type: "array",是为了让该字段当做Array[]处理
-            type: "array"
-        });
-        continue;
-    }
+    //提交按钮
+    submitButton: "#btn_submit",
+    //提交接口
+    submitModelEvent: model.add,
+    //接口参数
+    submitModelParams: function(params, callback) {
+        //新增参数项，回调函数
+        return [params, callback];
+    },
+    //数据格式化
+    submitDataFormat: function(data, form) {
+        var _data = [];
+        //格式化后的数据
+        for (var i = 0; i < data.length; i++) {
+        if (data[i].name == 'checkbox') {
+            _data.push({
+                name: "checkboxes",
+                value: {
+                    id: data[i].value,
+                    title: data[i].name
+                },
+                //当checkbox只选中一项的时候,提交的时候会当做Object{}处理
+                //属性type: "array",是为了让该字段当做Array[]处理
+                type: "array"
+            });
+            continue;
+        }
 
-    _data.push(data[i]);
+        _data.push(data[i]);
+        }
+        return _data;
+    },
+    //提交成功
+    submitSuccess: function(resp, valid) {
+        $p.alert(resp.message);
+    },
+    //提交失败
+    submitError: function(resp, valid) {
+        $p.alert(resp.message, "error");
     }
-    return _data;
-},
-//提交成功
-submitSuccess: function(resp, valid) {
-    $p.alert(resp.message);
-},
-//提交失败
-submitError: function(resp, valid) {
-    $p.alert(resp.message, "error");
-}
 });</code></pre>
             </div>
         </div>
@@ -174,4 +182,4 @@ submitError: function(resp, valid) {
 </script>
 {{/inline}}
 
-{{/base}}
+{{/layouts/base}}

@@ -57,7 +57,7 @@ define(function(require, exports, module) {
 
                 item = [
                     '<label class="checkbox-item" ><input type="checkbox"',
-                    'name="' + name + '"',
+                    'name="' + this.name + '"',
                     'value="' + this.items[i].value + '"',
                     'data-text="' + this.items[i].text + '"'
                 ];

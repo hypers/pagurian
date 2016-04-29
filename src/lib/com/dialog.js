@@ -3,48 +3,67 @@ define(function(require, exports, module) {
     var g = window;
     var template = require("../tpl/dialog.tpl");
 
-    function Dialog() {
+    function Dialog(selector, options) {
 
 
         var timer; //定时器，定时关闭消息提示
-        var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
+        var self = this;
 
-        /**
-         * 重置表单,情况表单中的值
-         */
-        function resetForm(form) {
+        function resize() {
+            var scrollHeight = self.body.height(); //modal 滚动高度
+            var overHeight = 214; //footer:50,  header:50, custom:114
+            var contentHeight = $(window).height() - overHeight; //内容区域高度
 
-            var form_element_list = form.find("input,textarea");
-            form_element_list.each(function() {
-                if ($(this).attr('type') === "text" || $(this).attr('type') === "hidden" || $(this).get(0).tagName === "TEXTAREA") {
-                    $(this).val("");
-                }
-            });
+            if (options.width) {
+                //body.width(options.width);
+                var padding = 36; // content css padding left + right
+                self.content.width(options.width + padding);
+                self.content.parent().width(options.width + padding);
+            }
 
-            form.find(".help-block").each(function() {
-                var tip = $(this).data("tip");
-                if (tip) {
-                    $(this).text(tip).addClass("tip");
-                } else {
-                    $(this).text("");
-                }
-            });
+            if (scrollHeight >= contentHeight) {
+                self.body.css("max-height", contentHeight);
+            }
+            self.body.scrollTop(0);
         }
 
+        this.id = $p.tool.newId();
         this.language = {
             zh_CN: {
                 title: "提示信息",
-                btn_submit: "确定",
-                btn_cancel: "取消",
+                buttonSubmit: "确定",
+                buttonCancel: "取消",
                 body: "你好，我是一个模式对话框。"
             },
             en_US: {
                 title: 'Title',
-                btn_submit: "Confirm",
-                btn_cancel: "Cancel",
+                buttonSubmit: "Confirm",
+                buttonCancel: "Cancel",
                 body: "Hello, I am a dialog ."
             }
         };
+
+        this.reset = function() {
+
+            if (this.form) {
+                this.form[0].reset();
+                this.form.find(".help-block").each(function() {
+                    var tip = $(this).data("tip");
+                    if (tip) {
+                        $(this).text(tip).addClass("tip");
+                    } else {
+                        $(this).empty();
+                    }
+                });
+            }
+
+            this.container.find(".submit-waiting").empty();
+            this.container.find(".modal-message").empty();
+            this.container.find(".btn").removeClass("disabled").removeAttr("disabled");
+            this.container.find(".form-group").removeClass("has-error");
+            this.whisper.empty().show();
+        };
+
 
         /**
          * 初始化
@@ -52,80 +71,118 @@ define(function(require, exports, module) {
          * @param  {Object} options 配置项
          * @return {Object}    Dialog
          */
-        this.init = function(selector, options) {
+        this.init = function() {
 
-            var modal = this;
-
-            this.id = _id;
-            options.id = _id;
-
-            //初始化模版
-            this.tpl = $p.tpl(template, $.extend(this.language[$p.language || "zh_CN"], options));
-
-            $("body").append(this.tpl);
-
-            var form = $("#modal" + _id + " form");
-            if (selector) {
-                //给按钮绑定事件
-                $(document).delegate(selector, 'click', function() {
-                    var params = $(this).data("params");
-                    modal.params = eval("(" + params + ")") || {};
-                    modal.show();
-                    if ($.isFunction(options.initForm)) {
-                        options.initForm(modal, form, modal.params);
-                    }
-                });
-
-                if ($.isFunction(options.preload)) {
-                    options.preload(modal);
-                }
+            var dialogBody;
+            if (!$p.tool.isString(options.body)) { // jQueryElement or Node
+                dialogBody = options.body;
+                options.body = '';
             }
 
-            this.element = $("#modal" + _id);
-            this.element.addClass(options.className);
+            //初始化模版
+            options.id = this.id;
+            this.htmlTpl = $p.tpl(template,
+                $.extend(
+                    this.language[$p.language || "zh_CN"],
+                    options
+                )
+            );
+            $("body").append(this.htmlTpl);
 
-            //提交按钮绑定事件
-            this.submitButton = $("#btn_submit" + _id).click(function() {
 
-                var data = form.serializeArray() || [];
-                //jquery.validate 验证表单
-                if (form.length && $.isFunction(form.valid) && !form.valid()) {
-                    return false;
-                }
+            this.container = $("#modal" + this.id);
+            this.whisper = $("#whisper" + this.id);
+            this.form = this.container.find("form").length ? this.container.find("form") : null;
+            this.body = this.container.find('.modal-body');
+            this.content = this.container.find('.modal-content');
+            this.submitButton = $("#btn_submit" + this.id);
+            this.cancelButton = $("#btn_cancel" + this.id);
+            this.container.addClass(options.className);
 
-                //手动验证表单
-                if (form.length && typeof $.isFunction(options.validate) && !options.validate(modal, data, modal.params)) {
-                    return false;
-                }
+            if (dialogBody) {
+                this.body.append(dialogBody);
+            }
 
-                //提交表单数据
-                if ($.isFunction(options.submit)) {
-                    $(this).addClass("disabled").prop("disabled", true);
-                    $("#modal" + _id + " .submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
-                    options.submit(modal, form.serializeArray() || [], modal.params);
-                }
-
-            });
-
-            //取消按钮绑定事件
-            this.cancelButton = $("#btn_cancel" + _id).click(function() {
-                if ($.isFunction(options.cancel)) {
-                    options.cancel(modal, modal.params);
-                }
-            });
+            this.initEvent();
+            if (options.preload !== undefined) options.preload(this);
 
             return this;
         };
 
+
+        this.showLoading = function() {
+            this.submitButton.addClass("disabled").prop("disabled", true);
+            this.container.find(".submit-waiting").html('<i class="fa fa-spinner fa-spin"></i>');
+            return this;
+        };
+
+        this.hideLoading = function() {
+            this.submitButton.removeClass("disabled").removeAttr("disabled");
+            this.container.find(".submit-waiting").empty();
+            return this;
+        };
+
+        this.submitForm = function() {
+
+            var data;
+
+            if (self.form) {
+                data = self.form.serializeArray();
+                //jquery.validate 验证
+                var failA = (self.form.valid !== undefined) ? !self.form.valid() : false;
+                //自定义验证
+                var failB = (options.validate !== undefined) && !options.validate(self, data, self.params);
+
+                if (failA || failB) return this;
+            }
+
+            //提交表单数据
+            if (options.submit !== undefined) options.submit(self, data, self.params);
+
+            this.showLoading();
+            return this;
+        };
+
+        this.initEvent = function() {
+
+            if (selector) {
+                //给按钮绑定事件
+                $(document).delegate(selector, 'click', function() {
+                    if ($(this).hasClass("disabled") || $(this).attr("disabled")) {
+                        return;
+                    }
+                    var params = $(this).data("params");
+                    var $form = self.form;
+
+                    self.params = eval("(" + params + ")") || {};
+                    self.show();
+                });
+            }
+
+            if (this.form) {
+                this.form.submit(function() {
+                    self.submitForm();
+                    return false;
+                });
+            }
+
+            //提交按钮绑定事件
+            this.submitButton.click(function() {
+                self.submitForm();
+            });
+
+            //取消按钮绑定事件
+            this.cancelButton.click(function() {
+                if (options.cancel !== undefined) options.cancel(self, self.params);
+            });
+        };
         /**
          * 当点击提交按钮以后,按钮会处理禁用状态
          * 这个时候，你如果需要把按钮恢复正常状态，就需要调用complete方法
          * @return {Object}  Dialog
          */
         this.complete = function() {
-            $("#modal" + _id + " .submit-waiting").html('');
-            $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
-
+            this.hideLoading();
             return this;
         };
 
@@ -135,47 +192,23 @@ define(function(require, exports, module) {
          */
         this.show = function() {
 
-            resetForm($("#modal" + _id + " form"));
-            $('#modal' + _id + " .submit-waiting").html("");
-            $('#modal' + _id + " .modal-message").html("");
-            $('#modal' + _id + " .btn").removeClass("disabled").removeAttr("disabled");
-            $('#modal' + _id + " .form-group").removeClass("has-error");
-            $('#modal' + _id).modal('show');
-            $("#whisper" + _id).html("").show();
+            this.reset();
+            this.container.modal('show');
 
+            if (options.initForm !== undefined) options.initForm(this, this.form, this.params);
             //调整Modal的高度
-            setTimeout(function() {
-                var modal_body = $('#modal' + _id + ' .modal-body');
-                //modal 滚动高度
-                var available_height = modal_body.height();
-
-                // $('#modal' + _id + ' .modal-footer') + $('#modal' + _id + ' .modal-footer');
-                var custom_height = 114;
-                // $('.footer').outerHeight()
-                var footer_height = 50;
-                //$('.header').outerHeight()
-                var header_height = 50;
-
-                //页面的工作区域高度
-                var content_height = $(window).height() - footer_height - header_height - custom_height;
-
-                if (available_height >= content_height) {
-                    modal_body.css("max-height", content_height);
-                }
-
-                modal_body.scrollTop(0);
-
-            }, 200);
-
+            setTimeout(resize, 200);
             return this;
         };
+
+
 
         /**
          * 隐藏Dialog
          * @return {Object} Dialog
          */
         this.hide = function() {
-            $('#modal' + _id).modal('hide');
+            this.container.modal('hide');
             return this;
         };
 
@@ -187,7 +220,7 @@ define(function(require, exports, module) {
          */
         this.showWhisper = function(message, type) {
 
-            var $whisper = $("#whisper" + _id).html(message).show();
+            var $whisper = this.whisper.html(message).show();
             var className = {
                 info: "whisper-success",
                 error: "whisper-error"
@@ -196,7 +229,7 @@ define(function(require, exports, module) {
             $whisper.removeClass().addClass("whisper " + className[type || "info"]);
             clearTimeout(timer);
             timer = setTimeout(function() {
-                $whisper.html("").hide();
+                $whisper.empty().hide();
             }, 3000);
 
             return this;
@@ -204,17 +237,15 @@ define(function(require, exports, module) {
 
     }
 
-    /**
-     *
-     */
+
     g[PagurianAlias].dialog = function(selector, options) {
 
         //当只传递一个参数的情况下，则不绑定click
         if (arguments.length === 1) {
-            return new Dialog().init(null, arguments[0]);
+            return new Dialog(null, arguments[0]).init();
         }
 
-        return new Dialog().init(selector, options);
+        return new Dialog(selector, options).init();
     };
 
 });

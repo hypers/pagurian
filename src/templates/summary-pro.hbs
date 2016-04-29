@@ -1,4 +1,4 @@
-{{#>base title=data.page.summary}}
+{{#>layouts/base title=data.page.summary appId="summary"}}
 
     {{#*inline "pageContent"}}
         <div class="row">
@@ -178,6 +178,8 @@ var chart = $p.echarts("my_chart", {
 });
 
 var option = {
+    //保存状态到cookie
+    "saveState": true,
     //最大列数
     "maxNum": 5,
     //最小列数
@@ -238,4 +240,4 @@ var summary = $p.summary("#summaryTest", option);</code></pre>
         </script>
     {{/inline}}
 
-{{/base}}
+{{/layouts/base}}

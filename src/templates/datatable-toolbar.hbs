@@ -1,4 +1,4 @@
-{{#>base title=data.page.datatables}}
+{{#>layouts/base title=data.page.datatables appId="datatables"}}
 
 {{#*inline "pageContent"}}
     <div class="row">
@@ -36,8 +36,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-toolbar">
-                <span class="label"> 状态 :</span>
-                <div class="btn-group btn-dropdown btn-select">
+                <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> 新建</button>
+                <span class="label ml10 mr10"> 状态 :</span>
+                <div class="btn-group btn-dropdown btn-select" data-type='select'>
                     <button data-toggle="dropdown" type="button" class="btn btn-default  dropdown-toggle w-unset">全部 <i class="fa fa-angle-down"></i></button>
                     <ul role="menu" class="dropdown-menu">
                         <li><a data-id="ALL" href="javascript:;">全部</a></li>
@@ -45,6 +46,13 @@
                         <li><a data-id="DISABLE" href="javascript:;">禁用</a></li>
                     </ul>
                 </div>
+                <span class="label ml10 mr10"> 状态 :</span>
+                <div class="btn-group btn-radio">
+                    <button  type="button" class="btn btn-default btn-active">全部</button>
+                    <button  type="button" class="btn btn-default ">启用</button>
+                    <button  type="button" class="btn btn-default ">禁用</button>
+                </div>
+                <span class="label">|</span>
                 <button type="button" class="btn btn-default ">报告导出</button>
 
                 <div class="input-icon input-search right">
@@ -137,4 +145,4 @@
     </script>
 {{/inline}}
 
-{{/base}}
+{{/layouts/base}}

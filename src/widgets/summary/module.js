@@ -9,6 +9,7 @@ define(function (require, exports, module) {
             locale = {};
         locale.zh_CN = require('./locale/zh_CN');
         locale.en_US = require('./locale/en_US');
+        var settingPanel = require('./tpl/settingPanel.tpl');
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
 
         /**
@@ -17,38 +18,47 @@ define(function (require, exports, module) {
          * @param {[type]} options [参数]
          */
         function Summary(selector, options) {
-            var o = this,
+            //版本
+            var _version = "2016.4.25.1841";
+
+            var _this = this;
             //前缀名
-                _nameStr = options.name ? options.name : "summary",
+            var _nameStr = options.name ? options.name : "summary";
             //随机id
-                _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase(),
+            var _id = '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
             //cookieName
-                _cookieName,
+            var _cookieName;
             //全部列、行
-                _allColumns, _allRows,
+            var _allColumns, _allRows;
             //临时变量
-                $div_ul, $setting_ul, i, l, j;
+            var $div_ul, $setting_ul, i, l, j;
             //最小列数
             var MIN_COLUMN_NUM = 1;
+            //是否保存状态到cookie
+            var _saveState = false;
+
             //cookie设置及获取
             var params = {
                 set: function (key, value) {
                     this[key] = value;
-                    $.cookie('params.' + key, value, {
-                        expires: 7,
-                        path: '/'
-                    });
+                    if (_saveState) {
+                        $.cookie('params.' + key, value, {
+                            expires: 7,
+                            path: _getCookiePath()
+                        });
+                    }
                 },
                 get: function (key) {
-                    return this[key] || $.cookie('params.' + key);
+                    if (_saveState) {
+                        return this[key] || $.cookie('params.' + key);
+                    }
+                    return this[key];
                 }
             };
             //展示数
             var _showNum = 0;
             //selectorStr
             this.selectorStr = selector.substring(1, selector.length);
-            //版本
-            this.version = "2015.12.06.0028";
             //id
             this.summaryName = _nameStr + _id;
             //参数
@@ -67,6 +77,8 @@ define(function (require, exports, module) {
             this._showColumns = [];
             //全部数据
             this.allDatas = [];
+            //标题行
+            this.titlesRows = [];
             /**
              * 选项
              *{
@@ -114,6 +126,8 @@ define(function (require, exports, module) {
             this.options = {
                 //数据源data cName的key
                 "cName": "cName",
+                //保存状态
+                "saveState": false,
                 //所有的列
                 "allColumns": [],
                 //所有的行
@@ -157,15 +171,17 @@ define(function (require, exports, module) {
             /**
              * 更新数据 并刷新组件
              */
-            this.update = function () {
-                drawData();
+            this.update = function (params) {
+                var _opParams = $.isFunction(_this.options.dataParams) ? _this.options.dataParams() : _this.options.dataParams;
+                var _params = $.extend(true, {}, _opParams, params);
+                drawData(_params);
                 return this;
             };
 
             /**
              *  调整组件高度
              */
-            this.autoHeight = function () {
+            this.resize = function () {
                 adjustHeight();
                 return this;
             };
@@ -174,42 +190,82 @@ define(function (require, exports, module) {
              * 初始化组件
              */
             var init = function () {
-                o.options = $.extend(o.options, options);
-                _allColumns = $.isArray(o.options.allColumns) ? o.options.allColumns : [];
-                _allRows = o.options.allRows;
-                o.maxNum = o.options.maxNum ? o.options.maxNum : _allColumns.length;
-                o.minNum = o.options.minNum ? o.options.minNum : MIN_COLUMN_NUM;
-                o.canChoose = o.options.canChoose;
-                o.showSetting = o.options.showSetting;
+                _this.options = $.extend(true, {}, _this.options, options);
+                _saveState = _this.options.saveState;
+                _allColumns = $.isArray(_this.options.allColumns) ? _this.options.allColumns : [];
+                _allRows = _this.options.allRows;
+                _this.maxNum = _this.options.maxNum ? _this.options.maxNum : _allColumns.length;
+                _this.minNum = _this.options.minNum ? _this.options.minNum : MIN_COLUMN_NUM;
+                _this.canChoose = _this.options.canChoose;
+                _this.showSetting = _this.options.showSetting;
                 //判断并设置最大展示数和展示数
-                o.maxNum = o.maxNum <= _allColumns.length ? o.maxNum : _allColumns.length;
-                if (o.maxNum > _allColumns.length) {
+                _this.maxNum = _this.maxNum <= _allColumns.length ? _this.maxNum : _allColumns.length;
+                if (_this.maxNum > _allColumns.length) {
                     _showNum = _allColumns.length;
                 }
                 //设置展示的列
-                _cookieName = _nameStr + '.' + o.selectorStr;
+                _cookieName = _nameStr + '.' + _this.selectorStr;
 
+                _this.options.allRows.forEach(function (row) {
+                    if (row.isTitle) {
+                        _this.titlesRows.push(row.dataName);
+                    }
+                });
+
+                //选项中展示的列
+                var _arrOptionShowColumns = [];
+                //标识全部列
+                var _objAllColumns = {};
+                //标识展示的列
+                var _objShowColumns = {};
+                for (i = 0; i < _allColumns.length; i++) {
+                    var _columnsName = _allColumns[i][_this.options.cName];
+                    _objAllColumns[_columnsName] = true;
+                    if (i < _this.maxNum) {
+                        _arrOptionShowColumns.push(_columnsName);
+                    }
+                }
+                //cookie中展示的列
                 var cookieShowColumns = params.get(_cookieName);
-                if (!cookieShowColumns) {
-                    for (i = 0; i < o.maxNum; i++) {
-                        o.showColumns.push(_allColumns[i][o.options.cName]);
-                    }
-                    params.set(_cookieName, o.showColumns.join(","));
-                } else {
-                    o.showColumns = cookieShowColumns.split(",");
-                }
+                var _arrCookieShowColumns = cookieShowColumns ? cookieShowColumns.split(",") : [];
+                //如果cookie中储存的展示列为0 或者 储存的展示列与配置项不一致则使用配置项中的展示列
+                _this.showColumns = (_arrCookieShowColumns.length === 0 || !_columnsValidate(_arrCookieShowColumns)) ? _arrOptionShowColumns : _arrCookieShowColumns;
+                params.set(_cookieName, _this.showColumns.join(","));
+                _this.showColumns.forEach(function (showColumn) {
+                    _objShowColumns[showColumn] = true;
+                });
+                //cookie中选中的列
+
                 //如果可以切换则设置已选择的列
-                if (o.canChoose) {
+                if (_this.canChoose) {
                     var cookieChooseColumns = params.get(_cookieName + ".chooseColumns");
-                    if (!cookieChooseColumns) {
-                        o.chooseColumns = o.showColumns[0];
+                    //如果cookie不存在 或者 cookie中所存的展示字段不存在 则默认选中第一列
+                    if (!cookieChooseColumns || !_objShowColumns[cookieChooseColumns]) {
+                        _this.chooseColumns = _this.showColumns[0];
                     } else {
-                        o.chooseColumns = cookieChooseColumns;
+                        _this.chooseColumns = cookieChooseColumns;
                     }
+                    params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
                 }
 
-                bindEvent(selector, options);
-                drawDom(selector, options);
+                bindEvent();
+                drawDom();
+
+
+                /**
+                 * 校验列明是否在配置中
+                 * @param colunms
+                 * @returns {boolean}
+                 * @private
+                 */
+                function _columnsValidate(colunms) {
+                    for (var _i = 0; _i < colunms.length; _i++) {
+                        if (!_objAllColumns[colunms[_i]]) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
             };
 
             /**
@@ -217,38 +273,33 @@ define(function (require, exports, module) {
              * @param selector
              * @param options
              */
-            var drawDom = function (selector, options) {
-                var _summaryPanelTpl = "",
-                    _settingPanelTpl = "",
-                    _classBorder = o.options.canChoose ? "border-bottom" : "";
+            var drawDom = function () {
+                var $summaryPanelTpl = $('<div class="summary-div-ul li"></div>'),
+                    _classBorder = _this.options.canChoose ? "border-bottom" : "";
 
-                _summaryPanelTpl += '<div id="' + getTagId("div_ul") + '" class="summary-div-ul li' + _showNum + ' ' + _classBorder + '">';
-                _summaryPanelTpl += '</div>';
-                if (o.showSetting) {
-                    _settingPanelTpl += '<div id="' + getTagId("setting_wrap") + '" class="summary-setting-wrap">';
-                    _settingPanelTpl += '    <a id="' + getTagId("setting_icon") + '" class="summary-setting-icon" href="javascript:;"><i class="fa fa-cog "></i></a>';
-                    _settingPanelTpl += '    <div id="' + getTagId("setting_panel") + '" class="summary-setting-panel">';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-arrows"></div>';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-body">';
-                    _settingPanelTpl += '            <div class="summary-setting-panel-text">';
-                    _settingPanelTpl += '                <span>' + oLanguage.maxNum.replace("{0}", _showNum) + '</span>';
-                    _settingPanelTpl += '                <a class="summary-reset" href="javascript:;">' + oLanguage.resetDefault + '</a>';
-                    _settingPanelTpl += '            </div>';
-                    _settingPanelTpl += '            <ul id="' + getTagId("setting_ul") + '" class="summary-setting-ul">';
-                    _settingPanelTpl += '            </ul>';
-                    _settingPanelTpl += '        </div>';
-                    _settingPanelTpl += '        <div class="summary-setting-panel-footer">';
-                    _settingPanelTpl += '            <button id="' + getTagId("btn_submit") + '" class="btn btn-primary" type="button">' + oLanguage.btnSubmit + '</button>';
-                    _settingPanelTpl += '            <button id="' + getTagId("btn_cancel") + '" class="btn btn-default" type="button">' + oLanguage.btnCancel + '</button>';
-                    _settingPanelTpl += '        </div>';
-                    _settingPanelTpl += '    </div>';
-                    _settingPanelTpl += '</div>';
+                $summaryPanelTpl.attr('id', getTagId("div_ul"));
+                $summaryPanelTpl.addClass(_showNum).addClass(_classBorder);
+
+                if (_this.showSetting) {
+
+                    oLanguage.maxNum = oLanguage.maxNum.replace("{0}", _this.maxNum);
+                    oLanguage.settingWrapId = getTagId("setting_wrap");
+                    oLanguage.settingIconId = getTagId("setting_icon");
+                    oLanguage.settingPannelId = getTagId("setting_panel");
+                    oLanguage.settingUlId = getTagId("setting_ul");
+                    oLanguage.btnSubmitId = getTagId("btn_submit");
+                    oLanguage.btnCancelId = getTagId("btn_cancel");
+
+                    settingPanel = $p.tpl(settingPanel, oLanguage);
                 }
 
-                $(selector).append(_summaryPanelTpl).append(_settingPanelTpl);
-
+                $(selector).append($summaryPanelTpl);
+                if (_this.options.showSetting) {
+                    $(selector).append(settingPanel);
+                }
                 drawInitDom();
-                drawData();
+                var _params = $.isFunction(_this.options.dataParams) ? _this.options.dataParams() : _this.options.dataParams;
+                drawData(_params);
             };
 
             /**
@@ -256,56 +307,102 @@ define(function (require, exports, module) {
              * @param selector
              * @param options
              */
-            var bindEvent = function (selector, options) {
-                if (o.showSetting) {
+            var bindEvent = function () {
+                if (_this.showSetting) {
                     /**
                      * 设置按钮
                      */
-                    $(document).delegate("#" + getTagId("setting_icon"), 'click', function () {
+                    $(selector).on('click', " .summary-setting-icon", function () {
                         expandSettingPanel();
                     });
 
                     /**
                      * setting submit按钮
                      */
-                    $(document).delegate("#" + getTagId("btn_submit"), 'click', function () {
+                    $(selector).on('click', " .summary-setting-wrap .btn-primary", function () {
+                        var _needClick = false;
                         expandSettingPanel();
-                        o.showColumns = o._showColumns;
-                        params.set(_cookieName, o.showColumns.join(","));
+                        _this.showColumns = _this._showColumns;
+                        params.set(_cookieName, _this.showColumns.join(","));
+                        if (_this.canChoose && _this.showColumns.indexOf(_this.chooseColumns) < 0) {
+                            _needClick = true;
+                            var _chooseColumns = _this.showColumns[0];
+                            _this.chooseColumns = _chooseColumns;
+                            params.set(_cookieName + ".chooseColumns", _chooseColumns);
+                        }
                         drawPanel($div_ul);
-                        setData(o.allDatas);
+                        setData(_this.allDatas);
                         adjustHeight();
-                        if ($.isFunction(o.options.callbackSubmit)) {
-                            o.options.callbackSubmit(o.showColumns, o.allDatas);
+                        if ($.isFunction(_this.options.callbackSubmit)) {
+                            _this.options.callbackSubmit(_this.showColumns, _this.allDatas);
+                        }
+                        if (_needClick) {
+                            $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]').trigger('click');
                         }
                     });
 
                     /**
                      * setting cancel按钮
                      */
-                    $(document).delegate("#" + getTagId("btn_cancel"), 'click', function () {
+                    $(selector).on('click', " .summary-setting-wrap .btn-default", function () {
                         var $allCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]');
-                        $allCheckBoxes.removeAttr("checked");
-                        for (var _i = 0; _i < o.showColumns.length; _i++) {
-                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="' + o.showColumns[_i] + '"]')
+                        $allCheckBoxes.prop("checked", false);
+                        for (var _i = 0; _i < _this.showColumns.length; _i++) {
+                            $('#' + getTagId("setting_ul") + ' [type="checkbox"][value="' + _this.showColumns[_i] + '"]')
                                 .prop("checked", "checked");
                         }
                         updateCheckbox();
                         expandSettingPanel();
-                        if (o.options.callbackCancel) {
-                            o.options.callbackCancel();
+                        if (_this.options.callbackCancel) {
+                            _this.options.callbackCancel();
                         }
                     });
 
                     /**
                      * setting 中的checkbox
                      */
-                    $(document).delegate('#' + getTagId("setting_ul") + ' [type="checkbox"]', 'click', function () {
+                    $(selector).on('click', '.summary-setting-ul [type="checkbox"]', function () {
                         var $selectCheckBoxes = updateCheckbox();
-                        o._showColumns = [];
+                        _this._showColumns = [];
                         $selectCheckBoxes.each(function () {
-                            o._showColumns.push($(this).val());
+                            _this._showColumns.push($(this).val());
                         });
+                    });
+
+                    /**
+                     * setting 中的reset
+                     */
+                    $(selector).on('click', '.summary-setting-panel .summary-reset', function () {
+                        var _needClick = false;
+                        var _showColunms = [];
+                        var checkBoxs = $(selector).find('.summary-setting-ul [type="checkbox"]');
+                        checkBoxs.prop('checked', false).prop('disabled', false);
+                        expandSettingPanel();
+                        _this.allDatas.forEach(function (data, index) {
+                            if (index < _this.options.maxNum) {
+                                _showColunms.push(data.cName);
+                            }
+                        });
+                        checkBoxs.each(function (index, checkBox) {
+                            if (_showColunms.indexOf(checkBox.value) > -1) {
+                                $(checkBox).prop('checked', 'checked');
+                            } else {
+                                $(checkBox).prop('disabled', 'disabled');
+                            }
+                        });
+                        checkBoxs.uniform();
+
+                        _this.showColumns = _showColunms;
+                        params.set(_cookieName, _this.showColumns.join(","));
+                        var _chooseColumns = _this.showColumns[0];
+                        _this.chooseColumns = _chooseColumns;
+                        params.set(_cookieName + ".chooseColumns", _chooseColumns);
+                        drawPanel($div_ul);
+                        setData(_this.allDatas);
+                        adjustHeight();
+                        if (_needClick) {
+                            $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]').trigger('click');
+                        }
                     });
 
                     /**
@@ -317,7 +414,8 @@ define(function (require, exports, module) {
                             _$selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked'),
                             _$unselectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:not(:checked)');
                         var checkNum = _$selectCheckBoxes.length;
-                        if (checkNum >= o.maxNum) {
+                        if (checkNum >= _this.maxNum) {
+                            _$selectCheckBoxes.removeAttr("disabled");
                             _$unselectCheckBoxes.attr("disabled", "disabled");
                             if ($.uniform) {
                                 _$allCheckBoxes.uniform.update();
@@ -328,7 +426,7 @@ define(function (require, exports, module) {
                                 _$allCheckBoxes.uniform.update();
                             }
                         }
-                        if (checkNum === o.minNum) {
+                        if (checkNum === _this.minNum) {
                             _$selectCheckBoxes.attr("disabled", "disabled");
                             if ($.uniform) {
                                 _$allCheckBoxes.uniform.update();
@@ -343,24 +441,37 @@ define(function (require, exports, module) {
                 /**
                  * 面板点击回调
                  */
-                if (o.options.callBackPanel) {
-                    $(document).delegate('.jsSummary' + _id + '_content', 'click', function () {
-                        var _columnName = $(this).data("name"),
-                            _columnData = getColumnData(_columnName),
-                            _columnsData = o.allDatas;
+                $(selector).on('click', ' .jsSummary' + _id + '_content', function () {
+                    var _columnName = $(this).data("name"),
+                        _columnData = getColumnData(_columnName),
+                        _columnsData = _this.allDatas;
 
-                        if (o.canChoose) {
-                            o.chooseColumns = _columnName;
-                            params.set(_cookieName + ".chooseColumns", o.chooseColumns);
-                            $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
-                            $(this).parent().addClass("choose");
-                        }
-                        if (o.options.callBackPanel) {
-                            o.options.callBackPanel(_columnName, _columnData, _columnsData);
-                        }
-                    });
-                }
+                    if (_this.canChoose) {
+                        _this.chooseColumns = _columnName;
+                        params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
+                        $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
+                        $(this).parent().addClass("choose");
+                    }
+                    if ($.isFunction(_this.options.callBackPanel)) {
+                        _this.options.callBackPanel(_columnName, _columnData, _columnsData);
+                    }
+                });
 
+                $(selector).on('click', ' .summary-div-li', function () {
+                    var $ul = $(this).find('ul[data-name]');
+                    var _columnName = $ul.data("name"),
+                        _columnData = getColumnData(_columnName),
+                        _columnsData = _this.allDatas;
+                    if (_this.canChoose) {
+                        _this.chooseColumns = _columnName;
+                        params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
+                        $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
+                        $(this).addClass("choose");
+                    }
+                    if ($.isFunction(_this.options.callBackPanel)) {
+                        _this.options.callBackPanel(_columnName, _columnData, _columnsData);
+                    }
+                });
             };
 
 
@@ -384,34 +495,41 @@ define(function (require, exports, module) {
                 obj.attr('class', function (i, cls) {
                     return cls.replace(/li\d+/, '');
                 });
-                obj.addClass("li" + o.showColumns.length);
-                for (i = 0; i < o.showColumns.length; i++) {
-                    var _columnsName = o.showColumns[i];
+                obj.addClass("li" + _this.showColumns.length);
+                for (i = 0; i < _this.showColumns.length; i++) {
+                    var _columnsName = _this.showColumns[i];
                     var _columnsConfig = getColumnConfig(_columnsName);
-                    var _clickStr = o.options.callBackPanel ? "canClick" : "";
-                    var _div_li_tpl = '';
-                    _div_li_tpl += '<div class="summary-div-li">';
-                    _div_li_tpl += '    <ul data-name="' + _columnsConfig.cName + '" class="jsSummary' + _id + '_content ' + _clickStr + '">';
+                    var _clickStr = _this.options.callBackPanel ? "canClick" : "";
+
+                    var $div_li = $('<div class="summary-div-li"></div>');
+                    var $div_li_ul = $('<ul></ul>');
+                    var $triangle = $('<div class="summary-triangle"></div>');
+
+                    $div_li_ul.attr('data-name', _columnsConfig.cName);
+                    $div_li_ul.addClass('jsSummary' + _id + '_content ' + _clickStr);
                     for (var k = 0; k < _allRows.length; k++) {
                         var _class = _allRows[k].klass ? _allRows[k].klass : "",
                             _text = _allRows[k].tpl ? _allRows[k].tpl.replace("{0}", "--") : "--";
                         _text = _allRows[k].isTitle ? _columnsConfig.title : _text;
-                        _div_li_tpl += ' <li class="' + _class + '" data-name="' + _allRows[k].dataName + '">' + _text + '</li>';
+                        var $li = $('<li></li>');
+                        $li.addClass(_class);
+                        $li.attr('data-name', _allRows[k].dataName);
+                        $li.append(_text);
+                        $div_li_ul.append($li);
                     }
-                    _div_li_tpl += '    </ul>';
-                    if (o.canChoose) {
-                        _div_li_tpl += '<div class="summary-triangle"></div>';
+                    $div_li.append($div_li_ul);
+                    if (_this.canChoose) {
+                        $div_li.append('<div class="summary-triangle"></div>');
                     }
-                    _div_li_tpl += '</div>';
-                    obj.append(_div_li_tpl);
+
+
+                    obj.append($div_li);
                 }
-                if (o.canChoose) {
-                    var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + o.chooseColumns + '"]');
+                if (_this.canChoose) {
+                    var $chooseColumns = $('.jsSummary' + _id + '_content[data-name="' + _this.chooseColumns + '"]');
                     $chooseColumns.parent().addClass("choose");
                 }
                 adjustHeight();
-
-
             }
 
             /**
@@ -423,9 +541,9 @@ define(function (require, exports, module) {
                     var _setting_option_tpl = '',
                         _mr = i % 2 === 0 ? 'mr' : '';
                     _setting_option_tpl += ' <li class="summary-setting-li ' + _mr + '"><label>';
-                    _setting_option_tpl += '      <input type="checkbox" value="' + _allColumns[i][o.options.cName] + '"';
-                    for (var j = 0; j < o.showColumns.length; j++) {
-                        if (_allColumns[i][o.options.cName] === o.showColumns[j]) {
+                    _setting_option_tpl += '      <input type="checkbox" value="' + _allColumns[i][_this.options.cName] + '"';
+                    for (var j = 0; j < _this.showColumns.length; j++) {
+                        if (_allColumns[i][_this.options.cName] === _this.showColumns[j]) {
                             _setting_option_tpl += 'checked = "checked"';
                         }
                     }
@@ -436,10 +554,10 @@ define(function (require, exports, module) {
                 }
                 var $selectCheckBoxes = obj.find('[type="checkbox"]:checked'),
                     $unselectCheckBoxes = obj.find('[type="checkbox"]:not(:checked)');
-                if ($selectCheckBoxes.length >= o.maxNum) {
+                if ($selectCheckBoxes.length >= _this.maxNum) {
                     $unselectCheckBoxes.attr("disabled", "disabled");
                 }
-                if ($selectCheckBoxes.length <= o.minNum) {
+                if ($selectCheckBoxes.length <= _this.minNum) {
                     $selectCheckBoxes.attr("disabled", "disabled");
                 }
                 var $checkboxes = obj.find('[type="checkbox"]');
@@ -451,55 +569,56 @@ define(function (require, exports, module) {
             /**
              * 绘制数据
              */
-            function drawData() {
+            function drawData(params) {
                 var _datas = [];
-                if (!o.options.dataSource) {
-                    var _allColumns = o.options.allColumns;
+                var _params = $.extend({}, params);
+                if (!_this.options.dataSource) {
+                    var _allColumns = _this.options.allColumns;
                     for (i = 0; i < _allColumns.length; i++) {
-                        var _dataName = _allColumns[i][o.options.cName],
+                        var _dataName = _allColumns[i][_this.options.cName],
                             _columnConfig = getColumnConfig(_dataName),
                             _o = {
                                 "cName": _dataName
                             };
-                        _o[o.options.cName + "Title"] = _columnConfig.title;
+                        _o[_this.options.cName + "Title"] = _columnConfig.title;
                         _datas.push(_o);
                     }
-                    o.allDatas = _datas;
+                    _this.allDatas = _datas;
                     setData(_datas);
                     adjustHeight();
-                    if (o.canChoose) {
-                        var _chooseColumnsData = getColumnData(o.chooseColumns);
-                        if ($.isFunction(o.options.callBackGetData)) {
-                            o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                    if (_this.canChoose) {
+                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
+                        if ($.isFunction(_this.options.callBackGetData)) {
+                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
                         }
                         return;
                     }
-                    if ($.isFunction(o.options.callBackGetData)) {
-                        o.options.callBackGetData(o.allDatas);
+                    if ($.isFunction(_this.options.callBackGetData)) {
+                        _this.options.callBackGetData(_this.allDatas);
                     }
                     return;
                 }
 
-                o.options.dataSource(o.options.dataParams, function (resp) {
+                _this.options.dataSource(_params, function (resp) {
                     var _result = resp.result || {};
                     _datas = $.isArray(_result) ? _result : _result.items || [];
                     for (i = 0; i < _datas.length; i++) {
-                        var _dataName = _datas[i][o.options.cName],
+                        var _dataName = _datas[i][_this.options.cName],
                             _columnConfig = getColumnConfig(_dataName);
-                        _datas[i][o.options.cName + "Title"] = _columnConfig.title;
+                        _datas[i][_this.options.cName + "Title"] = _columnConfig.title;
                     }
-                    o.allDatas = _datas;
+                    _this.allDatas = _datas;
                     setData(_datas);
                     adjustHeight();
-                    if (o.canChoose) {
-                        var _chooseColumnsData = getColumnData(o.chooseColumns);
-                        if($.isFunction(o.options.callBackGetData)){
-                            o.options.callBackGetData(o.chooseColumns, _chooseColumnsData, o.allDatas);
+                    if (_this.canChoose) {
+                        var _chooseColumnsData = getColumnData(_this.chooseColumns);
+                        if ($.isFunction(_this.options.callBackGetData)) {
+                            _this.options.callBackGetData(_this.chooseColumns, _chooseColumnsData, _this.allDatas);
                         }
                         return;
                     }
-                    if($.isFunction(o.options.callBackGetData)){
-                        o.options.callBackGetData(o.allDatas);
+                    if ($.isFunction(_this.options.callBackGetData)) {
+                        _this.options.callBackGetData(_this.allDatas);
                     }
                 });
             }
@@ -510,19 +629,43 @@ define(function (require, exports, module) {
              */
             function setData(_datas) {
                 var $summaryContents = $('.jsSummary' + _id + '_content');
+                var $summaryContentLi = $summaryContents.find('li');
+                var _rowConfigs = {};
+                _this.options.allRows.forEach(function (row) {
+                    _rowConfigs[row.dataName] = row;
+                });
+
+                $summaryContentLi.each(function (index, summaryContent) {
+                    var _dataName = $(summaryContent).data('name');
+                    if (_rowConfigs[_dataName].isTitle) {
+                        return;
+                    }
+                    var _html = "--";
+                    if ($p.tool.isString(_rowConfigs[_dataName].tpl)) {
+                        _html = $p.str.format(_rowConfigs[_dataName].tpl, '--');
+                    }
+                    $(summaryContent).html(_html);
+                });
+
                 for (i = 0; i < $summaryContents.length; i++) {
                     var $summaryContent = $($summaryContents[i]),
                         _data = getColumnData($summaryContent.data("name"));
                     for (var _name in _data) {
                         var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
                             _rowConfig = getRowConfig(_name);
-                        if (_rowConfig.render) {
-                            $contentLi.html(_rowConfig.render(_data[_name], _datas));
+                        var _html = "";
+                        //if (_data[_name] === null || _data[_name] === undefined) {
+                        //    continue;
+                        //}
+                        if ($.isFunction(_rowConfig.render)) {
+                            _html = _rowConfig.render(_data[_name], _datas);
                         } else if (_rowConfig.tpl) {
-                            $contentLi.html(_rowConfig.tpl.replace("{0}", _data[_name]));
+                            _html = $p.str.format(_rowConfig.tpl, _data[_name]);
                         } else {
-                            $contentLi.html(_data[_name]);
+                            _html = _data[_name];
                         }
+
+                        $contentLi.html(_html);
                     }
                 }
             }
@@ -545,7 +688,7 @@ define(function (require, exports, module) {
                  * @param $lis 需要获取高度的li的集合
                  * @returns {Array} 所有的高度
                  */
-                function getAllHeight($lis){
+                function getAllHeight($lis) {
                     var _heights = [];
                     $lis.each(function () {
                         _heights.push($(this).height());
@@ -568,12 +711,12 @@ define(function (require, exports, module) {
 
                 $settingPanel.addClass("open");
                 var $selectCheckBoxes = $('#' + getTagId("setting_ul") + ' [type="checkbox"]:checked');
-                o._showColumns = [];
+                _this._showColumns = [];
                 $selectCheckBoxes.each(function () {
-                    o._showColumns.push($(this).val());
+                    _this._showColumns.push($(this).val());
                 });
-                if($.isFunction(o.options.callbackOpen)){
-                    o.options.callbackOpen();
+                if ($.isFunction(_this.options.callbackOpen)) {
+                    _this.options.callbackOpen();
                 }
             }
 
@@ -584,9 +727,9 @@ define(function (require, exports, module) {
              */
             function getColumnData(cName) {
                 var columnData = {};
-                for (var _i = 0; _i < o.allDatas.length; _i++) {
-                    if (cName === o.allDatas[_i][o.options.cName]) {
-                        columnData = o.allDatas[_i];
+                for (var _i = 0; _i < _this.allDatas.length; _i++) {
+                    if (cName === _this.allDatas[_i][_this.options.cName]) {
+                        columnData = _this.allDatas[_i];
                         break;
                     }
                 }
@@ -601,7 +744,7 @@ define(function (require, exports, module) {
             function getColumnConfig(cName) {
                 var columnData = {};
                 for (var _i = 0; _i < _allColumns.length; _i++) {
-                    if (cName === _allColumns[_i][o.options.cName]) {
+                    if (cName === _allColumns[_i][_this.options.cName]) {
                         columnData = _allColumns[_i];
                         break;
                     }
@@ -641,6 +784,17 @@ define(function (require, exports, module) {
              */
             function isArray(obj) {
                 return Object.prototype.toString.call(obj) === '[object Array]';
+            }
+
+            function _getCookiePath() {
+                var _path;
+                var _optionPath = options.cookiePath ? options.cookiePath : location.pathname;
+                if (_optionPath === 'root') {
+                    _path = '/';
+                } else {
+                    _path = _optionPath;
+                }
+                return _path;
             }
 
             init();

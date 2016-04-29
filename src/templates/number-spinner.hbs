@@ -1,4 +1,4 @@
-{{#>base title=data.page.spinner}}
+{{#>layouts/base title=data.page.spinner  appId="spinner"}}
 
     {{#*inline "pageContent"}}
         <style media="screen">
@@ -33,7 +33,13 @@
             <div class="col-md-12">
                 <input type="text" id="txt_spinner"  class="form-control input-small" />
                 <div class="markdown">
-                    <pre><code class="javascript">$p.numberSpinner("#txt_spinner");</code></pre>
+<pre><code class="javascript">
+$p.numberSpinner("#txt_spinner", {
+    change: function(data, entity) {
+        console.log(data);
+    }
+});
+</code></pre>
                 </div>
             </div>
             <div class="col-md-12">
@@ -75,4 +81,4 @@ $p.numberSpinner("#txt_spinner2", {
             </script>
             {{/inline}}
 
-            {{/base}}
+            {{/layouts/base}}

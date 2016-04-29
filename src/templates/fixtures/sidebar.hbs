@@ -3,7 +3,7 @@
         <!-- BEGIN SIDEBAR MENU -->
         <ul class="page-sidebar-menu">
             {{#each data.menu}}
-                <li class="open">
+                <li class="open" data-id="{{name}}">
                     <a href="javascript:;">
                         <i class="{{icon}}"></i>
                         <span class="title">{{title}}</span>
@@ -11,7 +11,7 @@
                     </a>
                     <ul class="sub-menu">
                         {{#each items}}
-                            <li data-id="{{title}}">
+                            <li data-id="{{name}}">
                                 <a href="{{url}}">{{title}}</a>
                             </li>
                         {{/each}}
@@ -20,6 +20,10 @@
             {{/each}}
 
         </ul>
+
+        <div class="page-sidebar-spanner">
+            <i class="fa"></i>
+        </div>
         <!-- END SIDEBAR MENU -->
     </div>
 </div>

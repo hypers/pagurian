@@ -1,0 +1,669 @@
+{{#>layouts/base title=data.page.uploader appId="uploader" }}
+
+    {{#*inline "pageContent"}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.uploader}}
+                </h3>
+
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="uploader.html">基础</a>
+                        </li>
+                        <li class="active">
+                            <a href="uploader-options.html">参数说明</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>参数说明</h3>
+                <hr>
+                <ul class="params-list" style="padding:0 18px;">
+
+                    <li>
+                        <span class="meta">
+                            <code>dnd</code>
+                            {Selector} [可选] [默认值：undefined]
+                        </span>
+                        <p> 指定Drag And Drop拖拽的容器，如果不指定，则不启动。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>disableGlobalDnd</code>
+                            {Selector} [可选] [默认值：false]
+                        </span>
+                        <p> 是否禁掉整个页面的拖拽功能，如果不禁用，图片拖进来的时候会默认被浏览器打开。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>paste</code>
+                            {Selector} [可选] [默认值：undefined]
+                        </span>
+                        <p> 指定监听paste事件的容器，如果不指定，不启用此功能。此功能为通过粘贴来添加截屏的图片。建议设置为
+                            <code>document.body</code>.</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>pick</code>
+                            {Selector, Object} [可选] [默认值：undefined]
+                        </span>
+                        <p>指定选择文件的按钮容器，不指定则不创建按钮。</p>
+                        <ul>
+                            <li>
+                                <code>id</code> {Seletor|dom} 指定选择文件的按钮容器，不指定则不创建按钮。
+                                <strong>注意</strong> 这里虽然写的是 id, 但是不是只支持 id, 还支持 class, 或者 dom 节点。</li>
+                            <li>
+                                <code>label</code> {String} 请采用
+                                <code>innerHTML</code> 代替</li>
+                            <li>
+                                <code>innerHTML</code> {String} 指定按钮文字。不指定时优先从指定的容器中看是否自带文字。</li>
+                            <li>
+                                <code>multiple</code> {Boolean} 是否开起同时选择多个文件能力。</li>
+                        </ul>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>accept</code>
+                            {Arroy} [可选] [默认值：null]
+                        </span>
+                        <p>指定接受哪些类型的文件。 由于目前还有ext转mimeType表，所以这里需要分开指定。</p>
+                        <ul>
+                            <li>
+                                <code>title</code> {String} 文字描述</li>
+                            <li>
+                                <code>extensions</code> {String} 允许的文件后缀，不带点，多个用逗号分割。</li>
+                            <li>
+                                <code>mimeTypes</code> {String} 多个用逗号分割。</li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>thumb</code>
+                            {Object} [可选]
+
+                        </span>
+                        <p>配置生成缩略图的选项。</p>
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>compress</code>
+                            {Object} [可选]
+
+                        </span>
+                        <p>配置压缩的图片的选项。如果此选项为
+                            <code>false</code>, 则图片在上传前不进行压缩。</p>
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>auto</code>
+                            {Boolean} [可选] [默认值：false]
+                        </span>
+                        <p>设置为 true 后，不需要手动调用上传，有文件选择即开始上传。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>runtimeOrder</code>
+                            {Object} [可选] [默认值：html5,flash]
+                        </span>
+                        <p>指定运行时启动顺序。默认会想尝试 html5 是否支持，如果支持则使用 html5, 否则则使用 flash.</p>
+                        <p>可以将此值设置成
+                            <code>flash</code>，来强制使用 flash 运行时。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>prepareNextFile</code>
+                            {Boolean} [可选] [默认值：false]
+                        </span>
+                        <p>是否允许在文件传输时提前把下一个文件准备好。 对于一个文件的准备工作比较耗时，比如图片压缩，md5序列化。 如果能提前在当前文件传输期处理，可以节省总体耗时。
+                        </p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>chunked</code>
+                            {Boolean} [可选] [默认值：false]
+                        </span>
+                        <p>是否要分片处理大文件上传。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>chunkSize</code>
+                            {Boolean} [可选] [默认值：5242880]
+                        </span>
+                        <p>如果要分片，分多大一片？ 默认大小为5M.</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>chunkRetry</code>
+                            {Boolean} [可选] [默认值：2]
+                        </span>
+                        <p>如果某个分片由于网络问题出错，允许自动重传多少次？</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>threads</code>
+                            {Boolean} [可选] [默认值：3]
+                        </span>
+                        <p>上传并发数。允许同时最大上传进程数。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>formData</code>
+                            {Object} [可选] [默认值：{}]
+                        </span>
+                        <p>文件上传请求的参数表，每次发送都会发送此对象中的参数。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>fileVal</code>
+                            {Object} [可选] [默认值：'file']
+                        </span>
+                        <p>设置文件上传域的name。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>method</code>
+                            {Object} [可选] [默认值：'POST']
+                        </span>
+                        <p>文件上传方式，
+                            <code>POST</code>或者
+                            <code>GET</code>。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>sendAsBinary</code>
+                            {Object} [可选] [默认值：false]
+                        </span>
+                        <p>是否已二进制的流的方式发送文件，这样整个上传内容
+                            <code>php://input</code>都为文件内容， 其他参数在$_GET数组中。
+                        </p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>fileNumLimit</code>
+                            {int} [可选] [默认值：undefined]
+                        </span>
+                        <p>验证文件总数量, 超出则不允许加入队列。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>fileSizeLimit</code>
+                            {int} [可选] [默认值：undefined]
+                        </span>
+                        <p>验证文件总大小是否超出限制, 超出则不允许加入队列。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>fileSingleSizeLimit</code>
+                            {int} [可选] [默认值：undefined]
+                        </span>
+                        <p>验证单个文件大小是否超出限制, 超出则不允许加入队列。</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>duplicate</code>
+                            {Boolean} [可选] [默认值：undefined]
+                        </span>
+                        <p>去重， 根据文件名字、文件大小和最后修改时间来生成hash Key.</p>
+
+
+                    </li>
+
+                    <li>
+                        <span class="meta">
+                            <code>disableWidgets</code>
+                            {String, Array} [可选] [默认值：undefined]
+                        </span>
+                        <p>默认所有 Uploader.register 了的 widget 都会被加载，如果禁用某一部分，请通过此 option 指定黑名单。</p>
+
+
+                    </li>
+
+                </ul>
+                <h3>事件说明</h3>
+                <hr>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>事件名</th>
+                            <th class="events-tb-desc">参数说明</th>
+                            <th>描述</th>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <code>dndAccept</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>items</code> {DataTransferItemList}</span>
+                                        <p>DataTransferItem</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>阻止此事件可以拒绝某些类型的文件拖入进来。目前只有 chrome 提供这样的 API，且只能通过 mime-type 验证。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>beforeFileQueued</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当文件被加入队列之前触发，此事件的handler返回值为
+                                    <code>false</code>，则此文件不会被添加进入队列。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>fileQueued</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当文件被加入队列以后触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>filesQueued</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>files</code> {File}</span>
+                                        <p>数组，内容为原始File(lib/File）对象。</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当一批文件添加进队列以后触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>fileDequeued</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当文件被移除队列后触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>reset</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                            </td>
+                            <td>
+                                <p>当 uploader 被重置的时候触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>startUpload</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                            </td>
+                            <td>
+                                <p>当开始上传流程时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>stopUpload</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                            </td>
+                            <td>
+                                <p>当开始上传流程暂停时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadFinished</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                            </td>
+                            <td>
+                                <p>当所有文件上传结束时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadStart</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>某个文件开始上传前触发，一个文件只会触发一次。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadBeforeSend</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>object</code> {Object}</span>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>data</code> {Object}</span>
+                                        <p>默认的上传参数，可以扩展此对象来控制上传参数。</p>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>headers</code> {Object}</span>
+                                        <p>可以扩展此对象来控制上传头部。</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当某个文件的分块在发送前触发，主要用来询问是否要添加附带参数，大文件在开起分片上传的前提下此事件可能会触发多次。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadAccept</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>object</code> {Object}</span>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>ret</code> {Object}</span>
+                                        <p>服务端的返回数据，json格式，如果服务端不是json格式，从ret._raw中取数据，自行解析。</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当某个文件上传到服务端响应后，会派送此事件来询问服务端响应是否有效。如果此事件handler返回值为
+                                    <code>false</code>, 则此文件将派送
+                                    <code>server</code>类型的
+                                    <code>uploadError</code>事件。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadProgress</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>percentage</code> {Number}</span>
+                                        <p>上传进度</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>上传过程中触发，携带上传进度。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadError</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>reason</code> {String}</span>
+                                        <p>出错的code</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当文件上传出错时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadSuccess</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File}</span>
+                                        <p>File对象</p>
+                                    </li>
+                                    <li>
+                                        <span class="meta">
+                                            <code>response</code> {Object}</span>
+                                        <p>服务端返回的数据</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当文件上传成功时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>uploadComplete</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>file</code> {File} [可选]</span>
+                                        <p>File对象</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>不管成功或者失败，文件上传完成时触发。</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <code>error</code>
+                            </td>
+                            <td class="events-tb-desc">
+
+                                <ul class="params-list">
+                                    <li>
+                                        <span class="meta">
+                                            <code>type</code> {String}</span>
+                                        <p>错误类型。</p>
+                                    </li>
+                                </ul>
+
+                            </td>
+                            <td>
+                                <p>当validate不通过时，会以派送错误事件的形式通知调用者。通过
+                                    <code>upload.on('error', handler)</code>可以捕获到此类错误，目前有以下错误会在特定的情况下派送错来。</p>
+                                <ul>
+                                    <li>
+                                        <code>Q_EXCEED_NUM_LIMIT</code> 在设置了
+                                        <code>fileNumLimit</code>且尝试给
+                                        <code>uploader</code>添加的文件数量超出这个值时派送。</li>
+                                    <li>
+                                        <code>Q_EXCEED_SIZE_LIMIT</code> 在设置了
+                                        <code>Q_EXCEED_SIZE_LIMIT</code>且尝试给
+                                        <code>uploader</code>添加的文件总大小超出这个值时派送。</li>
+                                    <li>
+                                        <code>Q_TYPE_DENIED</code> 当文件类型不满足时触发。。</li>
+                                </ul>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+            <script type="text/javascript">
+                pagurian.call("modules/uploader/app", function(app) {
+
+                });
+            </script>
+            {{/inline}}
+
+            {{/layouts/base}}

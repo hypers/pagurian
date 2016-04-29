@@ -1,0 +1,77 @@
+{{#>layouts/base title=data.page.clipboard appId="clipboard" }}
+
+    {{#*inline "pageContent"}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    {{data.page.clipboard}}
+                </h3>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="portlet box default ">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            剪切板
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form action="#" id="form_sample_1">
+                            <div class="form-body">
+
+                                <div class="form-group">
+                                    <textarea id="txt_content" rows="3" class="form-control" >快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="btn_copy" class="btn btn-primary" type="button">复制</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <div class="markdown">
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;textarea id=&quot;txt_content&quot; rows=&quot;3&quot; class=&quot;form-control&quot; &gt;快点击复制按钮复制我吧！！随便找个地方 ctrl+v 一下。
+    &lt;/textarea&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+    &lt;button id=&quot;btn_copy&quot; class=&quot;btn btn-primary&quot;&gt;复制&lt;/button&gt;
+&lt;/div&gt;
+                    </code></pre>
+                    <h3>Javascript代码</h3>
+<pre><code class="javascript">
+$p.clipboard("#btn_copy", {
+    copy: function(event) {
+        return $("#txt_content").val();
+    },
+    afterCopy: function(data) {
+        $p.log(data);
+    }
+});
+</code></pre>
+                </div>
+            </div>
+
+        </div>
+
+        {{/inline}}
+
+        {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/clipboard/app", function(app) {
+                app.page.index();
+            });
+        </script>
+        {{/inline}}
+
+{{/layouts/base}}

@@ -1,7 +1,5 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "DataTree"
-    };
+
     var app = require("../../lib/app");
 
     require('../../plugins/number-spinner/module');
@@ -71,7 +69,11 @@ define(function(require, exports, module) {
                 numberSpinner: {
                     decimals: 2,
                     min: -10,
-                    max: 100
+                    max: 100,
+                    step: 0.1,
+                    change: function(data, entity) {
+                        console.log(data);
+                    }
                 }
             },
             change: function(e, node) {

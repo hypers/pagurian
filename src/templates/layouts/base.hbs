@@ -1,0 +1,38 @@
+{{>fixtures/doctype}}
+
+<head>
+	<title>{{title}} - Pagurian</title>
+	{{>fixtures/head}}
+</head>
+<body>
+
+{{>fixtures/header}}
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+
+	{{>fixtures/sidebar}}
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+{{>fixtures/theme-panel}}
+{{>pageContent}}
+		</div>
+        {{>fixtures/footer}}
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+<script type="text/javascript">
+    window.CONFIG = {
+        appId: "{{appId}}"
+    };
+</script>
+{{>appScript}}
+
+{{>fixtures/tracker}}
+
+</body>
+</html>

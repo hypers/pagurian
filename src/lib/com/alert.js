@@ -16,32 +16,34 @@ define(function(require, exports, module) {
         this.show = function(message, type) {
 
             var className = type || "success";
-            var $headerMessage = $(".global-message").length > 0 ?
+            var messageDom = '<div class="global-message ' + className + '">' + message + '</div>';
+            var $headerMessageWrap = $(".global-message").length > 0 ?
                 $(".global-message").html(message).removeClass().addClass("global-message " + className) :
-                $('<div class="global-message ' + className + '">' + message + '</div>');
+                $(messageDom);
 
-            //在Modal中显示消息
-            var visibleModal = false;
-            $(".modal").each(function() {
-                if ($(this).hasClass("in")) {
-                    $(this).find(".modal-message").html('<div class="global-message ' + className + '">' + message + '</div>');
+            if (className !== "success") {
+                //在Modal中显示消息
+                var visibleModal = false;
+                $(".modal.in").each(function() {
+                    $(this).find(".modal-message").html(messageDom);
                     visibleModal = true;
+                });
+                if (visibleModal) {
+                    return this;
                 }
-            });
-            if (visibleModal) {
-                return this;
             }
 
             //在页面顶部显示
-            $("body").append($headerMessage);
-            $headerMessage.css({
-                "margin-left": "-" + ($headerMessage.outerWidth() / 2) + "px"
+            $("body").append($headerMessageWrap);
+            $headerMessageWrap.css({
+                "margin-left": "-" + ($headerMessageWrap.outerWidth() / 2) + "px"
             });
 
             clearTimeout(timer);
             timer = setTimeout(function() {
-                $headerMessage.remove();
+                $headerMessageWrap.remove();
             }, 3000);
+
 
             return this;
         };

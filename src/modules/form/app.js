@@ -1,15 +1,11 @@
 define(function(require, exports, module) {
-    window.CONFIG = {
-        appId: "Form"
-    };
+
 
     var app = require("../../lib/app");
     var model = require('./model');
 
 
     require('../../plugins/jquery.validate/module');
-    require('../../plugins/uploadify/module');
-
 
     app.page.index = function() {
 
@@ -53,7 +49,13 @@ define(function(require, exports, module) {
                     }
                 },
                 //自定义验证
-                custom: function(form, data) {
+                custom: function(data, $form) {
+
+                    var $occupation = $form.find("[name='occupation']");
+                    var $occupationBlock = $form.find("[for='occupation']");
+                    if ($occupation.val().length > 10) {
+                        $occupationBlock.text("该字段不能大于10个字符").removeClass("tip");
+                    }
                     return true;
                 }
             }
@@ -92,8 +94,15 @@ define(function(require, exports, module) {
                     }
                 },
                 //自定义验证
-                custom: function(data, form) {
-                    $p.log("自定义验证");
+                custom: function(data, $form) {
+
+                    var $textarea = $form.find("[name='textarea']");
+                    var $textareaBlock = $form.find(".help-block[for='textarea']");
+
+                    if ($textarea.val().length > 10) {
+                        $textareaBlock.html("该字段不能大于10个字符啊~~~").removeClass("tip");
+                        return false;
+                    }
                     return true;
                 }
             },
@@ -145,18 +154,6 @@ define(function(require, exports, module) {
 
 
 
-    //文件上传
-    app.page.fileUpload = function() {
-        $p.upload("#file", {
-            formData: {
-                "token": "abc"
-            },
-            uploader: '/src/plugins/uploadify/3.2.1/uploadify.php',
-            onUploadSuccess: function(file, data, response) {
-                console.log(file, data, response);
-            }
-        });
-    };
 
 
 

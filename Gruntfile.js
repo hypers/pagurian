@@ -10,13 +10,16 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-template-html');
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     var transport = require('grunt-cmd-transport');
 
     var style = transport.style.init(grunt);
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
-
+    //connect端口
+    var connectPort = 9000;
 
     require('time-grunt')(grunt);
 
@@ -36,12 +39,12 @@ module.exports = function (grunt) {
                 }, {
                     expand: true,
                     cwd: 'src/lib',
-                    src: ['**/sea.js', '**/jquery*.js'],
+                    src: ['**/sea.js', '**/jquery*.js', '**/es5*.*'],
                     dest: 'dist/lib'
                 }, {
                     expand: true,
                     cwd: 'src/plugins',
-                    src: ['**/*', '!**/*.js'],
+                    src: ['**/**/*.png', '**/**/*.gif'],
                     dest: 'dist/plugins',
                     filter: 'isFile'
                 }]
@@ -77,11 +80,9 @@ module.exports = function (grunt) {
             build: {
                 files: {
                     'src/resources/css/public.css': [
-                        'src/plugins/bootstrap/css/bootstrap.css',
-                        'src/plugins/daterangepicker/bs3.css',
-                        'src/plugins/uniform/css/uniform.default.css',
-                        'src/plugins/font-awesome/css/font-awesome.min.css',
-                        'src/plugins/datatables/1.9.4/bs.css'
+                        'src/lib/vendor/bootstrap/css/bootstrap.css',
+                        'src/lib/vendor/uniform/css/uniform.default.css',
+                        'src/lib/vendor/font-awesome/css/font-awesome.min.css'
                     ],
                     'src/resources/css/themes-green.css': ['src/resources/css/themes-green.css'],
                     'src/resources/css/themes-blue.css': ['src/resources/css/themes-blue.css'],
@@ -108,10 +109,7 @@ module.exports = function (grunt) {
         },
         jshint: {
             options: {
-                eqeqeq: true,
-                trailing: true,
-                evil: true,
-                loopfunc: true
+                jshintrc: true
             },
             files: [
                 'src/modules/**/*.js',
@@ -129,7 +127,8 @@ module.exports = function (grunt) {
                 parsers: {
                     '.js': [script.jsParser],
                     '.css': [style.css2jsParser],
-                    '.tpl': [text.html2jsParser]
+                    '.tpl': [text.html2jsParser],
+                    '.html': [text.html2jsParser]
                 }
             },
             all: {
@@ -139,7 +138,12 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'src',
-                    src: ['**/*', '!**/sea*.js'],
+                    src: [
+                        '**/*',
+                        '!resources/**',
+                        '!templates/**',
+                        '!**/sea*.js'
+                    ],
                     filter: 'isFile',
                     dest: '.build'
                 }]
@@ -148,7 +152,8 @@ module.exports = function (grunt) {
         concat: {
             options: {
                 paths: ['.'],
-                include: 'relative'
+                include: 'relative',
+                uglify: true
             },
             modules: {
                 files: [{
@@ -172,50 +177,61 @@ module.exports = function (grunt) {
                 files: {
                     "src/lib/vendor/sea.js": ["src/lib/vendor/seajs/*.js"]
                 }
-            },
-            /**
-             * [all 混淆压缩所以的页面模块文件]
-             */
-            all: {
-                files: [{
-                    expand: true,
-                    cwd: 'dist/',
-                    src: ['**/modules/**/app.js'],
-                    dest: 'dist/',
-                    ext: '.js'
-                }]
             }
         },
         /**
-         * [template 编译html 模板引擎handlebars]
+         * [handlebars template]
          */
         template: {
             dev: {
                 engine: 'handlebars',
                 cwd: 'src/templates/',
-                partials: ['src/templates/fixtures/*.hbs', 'src/templates/base.hbs','src/templates/codes/*.hbs',],
+                partials: [
+                    'src/templates/fixtures/*',
+                    'src/templates/codes/*',
+                    'src/templates/layouts/*'
+                ],
                 data: 'src/templates/data.json',
                 options: {},
                 files: [{
                     expand: true,
                     cwd: 'src/templates/',
-                    src: ['*.hbs', '!base.hbs'],
+                    src: ['*.hbs'],
                     dest: 'dist/templates',
                     ext: '.html'
                 }]
             }
+        },
+        // Create a local web server for testing http:// URIs.
+        connect: {
+            root_server: {
+                options: {
+                    port: connectPort,
+                    base: '.',
+                }
+            }
+        },
+        // Unit tests.
+        qunit: {
+            allTest: {
+                options: {
+                    urls: [
+                        'http://localhost:' + connectPort + '/test/index.html',
+                        'http://localhost:' + connectPort + '/test/sizer.html',
+                    ]
+                }
+            }
         }
-
     };
 
 
+    //生产发布的Task
     var task_default = [];
 
     task_default.push("clean:dist");
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("uglify:all");
     task_default.push("clean:build");
     task_default.push("template");
 
@@ -223,12 +239,12 @@ module.exports = function (grunt) {
     grunt.initConfig(option);
 
 
-    grunt.registerTask('check', ['jshint']);
-    grunt.registerTask('css', ['less:build', 'cssmin:build', 'postcss', 'copy:all']);
     grunt.registerTask('seajs', ['uglify:seajs']);
+    grunt.registerTask('check', ['jshint', 'connect', 'qunit']);
+    grunt.registerTask('css', ['less:build', 'cssmin:build', 'postcss', 'copy:all']);
     grunt.registerTask('tpl', ['template', "copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
-    grunt.registerTask('default', task_default);
 
+    grunt.registerTask('default', task_default);
 
 };

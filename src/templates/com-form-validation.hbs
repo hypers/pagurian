@@ -1,4 +1,4 @@
-{{#>base title=data.page.form}}
+{{#>layouts/base title=data.page.form appId="form"}}
 
     {{#*inline "pageContent"}}
 
@@ -96,7 +96,7 @@
                         <label class="control-label">Occupation&nbsp;&nbsp;</label>
                         <div>
                             <input name="occupation" type="text" class="form-control"/>
-                            <span class="help-block tip">
+                            <span class="help-block tip" for="occupation">
                                 optional field
                             </span>
                         </div>
@@ -194,4 +194,4 @@ $p.form("#form_sample_1", {
         </script>
     {{/inline}}
 
-{{/base}}
+{{/layouts/base}}

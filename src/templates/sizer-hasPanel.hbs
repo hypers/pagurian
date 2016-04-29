@@ -1,4 +1,4 @@
-{{#>base title=data.page.sizer appId="Sizer"}}
+{{#>layouts/base title=data.page.sizer appId="sizer"}}
 
     {{#*inline "pageContent"}}
         {{>fixtures/theme-panel}}
@@ -48,7 +48,7 @@ var options = {
 var sizer = $p.sizer($("#sizer-multiple"), options)
                 .on('submit', function (selectDatas, allDatas) {
                     appendSpan("#sizerPanel", selectDatas);
-                    });
+                });
 
 /**
 * 选择器
@@ -60,7 +60,7 @@ function appendSpan(selector, selectDatas) {
     for (var i = 0; i < selectDatas.length; i++) {
         spans.push('<span>' + selectDatas[i].name + '</span>');
     }
-    $(selector).find('.sizer-result-content').empty().append(spans.join(''));
+    $(selector).find('.sizer-result-content').empty().append(spans.join('')|| "选择为空");
 }</code></pre>
                     <h3>JSON 数据</h3>
                     <a href="/test/api/sizerdata.json" target="_blank">sizerdata.json</a>
@@ -77,4 +77,4 @@ function appendSpan(selector, selectDatas) {
         </script>
     {{/inline}}
 
-{{/base}}
+{{/layouts/base}}

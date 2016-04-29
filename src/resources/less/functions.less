@@ -4,7 +4,7 @@
     // IE8 filter
     @opacity-ie: (@opacity * 100);
 }
-.box-shadow(@x:0px, @y:2px, @blur:5px, @color:#999) {
+.box-shadow(@x:0px, @y:2px, @blur:3px, @color:rgba(0, 0, 0, 0.28)) {
     -moz-box-shadow: @arguments;
     -webkit-box-shadow: @arguments;
     box-shadow: @arguments;
@@ -225,7 +225,6 @@
     .ellipsis-basic();
     width: 100% - @substract;
 }
-
 /*************
 生成各种常量class所用的mixin
 *************/
@@ -234,7 +233,7 @@
     @wi: @i*10;
     @j: @i+1;
     .w@{wi} {
-        width: @wi*1px;
+        width: @wi*1px !important;
     }
     .generate-w(@n, @j);
 }
@@ -244,7 +243,7 @@
     @pi: @i*5;
     @j: @i+1;
     .pr@{pi} {
-        padding-right: @pi*1px;
+        padding-right: @pi*1px !important;
     }
     .generate-pr(@n, @j);
 }
@@ -253,7 +252,7 @@
     @pi: @i*5;
     @j: @i+1;
     .pl@{pi} {
-        padding-left: @pi*1px;
+        padding-left: @pi*1px !important;
     }
     .generate-pl(@n, @j);
 }
@@ -262,7 +261,7 @@
     @pi: @i*5;
     @j: @i+1;
     .pb@{pi} {
-        padding-bottom: @pi*1px;
+        padding-bottom: @pi*1px !important;
     }
     .generate-pb(@n, @j);
 }
@@ -271,7 +270,7 @@
     @pi: @i*5;
     @j: @i+1;
     .pt@{pi} {
-        padding-top: @pi*1px;
+        padding-top: @pi*1px !important;
     }
     .generate-pt(@n, @j);
 }
@@ -280,7 +279,7 @@
     @pi: @i*5;
     @j: @i+1;
     .p@{pi} {
-        padding: @pi*1px;
+        padding: @pi*1px !important;
     }
     .generate-p(@n, @j);
 }
@@ -290,7 +289,7 @@
     @pi: @i*5;
     @j: @i+1;
     .mr@{pi} {
-        padding-right: @pi*1px;
+        margin-right: @pi*1px !important;
     }
     .generate-mr(@n, @j);
 }
@@ -299,7 +298,7 @@
     @pi: @i*5;
     @j: @i+1;
     .ml@{pi} {
-        margin-left: @pi*1px;
+        margin-left: @pi*1px !important;
     }
     .generate-ml(@n, @j);
 }
@@ -308,7 +307,7 @@
     @pi: @i*5;
     @j: @i+1;
     .mt@{pi} {
-        margin-top: @pi*1px;
+        margin-top: @pi*1px !important;
     }
     .generate-mt(@n, @j);
 }
@@ -317,7 +316,7 @@
     @pi: @i*5;
     @j: @i+1;
     .mb@{pi} {
-        margin-bottom: @pi*1px;
+        margin-bottom: @pi*1px !important;
     }
     .generate-mb(@n, @j);
 }
@@ -326,7 +325,7 @@
     @pi: @i*5;
     @j: @i+1;
     .m@{pi} {
-        margin: @pi*1px;
+        margin: @pi*1px !important;
     }
     .generate-m(@n, @j);
 }
