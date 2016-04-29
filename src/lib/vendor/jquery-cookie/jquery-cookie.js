@@ -1,4 +1,4 @@
-define("lib/vendor/jquery-cookie/jquery-cookie", [],function(require, exports, module) {
+define(function(require, exports, module) {
 /*!
  * jQuery Cookie Plugin v1.3.1
  * https://github.com/carhartl/jquery-cookie

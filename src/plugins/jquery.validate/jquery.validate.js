@@ -531,7 +531,8 @@ define(function(require, exports, module) {
                             parameters: rules[method]
                         };
                         try {
-                            var value = element.value.replace(/\r/g, "");
+                            var value = $.trim(element.value.replace(/\r/g, ""));
+
 
                             //这个后来加的
                             if ($(element).attr("placeholder") === value) {

@@ -357,7 +357,6 @@ Page breadcrumb
     font-size: 16px;
 }
 .page-container {
-    min-width: @page-min-width;
     zoom: 1;
     margin-top: 50px;
 }
@@ -365,7 +364,7 @@ Page breadcrumb
     position: relative !important;
     float: none !important;
     margin-left: 200px;
-    width: auto !important;
+    min-width: @page-min-width;
     &.full-screen {
         margin: 0;
     }
@@ -393,6 +392,10 @@ Page breadcrumb
     overflow-x: hidden;
     bottom: 0;
     top: 50px;
+    z-index: 100;
+    &.over {
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.28);
+    }
 }
 .page-sidebar {
     width: 100% !important;
@@ -506,7 +509,7 @@ Page breadcrumb
         background: @B200;
     }
     &.over {
-        box-shadow: 0 1px 10px rgba(0, 0, 0, 0.28);
+        box-shadow: -10px 1px 10px rgba(0, 0, 0, 0.28);
     }
     i {
         font-size: 16px;

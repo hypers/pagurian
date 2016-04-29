@@ -63,7 +63,7 @@ define(function(require, exports, module) {
 
             this.hideLoading();
             if (this.container[0].reset !== undefined) this.container[0].reset();
-            
+
             this.container.find(".help-block").each(function() {
                 var tip = $(this).data("tip");
                 if (tip) {
@@ -89,7 +89,7 @@ define(function(require, exports, module) {
                     return data[name];
                 }
                 //兼容老版本中的 parent.id 这种
-                var split = name.split(".");
+                var split = (name+"").split(".");
                 if ($.isPlainObject(data[split[0]])) {
                     return data[split[0]][split[1]];
                 }

@@ -314,15 +314,26 @@ define(function(require, exports, module) {
     }
 
     function doSidebarOver() {
+        var $spanner = $(".page-sidebar-spanner");
+        var $sidebar = $(".page-sidebar-wrapper");
+
         var menuHeight = $(".page-sidebar-menu").height();
-        var sidebarHeight = $(".page-sidebar-wrapper").height();
-        var spanner = $(".page-sidebar-spanner");
-        var top = $(".page-sidebar-wrapper").scrollTop();
+        var sidebarHeight = $sidebar.height();
+
+        var top = $sidebar.scrollTop();
+        var left = $(window).scrollLeft();
         if ((top - 50 + sidebarHeight) >= menuHeight) {
-            spanner.removeClass("over");
+            $spanner.removeClass("over");
         } else {
-            spanner.addClass("over");
+            $spanner.addClass("over");
         }
+
+        if(left > 2){
+            $sidebar.addClass("over");
+        }else{
+            $sidebar.removeClass("over");
+        }
+
     }
 
     //处理左侧菜单滚动事件
@@ -333,6 +344,13 @@ define(function(require, exports, module) {
             doSidebarOver();
         });
         doSidebarOver();
+    }
+
+
+    function doWindowScroll(){
+        $(window).scroll(function() {
+            doSidebarOver();
+        });
     }
 
     //处理左侧菜单隐藏显示
@@ -433,6 +451,7 @@ define(function(require, exports, module) {
             doHighlightCode();
             doSidebarScroll();
             doSidebarToggle();
+            doWindowScroll();
         },
 
         fixContentHeight: function() {
@@ -440,14 +459,6 @@ define(function(require, exports, module) {
         },
         resize: function(callback) {
             resizeEventQueue.push(callback);
-        },
-        initDropdownMenu: function() {
-            var dropdown = new DropdownMenu("#dropdown_pro_menu");
-            resizeEventQueue.push(function() {
-                dropdown.update();
-            });
-            this.dropdown = dropdown;
-            return this;
         },
         activateCurrentMenu: function() {
             if (window.CONFIG && CONFIG.appId) {
@@ -474,315 +485,7 @@ define(function(require, exports, module) {
                 _doSidebarMenuStatus();
                 doSidebarOver();
             });
+
         }
     };
-
-    function DropdownMenu(selector, options) {
-
-        this.windowHeight = $(window).height();
-        this.isExpandSubMenu = 0;
-
-        var dom = $(selector); //当前菜单对象
-        var header_h = 60; //的高度
-        var item_h = 40; //每一个菜单高度
-        var scroll_min_h = 200; //滚动最小高度
-        var arrow_h = 20; //上下箭头高度
-
-        var first = dom.find(".dropdown-level-first"); //一级菜单
-        var second = dom.find(".dropdown-level-second"); //二级菜单
-        var third = dom.find(".dropdown-level-third"); //三级菜单
-
-        var first_count = first.children("ul").children("li").length; //一级菜单个数
-        var first_h = first_count * item_h; //一级菜单的总高度
-
-        this.initFirstHeight = function() {
-            first.find(".dropdown-scroll-top").remove();
-            first.find(".dropdown-scroll-bottom").remove();
-
-            //如果可视高度小于一级菜单高度时显示箭头
-            if ((this.windowHeight - header_h) < first_h) {
-                first.prepend('<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up "></i></a>');
-                first.append('<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>');
-                first.css("height", this.windowHeight - header_h);
-            } else {
-                first.css("height", first_h);
-            }
-        };
-
-        this.init = function() {
-
-            this.level_in = 1;
-            this.level_out = 1;
-            this.level_base = 0;
-            var dropdown = this;
-
-            this.initFirstHeight();
-
-            dom.hover(function() {
-                dropdown.level_base = 1;
-                first.show();
-            }, function() {
-                first.hide();
-                dropdown.level_base = 0;
-                if (dropdown.level_in === 1 && dropdown.level_out === 1) {
-                    second.hide();
-                    third.hide();
-                }
-            });
-
-            $(".dropdown-wrap").mouseenter(function() {
-                dropdown.level_in = $(this).data("level");
-                $(".dropdown-wrap").each(function() {
-                    var o = $(this);
-                    var level = o.data("level");
-                    if (dropdown.isExpandSubMenu === 1 && (level - dropdown.level_in === 1)) {
-                        //...
-                    } else if (level > dropdown.level_in) {
-                        o.hide();
-                    }
-                });
-            });
-
-            $(".dropdown-wrap").mouseleave(function() {
-                dropdown.level_out = $(this).data("level");
-                var o = $(this);
-
-                var k = setTimeout(function() {
-                    if (dropdown.level_base) {
-                        return;
-                    }
-
-                    if (dropdown.level_in === dropdown.level_out) {
-                        first.hide();
-                        second.hide();
-                        third.hide();
-                        dom.find("li").removeClass("active");
-                    }
-
-                    clearTimeout(k);
-                }, 100);
-            });
-
-            $(".dropdown-wrap").click(function() {
-                second.hide();
-                third.hide();
-            });
-
-            //设置一级滚动事件
-            this.setDropdownScroll(first);
-
-            //展开二级菜单
-            this.hoverMenu(first, second);
-
-            this.dropdownMouseWheel(first);
-            this.dropdownMouseWheel(second);
-            this.dropdownMouseWheel(third);
-
-        };
-        this.update = function() {
-            this.windowHeight = $(window).height();
-            this.initFirstHeight();
-            this.setDropdownScroll(first);
-            this.hoverMenu(first, second);
-        };
-
-        //鼠标滚动事件
-        this.dropdownMouseWheel = function(obj) {
-
-            obj.unbind("mousewheel");
-            obj.bind('mousewheel', function(event, delta) {
-
-                var scroll_top = obj.find(".dropdown-scroll-top");
-                var scroll_bottom = obj.find(".dropdown-scroll-bottom");
-
-                var dir = delta > 0 ? 'up' : 'down';
-
-
-
-                if ($(this).find(".dropdown-scroll-top").length === 0) {
-                    return;
-                }
-
-                var item = $(this).children(".dropdown-menu");
-                var t = parseInt(item.css("top"));
-                var _l = item.children("li").length;
-
-
-                if (dir === "up") {
-                    scroll_bottom.removeClass("disabled");
-                    if (t >= 20) {
-                        scroll_top.addClass("disabled");
-                        return false;
-                    }
-                    t += 20;
-                    item.css("top", t);
-                } else {
-                    scroll_top.removeClass("disabled");
-                    if (t <= ($(this).height() - (_l * item_h) - arrow_h)) {
-                        scroll_bottom.addClass("disabled");
-                        return false;
-                    }
-                    t -= 20;
-                    item.css("top", t);
-                }
-                return false;
-            });
-        };
-
-        this.setDropdownScroll = function(obj) {
-
-
-            var levels = ['first', 'second', 'third'];
-            var _l = obj.children("ul").children("li").length;
-            var dropdown = this;
-            var timer; //定时器
-            obj.find(".dropdown-scroll-top").unbind();
-            obj.find(".dropdown-scroll-top").hover(function() {
-
-                obj.find(".dropdown-scroll-bottom").removeClass("disabled");
-                var scroll = $(this);
-
-                hideChild(scroll);
-
-                var that = $(this).next();
-                var t = parseInt(that.css("top"));
-                timer = setInterval(function() {
-                    if (t >= 20) {
-                        scroll.addClass("disabled");
-                        clearInterval(timer);
-                        return;
-                    }
-                    t += 10;
-                    that.css("top", t);
-                }, 30);
-
-            }, function() {
-                clearInterval(timer);
-            });
-
-            obj.find(".dropdown-scroll-bottom").unbind();
-            obj.find(".dropdown-scroll-bottom").hover(function() {
-
-                obj.find(".dropdown-scroll-top").removeClass("disabled");
-
-                var scroll = $(this);
-                hideChild(scroll);
-
-                var o = $(this).prev();
-                var t = parseInt(o.css("top"));
-
-                timer = setInterval(function() {
-
-                    if (t <= (obj.height() - (_l * item_h) - arrow_h)) {
-                        scroll.addClass("disabled");
-                        clearInterval(timer);
-                        return;
-                    }
-
-                    t -= 10;
-                    o.css("top", t);
-                }, 30);
-            }, function() {
-                clearInterval(timer);
-            });
-
-
-            function hideChild(activeObj) {
-                var obj_dropdown = activeObj.parents(".dropdown-wrap");
-                var level = obj_dropdown.data("level");
-                if (level === 1) {
-                    second.hide();
-                    third.hide();
-                }
-                if (level === 2) {
-                    third.hide();
-                }
-
-            }
-        };
-
-        this.hoverMenu = function(obj, subObj) {
-
-            var dropdown = this;
-            var timer;
-            var level_active = 0;
-            obj.find("li").unbind("mouseenter");
-            obj.find("li").mouseenter(function() {
-
-                level_active = dropdown.level_in;
-                obj.find("li").removeClass("active");
-
-                //console.log(dropdown.level_in + "========" + dropdown.level_out + "--------" + dropdown.level_base + ">>>>>>>>>" + dropdown.isExpandSubMenu + "//////////////" + level_active);
-
-                if ($(this).hasClass("dropdown-submenu")) {
-
-                    if (timer) {
-                        clearTimeout(timer);
-                    }
-
-                    dropdown.isExpandSubMenu = 1;
-
-                    $(this).addClass("active");
-                    var offset = $(this).offset();
-                    var top = offset.top;
-                    var item = $(this).find(".dropdown-menu:eq(0)");
-                    var l = item.children("li").length;
-                    var total_h = item_h * l; //二级菜单高度
-
-                    subObj.html(item.clone());
-                    subObj.css("top", top - 1);
-
-                    //如果可视高度小于二级菜单高度时显示箭头
-                    if (dropdown.windowHeight < (total_h + top)) {
-
-                        if (total_h > scroll_min_h) {
-                            subObj.prepend('<a class="dropdown-scroll-top disabled"><i class="fa fa-angle-up"></i></a>');
-                            subObj.append('<a class="dropdown-scroll-bottom"><i class="fa fa-angle-down"></i></a>');
-                        }
-
-                        var _total_h = dropdown.windowHeight - top; //二级菜单可显示的高度
-
-                        if (scroll_min_h > _total_h) {
-                            subObj.css("height", scroll_min_h);
-                            subObj.css("top", top - (scroll_min_h - _total_h));
-                        } else {
-                            subObj.css("height", _total_h);
-                        }
-
-                    } else {
-                        subObj.css("height", total_h);
-                    }
-
-                    subObj.show();
-
-                    //设置滚动事件
-                    dropdown.setDropdownScroll(subObj);
-
-                    //展开三级菜单
-                    dropdown.hoverMenu(second, third);
-
-                    return;
-                }
-
-                dropdown.isExpandSubMenu = 0;
-                timer = setTimeout(function() {
-
-                    if (level_active === 2) {
-                        subObj.hide();
-                        return;
-                    }
-
-                    if (dropdown.level_in > dropdown.level_out || dropdown.isExpandSubMenu === 1) {
-                        return;
-                    }
-
-                    subObj.hide();
-
-                }, 300);
-
-            });
-        };
-
-        this.init();
-    }
 });
