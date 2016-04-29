@@ -1,4 +1,4 @@
-define("lib/vendor/uniform/jquery.uniform", [], function(require, exports, module) {
+define(function(require, exports, module) {
     /*
 
     Uniform v2.1.0
