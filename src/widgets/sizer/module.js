@@ -388,11 +388,14 @@ define(function (require, exports, module) {
             }
             _this.options = $.extend(_this.options, options);
             _this.matchCase = _this.options.matchCase;
+            setBtnsOptions();
+
             if (_this.options.isMultiple) {
                 _this._tmpSelectDatas = []; //暂存数据
                 _this.isFirstClick = true; //是否为第一次点击
                 _this.isFirstSearch = true; //是否为第一次搜索
             }
+
             drawDom();
             bindEvent();
 
@@ -427,6 +430,7 @@ define(function (require, exports, module) {
             var $clearAll = $('<a></a>');
             var $clearSingle = $('<a></a>');
             var sizerSelectPanel = $($p.tpl(sizerPanelTpl, _oLanguage));
+            var sizerBtnGroup = sizerSelectPanel.find(".sizer-btn-group");
 
             $sizerWrap.attr('id', _this.sizerName).addClass(_this.options.style);
             $selectAll.prop('href', 'javascript:;').attr('id', _nameStr + '_selectAll' + _id).append(_oLanguage.chooseAll);
@@ -436,12 +440,20 @@ define(function (require, exports, module) {
 
             $sizerBtn.empty().attr('title', _oLanguage.promtText).append($p.tpl($(sizerButton).html(), _oLanguage));
 
+            var Obtns = {
+                selectAll: $selectAll,
+                clearAll: $clearAll,
+                clearSingle: $clearSingle
+            };
+
+            _this.options.btns.forEach(function (btnName) {
+                sizerBtnGroup.append(Obtns[btnName] || '');
+            });
+
             if (_this.options.isMultiple) {
-                sizerSelectPanel.find(".sizer-btn-group").append($selectAll).append($clearAll);
                 sizerSelectPanel.append($p.tpl(sizerFooterTpl, _oLanguage));
-            } else {
-                sizerSelectPanel.find(".sizer-btn-group").append($clearSingle);
             }
+
             $sizerBtn.after(sizerSelectPanel.get(0).outerHTML);
             $("#" + _nameStr + '_select_panel' + _id).css(_this.options.position);
             _this.container = $sizerBtn.parent(".sizer-wrap");
@@ -633,6 +645,20 @@ define(function (require, exports, module) {
                     closePanel(true);
                 });
             }
+        }
+
+        /**
+         * 设置组件的按钮配置
+         */
+        function setBtnsOptions() {
+            if (_this.options.btns && $.isArray(_this.options.btns)) {
+                return;
+            }
+            if (_this.options.btns === 'null' || _this.options.btns === null) {
+                _this.options.btns = [];
+                return;
+            }
+            _this.options.btns = _this.options.isMultiple ? ['selectAll', 'clearAll'] : ['clearSingle'];
         }
 
         /**
