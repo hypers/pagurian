@@ -16,7 +16,7 @@
     var URL = [PROTOCOL, DOMAIN, PORT, PATH].join(""); //完整URL
 
     var pagurian = {
-        version: CONFIG.version || "1.6.1",
+        version: CONFIG.version || "1.6.2",
         language: CONFIG.language || "zh_CN", //简体中文:zh_CN , 英文:en_US
         debug: DEBUG,
         path: {
