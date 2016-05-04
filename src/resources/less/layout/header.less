@@ -20,9 +20,6 @@ Header and header elements.
     padding-right: 0;
     width: 225px;
 }
-.header .navbar-brand img {
-    margin-left: 20px;
-}
 .header .navbar-brand.text-logo {
     padding-left: 20px;
     padding-top: 12px;
@@ -237,13 +234,13 @@ Language Bar
         }
     }
     .logo {
-        width: 200px;
         height: @header-height;
         color: @B000;
         font-size: 30px;
-        padding: 0;
-        background: @logo no-repeat center center;
-        text-indent: -10000px;
+        padding: 0 10px;
+        &:hover {
+            background-color: @H700;
+        }
     }
     .navbar-nav {
         margin: 0;
