@@ -209,17 +209,21 @@ define(function(require, exports, module) {
             _attachEvents: function() {
                 this._detachEvents();
                 if (this.isInput) { // single input
+
                     this._events = [
                         [this.element, {
+                            click: $.proxy(this.show, this),
                             focus: $.proxy(this.show, this),
                             keyup: $.proxy(this.update, this),
                             keydown: $.proxy(this.keydown, this)
                         }]
                     ];
                 } else if (this.component && this.hasInput) { // component: input + button
+
                     this._events = [
                         // For components that are not readonly, allow keyboard nav
                         [this.element.find('input'), {
+                            click: $.proxy(this.show, this),
                             focus: $.proxy(this.show, this),
                             keyup: $.proxy(this.update, this),
                             keydown: $.proxy(this.keydown, this)

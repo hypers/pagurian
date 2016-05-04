@@ -26,24 +26,27 @@ define(function(require, exports, module) {
 
         var options = {
             original: false,
-            bundle: true
+            bundle: true,
+            data: {}
         };
 
-
+        // (options);
         if (arguments.length === 1 && $.isPlainObject(arguments[0])) {
             return $.extend(options, arguments[0]);
         }
 
+        // (url,data,callback)
         if (arguments.length === 3) {
             options.url = arguments[0];
-            options.params = filterParams(arguments[1]);
+            options.data = filterParams(arguments[1]);
             options.callback = arguments[2];
             return options;
         }
 
+        // (type,url,data,callback)
         options.type = arguments[0];
         options.url = arguments[1];
-        options.params = filterParams(arguments[2]);
+        options.data = filterParams(arguments[2]);
         options.callback = arguments[3];
 
         return options;
@@ -60,6 +63,7 @@ define(function(require, exports, module) {
                 value: value
             };
             if ($.isArray(data)) {
+
                 _temp && (_temp.type = type);
                 data.push(_temp);
                 return data;
@@ -68,9 +72,8 @@ define(function(require, exports, module) {
         }
 
         $.each(params, function(index, value) {
-
             if ($p.tool.isNumber(index) && $.isPlainObject(value)) {
-                push(value.name, value.value, value.type);
+                push(value.name, value.value);
             } else if (!$.isFunction(value)) {
                 push(index, value);
             }
@@ -119,21 +122,19 @@ define(function(require, exports, module) {
             return false;
         }
 
-        options.url = [$p.path.api, options.url, $p.lib.apiPostfix].join("");
-        
         if (options.type === "get") {
-            options.params = encode($.param(options.params, true));
+            options.data = encode($.param(options.data, true));
+        } else if (options.type === "delete") {
+            options.url = options.url + "?" + encode($.param(options.data, true));
         } else if ($.inArray(options.type, ["post", "put", "patch"]) > -1) {
-
             if (!options.original) {
-                options.params = transport.toObject(options.params);
+                options.data = transport.toObject(options.data);
             }
             if (options.bundle) {
                 options.contentType = "application/json";
-                options.params = transport.toJSON(options.params);
+                options.data = transport.toJSON(options.data);
             }
         }
-
 
         ajax.getJSON(options, function(response) {
             var valid = validate.check(response);
@@ -163,13 +164,33 @@ define(function(require, exports, module) {
             });
             options.type = "get";
             requestDate(options);
-
         },
         post: function(url, params, callback) {
             var options = getOptions.apply(this, arguments);
             options.type = "post";
             requestDate(options);
         },
+        /**
+        restful 请求
+        params 参数支持两种格式
+        - [{"foo":"bar"},{"foo2":"bar2"}]
+        - {"foo":"bar","foo2":"bar2"}
+        最终都会转化为以下格式提交给数据库:
+        {"data":{"foo":"bar","foo2":"bar2"}}
+        CASE 1:
+        service.request("put","user/update/1",{name:"foobar"},function(){});
+        如果你需要把已定义好数据传递到服务端，比如：
+        {"data":[{"foo":"bar"},{"foo2":"bar2"},{"foo3":[1,2,3,4]}]
+        需要采用CASE 2的方式,把original设置为true
+        CASE 2:
+        service.request({
+               type:"put",
+               original:true,
+               url:user/update/1",
+               params:{name:"foobar"},
+               callback:function(){}
+        });
+        */
         request: function(type, url, params, callback) {
             var options = getOptions.apply(this, arguments);
             requestDate(options);
