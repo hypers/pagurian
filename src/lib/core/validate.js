@@ -3,7 +3,7 @@ define(function(require, exports, module) {
     function handleServerCheck(code) {
         var dot = (code + "").match(/\.\d*/);
         var postfix = "error_200403";
-        if (dot[0] === ".17") {
+        if (dot && dot[0] === ".17") {
             $p.url.reload();
             return;
         }

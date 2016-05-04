@@ -1,4 +1,4 @@
-define("lib/vendor/bootstrap/js/bootstrap", [],function(require, exports, module) {
+define(function(require, exports, module) {
 /*!
  * Bootstrap v3.0.3 (http://getbootstrap.com)
  * Copyright 2013 Twitter, Inc.

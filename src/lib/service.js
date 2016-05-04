@@ -57,12 +57,15 @@ define(function(require, exports, module) {
 
         var data = $.isArray(params) ? [] : {};
 
-        function push(key, value) {
+        function push(key, value, type) {
+            var _temp = {
+                name: key,
+                value: value
+            };
             if ($.isArray(data)) {
-                data.push({
-                    name: key,
-                    value: value
-                });
+
+                _temp && (_temp.type = type);
+                data.push(_temp);
                 return data;
             }
             return (data[key] = value);
@@ -119,8 +122,6 @@ define(function(require, exports, module) {
             return false;
         }
 
-        options.url = [$p.path.api, options.url, $p.lib.apiPostfix].join("");
-
         if (options.type === "get") {
             options.data = encode($.param(options.data, true));
         } else if (options.type === "delete") {
@@ -171,21 +172,16 @@ define(function(require, exports, module) {
         },
         /**
         restful 请求
-
         params 参数支持两种格式
         - [{"foo":"bar"},{"foo2":"bar2"}]
         - {"foo":"bar","foo2":"bar2"}
-
         最终都会转化为以下格式提交给数据库:
         {"data":{"foo":"bar","foo2":"bar2"}}
-
         CASE 1:
         service.request("put","user/update/1",{name:"foobar"},function(){});
-
         如果你需要把已定义好数据传递到服务端，比如：
         {"data":[{"foo":"bar"},{"foo2":"bar2"},{"foo3":[1,2,3,4]}]
         需要采用CASE 2的方式,把original设置为true
-
         CASE 2:
         service.request({
                type:"put",

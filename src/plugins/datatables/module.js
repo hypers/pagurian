@@ -237,12 +237,17 @@ define(function(require, exports, module) {
 
         }
 
+        function _isNull(key) {
+            return key === undefined || key === null;
+        }
+
         //设置默认值
         function _setDefaultValue(items, columns) {
 
+
             for (var i = 0; i < items.length; i++) {
                 for (var o in items[i]) {
-                    if (items[i][o] === undefined) {
+                    if (_isNull(items[i][o])) {
                         items[i][o] = self.options.sDefaultValue;
                     }
                 }
@@ -251,7 +256,7 @@ define(function(require, exports, module) {
                         continue;
                     }
                     //如果Table中的列在后端没有返回，则初始为"--"
-                    if (items[i][columns[j].mData] === undefined) {
+                    if (_isNull(items[i][columns[j].mData])) {
                         items[i][columns[j].mData] = self.options.sDefaultValue;
                     }
                 }
