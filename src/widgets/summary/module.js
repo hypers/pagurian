@@ -19,7 +19,7 @@ define(function (require, exports, module) {
          */
         function Summary(selector, options) {
             //版本
-            var _version = "2016.4.25.1841";
+            var _version = "2016.3.18.1841";
 
             var _this = this;
             //前缀名
@@ -436,27 +436,7 @@ define(function (require, exports, module) {
                         return _$selectCheckBoxes;
                     };
                 }
-
-
-                /**
-                 * 面板点击回调
-                 */
-                $(selector).on('click', ' .jsSummary' + _id + '_content', function () {
-                    var _columnName = $(this).data("name"),
-                        _columnData = getColumnData(_columnName),
-                        _columnsData = _this.allDatas;
-
-                    if (_this.canChoose) {
-                        _this.chooseColumns = _columnName;
-                        params.set(_cookieName + ".chooseColumns", _this.chooseColumns);
-                        $("#" + getTagId("div_ul")).find(".summary-div-li").removeClass("choose");
-                        $(this).parent().addClass("choose");
-                    }
-                    if ($.isFunction(_this.options.callBackPanel)) {
-                        _this.options.callBackPanel(_columnName, _columnData, _columnsData);
-                    }
-                });
-
+                
                 $(selector).on('click', ' .summary-div-li', function () {
                     var $ul = $(this).find('ul[data-name]');
                     var _columnName = $ul.data("name"),
