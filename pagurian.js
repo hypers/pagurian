@@ -76,4 +76,4 @@
 
     GLOBAL[NAME] = GLOBAL.pagurian = pagurian;
 
-})(this, "$p", true);
+})(this, "$p", false);
