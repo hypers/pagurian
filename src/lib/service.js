@@ -136,6 +136,8 @@ define(function(require, exports, module) {
             }
         }
 
+        options.url = pagurian.path.api + options.url + (pagurian.lib.apiPostfix || "");
+        
         ajax.getJSON(options, function(response) {
             var valid = validate.check(response);
             response.result = response.result || {};

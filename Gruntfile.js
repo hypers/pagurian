@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -13,15 +13,53 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-qunit');
 
-    var transport = require('grunt-cmd-transport');
+    require('time-grunt')(grunt);
 
+    var transport = require('grunt-cmd-transport');
     var style = transport.style.init(grunt);
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
+
     //connect端口
     var connectPort = 9000;
 
-    require('time-grunt')(grunt);
+    var vendorPath = 'src/lib/vendor/';
+    var cssPath = 'src/resources/';
+    var cssThemes = ['default','green', 'blue', 'purple', 'orange', 'red'];
+    var cssPages = ['home', 'login']
+
+    function getCssFiles() {
+        var cssObject = {};
+        for (var i = 0; i < cssThemes.length; i++) {
+            cssObject[cssPath + 'css/themes-' + cssThemes[i] + '.css'] = [cssPath + 'less/themes/' + cssThemes[i] + '.less'];
+        }
+        for (var i = 0; i < cssPages.length; i++) {
+            cssObject[cssPath + 'css/page-' + cssPages[i] + '.css'] = [cssPath + 'less/pages/' + cssPages[i] + '.less'];
+        }
+        return cssObject;
+    }
+
+    function getMinCssFiles() {
+        var cssObject = {},
+            file;
+
+        cssObject[cssPath + 'css/public.css'] = [
+                vendorPath + 'bootstrap/css/bootstrap.css',
+                vendorPath + 'uniform/css/uniform.default.css',
+                vendorPath + 'font-awesome/css/font-awesome.min.css'
+            ];
+
+        for (var i = 0; i < cssThemes.length; i++) {
+            file = cssPath + 'css/themes-' + cssThemes[i] + '.css';
+            cssObject[file] = [file];
+        }
+        for (var i = 0; i < cssPages.length; i++) {
+            file = cssPath + 'css/page-' + cssPages[i] + '.css';
+            cssObject[file] = [file];
+        }
+
+        return cssObject;
+    }
 
     var option = {
         pkg: grunt.file.readJSON("package.json"),
@@ -44,7 +82,7 @@ module.exports = function (grunt) {
                 }, {
                     expand: true,
                     cwd: 'src/plugins',
-                    src: ['**/**/*.png', '**/**/*.gif','**/**/*.swf'],
+                    src: ['**/**/*.png', '**/**/*.gif'],
                     dest: 'dist/plugins',
                     filter: 'isFile'
                 }]
@@ -59,14 +97,7 @@ module.exports = function (grunt) {
              * [build 编译所有的less文件，按照模板分类]
              */
             build: {
-                files: {
-                    "src/resources/css/themes-green.css": ["src/resources/less/themes/green.less"],
-                    "src/resources/css/themes-blue.css": ["src/resources/less/themes/blue.less"],
-                    "src/resources/css/themes-purple.css": ["src/resources/less/themes/purple.less"],
-                    "src/resources/css/themes-orange.css": ["src/resources/less/themes/orange.less"],
-                    "src/resources/css/themes-red.css": ["src/resources/less/themes/red.less"],
-                    "src/resources/css/page-login.css": ["src/resources/less/pages/login.less"]
-                }
+                files: getCssFiles()
             }
         },
         cssmin: {
@@ -78,19 +109,7 @@ module.exports = function (grunt) {
              * @type {Object}
              */
             build: {
-                files: {
-                    'src/resources/css/public.css': [
-                        'src/lib/vendor/bootstrap/css/bootstrap.css',
-                        'src/lib/vendor/uniform/css/uniform.default.css',
-                        'src/lib/vendor/font-awesome/css/font-awesome.min.css'
-                    ],
-                    'src/resources/css/themes-green.css': ['src/resources/css/themes-green.css'],
-                    'src/resources/css/themes-blue.css': ['src/resources/css/themes-blue.css'],
-                    'src/resources/css/themes-purple.css': ['src/resources/css/themes-purple.css'],
-                    'src/resources/css/themes-orange.css': ['src/resources/css/themes-orange.css'],
-                    'src/resources/css/themes-red.css': ['src/resources/css/themes-red.css'],
-                    'src/resources/css/page-login.css': ['src/resources/css/page-login.css']
-                }
+                files: getMinCssFiles()
             }
         },
         postcss: {
@@ -216,13 +235,15 @@ module.exports = function (grunt) {
             allTest: {
                 options: {
                     urls: [
-                        'http://localhost:' + connectPort + '/test/index.html',
-                        'http://localhost:' + connectPort + '/test/sizer.html',
+                        'http://localhost:' + connectPort + '/test/index.html'
                     ]
                 }
             }
         }
     };
+
+
+
 
 
     //生产发布的Task
