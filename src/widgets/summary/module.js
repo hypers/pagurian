@@ -606,6 +606,16 @@ define(function (require, exports, module) {
             }
 
             /**
+             * 转千分位
+             **/
+            function toThousands(num){
+                if(CONFIG.thousands && $p.tool.isNumber(num)){
+                   return $p.tool.toThousands(num);
+                }
+                return num;
+            }
+
+            /**
              * 渲染数据到页面
              * @param _datas
              */
@@ -636,19 +646,16 @@ define(function (require, exports, module) {
                         var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
                             _rowConfig = getRowConfig(_name);
                         var _html = "";
+
                         //if (_data[_name] === null || _data[_name] === undefined) {
                         //    continue;
                         //}
                         if ($.isFunction(_rowConfig.render)) {
                             _html = _rowConfig.render(_data[_name], _datas);
                         } else if (_rowConfig.tpl) {
-                            _html = $p.str.format(_rowConfig.tpl, _data[_name]);
+                            _html = $p.str.format(_rowConfig.tpl, toThousands(_data[_name]));
                         } else {
-                            _html = _data[_name];
-                        }
-
-                        if(CONFIG.thousands && $p.tool.isNumber(_html)){
-                            _html = $p.tool.toThousands(_html);
+                            _html = toThousands(_data[_name]);
                         }
 
                         $contentLi.html(_html);
