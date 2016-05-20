@@ -7,8 +7,12 @@
 (function(GLOBAL, NAME, DEBUG) {
 
     GLOBAL.PagurianAlias = NAME;
+    CONFIG = GLOBAL.CONFIG || {};
+    //设置启用千分位
+    CONFIG.thousands = true;
+    //设置数据默认值
+    CONFIG.nullDefault = '--';
 
-    var CONFIG = GLOBAL.CONFIG || {};
     var PROTOCOL = ("https:" === location.protocol) ? "https://" : "http://"; //协议
     var DOMAIN = location.hostname || "/"; //域名
     var PORT = location.port ? ":" + location.port : ""; //端口
@@ -76,4 +80,4 @@
 
     GLOBAL[NAME] = GLOBAL.pagurian = pagurian;
 
-})(this, "$p", false);
+})(this, "$p", true);

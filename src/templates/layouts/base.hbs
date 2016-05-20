@@ -26,9 +26,8 @@
 <!-- END CONTAINER -->
 
 <script type="text/javascript">
-    window.CONFIG = {
-        appId: "{{appId}}"
-    };
+    var CONFIG = window.CONFIG || {};
+    CONFIG.appId = "{{appId}}";
 </script>
 {{>appScript}}
 

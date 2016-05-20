@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     var g = window;
     var languages = {
@@ -6,6 +6,7 @@ define(function(require, exports, module) {
         en_US: require('./locale/en_US')
     };
     var locale = languages[$p.language || "zh_CN"];
+    var CONFIG = g.CONFIG || {};
 
     require('./1.9.4/dataTables.css');
     require('./1.9.4/jquery.dataTables');
@@ -18,7 +19,6 @@ define(function(require, exports, module) {
 
     function DataTables(selector, options) {
 
-
         var oTable, pagesize = parseInt($.cookie("params.pagesize")) || 30;
         var self = this;
 
@@ -26,9 +26,10 @@ define(function(require, exports, module) {
         this.bLoadFinish = false;
         this.bShowSummary = false;
         this.aApiParams = {};
-        this.version = "0.2.20160310";
+        this.version = "0.2.20160520";
         this.options = {
-            "sDefaultValue": "--",
+            "sDefaultValue": CONFIG.nullDefault || "--",
+            "bThousands": CONFIG.thousands || false,
             "sForm": '#form',
             "bAutoload": true,
             "bProcessing": true,
@@ -38,8 +39,8 @@ define(function(require, exports, module) {
             "bSort": true,
             "bAutoWidth": false,
             "bOrderNumbers": false,
-            "fnRowCallback": function(row) {},
-            "fnInitComplete": function() {},
+            "fnRowCallback": function (row) { },
+            "fnInitComplete": function () { },
             "bLengthChange": true,
             "bJQueryUI": false,
             "sPaginationType": "bootstrap_full_number",
@@ -60,16 +61,13 @@ define(function(require, exports, module) {
                 [30, 50, 100]
             ],
             "oLanguage": locale,
-            "fnServerParams": function(aoData) {},
-            "fnServerData": function(sSource, aoData, fnCallback, oSettings) {
+            "fnServerParams": function (aoData) { },
+            "fnServerData": function (sSource, aoData, fnCallback, oSettings) {
 
                 var _options = oSettings.oInit;
 
                 //aApiParams 用[] 不用{} 是有原因的，在某些情况下一个参数会传递多个值
                 var aApiParams = _getApiParams(aoData, oSettings);
-
-
-
 
                 if (!_options.bAutoload) {
                     fnCallback({
@@ -82,15 +80,13 @@ define(function(require, exports, module) {
                     return;
                 }
 
-
                 //兼容老的版本dataSource
-                var fnDataSource = _options.fnDataSource || _options.dataSource;
-
-                fnDataSource(aApiParams, loadedCallback, (function() {
+                var fnDataSource = options.fnDataSource || options.dataSource;
+                fnDataSource(aApiParams, loadedCallback, (function () {
                     if ($.isFunction(_options.fnOptions)) {
                         return _options.fnOptions();
                     }
-                }()));
+                } ()));
 
                 function loadedCallback(a, b, c) {
 
@@ -138,7 +134,7 @@ define(function(require, exports, module) {
 
         };
 
-        this.init = function() {
+        this.init = function () {
 
             this.container = $(selector);
 
@@ -215,7 +211,7 @@ define(function(require, exports, module) {
             //创建一个搜索框
             filter.create($.extend(oSearch, {
                 //过滤条件发生改变的时候触发
-                filterChange: function(value, isEmpty) {
+                filterChange: function (value, isEmpty) {
                     var filterParamName = oSearch.oFilter.sParamName;
                     self.aApiParams[filterParamName] = value;
                     if (!isEmpty) {
@@ -226,7 +222,7 @@ define(function(require, exports, module) {
                     }
                 },
                 //输入关键字的时候触发
-                search: function(word) {
+                search: function (word) {
                     self.aApiParams[searchWord] = word;
                     self.update();
                     if ($.isFunction(oSearch.fnCallback)) {
@@ -241,15 +237,17 @@ define(function(require, exports, module) {
             return key === undefined || key === null;
         }
 
+
         //设置默认值
         function _setDefaultValue(items, columns) {
 
-
             for (var i = 0; i < items.length; i++) {
                 for (var o in items[i]) {
+                    //设置 --
                     if (_isNull(items[i][o])) {
                         items[i][o] = self.options.sDefaultValue;
                     }
+
                 }
                 for (var j = 0; j < columns.length; j++) {
                     if (!columns[j].mData) {
@@ -259,6 +257,7 @@ define(function(require, exports, module) {
                     if (_isNull(items[i][columns[j].mData])) {
                         items[i][columns[j].mData] = self.options.sDefaultValue;
                     }
+
                 }
             }
             return items;
@@ -383,7 +382,7 @@ define(function(require, exports, module) {
         function _createOrderNumbers(current, pagesize) {
             var index = (current - 1) * pagesize,
                 k = 1;
-            $(selector).find("tbody tr").each(function() {
+            $(selector).find("tbody tr").each(function () {
                 $(this).find("td:eq(0)").text(index + k);
                 k++;
             });
@@ -418,7 +417,7 @@ define(function(require, exports, module) {
         //显示汇总信息
         function _showSummary(summary, oSettings) {
 
-            $(selector).find("thead .table-summary").each(function() {
+            $(selector).find("thead .table-summary").each(function () {
                 var key = $(this).data("field");
                 var summary_value = summary[key];
                 for (i = 0; i < oSettings.aoColumns.length; i++) {
@@ -429,6 +428,11 @@ define(function(require, exports, module) {
                 if ($p.tool.isNull(summary_value) || summary_value === undefined) {
                     summary_value = self.options.sDefaultValue;
                 }
+
+                if (oSettings.oInit.bThousands && $p.tool.isNumber(summary_value)) {
+                    summary_value = $p.tool.toThousands(summary_value);
+                }
+
                 $(this).html(summary_value);
             });
         }
@@ -443,19 +447,19 @@ define(function(require, exports, module) {
             $(nCloneTd).addClass("w60 nCloneTd nExtend");
             nCloneTd.innerHTML = '<span class="row-details row-details-close"></span>';
 
-            $(selector + ' thead tr').each(function() {
+            $(selector + ' thead tr').each(function () {
                 if (!$(this).find(".nCloneTh").length) {
                     this.insertBefore(nCloneTh, this.childNodes[0]);
                 }
             });
 
-            $(selector + ' tbody tr').each(function() {
+            $(selector + ' tbody tr').each(function () {
                 this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
             });
 
 
             $(selector + '  tbody td .row-details').unbind("click");
-            $(selector + '  tbody td .row-details').click(function() {
+            $(selector + '  tbody td .row-details').click(function () {
 
                 var row_details = $(this);
                 var nTr = $(this).parents('tr')[0];
@@ -475,7 +479,7 @@ define(function(require, exports, module) {
                     /* Open this row */
                     row_details.addClass("row-details-open disabled").removeClass("row-details-close");
 
-                    fn(oTable, nTr, function(tb_details) {
+                    fn(oTable, nTr, function (tb_details) {
 
                         oTable.fnOpen(nTr, tb_details || "<div class='p10  dataTables_empty'>" + locale.sEmptyTable + "</div>", 'details');
                         var ndetails = row_details.parents("tr").next().find(".details");
@@ -489,25 +493,25 @@ define(function(require, exports, module) {
 
 
         //更新表格数据
-        this.update = function() {
+        this.update = function () {
             this.table.fnPageChange(0);
             return this;
         };
 
         //清空表格数据
-        this.clearTable = function() {
+        this.clearTable = function () {
             $(selector + " .table-summary").html(self.options.sDefaultValue);
         };
 
         //销毁表格
-        this.destroy = function() {
+        this.destroy = function () {
             this.table.fnDestroy();
             this.container.empty();
         };
 
     }
 
-    g[PagurianAlias].dataTable = function(selector, options) {
+    g[PagurianAlias].dataTable = function (selector, options) {
         return new DataTables(selector, options).init();
     };
 

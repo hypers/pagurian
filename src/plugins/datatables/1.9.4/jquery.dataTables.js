@@ -165,6 +165,12 @@
                              if (oCol.mRender && (sSpecific && sSpecific !== '')) {
                                  return mRender(innerData, sSpecific, oData);
                              }
+
+                             //设置千分位
+                             if(oSettings.oInit.bThousands && !oCol.mRender && $p.tool.isNumber(innerData)){
+                                return $p.tool.toThousands(innerData);
+                             }
+
                              return innerData;
                          };
                          oCol.fnSetData = _fnSetObjectDataFn(oCol.mData);

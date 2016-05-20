@@ -11,6 +11,8 @@ define(function (require, exports, module) {
         locale.en_US = require('./locale/en_US');
         var settingPanel = require('./tpl/settingPanel.tpl');
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
+        var CONFIG = g.CONFIG || {};
+
 
         /**
          * [Summary 汇总面板类]
@@ -436,7 +438,7 @@ define(function (require, exports, module) {
                         return _$selectCheckBoxes;
                     };
                 }
-                
+
                 $(selector).on('click', ' .summary-div-li', function () {
                     var $ul = $(this).find('ul[data-name]');
                     var _columnName = $ul.data("name"),
@@ -643,6 +645,10 @@ define(function (require, exports, module) {
                             _html = $p.str.format(_rowConfig.tpl, _data[_name]);
                         } else {
                             _html = _data[_name];
+                        }
+
+                        if(CONFIG.thousands && $p.tool.isNumber(_html)){
+                            _html = $p.tool.toThousands(_html);
                         }
 
                         $contentLi.html(_html);

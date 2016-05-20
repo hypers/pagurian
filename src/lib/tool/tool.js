@@ -16,7 +16,7 @@ define(function(require, exports, module) {
             return Object.prototype.toString.call(o) === "[object Object]";
         },
         isNumber: function(value) {
-            return /^[0-9]+$/.test(value);
+            return /^[0-9]+.?[0-9]*$/.test(value);
         },
         isNull: function(o) {
             return Object.prototype.toString.call(o) === '[object Null]';
@@ -108,6 +108,12 @@ define(function(require, exports, module) {
             }
 
             return arg;
+        },
+        /**
+         * 转千分位  1000.00 ==> 1,000.00
+         **/
+        toThousands:function(num){
+             return (num + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
         },
         formatTime: function(timestamp) {
             if ($p.tool.isNull(timestamp)) {
