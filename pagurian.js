@@ -16,7 +16,7 @@
     var PROTOCOL = ("https:" === location.protocol) ? "https://" : "http://"; //协议
     var DOMAIN = location.hostname || "/"; //域名
     var PORT = location.port ? ":" + location.port : ""; //端口
-    var PATH = CONFIG.rootPath || ""; //路径
+    var PATH = CONFIG.rootPath || "/pagurian"; //路径
     var URL = [PROTOCOL, DOMAIN, PORT, PATH].join(""); //完整URL
 
     var pagurian = {

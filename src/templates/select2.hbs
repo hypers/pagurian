@@ -1,0 +1,29 @@
+{{#>layouts/base title=data.page.sizer}}
+
+{{#*inline "pageContent"}}
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="page-title">
+            Select2
+        </h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <select name="text" style="width:100%" id="textSelect" multiple="multiple">
+            <option value="test">测试</option>
+        </select>
+    </div>
+</div>
+{{/inline}}
+
+{{#*inline "appScript"}}
+<script type="text/javascript">
+    pagurian.call("modules/select2/app", function(app) {
+        app.page.index();
+    });
+</script>
+{{/inline}}
+
+{{/layouts/base}}
