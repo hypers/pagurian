@@ -4,8 +4,9 @@
 define(function(require, exports, module) {
     var g = window;
 
-    require('./4.0.2/select2.js');
+    require('./4.0.2/select2');
     require('./4.0.2/css/select2.css');
+    require('./4.0.2/i18n/zh-CN');
 
     function Select2(selector, options) {
         var _this = this;
