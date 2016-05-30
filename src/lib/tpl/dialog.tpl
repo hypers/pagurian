@@ -2,7 +2,9 @@
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button"></button>
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">
+                    <i class="icon icon-close"></i>
+                </button>
                 <h4 class="modal-title">{title}</h4>
             </div>
             <div class="modal-body">
