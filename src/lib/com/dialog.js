@@ -136,10 +136,11 @@ define(function(require, exports, module) {
                 if (failA || failB) return this;
             }
 
+            this.showLoading();
+
             //提交表单数据
             if (options.submit !== undefined) options.submit(self, data, self.params);
 
-            this.showLoading();
             return this;
         };
 
