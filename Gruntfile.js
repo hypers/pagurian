@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 }, {
                     expand: true,
                     cwd: 'src/plugins',
-                    src: ['**/**/*.png', '**/**/*.gif'],
+                    src: ['**/**/*.png', '**/**/*.gif', '**/**/*.swf'],
                     dest: 'dist/plugins',
                     filter: 'isFile'
                 }]

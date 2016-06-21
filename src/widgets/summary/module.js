@@ -11,6 +11,8 @@ define(function (require, exports, module) {
         locale.en_US = require('./locale/en_US');
         var settingPanel = require('./tpl/settingPanel.tpl');
         var oLanguage = locale[g[PagurianAlias].language || "zh_CN"];
+        var CONFIG = g.CONFIG || {};
+
 
         /**
          * [Summary 汇总面板类]
@@ -436,7 +438,7 @@ define(function (require, exports, module) {
                         return _$selectCheckBoxes;
                     };
                 }
-                
+
                 $(selector).on('click', ' .summary-div-li', function () {
                     var $ul = $(this).find('ul[data-name]');
                     var _columnName = $ul.data("name"),
@@ -604,6 +606,16 @@ define(function (require, exports, module) {
             }
 
             /**
+             * 转千分位
+             **/
+            function toThousands(num){
+                if(CONFIG.thousands && $p.tool.isNumber(num)){
+                   return $p.tool.toThousands(num);
+                }
+                return num;
+            }
+
+            /**
              * 渲染数据到页面
              * @param _datas
              */
@@ -634,15 +646,16 @@ define(function (require, exports, module) {
                         var $contentLi = $summaryContent.find('li[data-name="' + _name + '"]'),
                             _rowConfig = getRowConfig(_name);
                         var _html = "";
+
                         //if (_data[_name] === null || _data[_name] === undefined) {
                         //    continue;
                         //}
                         if ($.isFunction(_rowConfig.render)) {
                             _html = _rowConfig.render(_data[_name], _datas);
                         } else if (_rowConfig.tpl) {
-                            _html = $p.str.format(_rowConfig.tpl, _data[_name]);
+                            _html = $p.str.format(_rowConfig.tpl, toThousands(_data[_name]));
                         } else {
-                            _html = _data[_name];
+                            _html = toThousands(_data[_name]);
                         }
 
                         $contentLi.html(_html);
