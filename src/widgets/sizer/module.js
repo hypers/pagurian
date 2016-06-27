@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
         //版本
-        var version = "2016.05.04.1501";
+        var version = "2016.06.20.1642";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -144,6 +144,7 @@ define(function (require, exports, module) {
         //打开面板
         this.open = function () {
             _this.container.addClass("sizer-open");
+            _this._readData();
         };
 
         //关闭面板
@@ -379,6 +380,21 @@ define(function (require, exports, module) {
             }
         };
 
+        //读取数据并渲染模版
+        this._readData = function () {
+            if (_this.needLoad) {
+                _this.needLoad = false;
+                var _promise = _this._loadData();
+                if (_this.p_loadData) {
+                    _this.p_loadData.reject();
+                }
+                _this.p_loadData = _promise;
+                $.when(_this.p_loadData).done(function (resp) {
+                    _this._renderData(resp, true);
+                });
+            }
+        };
+
         /**
          * 初始化组件
          */
@@ -399,18 +415,13 @@ define(function (require, exports, module) {
             drawDom();
             bindEvent();
 
-            var _promise = _this._loadData();
-            if (_this.p_loadData) {
-                _this.p_loadData.reject();
-            }
-            _this.p_loadData = _promise;
-            $.when(_this.p_loadData).done(function (resp) {
-                _this._renderData(resp, true);
-            });
-
+            //默认读取数据
             if (_this.options.isExpand) {
                 _this.open();
+            } else {
+                _this._readData();
             }
+
             if (chooseDatas) {
                 if (!_this.options.isMultiple && chooseDatas[0][_this.options.dataMapping.name]) {
                     singleSetText(chooseDatas[0][_this.options.dataMapping.name]);
