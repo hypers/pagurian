@@ -90,7 +90,13 @@ define(function (require, exports, module) {
 
                 function loadedCallback(a, b, c) {
 
-                    var total = a.page ? a.page.total : 0;
+                    var page = a.page || {
+                        total:0,
+                        current:1,
+                        pagesize:pagesize
+                    }
+
+                    var total = page.total;
                     var items = $.isArray(a.result) ? a.result : a.result.items || [];
                     var summary = a.result.summary || {};
                     var columns = _options.aoColumns;
@@ -109,7 +115,7 @@ define(function (require, exports, module) {
                     //生成序号
                     var bOrderNumbers = _options.bOrderNumbers || _options.isCreateOrder;
                     if (bOrderNumbers && items.length) {
-                        _createOrderNumbers(a.page.current, a.page.pagesize);
+                        _createOrderNumbers(page.current, page.pagesize);
                     }
 
                     //显示细分信息
