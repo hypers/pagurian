@@ -4,7 +4,7 @@
  * @param  {String}  NAME    Pagurian alias
  * @param  {Boolean} DEBUG
  */
-(function(GLOBAL, NAME, DEBUG) {
+(function (GLOBAL, NAME, DEBUG) {
 
     GLOBAL.PagurianAlias = NAME;
     CONFIG = GLOBAL.CONFIG || {};
@@ -24,13 +24,14 @@
         language: CONFIG.language || "zh_CN", //简体中文:zh_CN , 英文:en_US
         debug: DEBUG,
         path: {
+            cookie: (CONFIG.rootPath !== "") ? CONFIG.rootPath : "/",
             api: URL + "/test/api/",
             app: URL + "/" + (DEBUG ? "src" : "dist") + "/"
         },
-        call: function() {
+        call: function () {
             return (this.queue = this.queue || []).push(arguments);
         },
-        set: function(key, value) {
+        set: function (key, value) {
             this[key] = value;
         }
     };

@@ -18,7 +18,7 @@ define(function (require, exports, module) {
      */
     function Sizer(sizerBtnSelector, options, chooseDatas) {
         //版本
-        var version = "2016.06.20.1642";
+        var version = "2016.08.19.1828";
         var sizerPanelTpl = require("./tpl/sizerPanel.tpl");
         var sizerFooterTpl = require("./tpl/sizerFooter.tpl");
         var sizerButton = require("./tpl/sizerButton.tpl");
@@ -145,6 +145,23 @@ define(function (require, exports, module) {
         this.open = function () {
             _this.container.addClass("sizer-open");
             _this._readData();
+
+            //点击任意元素关闭面板 IE9+有效
+            if ($.isFunction(document.addEventListener)) {
+                document.addEventListener('click', closePanelEvent, true);
+            }
+
+            /**
+             * 关闭面板函数
+             * @param e
+             */
+            function closePanelEvent(e) {
+                var T = $(e.target);
+                if (T.parents('.sizer-wrap').length === 0) {
+                    _this.close();
+                    document.removeEventListener('click', closePanelEvent, true);
+                }
+            }
         };
 
         //关闭面板
