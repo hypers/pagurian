@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -19,45 +19,28 @@ module.exports = function(grunt) {
     var style = transport.style.init(grunt);
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
+    var getCssFiles = require('./grunt/getCssFiles');
 
     //connect端口
     var connectPort = 9000;
 
     var vendorPath = 'src/lib/vendor/';
     var cssPath = 'src/resources/';
-    var cssThemes = ['default','green', 'blue', 'purple', 'orange', 'red'];
-    var cssPages = ['home', 'login']
+    var lessFile = getCssFiles(cssPath);
 
-    function getCssFiles() {
-        var cssObject = {};
-        for (var i = 0; i < cssThemes.length; i++) {
-            cssObject[cssPath + 'css/themes-' + cssThemes[i] + '.css'] = [cssPath + 'less/themes/' + cssThemes[i] + '.less'];
-        }
-        for (var i = 0; i < cssPages.length; i++) {
-            cssObject[cssPath + 'css/page-' + cssPages[i] + '.css'] = [cssPath + 'less/pages/' + cssPages[i] + '.less'];
-        }
-        return cssObject;
-    }
 
     function getMinCssFiles() {
-        var cssObject = {},
-            file;
+        var cssObject = {};
 
         cssObject[cssPath + 'css/public.css'] = [
-                vendorPath + 'bootstrap/css/bootstrap.css',
-                vendorPath + 'uniform/css/uniform.default.css',
-                vendorPath + 'font-awesome/css/font-awesome.min.css'
-            ];
+            vendorPath + 'bootstrap/css/bootstrap.css',
+            vendorPath + 'uniform/css/uniform.default.css',
+            vendorPath + 'font-awesome/css/font-awesome.min.css'
+        ];
 
-        for (var i = 0; i < cssThemes.length; i++) {
-            file = cssPath + 'css/themes-' + cssThemes[i] + '.css';
+        Object.keys(lessFile).forEach(function (file) {
             cssObject[file] = [file];
-        }
-        for (var i = 0; i < cssPages.length; i++) {
-            file = cssPath + 'css/page-' + cssPages[i] + '.css';
-            cssObject[file] = [file];
-        }
-
+        });
         return cssObject;
     }
 
@@ -97,7 +80,7 @@ module.exports = function(grunt) {
              * [build 编译所有的less文件，按照模板分类]
              */
             build: {
-                files: getCssFiles()
+                files: lessFile
             }
         },
         cssmin: {
@@ -241,9 +224,6 @@ module.exports = function(grunt) {
             }
         }
     };
-
-
-
 
 
     //生产发布的Task
