@@ -28,7 +28,6 @@ module.exports = function (grunt) {
     var vendorPath = 'src/lib/vendor/';
     var cssPath = 'src/resources/';
     var lessFile = getCssFiles(cssPath);
-    console.log(lessFile);
 
     function getMinCssFiles() {
         var cssObject = {};
