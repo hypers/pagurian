@@ -20,6 +20,7 @@ module.exports = function (grunt) {
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
     var getCssFiles = require('./grunt/getCssFiles');
+    var pagurianColor = require('./grunt/pagurianColor');
 
     //connect端口
     var connectPort = 9000;
@@ -27,7 +28,7 @@ module.exports = function (grunt) {
     var vendorPath = 'src/lib/vendor/';
     var cssPath = 'src/resources/';
     var lessFile = getCssFiles(cssPath);
-
+    console.log(lessFile);
 
     function getMinCssFiles() {
         var cssObject = {};
@@ -80,7 +81,21 @@ module.exports = function (grunt) {
              * [build 编译所有的less文件，按照模板分类]
              */
             build: {
-                files: lessFile
+                options: {
+                    customFunctions: {
+                        'pagurain-color': pagurianColor
+                    }
+                },
+                files: {
+                    'src/resources/css/themes-blue.css': 'src/resources/less/themes/blue.less',
+                    'src/resources/css/themes-cyan.css': 'src/resources/less/themes/cyan.less',
+                    'src/resources/css/themes-default.css': 'src/resources/less/themes/default.less',
+                    'src/resources/css/themes-green.css': 'src/resources/less/themes/green.less',
+                    'src/resources/css/themes-orange.css': 'src/resources/less/themes/orange.less',
+                    'src/resources/css/themes-purple.css': 'src/resources/less/themes/purple.less',
+                    'src/resources/css/themes-red.css': 'src/resources/less/themes/red.less',
+                    'src/resources/css/page-login.css': 'src/resources/less/pages/login.less'
+                }
             }
         },
         cssmin: {
