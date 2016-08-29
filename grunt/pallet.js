@@ -44,7 +44,7 @@ function rgbToHex(rgb) {
  * @param color
  * @param percent
  */
-function pagurianColor(less, color, percent) {
+function pallet(less, color, percent) {
     var colorConfig = {
         '50': 0.9,
         '100': 0.7,
@@ -62,4 +62,4 @@ function pagurianColor(less, color, percent) {
     return shadeColor(color, percent);
 }
 
-module.exports = pagurianColor;
+module.exports = pallet;

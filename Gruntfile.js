@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     var text = transport.text.init(grunt);
     var script = transport.script.init(grunt);
     var getCssFiles = require('./grunt/getCssFiles');
-    var pagurianColor = require('./grunt/pagurianColor');
+    var pallet = require('./grunt/pallet');
 
     //connect端口
     var connectPort = 9000;
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
             build: {
                 options: {
                     customFunctions: {
-                        'pagurain-color': pagurianColor
+                        'pallet': pallet
                     }
                 },
                 files: lessFile
