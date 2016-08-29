@@ -85,16 +85,7 @@ module.exports = function (grunt) {
                         'pagurain-color': pagurianColor
                     }
                 },
-                files: {
-                    'src/resources/css/themes-blue.css': 'src/resources/less/themes/blue.less',
-                    'src/resources/css/themes-cyan.css': 'src/resources/less/themes/cyan.less',
-                    'src/resources/css/themes-default.css': 'src/resources/less/themes/default.less',
-                    'src/resources/css/themes-green.css': 'src/resources/less/themes/green.less',
-                    'src/resources/css/themes-orange.css': 'src/resources/less/themes/orange.less',
-                    'src/resources/css/themes-purple.css': 'src/resources/less/themes/purple.less',
-                    'src/resources/css/themes-red.css': 'src/resources/less/themes/red.less',
-                    'src/resources/css/page-login.css': 'src/resources/less/pages/login.less'
-                }
+                files: lessFile
             }
         },
         cssmin: {
@@ -125,15 +116,20 @@ module.exports = function (grunt) {
         },
         jshint: {
             options: {
-                jshintrc: true
+                jshintrc: '.jshintrc',
+                reporter: 'checkstyle',
+                reporterOutput: '.build/report.xml',
+                force: true
             },
-            files: [
-                'src/modules/**/*.js',
-                'src/widgets/**/*.js',
-                'src/plugins/**/module.js',
-                'src/lib/**/*.js',
-                '!src/lib/vendor/**/*.js'
-            ]
+            allFiles: {
+                files: [
+                    {src: 'src/modules/**/*.js'},
+                    {src: 'src/widgets/**/*.js'},
+                    {src: 'src/plugins/**/module.js'},
+                    {src: 'src/lib/**/*.js'},
+                    {src: '!src/lib/vendor/**/*.js'}
+                ]
+            }
         },
         transport: {
             options: {
