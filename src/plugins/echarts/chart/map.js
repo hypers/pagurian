@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     var languages = {
         zh_CN: require('../locale/zh_CN'),
@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var lang = pagurian.language || "zh_CN";
     var locale = languages[lang];
 
-    module.exports = function(options) {
+    module.exports = function (options) {
 
         var mapType = options.mapType || "china";
 
@@ -18,14 +18,14 @@ define(function(require, exports, module) {
         var country_en_US = $p.locale.echarts.en_US.country;
 
         var nameMap = {
-            china: function(locale) {
+            china: function (locale) {
                 var list = {};
                 for (var key in chinaProvince_zh_CN) {
                     list[chinaProvince_zh_CN[key]] = chinaProvinceLocale[key];
                 }
                 return list;
             },
-            world: function(locale) {
+            world: function (locale) {
                 var list = {};
                 for (var key in country_en_US) {
                     list[country_en_US[key]] = countryLocale[key];
@@ -58,7 +58,9 @@ define(function(require, exports, module) {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: options.name + "<br/>{b} : {c} {d}"
+                formatter: function (params) {
+                    return [options.name, params.name + '：' + (isNaN(params.value) ? '-' : params.value)].join('<br/>');
+                }
             },
             dataRange: {
                 orient: 'horizontal',
@@ -83,10 +85,13 @@ define(function(require, exports, module) {
                 roam: false,
                 itemStyle: {
                     normal: {
+                        borderColor: '#eee',
+                        borderWidth: 0.3,
+                        areaColor: '#d0d0d0',
                         label: {
                             show: mapType === "china" ? true : false,
-
                             textStyle: {
+                                color: '#8b4513',
                                 fontSize: pagurian.language === "en_US" ? "10" : "12"
                             }
                         }
@@ -95,12 +100,13 @@ define(function(require, exports, module) {
                         label: {
                             show: true,
                             textStyle: {
-                                color: "#fff"
+                                color: "#eee"
                             }
                         },
                         areaStyle: {
                             color: '#d7504b'
-                        }
+                        },
+                        areaColor: '#d7504b'
                     }
                 },
                 data: []
@@ -120,7 +126,6 @@ define(function(require, exports, module) {
         option.series[0].name = options.name;
 
         $.extend(true, option, options.options);
-
         this.option = option;
         return option;
     };
