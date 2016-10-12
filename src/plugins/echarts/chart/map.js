@@ -34,6 +34,9 @@ define(function (require, exports, module) {
             }
         };
 
+        //当前语言映射
+        var currentNameMap = nameMap[mapType](pagurian.language || "zh_CN");
+
         //通过Key获取本地语言的名称
         function getName(key) {
             if (mapType === "world") {
@@ -77,7 +80,7 @@ define(function (require, exports, module) {
                 type: 'map',
                 mapType: mapType,
                 selectedMode: 'single',
-                nameMap: nameMap[mapType](pagurian.language || "zh_CN"),
+                nameMap: currentNameMap,
                 calculable: false,
                 mapLocation: {
                     y: 60
@@ -113,15 +116,32 @@ define(function (require, exports, module) {
             }]
         };
 
-        //初始化数据
-        for (var i = 0; i < dataList.length; i++) {
+        dataList = dataList.map(function (data) {
+            data.name = getName(data.name);
+            return data;
+        });
 
-            dataList[i].name = getName(dataList[i].name);
-            option.series[0].data.push(dataList[i]);
-            if (dataList[i].value > option.dataRange.max) {
-                option.dataRange.max = dataList[i].value;
+        //初始化数据
+        Object.keys(currentNameMap).forEach(function (key) {
+            var currentName = currentNameMap[key];
+            var values = dataList.filter(function (item) {
+                return item.name === currentName;
+            });
+
+            if (values.length) {
+                var valueObj = values[0];
+                option.series[0].data.push(valueObj);
+                if (valueObj.value > option.dataRange.max) {
+                    option.dataRange.max = valueObj.value;
+                }
+                return;
             }
-        }
+
+            option.series[0].data.push({
+                name: currentName,
+                value: null
+            });
+        });
 
         option.series[0].name = options.name;
 

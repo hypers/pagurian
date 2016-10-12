@@ -22,7 +22,7 @@ define(function (require, exports, module) {
                 name: 'geo.country.china'
             }, {
                 value: 423,
-                name: 'United States of America'
+                name: '美国'
             }, {
                 value: 310,
                 name: 'geo.country.italy'
@@ -105,12 +105,12 @@ define(function (require, exports, module) {
         });
 
         /*//echarts 3.0 没有提供 台湾省的详细地图 所以不能点击
-        chart.on('mapselectchanged', function (param) {
-            if (param.name === $p.locale.echarts[$p.language].china_province['geo.china.taiwan']) {
-                return;
-            }
-            chart.onMapSelectedByChina(param);
-        });*/
+         chart.on('mapselectchanged', function (param) {
+         if (param.name === $p.locale.echarts[$p.language].china_province['geo.china.taiwan']) {
+         return;
+         }
+         chart.onMapSelectedByChina(param);
+         });*/
     };
 
     app.events.resize = function () {

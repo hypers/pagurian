@@ -1,8 +1,7 @@
 define(function (require, exports, module) {
 
     var g = window;
-    require('./js/2.2.7/echarts-all');
-    // require('./js/3.2.3/echarts.min');
+    require('./js/3.2.3/echarts.min');
 
     $p.locale.echarts = {
         en_US: {
@@ -17,7 +16,7 @@ define(function (require, exports, module) {
         }
     };
 
-    /*//Word Json
+    //Word Json
     var wordJson = require('./js/3.2.3/map/world.json');
     //China Json
     var chinaJson = require('./js/3.2.3/map/china.json');
@@ -66,5 +65,5 @@ define(function (require, exports, module) {
     //动态注册省份地图
     Object.keys(MAPPING_CHINA_PROVINCE_CONFIG).forEach(function (key) {
         echarts.registerMap(i18nProvince[key], MAPPING_CHINA_PROVINCE_CONFIG[key]);
-    });*/
+    });
 });
