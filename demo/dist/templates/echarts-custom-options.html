@@ -184,6 +184,9 @@
 	                            <li data-id="echarts_map">
 	                                <a href="echarts-map-world.html">Echarts 地图</a>
 	                            </li>
+	                            <li data-id="echarts_sankey">
+	                                <a href="echarts-sankey.html">Echarts 桑基图</a>
+	                            </li>
 	                            <li data-id="echarts_msahup">
 	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
 	                            </li>
@@ -349,10 +352,11 @@ chart.load({
 });</code></pre>
 
                     <h3>基于版本</h3>
-                    <p>[v2.2.0] <a href="https://github.com/ecomfe/echarts/tree/2.2.0" target="_blank">https://github.com/ecomfe/echarts/tree/2.2.0</a></p>
+                    <p>[v3.2.3] <a href="https://github.com/ecomfe/echarts/tree/3.2.3" target="_blank">https://github.com/ecomfe/echarts/tree/3.2.3</a>
+                    </p>
                     
                     <h3>更多实例</h3>
-                    <a href="http://echarts.baidu.com/doc/example.html" target="_blank">http://echarts.baidu.com/doc/example.html</a>
+                    <a href="http://echarts.baidu.com/examples.html" target="_blank">http://echarts.baidu.com/examples.html</a>
 
                 </div>
             </div>
@@ -378,9 +382,8 @@ chart.load({
 <!-- END CONTAINER -->
 
 <script type="text/javascript">
-    window.CONFIG = {
-        appId: "echarts_custom"
-    };
+    var CONFIG = window.CONFIG || {};
+    CONFIG.appId = "echarts_custom";
 </script>
         <script type="text/javascript">
             pagurian.call([

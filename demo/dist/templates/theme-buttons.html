@@ -184,6 +184,9 @@
 	                            <li data-id="echarts_map">
 	                                <a href="echarts-map-world.html">Echarts 地图</a>
 	                            </li>
+	                            <li data-id="echarts_sankey">
+	                                <a href="echarts-sankey.html">Echarts 桑基图</a>
+	                            </li>
 	                            <li data-id="echarts_msahup">
 	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
 	                            </li>
@@ -566,6 +569,10 @@
                             </div>
                             <div class="fa-item col-md-3 col-sm-4">
                                 <i class="icon icon-user-analysis"></i> icon icon-user-analysis
+                            </div>
+
+                            <div class="fa-item col-md-3 col-sm-4">
+                                <i class="icon icon-charts-line"></i> icon icon-charts-line
                             </div>
 
                         </div>
@@ -2143,9 +2150,8 @@
 <!-- END CONTAINER -->
 
 <script type="text/javascript">
-    window.CONFIG = {
-        appId: "button"
-    };
+    var CONFIG = window.CONFIG || {};
+    CONFIG.appId = "button";
 </script>
     <script type="text/javascript">
         pagurian.call("modules/theme/app", function(app) {

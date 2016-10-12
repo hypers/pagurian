@@ -184,6 +184,9 @@
 	                            <li data-id="echarts_map">
 	                                <a href="echarts-map-world.html">Echarts 地图</a>
 	                            </li>
+	                            <li data-id="echarts_sankey">
+	                                <a href="echarts-sankey.html">Echarts 桑基图</a>
+	                            </li>
 	                            <li data-id="echarts_msahup">
 	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
 	                            </li>
@@ -307,9 +310,8 @@ $p.numberSpinner("#txt_spinner2", {
 <!-- END CONTAINER -->
 
 <script type="text/javascript">
-    window.CONFIG = {
-        appId: "spinner"
-    };
+    var CONFIG = window.CONFIG || {};
+    CONFIG.appId = "spinner";
 </script>
             <script type="text/javascript">
                 pagurian.call("modules/number-spinner/app", function(app) {

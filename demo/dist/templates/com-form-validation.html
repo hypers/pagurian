@@ -184,6 +184,9 @@
 	                            <li data-id="echarts_map">
 	                                <a href="echarts-map-world.html">Echarts 地图</a>
 	                            </li>
+	                            <li data-id="echarts_sankey">
+	                                <a href="echarts-sankey.html">Echarts 桑基图</a>
+	                            </li>
 	                            <li data-id="echarts_msahup">
 	                                <a href="echarts-mashup-linebar.html">Echarts 混搭</a>
 	                            </li>
@@ -435,9 +438,8 @@ $p.form("#form_sample_1", {
 <!-- END CONTAINER -->
 
 <script type="text/javascript">
-    window.CONFIG = {
-        appId: "form"
-    };
+    var CONFIG = window.CONFIG || {};
+    CONFIG.appId = "form";
 </script>
         <script type="text/javascript">
             pagurian.call("modules/form/app", function(app) {
