@@ -65,7 +65,7 @@ module.exports = function (grunt) {
                 }, {
                     expand: true,
                     cwd: 'src/plugins',
-                    src: ['**/**/*.png', '**/**/*.gif', '**/**/*.swf'],
+                    src: ['**/**/*.png', '**/**/*.gif', '**/**/*.swf','**/echarts/**/*'],
                     dest: 'dist/plugins',
                     filter: 'isFile'
                 }]
@@ -154,7 +154,8 @@ module.exports = function (grunt) {
                         '**/*',
                         '!resources/**',
                         '!templates/**',
-                        '!**/sea*.js'
+                        '!**/sea*.js',
+                        '!**/plugins/echarts/js/**/*.js'
                     ],
                     filter: 'isFile',
                     dest: '.build'
@@ -173,8 +174,8 @@ module.exports = function (grunt) {
                     cwd: '.build/',
                     src: [
                         '**/modules/**/app.js',
-                        '**/echarts/loader.js',
-                        '**/echarts/loader-map.js'
+                        // '**/echarts/loader.js',
+                        // '**/echarts/loader-map.js'
                     ],
                     dest: 'dist/',
                     ext: '.js'
@@ -243,7 +244,7 @@ module.exports = function (grunt) {
     task_default.push("transport:all");
     task_default.push("copy:all");
     task_default.push("concat:modules");
-    task_default.push("clean:build");
+    // task_default.push("clean:build");
     task_default.push("template");
 
 
