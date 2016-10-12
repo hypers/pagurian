@@ -8,13 +8,13 @@ define(function (require, exports, module) {
     };
 
     /**
-     *
+     * 桑基图
      * @param {Object} options
-     * @param {Array} options.data - 数据
-     * @return {{title: {x: string, y: string, textStyle: {color: string, fontWeight: string}}, tooltip: {trigger: string, triggerOn: string}, series: *[]}}
+     * @param {Array} options.links - {@link http://echarts.baidu.com/option.html#series-sankey.links|关系数据}
+     * @return {Object} option
      */
     module.exports = function (options) {
-        var links = options.data || [];
+        var links = options.links || [];
         var nodes = {};
 
         links.forEach(function (data) {

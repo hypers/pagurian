@@ -13,11 +13,11 @@ define(function (require, exports, module) {
         });
 
         chart.load({
-            data: [
+            links: [
                 {
                     "source": "首页",
                     "target": "签到领金币",
-                    "zlevel": 0,
+                    // "zlevel": 0,
                     "value": 83034
                 },
                 {
@@ -73,8 +73,9 @@ define(function (require, exports, module) {
                     "value": 4336
                 }
             ]
+        }, function (options) {
+            return options;
         });
-
 
     };
 
