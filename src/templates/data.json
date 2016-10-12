@@ -23,6 +23,7 @@
         "echarts_map": "Echarts 地图",
         "echarts_mashup": "Echarts 混搭",
         "echarts_pie": "Echarts 饼图",
+        "echarts_sankey": "Echarts 桑基图",
         "form": "表单 Form",
         "js": "Javascript规范",
         "login": "Pagurian 单页-登录",
@@ -36,150 +37,192 @@
         "uploader": "Uploader",
         "clipboard": "Clipboard"
     },
-    "menu": [{
-        "name": "theme",
-        "title": "基础UI",
-        "icon": "fa fa-picture-o",
-        "items": [{
-            "name": "alert",
-            "title": "Alert",
-            "url": "com-alert.html",
-            "active": 0
-        }, {
-            "name": "button",
-            "title": "Button",
-            "url": "theme-buttons.html",
-            "active": 0
-        }, {
-            "name": "breadcrumb",
-            "title": "Breadcrumb",
-            "url": "breadcrumb.html",
-            "active": 0
-        }, {
-            "name": "color",
-            "title": "Color",
-            "url": "theme-color.html",
-            "active": 0
-        }, {
-            "name": "dialog",
-            "title": "Dialog",
-            "url": "com-dialogs.html",
-            "active": 0
-        }, {
-            "name": "form",
-            "title": "Form",
-            "url": "com-form.html",
-            "active": 0
-        }, {
-            "name": "popover",
-            "title": "Popover",
-            "url": "com-popover.html",
-            "active": 0
-        }, {
-            "name": "tooltip",
-            "title": "Tooltip",
-            "url": "com-tooltip.html",
-            "active": 0
-        }]
-    }, {
-        "name": "com",
-        "title": "组件",
-        "icon": "fa fa-briefcase",
-        "items": [{
-            "name": "datalistview",
-            "title": "DataListView",
-            "url": "datalistview.html",
-            "active": 0
-        }, {
-            "name": "sizer",
-            "title": "Sizer",
-            "url": "sizer-single.html"
-        }, {
-            "name": "summary",
-            "title": "Summary",
-            "url": "summary.html",
-            "active": 0
-        }]
-    }, {
-        "name": "plugin",
-        "title": "插件",
-        "icon": "fa fa-puzzle-piece",
-        "items": [{
-            "name": "clipboard",
-            "title": "Clipboard",
-            "url": "clipboard.html"
-        },{
-            "name": "datatables",
-            "title": "DataTables",
-            "url": "datatable.html",
-            "active": 0
-        }, {
-            "name": "datatree",
-            "title": "DataTree",
-            "url": "datatree.html",
-            "active": 0
-        }, {
-            "name": "datepicker",
-            "title": "Date Pickers",
-            "url": "datepicker.html"
-        }, {
-            "name": "slider",
-            "title": "Slider",
-            "url": "slider.html",
-            "active": 0
-        }, {
-            "name": "spinner",
-            "title": "Number Spinner",
-            "url": "number-spinner.html"
-        }, {
-            "name": "uploader",
-            "title": "Uploader",
-            "url": "uploader.html"
-        }]
-    }, {
-        "name": "chart",
-        "title": "图表",
-        "icon": "fa fa-bar-chart-o",
-        "items": [{
-            "name": "echarts_line",
-            "title": "Echarts 折线图",
-            "url": "echarts-line.html",
-            "active": 0
-        }, {
-            "name": "echarts_bar",
-            "title": "Echarts 柱状图",
-            "url": "echarts-bar.html",
-            "active": 0
-        }, {
-            "name": "echarts_pie",
-            "title": "Echarts 饼图",
-            "url": "echarts-pie.html",
-            "active": 0
-        }, {
-            "name": "echarts_map",
-            "title": "Echarts 地图",
-            "url": "echarts-map-world.html",
-            "active": 0
-        }, {
-            "name": "echarts_msahup",
-            "title": "Echarts 混搭",
-            "url": "echarts-mashup-linebar.html",
-            "active": 0
-        }, {
-            "name": "echarts_custom",
-            "title": "Echarts 自定义",
-            "url": "echarts-custom-event.html",
-            "active": 0
-        }]
-    }, {
-        "name": "page",
-        "title": "单页",
-        "icon": "fa fa-pagelines",
-        "items": [{
-            "name": "login",
-            "title": "登录页面",
-            "url": "page-login.html",
-            "active": 0
-        }]
-    }]
+    "menu": [
+        {
+            "name": "theme",
+            "title": "基础UI",
+            "icon": "fa fa-picture-o",
+            "items": [
+                {
+                    "name": "alert",
+                    "title": "Alert",
+                    "url": "com-alert.html",
+                    "active": 0
+                },
+                {
+                    "name": "button",
+                    "title": "Button",
+                    "url": "theme-buttons.html",
+                    "active": 0
+                },
+                {
+                    "name": "breadcrumb",
+                    "title": "Breadcrumb",
+                    "url": "breadcrumb.html",
+                    "active": 0
+                },
+                {
+                    "name": "color",
+                    "title": "Color",
+                    "url": "theme-color.html",
+                    "active": 0
+                },
+                {
+                    "name": "dialog",
+                    "title": "Dialog",
+                    "url": "com-dialogs.html",
+                    "active": 0
+                },
+                {
+                    "name": "form",
+                    "title": "Form",
+                    "url": "com-form.html",
+                    "active": 0
+                },
+                {
+                    "name": "popover",
+                    "title": "Popover",
+                    "url": "com-popover.html",
+                    "active": 0
+                },
+                {
+                    "name": "tooltip",
+                    "title": "Tooltip",
+                    "url": "com-tooltip.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "com",
+            "title": "组件",
+            "icon": "fa fa-briefcase",
+            "items": [
+                {
+                    "name": "datalistview",
+                    "title": "DataListView",
+                    "url": "datalistview.html",
+                    "active": 0
+                },
+                {
+                    "name": "sizer",
+                    "title": "Sizer",
+                    "url": "sizer-single.html"
+                },
+                {
+                    "name": "summary",
+                    "title": "Summary",
+                    "url": "summary.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "plugin",
+            "title": "插件",
+            "icon": "fa fa-puzzle-piece",
+            "items": [
+                {
+                    "name": "clipboard",
+                    "title": "Clipboard",
+                    "url": "clipboard.html"
+                },
+                {
+                    "name": "datatables",
+                    "title": "DataTables",
+                    "url": "datatable.html",
+                    "active": 0
+                },
+                {
+                    "name": "datatree",
+                    "title": "DataTree",
+                    "url": "datatree.html",
+                    "active": 0
+                },
+                {
+                    "name": "datepicker",
+                    "title": "Date Pickers",
+                    "url": "datepicker.html"
+                },
+                {
+                    "name": "slider",
+                    "title": "Slider",
+                    "url": "slider.html",
+                    "active": 0
+                },
+                {
+                    "name": "spinner",
+                    "title": "Number Spinner",
+                    "url": "number-spinner.html"
+                },
+                {
+                    "name": "uploader",
+                    "title": "Uploader",
+                    "url": "uploader.html"
+                }
+            ]
+        },
+        {
+            "name": "chart",
+            "title": "图表",
+            "icon": "fa fa-bar-chart-o",
+            "items": [
+                {
+                    "name": "echarts_line",
+                    "title": "Echarts 折线图",
+                    "url": "echarts-line.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_bar",
+                    "title": "Echarts 柱状图",
+                    "url": "echarts-bar.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_pie",
+                    "title": "Echarts 饼图",
+                    "url": "echarts-pie.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_map",
+                    "title": "Echarts 地图",
+                    "url": "echarts-map-world.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_sankey",
+                    "title": "Echarts 桑基图",
+                    "url": "echarts-sankey.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_msahup",
+                    "title": "Echarts 混搭",
+                    "url": "echarts-mashup-linebar.html",
+                    "active": 0
+                },
+                {
+                    "name": "echarts_custom",
+                    "title": "Echarts 自定义",
+                    "url": "echarts-custom-event.html",
+                    "active": 0
+                }
+            ]
+        },
+        {
+            "name": "page",
+            "title": "单页",
+            "icon": "fa fa-pagelines",
+            "items": [
+                {
+                    "name": "login",
+                    "title": "登录页面",
+                    "url": "page-login.html",
+                    "active": 0
+                }
+            ]
+        }
+    ]
 }
