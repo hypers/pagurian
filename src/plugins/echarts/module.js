@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     //直接在页面中引入,因为Grunt uglify 执行太慢了
     //require("plugins/echarts/loader"); //基础包（不含map）
@@ -17,6 +17,7 @@ define(function(require, exports, module) {
         pie: require('./chart/pie'),
         bar: require('./chart/bar'),
         map: require('./chart/map'),
+        sankey: require('./chart/sankey')
     };
 
     function Echarts(selector, options) {
@@ -31,7 +32,7 @@ define(function(require, exports, module) {
         var nameMapProvince = {};
         var options_all;
 
-        this.init = function() {
+        this.init = function () {
 
             //当地域信息不为空,初始化nameMap;
             if ($p.locale.echarts) {
@@ -62,7 +63,7 @@ define(function(require, exports, module) {
             return this;
         };
 
-        this.showLoading = function(effect) {
+        this.showLoading = function (effect) {
             this.echarts.showLoading({
                 effect: effect || "spin",
                 textStyle: {
@@ -76,13 +77,13 @@ define(function(require, exports, module) {
             return this;
         };
 
-        this.hideLoading = function() {
+        this.hideLoading = function () {
             this.echarts.hideLoading();
             this.container.find(".chart-message").remove();
             return this;
         };
 
-        this.message = function(status, message) {
+        this.message = function (status, message) {
 
             this.hideLoading();
             this.echarts.clear();
@@ -104,7 +105,7 @@ define(function(require, exports, module) {
         };
 
 
-        this.load = function(data, options) {
+        this.load = function (data, options) {
 
             //如果没有 type 参数，
             //则直接setOption 采用Echart自己的参数
@@ -138,7 +139,7 @@ define(function(require, exports, module) {
          * @param {Object} eventName 事件名称
          * @param {Object} eventListener 事件响应函数
          */
-        this.on = function(eventName, eventListener) {
+        this.on = function (eventName, eventListener) {
             this.echarts.on(eventName, eventListener);
             return this;
         };
@@ -147,15 +148,14 @@ define(function(require, exports, module) {
          * 设置属性
          * @param {Object} options
          */
-        this.set = function(options) {
+        this.set = function (options) {
             this.echarts.setOption($.extend(true, options_all, options), true);
         };
 
         /**
          * 点击中国全国地图-进入省市地图
          */
-        this.onMapSelectedByChina = function(params) {
-
+        this.onMapSelectedByChina = function (params) {
 
             var mapType = "china";
             var count = 0;
@@ -167,6 +167,8 @@ define(function(require, exports, module) {
                 mapType = "china";
             } else if (nameMapProvince[params.target]) {
                 mapType = nameMapProvince[params.target];
+            } else if (nameMapProvince[params.name]) { //兼容echarts 3.x
+                mapType = nameMapProvince[params.name];
             }
 
             this.set({
@@ -182,7 +184,7 @@ define(function(require, exports, module) {
     }
 
 
-    g[PagurianAlias].echarts = function(selector, options) {
+    g[PagurianAlias].echarts = function (selector, options) {
         return new Echarts(selector, options).init();
     };
 
