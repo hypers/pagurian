@@ -100,17 +100,13 @@ define(function (require, exports, module) {
             }]
         });
 
-        chart.on(echarts.config.EVENT.MAP_SELECTED, function (param) {
+        //echarts 3.0 没有提供 台湾省的详细地图 所以不能点击
+        chart.on('mapselectchanged', function (param) {
+            if (param.name === $p.locale.echarts[$p.language].china_province['geo.china.taiwan']) {
+                return;
+            }
             chart.onMapSelectedByChina(param);
         });
-
-        /*//echarts 3.0 没有提供 台湾省的详细地图 所以不能点击
-         chart.on('mapselectchanged', function (param) {
-         if (param.name === $p.locale.echarts[$p.language].china_province['geo.china.taiwan']) {
-         return;
-         }
-         chart.onMapSelectedByChina(param);
-         });*/
     };
 
     app.events.resize = function () {
