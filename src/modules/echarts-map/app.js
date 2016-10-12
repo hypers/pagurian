@@ -71,6 +71,7 @@ define(function (require, exports, module) {
     };
 
     app.page.city = function () {
+        var CHINA_PROVINCE_LOCALE = $p.locale.echarts[$p.language].china_province;
 
         chart = $p.echarts("my_chart", {
             type: "map",
@@ -100,9 +101,10 @@ define(function (require, exports, module) {
             }]
         });
 
-        //echarts 3.0 没有提供 台湾省的详细地图 所以不能点击
+        //echarts 3.0 没有提供 台湾省、南海诸岛的详细地图 所以不能点击
         chart.on('mapselectchanged', function (param) {
-            if (param.name === $p.locale.echarts[$p.language].china_province['geo.china.taiwan']) {
+            if (param.name === CHINA_PROVINCE_LOCALE['geo.china.taiwan'] ||
+                param.name === CHINA_PROVINCE_LOCALE['geo.china.south_china_sea_islands']) {
                 return;
             }
             chart.onMapSelectedByChina(param);

@@ -52,9 +52,10 @@ define(function (require, exports, module) {
         "geo.china.shaanxi": require('./js/3.2.3/map/province/shanxi1.json'),
         "geo.china.sichuan": require('./js/3.2.3/map/province/sichuan.json'),
         "geo.china.tianjin": require('./js/3.2.3/map/province/tianjin.json'),
+        "geo.china.tibet": require('./js/3.2.3/map/province/xizang.json'),
+        "geo.china.taiwan": require('./js/3.2.3/map/province/taiwan.json'),
         "geo.china.hongkong": require('./js/3.2.3/map/province/xianggang.json'),
         "geo.china.xinjiang": require('./js/3.2.3/map/province/xinjiang.json'),
-        "geo.china.tibet": require('./js/3.2.3/map/province/xizang.json'),
         "geo.china.yunnan": require('./js/3.2.3/map/province/yunnan.json'),
         "geo.china.zhejiang": require('./js/3.2.3/map/province/zhejiang.json')
     };

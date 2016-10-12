@@ -79,8 +79,12 @@ chart.load({
     }]
 });
 
-//添加地图的选择事件
-chart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+//echarts 3.0 没有提供 台湾省、南海诸岛的详细地图 所以不能点击
+chart.on('mapselectchanged', function (param) {
+    if (param.name === CHINA_PROVINCE_LOCALE['geo.china.taiwan'] ||
+        param.name === CHINA_PROVINCE_LOCALE['geo.china.south_china_sea_islands']) {
+        return;
+    }
     chart.onMapSelectedByChina(param);
 });</code></pre>
 
