@@ -18,12 +18,25 @@ define(function (require, exports, module) {
         var nodes = {};
 
         links.forEach(function (data) {
-            addKeyToNode(data.source);
-            addKeyToNode(data.target);
+            addKeyToNode({
+                type: 'source',
+                key: data.source,
+                value: data.value
+            });
+            addKeyToNode({
+                type: 'target',
+                key: data.target,
+                value: data.value
+            });
         });
 
         nodes = Object.keys(nodes).map(function (key) {
-            return {name: key};
+            var source = nodes[key].source || 0;
+            var target = nodes[key].target || 0;
+            return {
+                name: key,
+                value: source > target ? source : target
+            };
         });
 
         var option = {
@@ -42,10 +55,20 @@ define(function (require, exports, module) {
             series: [
                 {
                     type: 'sankey',
-                    layout: 'none',
-                    layoutIterations: 0,
+                    //layout: 'none',
+                    layoutIterations: 99,
+                    top: 50,
+                    nodeWidth: 100,
+                    nodeGap: 30,
                     data: nodes,
                     links: links,
+                    label: {
+                        emphasis: {
+                            textStyle: {
+                                color: '#575757'
+                            }
+                        }
+                    },
                     tooltip: {
                         trigger: 'item',
                         formatter: function (params) {
@@ -79,7 +102,7 @@ define(function (require, exports, module) {
                     lineStyle: {
                         normal: {
                             color: 'source',
-                            curveness: 0.5
+                            curveness: 0.6
                         }
                     }
                 }
@@ -88,13 +111,26 @@ define(function (require, exports, module) {
 
         /**
          * 添加key到node
-         * @param {String} key
+         * @param {object} obj
+         * @param {string} obj.type - 类型
+         * @param {string} obj.key - key
+         * @param {number} obj.value - value
          */
-        function addKeyToNode(key) {
+        function addKeyToNode(obj) {
+            var key = obj.key
+            var type = obj.type
+            var value = obj.value
+
             if (nodes[key]) {
+                if (nodes[key][type] === undefined) {
+                    nodes[key][type] = value;
+                    return;
+                }
+                nodes[key][type] += value;
                 return;
             }
-            nodes[key] = true;
+            nodes[key] = {};
+            nodes[key][type] = value;
         }
 
         return option;

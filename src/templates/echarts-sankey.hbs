@@ -42,8 +42,7 @@
             <div class="col-md-12">
                 <div class="markdown">
                     <h3>Javascript</h3>
-                    <pre><code class="javascript">
-chart = $p.echarts("my_chart", {
+                    <pre><code class="javascript">chart = $p.echarts("my_chart", {
     type: "sankey",
     title: {
         text: '来源分析'
@@ -51,19 +50,17 @@ chart = $p.echarts("my_chart", {
 });
 
 chart.load({
-    data: [
-        {"source": "IOS-签到领金币", "target": "Entry", "value": 83034},
-        {"source": "IOS-进入iBunk", "target": "Entry", "value": 8098},
-        {"source": "IOS-油费随手记", "target": "Entry", "value": 6868},
-        {"source": "IOS-幸运大抽奖", "target": "Entry", "value": 5442},
-        {"source": "IOS-违章查询", "target": "Solid", "value": 4336},
-        {"source": "IOS-幸运大抽奖", "target": "IOS-签到领金币", "value": 61785},
-        {"source": "IOS-进入个人中心", "target": "IOS-签到领金币", "value": 1797},
-        {"source": "IOS-油费随手记", "target": "IOS-签到领金币", "value": 1238},
-        {"source": "IOS-违章查询", "target": "IOS-签到领金币", "value": 1079}
+    links: [
+        {"source": "首页", "target": "签到领金币", "value": 83034},
+        {"source": "首页", "target": "进入iBuick", "value": 8098},
+        {"source": "首页", "target": "油费随手记", "value": 6868},
+        {"source": "首页", "target": "违章查询", "value": 4336},
+        {"source": "签到领金币", "target": "幸运大抽奖", "value": 61785},
+        {"source": "签到领金币", "target": "进入个人中心", "value": 1797}
     ]
-});
-</code></pre>
+}, function (options) {
+    return options;
+});</code></pre>
 
                     {{>fixtures/echarts-footer}}
 
