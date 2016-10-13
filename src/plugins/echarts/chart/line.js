@@ -26,7 +26,7 @@ define(function(require, exports, module) {
             },
             grid: {
                 x: 90,
-                y: 60,
+                y: 80,
                 x2: 60,
                 y2: 60
             },

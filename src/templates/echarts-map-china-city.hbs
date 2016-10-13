@@ -90,7 +90,7 @@ chart.load({
         name: '宁波市'
     }]
 });
-
+var CHINA_PROVINCE_LOCALE = $p.locale.echarts[$p.language].china_province;
 //echarts 3.0 没有提供 台湾省、南海诸岛的详细地图 所以不能点击
 chart.on('mapselectchanged', function (param) {
     if (param.name === CHINA_PROVINCE_LOCALE['geo.china.taiwan'] ||
