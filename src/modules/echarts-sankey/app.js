@@ -19,12 +19,19 @@ define(function (require, exports, module) {
                 {"source": "首页", "target": "油费随手记", "value": 6868},
                 {"source": "首页", "target": "违章查询", "value": 4336},
                 {"source": "签到领金币", "target": "幸运大抽奖", "value": 61785},
-                {"source": "签到领金币", "target": "进入个人中心", "value": 1797}
+                {"source": "签到领金币", "target": "进入个人中心", "value": 1797},
+                {"source": "签到领金币", "target": "进入iBuick", "value": 6234}
             ]
         }, function (options) {
             return options;
         });
 
+    };
+
+    app.events.resize = function () {
+        if (chart.chart && "function" === typeof chart.chart.resize) {
+            chart.chart.resize();
+        }
     };
 
 
