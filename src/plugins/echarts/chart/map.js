@@ -122,26 +122,38 @@ define(function (require, exports, module) {
         });
 
         //初始化数据
-        Object.keys(currentNameMap).forEach(function (key) {
-            var currentName = currentNameMap[key];
-            var values = dataList.filter(function (item) {
-                return item.name === currentName;
-            });
+        (function initData() {
+            if (mapType === 'world') {
+                Object.keys(currentNameMap).forEach(function (key) {
+                    var currentName = currentNameMap[key];
+                    var values = dataList.filter(function (item) {
+                        return item.name === currentName;
+                    });
 
-            if (values.length) {
-                var valueObj = values[0];
-                option.series[0].data.push(valueObj);
-                if (valueObj.value > option.dataRange.max) {
-                    option.dataRange.max = valueObj.value;
-                }
+                    if (values.length) {
+                        var valueObj = values[0];
+                        option.series[0].data.push(valueObj);
+                        if (valueObj.value > option.dataRange.max) {
+                            option.dataRange.max = valueObj.value;
+                        }
+                        return;
+                    }
+
+                    option.series[0].data.push({
+                        name: currentName,
+                        value: null
+                    });
+                });
                 return;
             }
-
-            option.series[0].data.push({
-                name: currentName,
-                value: null
-            });
-        });
+            for (var i = 0; i < dataList.length; i++) {
+                dataList[i].name = getName(dataList[i].name);
+                option.series[0].data.push(dataList[i]);
+                if (dataList[i].value > option.dataRange.max) {
+                    option.dataRange.max = dataList[i].value;
+                }
+            }
+        })();
 
         option.series[0].name = options.name;
 

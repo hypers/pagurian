@@ -50,7 +50,7 @@ define(function (require, exports, module) {
                 name: '上海'
             }, {
                 value: 310,
-                name: '北京'
+                name: 'geo.china.beijing'
             }, {
                 value: 234,
                 name: '四川'
@@ -85,10 +85,10 @@ define(function (require, exports, module) {
             mapType: "china",
             data: [{
                 value: 234,
-                name: 'Sichuan'
+                name: 'geo.china.sichuan'
             }, {
-                value: 400,
-                name: 'Chengdu'
+                value: 234,
+                name: '成都市'
             }, {
                 value: 500,
                 name: '浙江'

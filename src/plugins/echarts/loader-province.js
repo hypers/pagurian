@@ -2,10 +2,6 @@
  * Created by YangGuo on 2016/10/12.
  */
 define(function (require, exports, module) {
-    //Word Json
-    var wordJson = require('./js/3.2.3/map/world.json');
-    //China Json
-    var chinaJson = require('./js/3.2.3/map/china.json');
     // 省份标识与省份配置json的映射关系
     var MAPPING_CHINA_PROVINCE_CONFIG = {
         "geo.china.anhui": require('./js/3.2.3/map/province/anhui.json'),
@@ -43,11 +39,8 @@ define(function (require, exports, module) {
         "geo.china.zhejiang": require('./js/3.2.3/map/province/zhejiang.json')
     };
 
-
-    echarts.registerMap('china', chinaJson);
-    echarts.registerMap('world', wordJson);
     //获取当前语言的 省份语言包
-    var i18nProvince = pagurian.locale.echarts[pagurian.language].china_province;
+    var i18nProvince = pagurian.locale.echarts.zh_CN.china_province;
     //动态注册省份地图
     Object.keys(MAPPING_CHINA_PROVINCE_CONFIG).forEach(function (key) {
         echarts.registerMap(i18nProvince[key], MAPPING_CHINA_PROVINCE_CONFIG[key]);
