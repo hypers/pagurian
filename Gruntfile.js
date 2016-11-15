@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    const fs = require('fs');
+    const path = require('path');
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -15,36 +17,23 @@ module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
 
-    var transport = require('grunt-cmd-transport');
-    var style = transport.style.init(grunt);
-    var text = transport.text.init(grunt);
-    var script = transport.script.init(grunt);
-    var getCssFiles = require('./grunt/getCssFiles');
-    var pallet = require('./grunt/pallet');
+    const transport = require('grunt-cmd-transport');
+    const style = transport.style.init(grunt);
+    const text = transport.text.init(grunt);
+    const script = transport.script.init(grunt);
+    const getCssFiles = require('./grunt/getCssFiles');
+    const pallet = require('./grunt/pallet');
+    const getMinCssFiles = require('./grunt/getMinCssFiles');
+    const themes = grunt.file.readJSON('./grunt/themes.json');
 
     //connect端口
-    var connectPort = 9000;
+    const connectPort = 9000;
 
-    var vendorPath = 'src/lib/vendor/';
-    var cssPath = 'src/resources/';
-    var lessFile = getCssFiles(cssPath);
+    const vendorPath = 'src/lib/vendor/';
+    const resourcesPath = 'src/resources/';
+    const lessFile = getCssFiles(resourcesPath);
 
-    function getMinCssFiles() {
-        var cssObject = {};
-
-        cssObject[cssPath + 'css/public.css'] = [
-            vendorPath + 'bootstrap/css/bootstrap.css',
-            vendorPath + 'uniform/css/uniform.default.css',
-            vendorPath + 'font-awesome/css/font-awesome.min.css'
-        ];
-
-        Object.keys(lessFile).forEach(function (file) {
-            cssObject[file] = [file];
-        });
-        return cssObject;
-    }
-
-    var option = {
+    const option = {
         pkg: grunt.file.readJSON("package.json"),
         copy: {
             options: {
@@ -75,19 +64,6 @@ module.exports = function (grunt) {
             dist: ['dist'], //清除dist目录
             build: ['.build'] //清除build目录
         },
-        less: {
-            /**
-             * [build 编译所有的less文件，按照模板分类]
-             */
-            build: {
-                options: {
-                    customFunctions: {
-                        'pallet': pallet
-                    }
-                },
-                files: lessFile
-            }
-        },
         cssmin: {
             options: {
                 keepSpecialComments: 0
@@ -97,7 +73,7 @@ module.exports = function (grunt) {
              * @type {Object}
              */
             build: {
-                files: getMinCssFiles()
+                files: getMinCssFiles(resourcesPath, vendorPath)
             }
         },
         postcss: {
@@ -236,7 +212,7 @@ module.exports = function (grunt) {
 
 
     //生产发布的Task
-    var task_default = [];
+    const task_default = [];
 
     task_default.push("clean:dist");
     task_default.push("transport:all");
@@ -250,12 +226,36 @@ module.exports = function (grunt) {
     grunt.initConfig(option);
 
 
+    grunt.registerTask('default', task_default);
     grunt.registerTask('seajs', ['uglify:seajs']);
     grunt.registerTask('check', ['jshint', 'connect', 'qunit']);
-    grunt.registerTask('css', ['less:build', 'cssmin:build', 'postcss', 'copy:all']);
     grunt.registerTask('tpl', ['template', "copy:all"]);
     grunt.registerTask('cp', ['copy:all']);
-
-    grunt.registerTask('default', task_default);
-
+    //生成主题
+    grunt.registerTask('theme', 'Generate theme', function () {
+        Object.keys(themes).forEach((name)=> {
+            const color = themes[name];
+            const taskName = `theme-${name}`;
+            const outputName = `src/resources/css/themes-${name}.css`;
+            grunt.config.merge({
+                less: {
+                    [taskName]: {
+                        options: {
+                            customFunctions: {
+                                'pallet': pallet
+                            },
+                            modifyVars: {
+                                'base-color': color
+                            }
+                        },
+                        files: {
+                            [outputName]: 'src/resources/less/theme/base.less'
+                        }
+                    }
+                }
+            });
+            grunt.task.run(`less:${taskName}`);
+        });
+    });
+    grunt.registerTask('css', ['theme', 'cssmin:build', 'postcss', 'copy:all']);
 };

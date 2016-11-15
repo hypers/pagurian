@@ -6,9 +6,11 @@ Datatables Plugin(in v1.3)
     clear: both;
     margin-top: 5px;
 }
+
 .dataTables_filter label {
     line-height: 32px;
 }
+
 .dataTable .row-details {
     margin-top: 3px;
     display: inline-block;
@@ -16,76 +18,120 @@ Datatables Plugin(in v1.3)
     width: 14px;
     height: 14px;
 }
+
 .dataTable .row-details.row-details-close {
     background: url(../css/img/datatable-row-openclose.png) no-repeat 0 0;
 }
+
 .dataTable .row-details.row-details-open {
     background: url(../css/img/datatable-row-openclose.png) no-repeat 0 -23px;
 }
+
 .dataTable .details {
     padding: 0 !important;
     background: @B200;
 }
+
 .dataTable .details .table {
     margin-top: -1px !important;
     margin-bottom: 0;
 }
+
 .dataTable .details td,
 .dataTable .details th {
     padding: 4px;
     background: #e5e5e5 !important;
     border-top: 1px solid #ddd;
 }
+
 .dataTable .details tr:nth-child(odd) td,
 .dataTable .details tr:nth-child(odd) th {
     background-color: #e5e5e5 !important;
 }
+
 .dataTable .details tr:nth-child(even) td,
 .dataTable .details tr:nth-child(even) th {
     background-color: #e5e5e5 !important;
 }
+
 .dataTable .details tr:hover td,
 .dataTable .details tr:hover th {
     background: #ddd !important;
 }
+
 .dataTable > thead > tr > th.sorting,
 .dataTable > thead > tr > th.sorting_asc,
 .dataTable > thead > tr > th.sorting_desc {
     padding-right: 18px;
 }
+
 .dataTable .table-checkbox {
     width: 8px !important;
 }
+
 .dataTables_wrapper .row:after {
     clear: inherit;
 }
+
 .table-scrollable {
     position: relative;
     min-height: 80px;
     thead {
         th {
+            position: relative;
             vertical-align: top !important;
             &:hover {
                 background-color: #ecedeb !important;
             }
         }
-        .sorting {
-            background: @sort_both no-repeat scroll right 12px #f2f3f2 !important;
+        .fa() {
+            display: inline-block;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .sorting,
+        .sorting_asc,
+        .sorting_desc,
+        .sorting_asc_disabled,
+        .sorting_desc_disabled {
+            &:after,
+            &:before {
+                .fa;
+                position: absolute;
+                right: 6px;
+            }
+        }
+
+        .sorting,
+        .sorting_asc,
+        .sorting_desc {
+            &:before {
+                top: 13px;
+                content: "\f0dc";
+                color: @table-sort-color;
+            }
         }
         .sorting_asc {
-            background: @sort_asc no-repeat scroll right 12px #f2f3f2 !important;
+            &:after {
+                top: 9px;
+                content: "\f0d8";
+                color: @H500;
+            }
         }
         .sorting_desc {
-            background: @sort_desc no-repeat scroll right 12px #f2f3f2 !important;
-        }
-        .sorting_asc_disabled {
-            background: @sort_asc_disabled no-repeat scroll right 12px #f2f3f2 !important;
-        }
-        .sorting_desc_disabled {
-            background: @sort_desc_disabled no-repeat scroll right 12px #f2f3f2 !important;
+            &:after {
+                top: 16px;
+                content: "\f0d7";
+                color: @H500;
+            }
         }
     }
 }
+
 /* datatable style */
 .dataTables_empty {
     text-align: center;
@@ -94,18 +140,22 @@ Datatables Plugin(in v1.3)
         color: @H500;
     }
 }
+
 .dataTables_length {
     float: left;
     margin: 10px;
 }
+
 .dataTables_length select {
     width: 80px !important;
     display: inline;
     height: 36px;
 }
+
 .dataTables_length label {
     line-height: 36px;
 }
+
 .dataTables_wrapper {
     clear: both;
     .bottom {
@@ -152,8 +202,8 @@ Datatables Plugin(in v1.3)
             float: right;
         }
         .pagination {
-            li>a,
-            li>span {
+            li > a,
+            li > span {
                 background: none;
                 color: @B900;
                 border-color: @B050;
@@ -175,6 +225,7 @@ Datatables Plugin(in v1.3)
         }
     }
 }
+
 .table-bordered,
 .table-bordered > tbody > tr > td,
 .table-bordered > tbody > tr > th,
@@ -184,6 +235,7 @@ Datatables Plugin(in v1.3)
 .table-bordered > thead > tr > th {
     border: 1px solid #eee;
 }
+
 /***
 Responsive & Scrollable Tables
 ***/
@@ -194,14 +246,17 @@ Responsive & Scrollable Tables
     border: 1px solid #ddd;
     margin: 10px 0 !important;
 }
+
 .table-scrollable > .table {
     width: 100% !important;
     margin: 0 !important;
     background-color: #fff;
 }
+
 .table-scrollable > .table-bordered {
     border: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr > th:first-child,
 .table-scrollable > .table-bordered > tbody > tr > th:first-child,
 .table-scrollable > .table-bordered > tfoot > tr > th:first-child,
@@ -210,6 +265,7 @@ Responsive & Scrollable Tables
 .table-scrollable > .table-bordered > tfoot > tr > td:first-child {
     border-left: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr > th:last-child,
 .table-scrollable > .table-bordered > tbody > tr > th:last-child,
 .table-scrollable > .table-bordered > tfoot > tr > th:last-child,
@@ -218,6 +274,7 @@ Responsive & Scrollable Tables
 .table-scrollable > .table-bordered > tfoot > tr > td:last-child {
     border-right: 0;
 }
+
 .table-scrollable > .table-bordered > thead > tr:last-child > th,
 .table-scrollable > .table-bordered > tbody > tr:last-child > th,
 .table-scrollable > .table-bordered > tfoot > tr:last-child > th,
@@ -226,45 +283,55 @@ Responsive & Scrollable Tables
 .table-scrollable > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
 }
+
 /***
 Bootstrap Tables
 ***/
 .table thead > tr > th {
     border-bottom: 0;
 }
+
 .table tbody tr.active td,
 .table tbody tr.active th {
     background-color: #e9e9e9 !important;
 }
+
 .table tbody tr.active:hover td,
 .table tbody tr.active:hover th {
     background-color: #e1e1e1 !important;
 }
+
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active:nth-child(odd) th {
     background-color: #017ebc;
 }
+
 @media (max-width: 768px) {
     .dataTables_wrapper .dataTables_length .form-control,
     .dataTables_wrapper .dataTables_filter .form-control {
         display: inline-block;
     }
+
     .dataTables_wrapper .dataTables_info {
         top: 17px;
     }
+
     .dataTables_wrapper .dataTables_paginate {
         margin-top: -15px;
     }
 }
+
 @media (max-width: 480px) {
     .dataTables_wrapper .dataTables_filter .form-control {
         width: 175px !important;
     }
+
     .dataTables_wrapper .dataTables_paginate {
         float: left;
         margin-top: 20px;
     }
 }
+
 /***Table****/
 .table {
     th {
@@ -279,6 +346,7 @@ Bootstrap Tables
         color: @B600;
     }
 }
+
 .table-bordered {
     border: none;
     tr {
@@ -287,6 +355,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-striped {
     tbody {
         tr:hover {
@@ -297,6 +366,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-hover {
     tr {
         &:hover {
@@ -306,6 +376,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-fixed {
     table-layout: fixed;
     td,
@@ -314,6 +385,7 @@ Bootstrap Tables
         text-overflow: ellipsis;
     }
 }
+
 .table-custom {
     th,
     td {
@@ -368,11 +440,13 @@ Bootstrap Tables
         }
     }
 }
+
 .table-scrollable {
     margin: 0 !important;
     border-width: 1px 1px 1px 1px;
     border-color: @B100;
 }
+
 .table-summary-wrapper {
     .table-scrollable {
         min-height: 118px;
@@ -381,6 +455,7 @@ Bootstrap Tables
         top: 60%;
     }
 }
+
 .table-toolbar {
     background: #f5f5f5;
     padding: 18px;
@@ -401,7 +476,7 @@ Bootstrap Tables
         &:hover {
             background: @B100;
         }
-        &:active{
+        &:active {
             background: @B200;
         }
     }
@@ -423,13 +498,13 @@ Bootstrap Tables
         padding: 7px 0;
         vertical-align: middle;
         margin: 0;
-        &.split{
+        &.split {
             font-size: 14px;
             color: @B300;
         }
     }
     .btn-radio {
-        .btn-active{
+        .btn-active {
             border-color: @B050;
             border-bottom: 2px solid @H700;
             padding-bottom: 6px;
@@ -444,6 +519,7 @@ Bootstrap Tables
         }
     }
 }
+
 .table-form {
     th,
     td {

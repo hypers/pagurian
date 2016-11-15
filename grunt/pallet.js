@@ -7,7 +7,7 @@
  * Github: https://github.com/mbitson/mcg
  */
 function shadeColor(color, percent) {
-    var f = parseInt(color.slice(1), 16),
+    const f = parseInt(color.slice(1), 16),
         t = percent < 0 ? 0 : 255,
         p = percent < 0 ? percent * -1 : percent,
         R = f >> 16,
@@ -22,7 +22,7 @@ function shadeColor(color, percent) {
  * @returns {string}
  */
 function componentToHex(c) {
-    var hex = c.toString(16);
+    const hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
 }
 
@@ -32,9 +32,9 @@ function componentToHex(c) {
  * @returns {string}
  */
 function rgbToHex(rgb) {
-    var r = rgb[0];
-    var g = rgb[1];
-    var b = rgb[2];
+    const r = rgb[0];
+    const g = rgb[1];
+    const b = rgb[2];
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
@@ -45,7 +45,7 @@ function rgbToHex(rgb) {
  * @param percent
  */
 function pallet(less, color, percent) {
-    var colorConfig = {
+    const colorConfig = {
         '50': 0.9,
         '100': 0.7,
         '200': 0.5,
