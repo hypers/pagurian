@@ -230,7 +230,7 @@ module.exports = function (grunt) {
     grunt.registerTask('cp', ['copy:all']);
     //生成主题
     grunt.registerTask('theme', 'Generate theme', function () {
-        Object.keys(themes).forEach((name)=> {
+        Object.keys(themes).forEach(function (name) {
             const color = themes[name];
             const taskName = `theme-${name}`;
             const outputName = `src/resources/css/themes-${name}.css`;
