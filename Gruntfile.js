@@ -21,7 +21,6 @@ module.exports = function (grunt) {
     const style = transport.style.init(grunt);
     const text = transport.text.init(grunt);
     const script = transport.script.init(grunt);
-    const getCssFiles = require('./grunt/getCssFiles');
     const pallet = require('./grunt/pallet');
     const getMinCssFiles = require('./grunt/getMinCssFiles');
     const themes = grunt.file.readJSON('./grunt/themes.json');
@@ -31,8 +30,6 @@ module.exports = function (grunt) {
 
     const vendorPath = 'src/lib/vendor/';
     const resourcesPath = 'src/resources/';
-    const lessFile = getCssFiles(resourcesPath);
-
     const option = {
         pkg: grunt.file.readJSON("package.json"),
         copy: {
