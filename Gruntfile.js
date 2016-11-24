@@ -128,7 +128,8 @@ module.exports = function (grunt) {
                         '!resources/**',
                         '!templates/**',
                         '!**/sea*.js',
-                        '!**/plugins/echarts/js/**/*.js'
+                        '!**/plugins/echarts/js/**/*.js',
+                        '!**/plugins/echarts/loader**.js'
                     ],
                     filter: 'isFile',
                     dest: '.build'
