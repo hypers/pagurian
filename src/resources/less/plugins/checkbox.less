@@ -2,23 +2,32 @@
     margin-top: -4px !important;
     margin-right: 0;
 }
+
 .form-horizontal {
     .radio > span {
         margin-top: 2px;
+
+        &:before {
+            top: 3px;
+        }
     }
 }
+
 .checker input,
 .radio input {
     outline: none !important;
 }
+
 div.checker.disabled span,
 div.checker.disabled.active span {
     background-position: -152px -260px;
 }
+
 div.checker.disabled:hover,
 div.radio.disabled:hover {
     cursor: not-allowed;
 }
+
 .checkboxes {
     border: 1px solid #b5b5b5;
     height: 150px;
@@ -36,10 +45,11 @@ div.radio.disabled:hover {
         }
     }
 }
+
 .checkbox-wrap {
     border: 1px solid #ddd;
     padding: 10px;
-    &.disabled{
+    &.disabled {
         background: @B050;
     }
     .checkbox-item {
@@ -49,6 +59,94 @@ div.radio.disabled:hover {
             left: 0;
             position: absolute;
             top: 4px;
+        }
+    }
+}
+
+div.checker,
+div.radio {
+    span {
+        background-image: url(img//checkbox_radio.png);
+        background-repeat: no-repeat;
+        -webkit-font-smoothing: antialiased
+    }
+
+    span:before {
+        font-family: FontAwesome;
+        color: @H500;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        font-size: 12px;
+        top: 1px;
+        left: 0;
+        .opacity(0);
+        transition: opacity .2s linear;
+    }
+
+    span.checked:before {
+        .opacity(1);
+    }
+}
+
+div.checker {
+    span {
+        &:before {
+            content: "\f00c";
+        }
+    }
+
+    & span,
+    & span.checked,
+    &.focus span,
+    &.focus span.checked,
+    &.active span,
+    &.active span.checked
+    &.hover span,
+    &.hover span.checked {
+        background-position: 0px 0px;
+    }
+
+    &.disabled span {
+        &,
+        &.checked,
+        &.checked.hover {
+            background-position: -19px 0px;
+
+            &:before {
+                color: #b9b9b9;
+            }
+        }
+    }
+}
+
+div.radio {
+    span:before {
+        content: "\f111";
+        top: 0px;
+    }
+
+    & span,
+    & span.checked,
+    &.focus span,
+    &.focus span.checked,
+    &.active span,
+    &.active span.checked
+    &.hover span,
+    &.hover span.checked {
+        background-position: -38px 0px;
+    }
+
+    &.disabled span {
+        &,
+        &.checked,
+        &.checked.hover {
+            background-position: -57px 0px;
+
+            &:before {
+                color: #b9b9b9;
+            }
         }
     }
 }
