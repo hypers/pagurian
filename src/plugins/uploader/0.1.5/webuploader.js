@@ -1,5 +1,5 @@
 /*! WebUploader 0.1.5 */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
 
     /**
@@ -7,12 +7,12 @@ define(function(require, exports, module) {
      *
      * AMD API 内部的简单不完全实现，请忽略。只有当WebUploader被合并成一个文件的时候才会引入。
      */
-    (function(root, factory) {
+    (function (root, factory) {
         var modules = {},
 
             // 内部require, 简单不完全实现。
             // https://github.com/amdjs/amdjs-api/wiki/require
-            _require = function(deps, callback) {
+            _require = function (deps, callback) {
                 var args, len, i;
 
                 // 如果deps不是数组，则直接返回指定module
@@ -29,19 +29,19 @@ define(function(require, exports, module) {
             },
 
             // 内部define，暂时不支持不指定id.
-            _define = function(id, deps, factory) {
+            _define = function (id, deps, factory) {
                 if (arguments.length === 2) {
                     factory = deps;
                     deps = null;
                 }
 
-                _require(deps || [], function() {
+                _require(deps || [], function () {
                     setModule(id, factory, arguments);
                 });
             },
 
             // 设置module, 兼容CommonJs写法。
-            setModule = function(id, factory, args) {
+            setModule = function (id, factory, args) {
                 var module = {
                         exports: factory
                     },
@@ -57,7 +57,7 @@ define(function(require, exports, module) {
             },
 
             // 根据id获取module
-            getModule = function(id) {
+            getModule = function (id) {
                 var module = modules[id] || root[id];
 
                 if (!module) {
@@ -68,11 +68,11 @@ define(function(require, exports, module) {
             },
 
             // 将所有modules，将路径ids装换成对象。
-            exportsTo = function(obj) {
+            exportsTo = function (obj) {
                 var key, host, parts, part, last, ucFirst;
 
                 // make the first character upper case.
-                ucFirst = function(str) {
+                ucFirst = function (str) {
                     return str && (str.charAt(0).toUpperCase() + str.substr(1));
                 };
 
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
                 return obj;
             },
 
-            makeExport = function(dollar) {
+            makeExport = function (dollar) {
                 root.__dollar = dollar;
 
                 // exports every module.
@@ -123,17 +123,17 @@ define(function(require, exports, module) {
             // result to a property on the global.
             origin = root.WebUploader;
             root.WebUploader = makeExport();
-            root.WebUploader.noConflict = function() {
+            root.WebUploader.noConflict = function () {
                 root.WebUploader = origin;
             };
         }
-    })(window, function(window, _define, _require) {
+    })(window, function (window, _define, _require) {
 
 
         /**
          * @fileOverview jQuery or Zepto
          */
-        _define('dollar-third', [], function() {
+        _define('dollar-third', [], function () {
             var $ = window.__dollar || window.jQuery || window.Zepto;
 
 
@@ -143,21 +143,21 @@ define(function(require, exports, module) {
          * @fileOverview Dom 操作相关
          */
         _define('dollar', [
-        'dollar-third'
-    ], function(_) {
+            'dollar-third'
+        ], function (_) {
             return _;
         });
         /**
          * @fileOverview 使用jQuery的Promise
          */
         _define('promise-third', [
-        'dollar'
-    ], function($) {
+            'dollar'
+        ], function ($) {
             return {
                 Deferred: $.Deferred,
                 when: $.when,
 
-                isPromise: function(anything) {
+                isPromise: function (anything) {
                     return anything && typeof anything.then === 'function';
                 }
             };
@@ -166,8 +166,8 @@ define(function(require, exports, module) {
          * @fileOverview Promise/A+
          */
         _define('promise', [
-        'promise-third'
-    ], function(_) {
+            'promise-third'
+        ], function (_) {
             return _;
         });
         /**
@@ -191,23 +191,24 @@ define(function(require, exports, module) {
          * @title WebUploader API文档
          */
         _define('base', [
-        'dollar',
-        'promise'
-    ], function($, promise) {
+            'dollar',
+            'promise'
+        ], function ($, promise) {
 
-            var noop = function() {},
+            var noop = function () {
+                },
                 call = Function.call;
 
             // http://jsperf.com/uncurrythis
             // 反科里化
             function uncurryThis(fn) {
-                return function() {
+                return function () {
                     return call.apply(fn, arguments);
                 };
             }
 
             function bindFn(fn, context) {
-                return function() {
+                return function () {
                     return fn.apply(context, arguments);
                 };
             }
@@ -218,7 +219,8 @@ define(function(require, exports, module) {
                 if (Object.create) {
                     return Object.create(proto);
                 } else {
-                    f = function() {};
+                    f = function () {
+                    };
                     f.prototype = proto;
                     return new f();
                 }
@@ -259,14 +261,14 @@ define(function(require, exports, module) {
                  *
                  * @property {Object} [browser]
                  */
-                browser: (function(ua) {
+                browser: (function (ua) {
                     var ret = {},
                         webkit = ua.match(/WebKit\/([\d.]+)/),
                         chrome = ua.match(/Chrome\/([\d.]+)/) ||
-                        ua.match(/CriOS\/([\d.]+)/),
+                            ua.match(/CriOS\/([\d.]+)/),
 
                         ie = ua.match(/MSIE\s([\d\.]+)/) ||
-                        ua.match(/(?:trident)(?:.*rv:([\w.]+))?/i),
+                            ua.match(/(?:trident)(?:.*rv:([\w.]+))?/i),
                         firefox = ua.match(/Firefox\/([\d.]+)/),
                         safari = ua.match(/Safari\/([\d.]+)/),
                         opera = ua.match(/OPR\/([\d.]+)/);
@@ -288,7 +290,7 @@ define(function(require, exports, module) {
                  * * `ios` 如果在ios浏览器环境下，此值为对应的ios版本号，否则为`undefined`。
                  * @property {Object} [os]
                  */
-                os: (function(ua) {
+                os: (function (ua) {
                     var ret = {},
 
                         // osx = !!ua.match( /\(Macintosh\; Intel / ),
@@ -337,7 +339,7 @@ define(function(require, exports, module) {
                  * // 子类的__super__属性指向父类
                  * console.log( Manager.__super__ === Person );    // => true
                  */
-                inherits: function(Super, protos, staticProtos) {
+                inherits: function (Super, protos, staticProtos) {
                     var child;
 
                     if (typeof protos === 'function') {
@@ -346,7 +348,7 @@ define(function(require, exports, module) {
                     } else if (protos && protos.hasOwnProperty('constructor')) {
                         child = protos.constructor;
                     } else {
-                        child = function() {
+                        child = function () {
                             return Super.apply(this, arguments);
                         };
                     }
@@ -396,16 +398,16 @@ define(function(require, exports, module) {
                  * @grammar Base.log( args... ) => undefined
                  * @method log
                  */
-                log: (function() {
+                log: (function () {
                     if (window.console) {
                         return bindFn(console.log, console);
                     }
                     return noop;
                 })(),
 
-                nextTick: (function() {
+                nextTick: (function () {
 
-                    return function(cb) {
+                    return function (cb) {
                         setTimeout(cb, 1);
                     };
 
@@ -442,10 +444,10 @@ define(function(require, exports, module) {
                  * @grammar Base.guid() => String
                  * @grammar Base.guid( prefx ) => String
                  */
-                guid: (function() {
+                guid: (function () {
                     var counter = 0;
 
-                    return function(prefix) {
+                    return function (prefix) {
                         var guid = (+new Date()).toString(32),
                             i = 0;
 
@@ -474,7 +476,7 @@ define(function(require, exports, module) {
                  * console.log( Base.formatSize( 1024 * 1024 * 1024 ) );    // => 1.00G
                  * console.log( Base.formatSize( 1024 * 1024 * 1024, 0, ['B', 'KB', 'MB'] ) );    // => 1024MB
                  */
-                formatSize: function(size, pointLength, units) {
+                formatSize: function (size, pointLength, units) {
                     var unit;
 
                     units = units || ['B', 'K', 'M', 'G', 'TB'];
@@ -493,8 +495,8 @@ define(function(require, exports, module) {
          * @fileOverview Mediator
          */
         _define('mediator', [
-        'base'
-    ], function(Base) {
+            'base'
+        ], function (Base) {
             var $ = Base.$,
                 slice = [].slice,
                 separator = /\s+/,
@@ -502,18 +504,18 @@ define(function(require, exports, module) {
 
             // 根据条件过滤出事件handlers.
             function findHandlers(arr, name, callback, context) {
-                return $.grep(arr, function(handler) {
+                return $.grep(arr, function (handler) {
                     return handler &&
                         (!name || handler.e === name) &&
                         (!callback || handler.cb === callback ||
-                            handler.cb._cb === callback) &&
+                        handler.cb._cb === callback) &&
                         (!context || handler.ctx === context);
                 });
             }
 
             function eachEvent(events, callback, iterator) {
                 // 不支持对象，只支持多个event用空格隔开
-                $.each((events || '').split(separator), function(_, key) {
+                $.each((events || '').split(separator), function (_, key) {
                     iterator(key, callback);
                 });
             }
@@ -575,7 +577,7 @@ define(function(require, exports, module) {
                  * @chainable
                  * @class Mediator
                  */
-                on: function(name, callback, context) {
+                on: function (name, callback, context) {
                     var me = this,
                         set;
 
@@ -585,7 +587,7 @@ define(function(require, exports, module) {
 
                     set = this._events || (this._events = []);
 
-                    eachEvent(name, callback, function(name, callback) {
+                    eachEvent(name, callback, function (name, callback) {
                         var handler = {
                             e: name
                         };
@@ -611,15 +613,15 @@ define(function(require, exports, module) {
                  * @return {self} 返回自身，方便链式
                  * @chainable
                  */
-                once: function(name, callback, context) {
+                once: function (name, callback, context) {
                     var me = this;
 
                     if (!callback) {
                         return me;
                     }
 
-                    eachEvent(name, callback, function(name, callback) {
-                        var once = function() {
+                    eachEvent(name, callback, function (name, callback) {
+                        var once = function () {
                             me.off(name, once);
                             return callback.apply(context || me, arguments);
                         };
@@ -641,7 +643,7 @@ define(function(require, exports, module) {
                  * @return {self} 返回自身，方便链式
                  * @chainable
                  */
-                off: function(name, cb, ctx) {
+                off: function (name, cb, ctx) {
                     var events = this._events;
 
                     if (!events) {
@@ -653,8 +655,8 @@ define(function(require, exports, module) {
                         return this;
                     }
 
-                    eachEvent(name, cb, function(name, cb) {
-                        $.each(findHandlers(events, name, cb, ctx), function() {
+                    eachEvent(name, cb, function (name, cb) {
+                        $.each(findHandlers(events, name, cb, ctx), function () {
                             delete events[this.id];
                         });
                     });
@@ -670,7 +672,7 @@ define(function(require, exports, module) {
                  * @param  {*} [...] 任意参数
                  * @return {Boolean} 如果handler中return false了，则返回false, 否则返回true
                  */
-                trigger: function(type) {
+                trigger: function (type) {
                     var args, events, allEvents;
 
                     if (!this._events || !type) {
@@ -700,7 +702,7 @@ define(function(require, exports, module) {
                  * @param  {Object} obj 需要具备事件行为的对象。
                  * @return {Object} 返回obj.
                  */
-                installTo: function(obj) {
+                installTo: function (obj) {
                     return $.extend(obj, protos);
                 }
 
@@ -710,9 +712,9 @@ define(function(require, exports, module) {
          * @fileOverview Uploader上传类
          */
         _define('uploader', [
-        'base',
-        'mediator'
-    ], function(Base, Mediator) {
+            'base',
+            'mediator'
+        ], function (Base, Mediator) {
 
             var $ = Base.$;
 
@@ -762,8 +764,8 @@ define(function(require, exports, module) {
                 disable: 'disable',
                 enable: 'enable',
                 reset: 'reset'
-            }, function(fn, command) {
-                Uploader.prototype[fn] = function() {
+            }, function (fn, command) {
+                Uploader.prototype[fn] = function () {
                     return this.request(command, arguments);
                 };
             });
@@ -771,10 +773,10 @@ define(function(require, exports, module) {
             $.extend(Uploader.prototype, {
                 state: 'pending',
 
-                _init: function(opts) {
+                _init: function (opts) {
                     var me = this;
 
-                    me.request('init', opts, function() {
+                    me.request('init', opts, function () {
                         me.state = 'ready';
                         me.trigger('ready');
                     });
@@ -798,7 +800,7 @@ define(function(require, exports, module) {
                  *     height: 1600
                  * });
                  */
-                option: function(key, val) {
+                option: function (key, val) {
                     var opts = this.options;
 
                     // setter
@@ -828,45 +830,45 @@ define(function(require, exports, module) {
                  * @method getStats
                  * @grammar getStats() => Object
                  */
-                getStats: function() {
+                getStats: function () {
                     // return this._mgr.getStats.apply( this._mgr, arguments );
                     var stats = this.request('get-stats');
 
                     return stats ? {
-                        successNum: stats.numOfSuccess,
-                        progressNum: stats.numOfProgress,
+                            successNum: stats.numOfSuccess,
+                            progressNum: stats.numOfProgress,
 
-                        // who care?
-                        // queueFailNum: 0,
-                        cancelNum: stats.numOfCancel,
-                        invalidNum: stats.numOfInvalid,
-                        uploadFailNum: stats.numOfUploadFailed,
-                        queueNum: stats.numOfQueue,
-                        interruptNum: stats.numofInterrupt
-                    } : {};
+                            // who care?
+                            // queueFailNum: 0,
+                            cancelNum: stats.numOfCancel,
+                            invalidNum: stats.numOfInvalid,
+                            uploadFailNum: stats.numOfUploadFailed,
+                            queueNum: stats.numOfQueue,
+                            interruptNum: stats.numofInterrupt
+                        } : {};
                 },
 
                 // 需要重写此方法来来支持opts.onEvent和instance.onEvent的处理器
-                trigger: function(type /*, args...*/ ) {
+                trigger: function (type /*, args...*/) {
                     var args = [].slice.call(arguments, 1),
                         opts = this.options,
                         name = 'on' + type.substring(0, 1).toUpperCase() +
-                        type.substring(1);
+                            type.substring(1);
 
                     if (
                         // 调用通过on方法注册的handler.
-                        Mediator.trigger.apply(this, arguments) === false ||
+                    Mediator.trigger.apply(this, arguments) === false ||
 
-                        // 调用opts.onEvent
-                        $.isFunction(opts[name]) &&
-                        opts[name].apply(this, args) === false ||
+                    // 调用opts.onEvent
+                    $.isFunction(opts[name]) &&
+                    opts[name].apply(this, args) === false ||
 
-                        // 调用this.onEvent
-                        $.isFunction(this[name]) &&
-                        this[name].apply(this, args) === false ||
+                    // 调用this.onEvent
+                    $.isFunction(this[name]) &&
+                    this[name].apply(this, args) === false ||
 
-                        // 广播所有uploader的事件。
-                        Mediator.trigger.apply(Mediator, [this, type].concat(args)) === false) {
+                    // 广播所有uploader的事件。
+                    Mediator.trigger.apply(Mediator, [this, type].concat(args)) === false) {
 
                         return false;
                     }
@@ -879,7 +881,7 @@ define(function(require, exports, module) {
                  * @method destroy
                  * @grammar destroy() => undefined
                  */
-                destroy: function() {
+                destroy: function () {
                     this.request('destroy', arguments);
                     this.off();
                 },
@@ -895,7 +897,7 @@ define(function(require, exports, module) {
              * @static
              * @grammar Base.create( opts ) => Uploader
              */
-            Base.create = Uploader.create = function(opts) {
+            Base.create = Uploader.create = function (opts) {
                 return new Uploader(opts);
             };
 
@@ -908,15 +910,15 @@ define(function(require, exports, module) {
          * @fileOverview Runtime管理器，负责Runtime的选择, 连接
          */
         _define('runtime/runtime', [
-        'base',
-        'mediator'
-    ], function(Base, Mediator) {
+            'base',
+            'mediator'
+        ], function (Base, Mediator) {
 
             var $ = Base.$,
                 factories = {},
 
                 // 获取对象的第一个key
-                getFirstKey = function(obj) {
+                getFirstKey = function (obj) {
                     for (var key in obj) {
                         if (obj.hasOwnProperty(key)) {
                             return key;
@@ -935,7 +937,7 @@ define(function(require, exports, module) {
 
             $.extend(Runtime.prototype, {
 
-                getContainer: function() {
+                getContainer: function () {
                     var opts = this.options,
                         parent, container;
 
@@ -966,7 +968,7 @@ define(function(require, exports, module) {
                 init: Base.noop,
                 exec: Base.noop,
 
-                destroy: function() {
+                destroy: function () {
                     this._container && this._container.remove();
                     this._parent && this._parent.removeClass('webuploader-container');
                     this.off();
@@ -981,19 +983,19 @@ define(function(require, exports, module) {
              * @param {String} type    类型
              * @param {Runtime} factory 具体Runtime实现。
              */
-            Runtime.addRuntime = function(type, factory) {
+            Runtime.addRuntime = function (type, factory) {
                 factories[type] = factory;
             };
 
-            Runtime.hasRuntime = function(type) {
+            Runtime.hasRuntime = function (type) {
                 return !!(type ? factories[type] : getFirstKey(factories));
             };
 
-            Runtime.create = function(opts, orders) {
+            Runtime.create = function (opts, orders) {
                 var type, runtime;
 
                 orders = orders || Runtime.orders;
-                $.each(orders.split(/\s*,\s*/g), function() {
+                $.each(orders.split(/\s*,\s*/g), function () {
                     if (factories[this]) {
                         type = this;
                         return false;
@@ -1018,22 +1020,22 @@ define(function(require, exports, module) {
          * @fileOverview Runtime管理器，负责Runtime的选择, 连接
          */
         _define('runtime/client', [
-        'base',
-        'mediator',
-        'runtime/runtime'
-    ], function(Base, Mediator, Runtime) {
+            'base',
+            'mediator',
+            'runtime/runtime'
+        ], function (Base, Mediator, Runtime) {
 
             var cache;
 
-            cache = (function() {
+            cache = (function () {
                 var obj = {};
 
                 return {
-                    add: function(runtime) {
+                    add: function (runtime) {
                         obj[runtime.uid] = runtime;
                     },
 
-                    get: function(ruid, standalone) {
+                    get: function (ruid, standalone) {
                         var i;
 
                         if (ruid) {
@@ -1052,7 +1054,7 @@ define(function(require, exports, module) {
                         return null;
                     },
 
-                    remove: function(runtime) {
+                    remove: function (runtime) {
                         delete obj[runtime.uid];
                     }
                 };
@@ -1065,11 +1067,11 @@ define(function(require, exports, module) {
                 this.uid = Base.guid('client_');
 
                 // 允许runtime没有初始化之前，注册一些方法在初始化后执行。
-                this.runtimeReady = function(cb) {
+                this.runtimeReady = function (cb) {
                     return deferred.done(cb);
                 };
 
-                this.connectRuntime = function(opts, cb) {
+                this.connectRuntime = function (opts, cb) {
 
                     // already connected.
                     if (runtime) {
@@ -1104,11 +1106,11 @@ define(function(require, exports, module) {
                     return runtime;
                 };
 
-                this.getRuntime = function() {
+                this.getRuntime = function () {
                     return runtime;
                 };
 
-                this.disconnectRuntime = function() {
+                this.disconnectRuntime = function () {
                     if (!runtime) {
                         return;
                     }
@@ -1124,7 +1126,7 @@ define(function(require, exports, module) {
                     runtime = null;
                 };
 
-                this.exec = function() {
+                this.exec = function () {
                     if (!runtime) {
                         return;
                     }
@@ -1135,12 +1137,12 @@ define(function(require, exports, module) {
                     return runtime.exec.apply(this, args);
                 };
 
-                this.getRuid = function() {
+                this.getRuid = function () {
                     return runtime && runtime.uid;
                 };
 
-                this.destroy = (function(destroy) {
-                    return function() {
+                this.destroy = (function (destroy) {
+                    return function () {
                         destroy && destroy.apply(this, arguments);
                         this.trigger('destroy');
                         this.off();
@@ -1157,10 +1159,10 @@ define(function(require, exports, module) {
          * @fileOverview 错误信息
          */
         _define('lib/dnd', [
-        'base',
-        'mediator',
-        'runtime/client'
-    ], function(Base, Mediator, RuntimeClent) {
+            'base',
+            'mediator',
+            'runtime/client'
+        ], function (Base, Mediator, RuntimeClent) {
 
             var $ = Base.$;
 
@@ -1184,10 +1186,10 @@ define(function(require, exports, module) {
             Base.inherits(RuntimeClent, {
                 constructor: DragAndDrop,
 
-                init: function() {
+                init: function () {
                     var me = this;
 
-                    me.connectRuntime(me.options, function() {
+                    me.connectRuntime(me.options, function () {
                         me.exec('init');
                         me.trigger('ready');
                     });
@@ -1202,9 +1204,9 @@ define(function(require, exports, module) {
          * @fileOverview 组件基类。
          */
         _define('widgets/widget', [
-        'base',
-        'uploader'
-    ], function(Base, Uploader) {
+            'base',
+            'uploader'
+        ], function (Base, Uploader) {
 
             var $ = Base.$,
                 _init = Uploader.prototype._init,
@@ -1226,7 +1228,7 @@ define(function(require, exports, module) {
 
                 return type === 'array' || type !== 'function' && type !== 'string' &&
                     (length === 0 || typeof length === 'number' && length > 0 &&
-                        (length - 1) in obj);
+                    (length - 1) in obj);
             }
 
             function Widget(uploader) {
@@ -1240,18 +1242,17 @@ define(function(require, exports, module) {
 
                 // 类Backbone的事件监听声明，监听uploader实例上的事件
                 // widget直接无法监听事件，事件只能通过uploader来传递
-                invoke: function(apiName, args) {
+                invoke: function (apiName, args) {
 
                     /*
-                        {
-                            'make-thumb': 'makeThumb'
-                        }
+                     {
+                     'make-thumb': 'makeThumb'
+                     }
                      */
                     var map = this.responseMap;
 
                     // 如果无API响应声明则忽略
-                    if (!map || !(apiName in map) || !(map[apiName] in this) ||
-                        !$.isFunction(this[map[apiName]])) {
+                    if (!map || !(apiName in map) || !(map[apiName] in this) || !$.isFunction(this[map[apiName]])) {
 
                         return IGNORE;
                     }
@@ -1267,7 +1268,7 @@ define(function(require, exports, module) {
                  * @grammar request( command, args, callback ) => Promise
                  * @for  Uploader
                  */
-                request: function() {
+                request: function () {
                     return this.owner.request.apply(this.owner, arguments);
                 }
             });
@@ -1283,12 +1284,12 @@ define(function(require, exports, module) {
                  */
 
                 // 覆写_init用来初始化widgets
-                _init: function() {
+                _init: function () {
                     var me = this,
                         widgets = me._widgets = [],
                         deactives = me.options.disableWidgets || '';
 
-                    $.each(widgetClass, function(_, klass) {
+                    $.each(widgetClass, function (_, klass) {
                         (!deactives || !~deactives.indexOf(klass._name)) &&
                         widgets.push(new klass(me));
                     });
@@ -1296,7 +1297,7 @@ define(function(require, exports, module) {
                     return _init.apply(me, arguments);
                 },
 
-                request: function(apiName, args, callback) {
+                request: function (apiName, args, callback) {
                     var i = 0,
                         widgets = this._widgets,
                         len = widgets && widgets.length,
@@ -1328,7 +1329,7 @@ define(function(require, exports, module) {
 
                         // 很重要不能删除。删除了会死循环。
                         // 保证执行顺序。让callback总是在下一个 tick 中执行。
-                        return promise[key](function() {
+                        return promise[key](function () {
                             var deferred = Base.Deferred(),
                                 args = arguments;
 
@@ -1336,7 +1337,7 @@ define(function(require, exports, module) {
                                 args = args[0];
                             }
 
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 deferred.resolve(args);
                             }, 1);
 
@@ -1347,7 +1348,7 @@ define(function(require, exports, module) {
                     }
                 },
 
-                destroy: function() {
+                destroy: function () {
                     _destroy.apply(this, arguments);
                     this._widgets = null;
                 }
@@ -1375,7 +1376,7 @@ define(function(require, exports, module) {
              *     }
              * });
              */
-            Uploader.register = Widget.register = function(responseMap, widgetProto) {
+            Uploader.register = Widget.register = function (responseMap, widgetProto) {
                 var map = {
                         init: 'init',
                         destroy: 'destroy',
@@ -1387,7 +1388,7 @@ define(function(require, exports, module) {
                     widgetProto = responseMap;
 
                     // 自动生成 map 表。
-                    $.each(widgetProto, function(key) {
+                    $.each(widgetProto, function (key) {
                         if (key[0] === '_' || key === 'name') {
                             key === 'name' && (map.name = widgetProto.name);
                             return;
@@ -1426,7 +1427,7 @@ define(function(require, exports, module) {
              *
              * Uploader.unRegister('custom');
              */
-            Uploader.unRegister = Widget.unRegister = function(name) {
+            Uploader.unRegister = Widget.unRegister = function (name) {
                 if (!name || name === 'anonymous') {
                     return;
                 }
@@ -1445,11 +1446,11 @@ define(function(require, exports, module) {
          * @fileOverview DragAndDrop Widget。
          */
         _define('widgets/filednd', [
-        'base',
-        'uploader',
-        'lib/dnd',
-        'widgets/widget'
-    ], function(Base, Uploader, Dnd) {
+            'base',
+            'uploader',
+            'lib/dnd',
+            'widgets/widget'
+        ], function (Base, Uploader, Dnd) {
             var $ = Base.$;
 
             Uploader.options.dnd = '';
@@ -1475,7 +1476,7 @@ define(function(require, exports, module) {
             return Uploader.register({
                 name: 'dnd',
 
-                init: function(opts) {
+                init: function (opts) {
 
                     if (!opts.dnd ||
                         this.request('predict-runtime-type') !== 'html5') {
@@ -1494,12 +1495,12 @@ define(function(require, exports, module) {
                     this.dnd = dnd = new Dnd(options);
 
                     dnd.once('ready', deferred.resolve);
-                    dnd.on('drop', function(files) {
+                    dnd.on('drop', function (files) {
                         me.request('add-file', [files]);
                     });
 
                     // 检测文件是否全部允许添加。
-                    dnd.on('accept', function(items) {
+                    dnd.on('accept', function (items) {
                         return me.owner.trigger('dndAccept', items);
                     });
 
@@ -1508,7 +1509,7 @@ define(function(require, exports, module) {
                     return deferred.promise();
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.dnd && this.dnd.destroy();
                 }
             });
@@ -1518,10 +1519,10 @@ define(function(require, exports, module) {
          * @fileOverview 错误信息
          */
         _define('lib/filepaste', [
-        'base',
-        'mediator',
-        'runtime/client'
-    ], function(Base, Mediator, RuntimeClent) {
+            'base',
+            'mediator',
+            'runtime/client'
+        ], function (Base, Mediator, RuntimeClent) {
 
             var $ = Base.$;
 
@@ -1534,10 +1535,10 @@ define(function(require, exports, module) {
             Base.inherits(RuntimeClent, {
                 constructor: FilePaste,
 
-                init: function() {
+                init: function () {
                     var me = this;
 
-                    me.connectRuntime(me.options, function() {
+                    me.connectRuntime(me.options, function () {
                         me.exec('init');
                         me.trigger('ready');
                     });
@@ -1552,11 +1553,11 @@ define(function(require, exports, module) {
          * @fileOverview 组件基类。
          */
         _define('widgets/filepaste', [
-        'base',
-        'uploader',
-        'lib/filepaste',
-        'widgets/widget'
-    ], function(Base, Uploader, FilePaste) {
+            'base',
+            'uploader',
+            'lib/filepaste',
+            'widgets/widget'
+        ], function (Base, Uploader, FilePaste) {
             var $ = Base.$;
 
             /**
@@ -1567,7 +1568,7 @@ define(function(require, exports, module) {
             return Uploader.register({
                 name: 'paste',
 
-                init: function(opts) {
+                init: function (opts) {
 
                     if (!opts.paste ||
                         this.request('predict-runtime-type') !== 'html5') {
@@ -1585,7 +1586,7 @@ define(function(require, exports, module) {
                     this.paste = paste = new FilePaste(options);
 
                     paste.once('ready', deferred.resolve);
-                    paste.on('paste', function(files) {
+                    paste.on('paste', function (files) {
                         me.owner.request('add-file', [files]);
                     });
                     paste.init();
@@ -1593,7 +1594,7 @@ define(function(require, exports, module) {
                     return deferred.promise();
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.paste && this.paste.destroy();
                 }
             });
@@ -1602,9 +1603,9 @@ define(function(require, exports, module) {
          * @fileOverview Blob
          */
         _define('lib/blob', [
-        'base',
-        'runtime/client'
-    ], function(Base, RuntimeClient) {
+            'base',
+            'runtime/client'
+        ], function (Base, RuntimeClient) {
 
             function Blob(ruid, source) {
                 var me = this;
@@ -1614,8 +1615,7 @@ define(function(require, exports, module) {
                 this.size = source.size || 0;
 
                 // 如果没有指定 mimetype, 但是知道文件后缀。
-                if (!source.type && this.ext &&
-                    ~'jpg,jpeg,png,gif,bmp'.indexOf(this.ext)) {
+                if (!source.type && this.ext && ~'jpg,jpeg,png,gif,bmp'.indexOf(this.ext)) {
                     this.type = 'image/' + (this.ext === 'jpg' ? 'jpeg' : this.ext);
                 } else {
                     this.type = source.type || 'application/octet-stream';
@@ -1632,11 +1632,11 @@ define(function(require, exports, module) {
             Base.inherits(RuntimeClient, {
                 constructor: Blob,
 
-                slice: function(start, end) {
+                slice: function (start, end) {
                     return this.exec('slice', start, end);
                 },
 
-                getSource: function() {
+                getSource: function () {
                     return this.source;
                 }
             });
@@ -1649,9 +1649,9 @@ define(function(require, exports, module) {
          * @fileOverview File
          */
         _define('lib/file', [
-        'base',
-        'lib/blob'
-    ], function(Base, Blob) {
+            'base',
+            'lib/blob'
+        ], function (Base, Blob) {
 
             var uid = 1,
                 rExt = /\.([^.]+)$/;
@@ -1684,10 +1684,10 @@ define(function(require, exports, module) {
          * @fileOverview 错误信息
          */
         _define('lib/filepicker', [
-        'base',
-        'runtime/client',
-        'lib/file'
-    ], function(Base, RuntimeClent, File) {
+            'base',
+            'runtime/client',
+            'lib/file'
+        ], function (Base, RuntimeClent, File) {
 
             var $ = Base.$;
 
@@ -1723,14 +1723,14 @@ define(function(require, exports, module) {
             Base.inherits(RuntimeClent, {
                 constructor: FilePicker,
 
-                init: function() {
+                init: function () {
                     var me = this,
                         opts = me.options,
                         button = opts.button;
 
                     button.addClass('btn btn-default');
 
-                    me.on('all', function(type) {
+                    me.on('all', function (type) {
                         var files;
 
                         switch (type) {
@@ -1744,7 +1744,7 @@ define(function(require, exports, module) {
 
                             case 'change':
                                 files = me.exec('getFiles');
-                                me.trigger('select', $.map(files, function(file) {
+                                me.trigger('select', $.map(files, function (file) {
                                     file = new File(me.getRuid(), file);
 
                                     // 记录来源。
@@ -1755,7 +1755,7 @@ define(function(require, exports, module) {
                         }
                     });
 
-                    me.connectRuntime(opts, function() {
+                    me.connectRuntime(opts, function () {
                         me.refresh();
                         me.exec('init', opts);
                         me.trigger('ready');
@@ -1765,14 +1765,14 @@ define(function(require, exports, module) {
                     $(window).on('resize', this._resizeHandler);
                 },
 
-                refresh: function() {
+                refresh: function () {
                     var shimContainer = this.getRuntime().getContainer(),
                         button = this.options.button,
                         width = button.outerWidth ?
-                        button.outerWidth() : button.width(),
+                            button.outerWidth() : button.width(),
 
                         height = button.outerHeight ?
-                        button.outerHeight() : button.height(),
+                            button.outerHeight() : button.height(),
 
                         pos = button.offset();
 
@@ -1784,14 +1784,14 @@ define(function(require, exports, module) {
                     }).offset(pos);
                 },
 
-                enable: function() {
+                enable: function () {
                     var btn = this.options.button;
 
                     btn.removeClass('webuploader-pick-disable');
                     this.refresh();
                 },
 
-                disable: function() {
+                disable: function () {
                     var btn = this.options.button;
 
                     this.getRuntime().getContainer().css({
@@ -1801,7 +1801,7 @@ define(function(require, exports, module) {
                     btn.addClass('webuploader-pick-disable');
                 },
 
-                destroy: function() {
+                destroy: function () {
                     var btn = this.options.button;
                     $(window).off('resize', this._resizeHandler);
                     btn.removeClass('webuploader-pick-disable webuploader-pick-hover ' +
@@ -1816,11 +1816,11 @@ define(function(require, exports, module) {
          * @fileOverview 文件选择相关
          */
         _define('widgets/filepicker', [
-        'base',
-        'uploader',
-        'lib/filepicker',
-        'widgets/widget'
-    ], function(Base, Uploader, FilePicker) {
+            'base',
+            'uploader',
+            'lib/filepicker',
+            'widgets/widget'
+        ], function (Base, Uploader, FilePicker) {
             var $ = Base.$;
 
             $.extend(Uploader.options, {
@@ -1859,23 +1859,23 @@ define(function(require, exports, module) {
                  * ```
                  */
                 accept: null
-                    /*{
-                                    title: 'Images',
-                                    extensions: 'gif,jpg,jpeg,bmp,png',
-                                    mimeTypes: 'image/*'
-                                }*/
+                /*{
+                 title: 'Images',
+                 extensions: 'gif,jpg,jpeg,bmp,png',
+                 mimeTypes: 'image/*'
+                 }*/
             });
 
             return Uploader.register({
                 name: 'picker',
 
-                init: function(opts) {
+                init: function (opts) {
                     this.pickers = [];
                     return opts.pick && this.addBtn(opts.pick);
                 },
 
-                refresh: function() {
-                    $.each(this.pickers, function() {
+                refresh: function () {
+                    $.each(this.pickers, function () {
                         this.refresh();
                     });
                 },
@@ -1892,7 +1892,7 @@ define(function(require, exports, module) {
                  *     innerHTML: '选择文件'
                  * });
                  */
-                addBtn: function(pick) {
+                addBtn: function (pick) {
                     var me = this,
                         opts = me.options,
                         accept = opts.accept,
@@ -1906,7 +1906,7 @@ define(function(require, exports, module) {
                         id: pick
                     });
 
-                    $(pick.id).each(function() {
+                    $(pick.id).each(function () {
                         var options, picker, deferred;
 
                         deferred = Base.Deferred();
@@ -1921,7 +1921,7 @@ define(function(require, exports, module) {
                         picker = new FilePicker(options);
 
                         picker.once('ready', deferred.resolve);
-                        picker.on('select', function(files) {
+                        picker.on('select', function (files) {
                             me.owner.request('add-file', [files]);
                         });
                         picker.init();
@@ -1934,20 +1934,20 @@ define(function(require, exports, module) {
                     return Base.when.apply(Base, promises);
                 },
 
-                disable: function() {
-                    $.each(this.pickers, function() {
+                disable: function () {
+                    $.each(this.pickers, function () {
                         this.disable();
                     });
                 },
 
-                enable: function() {
-                    $.each(this.pickers, function() {
+                enable: function () {
+                    $.each(this.pickers, function () {
                         this.enable();
                     });
                 },
 
-                destroy: function() {
-                    $.each(this.pickers, function() {
+                destroy: function () {
+                    $.each(this.pickers, function () {
                         this.destroy();
                     });
                     this.pickers = null;
@@ -1958,10 +1958,10 @@ define(function(require, exports, module) {
          * @fileOverview Image
          */
         _define('lib/image', [
-        'base',
-        'runtime/client',
-        'lib/blob'
-    ], function(Base, RuntimeClient, Blob) {
+            'base',
+            'runtime/client',
+            'lib/blob'
+        ], function (Base, RuntimeClient, Blob) {
             var $ = Base.$;
 
             // 构造器。
@@ -1969,7 +1969,7 @@ define(function(require, exports, module) {
                 this.options = $.extend({}, Image.options, opts);
                 RuntimeClient.call(this, 'Image');
 
-                this.on('load', function() {
+                this.on('load', function () {
                     this._info = this.exec('info');
                     this._meta = this.exec('meta');
                 });
@@ -1995,7 +1995,7 @@ define(function(require, exports, module) {
             Base.inherits(RuntimeClient, {
                 constructor: Image,
 
-                info: function(val) {
+                info: function (val) {
 
                     // setter
                     if (val) {
@@ -2007,7 +2007,7 @@ define(function(require, exports, module) {
                     return this._info;
                 },
 
-                meta: function(val) {
+                meta: function (val) {
 
                     // setter
                     if (val) {
@@ -2019,31 +2019,31 @@ define(function(require, exports, module) {
                     return this._meta;
                 },
 
-                loadFromBlob: function(blob) {
+                loadFromBlob: function (blob) {
                     var me = this,
                         ruid = blob.getRuid();
 
-                    this.connectRuntime(ruid, function() {
+                    this.connectRuntime(ruid, function () {
                         me.exec('init', me.options);
                         me.exec('loadFromBlob', blob);
                     });
                 },
 
-                resize: function() {
+                resize: function () {
                     var args = Base.slice(arguments);
                     return this.exec.apply(this, ['resize'].concat(args));
                 },
 
-                crop: function() {
+                crop: function () {
                     var args = Base.slice(arguments);
                     return this.exec.apply(this, ['crop'].concat(args));
                 },
 
-                getAsDataUrl: function(type) {
+                getAsDataUrl: function (type) {
                     return this.exec('getAsDataUrl', type);
                 },
 
-                getAsBlob: function(type) {
+                getAsBlob: function (type) {
                     var blob = this.exec('getAsBlob', type);
 
                     return new Blob(this.getRuid(), blob);
@@ -2056,20 +2056,20 @@ define(function(require, exports, module) {
          * @fileOverview 图片操作, 负责预览图片和上传前压缩图片
          */
         _define('widgets/image', [
-        'base',
-        'uploader',
-        'lib/image',
-        'widgets/widget'
-    ], function(Base, Uploader, Image) {
+            'base',
+            'uploader',
+            'lib/image',
+            'widgets/widget'
+        ], function (Base, Uploader, Image) {
 
             var $ = Base.$,
                 throttle;
 
             // 根据要处理的文件大小来节流，一次不能处理太多，会卡。
-            throttle = (function(max) {
+            throttle = (function (max) {
                 var occupied = 0,
                     waiting = [],
-                    tick = function() {
+                    tick = function () {
                         var item;
 
                         while (waiting.length && occupied < max) {
@@ -2079,9 +2079,9 @@ define(function(require, exports, module) {
                         }
                     };
 
-                return function(emiter, size, cb) {
+                return function (emiter, size, cb) {
                     waiting.push([size, cb]);
-                    emiter.once('destroy', function() {
+                    emiter.once('destroy', function () {
                         occupied -= size;
                         setTimeout(tick, 1);
                     });
@@ -2216,7 +2216,7 @@ define(function(require, exports, module) {
                  *
                  * });
                  */
-                makeThumb: function(file, cb, width, height) {
+                makeThumb: function (file, cb, width, height) {
                     var opts, image;
 
                     file = this.request('get-file', file);
@@ -2240,7 +2240,7 @@ define(function(require, exports, module) {
 
                     image = new Image(opts);
 
-                    image.once('load', function() {
+                    image.once('load', function () {
                         file._info = file._info || image.info();
                         file._meta = file._meta || image.meta();
 
@@ -2259,24 +2259,24 @@ define(function(require, exports, module) {
                     });
 
                     // 当 resize 完后
-                    image.once('complete', function() {
+                    image.once('complete', function () {
                         cb(false, image.getAsDataUrl(opts.type));
                         image.destroy();
                     });
 
-                    image.once('error', function(reason) {
+                    image.once('error', function (reason) {
                         cb(reason || true);
                         image.destroy();
                     });
 
-                    throttle(image, file.source.size, function() {
+                    throttle(image, file.source.size, function () {
                         file._info && image.info(file._info);
                         file._meta && image.meta(file._meta);
                         image.loadFromBlob(file.source);
                     });
                 },
 
-                beforeSendFile: function(file) {
+                beforeSendFile: function (file) {
                     var opts = this.options.compress || this.options.resize,
                         compressSize = opts && opts.compressSize || 0,
                         noCompressIfLarger = opts && opts.noCompressIfLarger || false,
@@ -2298,12 +2298,12 @@ define(function(require, exports, module) {
 
                     image = new Image(opts);
 
-                    deferred.always(function() {
+                    deferred.always(function () {
                         image.destroy();
                         image = null;
                     });
                     image.once('error', deferred.reject);
-                    image.once('load', function() {
+                    image.once('load', function () {
                         var width = opts.width,
                             height = opts.height;
 
@@ -2324,7 +2324,7 @@ define(function(require, exports, module) {
                         image.resize(width, height);
                     });
 
-                    image.once('complete', function() {
+                    image.once('complete', function () {
                         var blob, size;
 
                         // 移动端 UC / qq 浏览器的无图模式下
@@ -2365,9 +2365,9 @@ define(function(require, exports, module) {
          * @fileOverview 文件属性封装
          */
         _define('file', [
-        'base',
-        'mediator'
-    ], function(Base, Mediator) {
+            'base',
+            'mediator'
+        ], function (Base, Mediator) {
 
             var $ = Base.$,
                 idPrefix = 'WU_FILE_',
@@ -2447,7 +2447,7 @@ define(function(require, exports, module) {
                 this.source = source;
                 this.loaded = 0;
 
-                this.on('error', function(msg) {
+                this.on('error', function (msg) {
                     this.setStatus(WUFile.Status.ERROR, msg);
                 });
             }
@@ -2461,7 +2461,7 @@ define(function(require, exports, module) {
                  * @param {File.Status|String} status [文件状态值](#WebUploader:File:File.Status)
                  * @param {String} [statusText=''] 状态说明，常在error时使用，用http, abort,server等来标记是由于什么原因导致文件错误。
                  */
-                setStatus: function(status, text) {
+                setStatus: function (status, text) {
 
                     var prevStatus = statusMap[this.id];
 
@@ -2482,23 +2482,23 @@ define(function(require, exports, module) {
                  * 获取文件状态
                  * @return {File.Status}
                  * @example
-                         文件状态具体包括以下几种类型：
-                         {
-                             // 初始化
-                            INITED:     0,
-                            // 已入队列
-                            QUEUED:     1,
-                            // 正在上传
-                            PROGRESS:     2,
-                            // 上传出错
-                            ERROR:         3,
-                            // 上传成功
-                            COMPLETE:     4,
-                            // 上传取消
-                            CANCELLED:     5
-                        }
+                 文件状态具体包括以下几种类型：
+                 {
+                     // 初始化
+                    INITED:     0,
+                    // 已入队列
+                    QUEUED:     1,
+                    // 正在上传
+                    PROGRESS:     2,
+                    // 上传出错
+                    ERROR:         3,
+                    // 上传成功
+                    COMPLETE:     4,
+                    // 上传取消
+                    CANCELLED:     5
+                }
                  */
-                getStatus: function() {
+                getStatus: function () {
                     return statusMap[this.id];
                 },
 
@@ -2506,11 +2506,11 @@ define(function(require, exports, module) {
                  * 获取文件原始信息。
                  * @return {*}
                  */
-                getSource: function() {
+                getSource: function () {
                     return this.source;
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.off();
                     delete statusMap[this.id];
                 }
@@ -2551,10 +2551,10 @@ define(function(require, exports, module) {
          * @fileOverview 文件队列
          */
         _define('queue', [
-        'base',
-        'mediator',
-        'file'
-    ], function(Base, Mediator, WUFile) {
+            'base',
+            'mediator',
+            'file'
+        ], function (Base, Mediator, WUFile) {
 
             var $ = Base.$,
                 STATUS = WUFile.Status;
@@ -2603,7 +2603,7 @@ define(function(require, exports, module) {
                  * @method append
                  * @param  {File} file   文件对象
                  */
-                append: function(file) {
+                append: function (file) {
                     this._queue.push(file);
                     this._fileAdded(file);
                     return this;
@@ -2615,7 +2615,7 @@ define(function(require, exports, module) {
                  * @method prepend
                  * @param  {File} file   文件对象
                  */
-                prepend: function(file) {
+                prepend: function (file) {
                     this._queue.unshift(file);
                     this._fileAdded(file);
                     return this;
@@ -2628,7 +2628,7 @@ define(function(require, exports, module) {
                  * @param  {String} fileId   文件ID
                  * @return {File}
                  */
-                getFile: function(fileId) {
+                getFile: function (fileId) {
                     if (typeof fileId !== 'string') {
                         return fileId;
                     }
@@ -2642,7 +2642,7 @@ define(function(require, exports, module) {
                  * @param {String} status [文件状态值](#WebUploader:File:File.Status)
                  * @return {File} [File](#WebUploader:File)
                  */
-                fetch: function(status) {
+                fetch: function (status) {
                     var len = this._queue.length,
                         i, file;
 
@@ -2665,7 +2665,7 @@ define(function(require, exports, module) {
                  * @method sort
                  * @param {Function} fn 排序方法
                  */
-                sort: function(fn) {
+                sort: function (fn) {
                     if (typeof fn === 'function') {
                         this._queue.sort(fn);
                     }
@@ -2677,7 +2677,7 @@ define(function(require, exports, module) {
                  * @method getFiles
                  * @param {String} [status] [文件状态值](#WebUploader:File:File.Status)
                  */
-                getFiles: function() {
+                getFiles: function () {
                     var sts = [].slice.call(arguments, 0),
                         ret = [],
                         i = 0,
@@ -2703,7 +2703,7 @@ define(function(require, exports, module) {
                  * @method removeFile
                  * @param {File} 文件对象。
                  */
-                removeFile: function(file) {
+                removeFile: function (file) {
                     var me = this,
                         existing = this._map[file.id];
 
@@ -2714,20 +2714,20 @@ define(function(require, exports, module) {
                     }
                 },
 
-                _fileAdded: function(file) {
+                _fileAdded: function (file) {
                     var me = this,
                         existing = this._map[file.id];
 
                     if (!existing) {
                         this._map[file.id] = file;
 
-                        file.on('statuschange', function(cur, pre) {
+                        file.on('statuschange', function (cur, pre) {
                             me._onFileStatusChange(cur, pre);
                         });
                     }
                 },
 
-                _onFileStatusChange: function(curStatus, preStatus) {
+                _onFileStatusChange: function (curStatus, preStatus) {
                     var stats = this.stats;
 
                     switch (preStatus) {
@@ -2794,14 +2794,14 @@ define(function(require, exports, module) {
          * @fileOverview 队列
          */
         _define('widgets/queue', [
-        'base',
-        'uploader',
-        'queue',
-        'file',
-        'lib/file',
-        'runtime/client',
-        'widgets/widget'
-    ], function(Base, Uploader, Queue, WUFile, File, RuntimeClient) {
+            'base',
+            'uploader',
+            'queue',
+            'file',
+            'lib/file',
+            'runtime/client',
+            'widgets/widget'
+        ], function (Base, Uploader, Queue, WUFile, File, RuntimeClient) {
 
             var $ = Base.$,
                 rExt = /\.\w+$/,
@@ -2810,7 +2810,7 @@ define(function(require, exports, module) {
             return Uploader.register({
                 name: 'queue',
 
-                init: function(opts) {
+                init: function (opts) {
                     var me = this,
                         deferred, len, i, item, arr, accept, runtime;
 
@@ -2829,8 +2829,8 @@ define(function(require, exports, module) {
 
                         if (arr.length) {
                             accept = '\\.' + arr.join(',')
-                                .replace(/,/g, '$|\\.')
-                                .replace(/\*/g, '.*') + '$';
+                                    .replace(/,/g, '$|\\.')
+                                    .replace(/\*/g, '.*') + '$';
                         }
 
                         me.accept = new RegExp(accept, 'i');
@@ -2851,7 +2851,7 @@ define(function(require, exports, module) {
                     this.placeholder = runtime = new RuntimeClient('Placeholder');
                     runtime.connectRuntime({
                         runtimeOrder: 'html5'
-                    }, function() {
+                    }, function () {
                         me._ruid = runtime.getRuid();
                         deferred.resolve();
                     });
@@ -2860,7 +2860,7 @@ define(function(require, exports, module) {
 
 
                 // 为了支持外部直接添加一个原生File对象。
-                _wrapFile: function(file) {
+                _wrapFile: function (file) {
                     if (!(file instanceof WUFile)) {
 
                         if (!(file instanceof File)) {
@@ -2877,7 +2877,7 @@ define(function(require, exports, module) {
                 },
 
                 // 判断文件是否可以被加入队列
-                acceptFile: function(file) {
+                acceptFile: function (file) {
                     var invalid = !file || !file.size || this.accept &&
 
                         // 如果名字中有后缀，才做后缀白名单处理。
@@ -2901,7 +2901,7 @@ define(function(require, exports, module) {
                  * @for  Uploader
                  */
 
-                _addFile: function(file) {
+                _addFile: function (file) {
                     var me = this;
 
                     file = me._wrapFile(file);
@@ -2922,7 +2922,7 @@ define(function(require, exports, module) {
                     return file;
                 },
 
-                getFile: function(fileId) {
+                getFile: function (fileId) {
                     return this.queue.getFile(fileId);
                 },
 
@@ -2949,27 +2949,27 @@ define(function(require, exports, module) {
                  * @description 添加文件到队列
                  * @for  Uploader
                  */
-                addFile: function(files) {
+                addFile: function (files) {
                     var me = this;
 
                     if (!files.length) {
                         files = [files];
                     }
 
-                    files = $.map(files, function(file) {
+                    files = $.map(files, function (file) {
                         return me._addFile(file);
                     });
 
                     me.owner.trigger('filesQueued', files);
 
                     if (me.options.auto) {
-                        setTimeout(function() {
+                        setTimeout(function () {
                             me.request('start-upload');
                         }, 20);
                     }
                 },
 
-                getStats: function() {
+                getStats: function () {
                     return this.stats;
                 },
 
@@ -2995,7 +2995,7 @@ define(function(require, exports, module) {
                  *     uploader.removeFile( file );
                  * })
                  */
-                removeFile: function(file, remove) {
+                removeFile: function (file, remove) {
                     var me = this;
 
                     file = file.id ? file : me.queue.getFile(file);
@@ -3017,11 +3017,11 @@ define(function(require, exports, module) {
                  * console.log( uploader.getFiles() );    // => all files
                  * console.log( uploader.getFiles('error') )    // => all error files.
                  */
-                getFiles: function() {
+                getFiles: function () {
                     return this.queue.getFiles.apply(this.queue, arguments);
                 },
 
-                fetchFile: function() {
+                fetchFile: function () {
                     return this.queue.fetch.apply(this.queue, arguments);
                 },
 
@@ -3036,7 +3036,7 @@ define(function(require, exports, module) {
                  *     uploader.retry();
                  * }
                  */
-                retry: function(file, noForceStart) {
+                retry: function (file, noForceStart) {
                     var me = this,
                         files, i, len;
 
@@ -3065,7 +3065,7 @@ define(function(require, exports, module) {
                  * @description 排序队列中的文件，在上传之前调整可以控制上传顺序。
                  * @for  Uploader
                  */
-                sortFiles: function() {
+                sortFiles: function () {
                     return this.queue.sort.apply(this.queue, arguments);
                 },
 
@@ -3083,13 +3083,13 @@ define(function(require, exports, module) {
                  * @example
                  * uploader.reset();
                  */
-                reset: function() {
+                reset: function () {
                     this.owner.trigger('reset');
                     this.queue = new Queue();
                     this.stats = this.queue.stats;
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.reset();
                     this.placeholder && this.placeholder.destroy();
                 }
@@ -3100,12 +3100,12 @@ define(function(require, exports, module) {
          * @fileOverview 添加获取Runtime相关信息的方法。
          */
         _define('widgets/runtime', [
-        'uploader',
-        'runtime/runtime',
-        'widgets/widget'
-    ], function(Uploader, Runtime) {
+            'uploader',
+            'runtime/runtime',
+            'widgets/widget'
+        ], function (Uploader, Runtime) {
 
-            Uploader.support = function() {
+            Uploader.support = function () {
                 return Runtime.hasRuntime.apply(Runtime, arguments);
             };
 
@@ -3121,7 +3121,7 @@ define(function(require, exports, module) {
             return Uploader.register({
                 name: 'runtime',
 
-                init: function() {
+                init: function () {
                     if (!this.predictRuntimeType()) {
                         throw Error('Runtime Error');
                     }
@@ -3133,7 +3133,7 @@ define(function(require, exports, module) {
                  * @method predictRuntimeType
                  * @for  Uploader
                  */
-                predictRuntimeType: function() {
+                predictRuntimeType: function () {
                     var orders = this.options.runtimeOrder || Runtime.orders,
                         type = this.type,
                         i, len;
@@ -3157,10 +3157,10 @@ define(function(require, exports, module) {
          * @fileOverview Transport
          */
         _define('lib/transport', [
-        'base',
-        'runtime/client',
-        'mediator'
-    ], function(Base, RuntimeClient, Mediator) {
+            'base',
+            'runtime/client',
+            'mediator'
+        ], function (Base, RuntimeClient, Mediator) {
 
             var $ = Base.$;
 
@@ -3175,7 +3175,7 @@ define(function(require, exports, module) {
                 this._headers = opts.headers || {};
 
                 this.on('progress', this._timeout);
-                this.on('load error', function() {
+                this.on('load error', function () {
                     me.trigger('progress', 1);
                     clearTimeout(me._timer);
                 });
@@ -3197,7 +3197,7 @@ define(function(require, exports, module) {
             $.extend(Transport.prototype, {
 
                 // 添加Blob, 只能添加一次，最后一次有效。
-                appendBlob: function(key, blob, filename) {
+                appendBlob: function (key, blob, filename) {
                     var me = this,
                         opts = me.options;
 
@@ -3206,7 +3206,7 @@ define(function(require, exports, module) {
                     }
 
                     // 连接到blob归属的同一个runtime.
-                    me.connectRuntime(blob.ruid, function() {
+                    me.connectRuntime(blob.ruid, function () {
                         me.exec('init');
                     });
 
@@ -3216,7 +3216,7 @@ define(function(require, exports, module) {
                 },
 
                 // 添加其他字段
-                append: function(key, value) {
+                append: function (key, value) {
                     if (typeof key === 'object') {
                         $.extend(this._formData, key);
                     } else {
@@ -3224,7 +3224,7 @@ define(function(require, exports, module) {
                     }
                 },
 
-                setRequestHeader: function(key, value) {
+                setRequestHeader: function (key, value) {
                     if (typeof key === 'object') {
                         $.extend(this._headers, key);
                     } else {
@@ -3232,36 +3232,36 @@ define(function(require, exports, module) {
                     }
                 },
 
-                send: function(method) {
+                send: function (method) {
                     this.exec('send', method);
                     this._timeout();
                 },
 
-                abort: function() {
+                abort: function () {
                     clearTimeout(this._timer);
                     return this.exec('abort');
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.trigger('destroy');
                     this.off();
                     this.exec('destroy');
                     this.disconnectRuntime();
                 },
 
-                getResponse: function() {
+                getResponse: function () {
                     return this.exec('getResponse');
                 },
 
-                getResponseAsJson: function() {
+                getResponseAsJson: function () {
                     return this.exec('getResponseAsJson');
                 },
 
-                getStatus: function() {
+                getStatus: function () {
                     return this.exec('getStatus');
                 },
 
-                _timeout: function() {
+                _timeout: function () {
                     var me = this,
                         duration = me.options.timeout;
 
@@ -3270,7 +3270,7 @@ define(function(require, exports, module) {
                     }
 
                     clearTimeout(me._timer);
-                    me._timer = setTimeout(function() {
+                    me._timer = setTimeout(function () {
                         me.abort();
                         me.trigger('error', 'timeout');
                     }, duration);
@@ -3287,12 +3287,12 @@ define(function(require, exports, module) {
          * @fileOverview 负责文件上传相关。
          */
         _define('widgets/upload', [
-        'base',
-        'uploader',
-        'file',
-        'lib/transport',
-        'widgets/widget'
-    ], function(Base, Uploader, WUFile, Transport) {
+            'base',
+            'uploader',
+            'file',
+            'lib/transport',
+            'widgets/widget'
+        ], function (Base, Uploader, WUFile, Transport) {
 
             var $ = Base.$,
                 isPromise = Base.isPromise,
@@ -3389,15 +3389,15 @@ define(function(require, exports, module) {
                 api = {
                     file: file,
 
-                    has: function() {
+                    has: function () {
                         return !!pending.length;
                     },
 
-                    shift: function() {
+                    shift: function () {
                         return pending.shift();
                     },
 
-                    unshift: function(block) {
+                    unshift: function (block) {
                         pending.unshift(block);
                     }
                 };
@@ -3426,7 +3426,7 @@ define(function(require, exports, module) {
             Uploader.register({
                 name: 'upload',
 
-                init: function() {
+                init: function () {
                     var owner = this.owner,
                         me = this;
 
@@ -3434,10 +3434,10 @@ define(function(require, exports, module) {
                     this.progress = false;
 
                     owner
-                        .on('startUpload', function() {
+                        .on('startUpload', function () {
                             me.progress = true;
                         })
-                        .on('uploadFinished', function() {
+                        .on('uploadFinished', function () {
                             me.progress = false;
                         });
 
@@ -3454,10 +3454,10 @@ define(function(require, exports, module) {
                     this.remaning = 0;
                     this.__tick = Base.bindFn(this._tick, this);
 
-                    owner.on('uploadComplete', function(file) {
+                    owner.on('uploadComplete', function (file) {
 
                         // 把其他块取消了。
-                        file.blocks && $.each(file.blocks, function(_, v) {
+                        file.blocks && $.each(file.blocks, function (_, v) {
                             v.transport && (v.transport.abort(), v.transport.destroy());
                             delete v.transport;
                         });
@@ -3467,7 +3467,7 @@ define(function(require, exports, module) {
                     });
                 },
 
-                reset: function() {
+                reset: function () {
                     this.request('stop-upload', true);
                     this.runing = false;
                     this.pool = [];
@@ -3493,11 +3493,11 @@ define(function(require, exports, module) {
                  * @method upload
                  * @for  Uploader
                  */
-                startUpload: function(file) {
+                startUpload: function (file) {
                     var me = this;
 
                     // 移出invalid的文件
-                    $.each(me.request('get-files', Status.INVALID), function() {
+                    $.each(me.request('get-files', Status.INVALID), function () {
                         me.request('remove-file', this);
                     });
 
@@ -3506,7 +3506,7 @@ define(function(require, exports, module) {
                         file = file.id ? file : me.request('get-file', file);
 
                         if (file.getStatus() === Status.INTERRUPT) {
-                            $.each(me.pool, function(_, v) {
+                            $.each(me.pool, function (_, v) {
 
                                 // 之前暂停过。
                                 if (v.file !== file) {
@@ -3523,7 +3523,7 @@ define(function(require, exports, module) {
                             file.setStatus(Status.QUEUED);
                         }
                     } else {
-                        $.each(me.request('get-files', [Status.INITED]), function() {
+                        $.each(me.request('get-files', [Status.INITED]), function () {
                             this.setStatus(Status.QUEUED);
                         });
                     }
@@ -3537,7 +3537,7 @@ define(function(require, exports, module) {
                     var files = [];
 
                     // 如果有暂停的，则续传
-                    $.each(me.pool, function(_, v) {
+                    $.each(me.pool, function (_, v) {
                         var file = v.file;
 
                         if (file.getStatus() === Status.INTERRUPT) {
@@ -3553,7 +3553,7 @@ define(function(require, exports, module) {
                     }
 
                     file || $.each(me.request('get-files',
-                        Status.INTERRUPT), function() {
+                        Status.INTERRUPT), function () {
                         this.setStatus(Status.PROGRESS);
                     });
 
@@ -3578,7 +3578,7 @@ define(function(require, exports, module) {
                  * @method stop
                  * @for  Uploader
                  */
-                stopUpload: function(file, interrupt) {
+                stopUpload: function (file, interrupt) {
                     var me = this;
 
                     if (file === true) {
@@ -3600,7 +3600,7 @@ define(function(require, exports, module) {
                         }
 
                         file.setStatus(Status.INTERRUPT);
-                        $.each(me.pool, function(_, v) {
+                        $.each(me.pool, function (_, v) {
 
                             // 只 abort 指定的文件。
                             if (v.file !== file) {
@@ -3621,7 +3621,7 @@ define(function(require, exports, module) {
                         this._promise.file.setStatus(Status.INTERRUPT);
                     }
 
-                    interrupt && $.each(me.pool, function(_, v) {
+                    interrupt && $.each(me.pool, function (_, v) {
                         v.transport && v.transport.abort();
                         v.file.setStatus(Status.INTERRUPT);
                     });
@@ -3642,11 +3642,11 @@ define(function(require, exports, module) {
                  *     uploader.cancelFile( file );
                  * })
                  */
-                cancelFile: function(file) {
+                cancelFile: function (file) {
                     file = file.id ? file : this.request('get-file', file);
 
                     // 如果正在上传。
-                    file.blocks && $.each(file.blocks, function(_, v) {
+                    file.blocks && $.each(file.blocks, function (_, v) {
                         var _tr = v.transport;
 
                         if (_tr) {
@@ -3666,11 +3666,11 @@ define(function(require, exports, module) {
                  * @method isInProgress
                  * @for  Uploader
                  */
-                isInProgress: function() {
+                isInProgress: function () {
                     return !!this.progress;
                 },
 
-                _getStats: function() {
+                _getStats: function () {
                     return this.request('get-stats');
                 },
 
@@ -3680,14 +3680,14 @@ define(function(require, exports, module) {
                  * @method skipFile
                  * @for  Uploader
                  */
-                skipFile: function(file, status) {
+                skipFile: function (file, status) {
                     file = file.id ? file : this.request('get-file', file);
 
                     file.setStatus(status || Status.COMPLETE);
                     file.skipped = true;
 
                     // 如果正在上传。
-                    file.blocks && $.each(file.blocks, function(_, v) {
+                    file.blocks && $.each(file.blocks, function (_, v) {
                         var _tr = v.transport;
 
                         if (_tr) {
@@ -3705,7 +3705,7 @@ define(function(require, exports, module) {
                  * @description 当所有文件上传结束时触发。
                  * @for  Uploader
                  */
-                _tick: function() {
+                _tick: function () {
                     var me = this,
                         opts = me.options,
                         fn, val;
@@ -3719,7 +3719,7 @@ define(function(require, exports, module) {
                     if (me.pool.length < opts.threads && (val = me._nextBlock())) {
                         me._trigged = false;
 
-                        fn = function(val) {
+                        fn = function (val) {
                             me._promise = null;
 
                             // 有可能是reject过来的，所以要检测val的类型。
@@ -3730,18 +3730,17 @@ define(function(require, exports, module) {
                         me._promise = isPromise(val) ? val.always(fn) : fn(val);
 
                         // 没有要上传的了，且没有正在传输的了。
-                    } else if (!me.remaning && !me._getStats().numOfQueue &&
-                        !me._getStats().numofInterrupt) {
+                    } else if (!me.remaning && !me._getStats().numOfQueue && !me._getStats().numofInterrupt) {
                         me.runing = false;
 
-                        me._trigged || Base.nextTick(function() {
+                        me._trigged || Base.nextTick(function () {
                             me.owner.trigger('uploadFinished');
                         });
                         me._trigged = true;
                     }
                 },
 
-                _putback: function(block) {
+                _putback: function (block) {
                     var idx;
 
                     block.cuted.unshift(block);
@@ -3752,7 +3751,7 @@ define(function(require, exports, module) {
                     }
                 },
 
-                _getStack: function() {
+                _getStack: function () {
                     var i = 0,
                         act;
 
@@ -3772,7 +3771,7 @@ define(function(require, exports, module) {
                     return null;
                 },
 
-                _nextBlock: function() {
+                _nextBlock: function () {
                     var me = this,
                         opts = me.options,
                         act, next, done, preparing;
@@ -3796,7 +3795,7 @@ define(function(require, exports, module) {
                         }
 
                         next = me.pending.shift();
-                        done = function(file) {
+                        done = function (file) {
                             if (!file) {
                                 return null;
                             }
@@ -3825,14 +3824,14 @@ define(function(require, exports, module) {
                  * @description 某个文件开始上传前触发，一个文件只会触发一次。
                  * @for  Uploader
                  */
-                _prepareNextFile: function() {
+                _prepareNextFile: function () {
                     var me = this,
                         file = me.request('fetch-file'),
                         pending = me.pending,
                         promise;
 
                     if (file) {
-                        promise = me.request('before-send-file', file, function() {
+                        promise = me.request('before-send-file', file, function () {
 
                             // 有可能文件被skip掉了。文件被skip掉后，状态坑定不是Queued.
                             if (file.getStatus() === Status.PROGRESS ||
@@ -3849,14 +3848,14 @@ define(function(require, exports, module) {
                         promise.file = file;
 
                         // 如果还在pending中，则替换成文件本身。
-                        promise.done(function() {
+                        promise.done(function () {
                             var idx = $.inArray(promise, pending);
 
                             ~idx && pending.splice(idx, 1, file);
                         });
 
                         // befeore-send-file的钩子就有错误发生。
-                        promise.fail(function(reason) {
+                        promise.fail(function (reason) {
                             file.setStatus(Status.ERROR, reason);
                             me.owner.trigger('uploadError', file, reason);
                             me.owner.trigger('uploadComplete', file);
@@ -3867,7 +3866,7 @@ define(function(require, exports, module) {
                 },
 
                 // 让出位置了，可以让其他分片开始上传
-                _popBlock: function(block) {
+                _popBlock: function (block) {
                     var idx = $.inArray(block, this.pool);
 
                     this.pool.splice(idx, 1);
@@ -3876,7 +3875,7 @@ define(function(require, exports, module) {
                 },
 
                 // 开始上传，可以被掉过。如果promise被reject了，则表示跳过此分片。
-                _startSend: function(block) {
+                _startSend: function (block) {
                     var me = this,
                         file = block.file,
                         promise;
@@ -3903,7 +3902,7 @@ define(function(require, exports, module) {
                         file.source.slice(block.start, block.end);
 
                     // hook, 每个分片发送之前可能要做些异步的事情。
-                    promise = me.request('before-send', block, function() {
+                    promise = me.request('before-send', block, function () {
 
                         // 有可能文件已经上传出错了，所以不需要再传输了。
                         if (file.getStatus() === Status.PROGRESS) {
@@ -3915,9 +3914,9 @@ define(function(require, exports, module) {
                     });
 
                     // 如果为fail了，则跳过此分片。
-                    promise.fail(function() {
+                    promise.fail(function () {
                         if (file.remaning === 1) {
-                            me._finishFile(file).always(function() {
+                            me._finishFile(file).always(function () {
                                 block.percentage = 1;
                                 me._popBlock(block);
                                 me.owner.trigger('uploadComplete', file);
@@ -3983,7 +3982,7 @@ define(function(require, exports, module) {
                  */
 
                 // 做上传操作。
-                _doSend: function(block) {
+                _doSend: function (block) {
                     var me = this,
                         owner = me.owner,
                         opts = me.options,
@@ -3995,25 +3994,25 @@ define(function(require, exports, module) {
 
                     block.transport = tr;
 
-                    tr.on('destroy', function() {
+                    tr.on('destroy', function () {
                         delete block.transport;
                         me._popBlock(block);
                         Base.nextTick(me.__tick);
                     });
 
                     // 广播上传进度。以文件为单位。
-                    tr.on('progress', function(percentage) {
+                    tr.on('progress', function (percentage) {
                         block.percentage = percentage;
                         me.updateFileProgress(file);
                     });
 
                     // 用来询问，是否返回的结果是有错误的。
-                    requestAccept = function(reject) {
+                    requestAccept = function (reject) {
                         var fn;
 
                         ret = tr.getResponseAsJson() || {};
                         ret._raw = tr.getResponse();
-                        fn = function(value) {
+                        fn = function (value) {
                             reject = value;
                         };
 
@@ -4026,7 +4025,7 @@ define(function(require, exports, module) {
                     };
 
                     // 尝试重试，然后广播文件上传出错。
-                    tr.on('error', function(type, flag) {
+                    tr.on('error', function (type, flag) {
                         block.retried = block.retried || 0;
 
                         // 自动重试
@@ -4050,7 +4049,7 @@ define(function(require, exports, module) {
                     });
 
                     // 上传成功
-                    tr.on('load', function() {
+                    tr.on('load', function () {
                         var reason;
 
                         // 如果非预期，转向上传出错。
@@ -4093,15 +4092,15 @@ define(function(require, exports, module) {
                 },
 
                 // 完成上传。
-                _finishFile: function(file, ret, hds) {
+                _finishFile: function (file, ret, hds) {
                     var owner = this.owner;
 
                     return owner
-                        .request('after-send-file', arguments, function() {
+                        .request('after-send-file', arguments, function () {
                             file.setStatus(Status.COMPLETE);
                             owner.trigger('uploadSuccess', file, ret, hds);
                         })
-                        .fail(function(reason) {
+                        .fail(function (reason) {
 
                             // 如果外部已经标记为invalid什么的，不再改状态。
                             if (file.getStatus() === Status.PROGRESS) {
@@ -4110,12 +4109,12 @@ define(function(require, exports, module) {
 
                             owner.trigger('uploadError', file, reason);
                         })
-                        .always(function() {
+                        .always(function () {
                             owner.trigger('uploadComplete', file);
                         });
                 },
 
-                updateFileProgress: function(file) {
+                updateFileProgress: function (file) {
                     var totalPercent = 0,
                         uploaded = 0;
 
@@ -4123,7 +4122,7 @@ define(function(require, exports, module) {
                         return;
                     }
 
-                    $.each(file.blocks, function(_, v) {
+                    $.each(file.blocks, function (_, v) {
                         uploaded += (v.percentage || 0) * (v.end - v.start);
                     });
 
@@ -4138,11 +4137,11 @@ define(function(require, exports, module) {
          */
 
         _define('widgets/validator', [
-        'base',
-        'uploader',
-        'file',
-        'widgets/widget'
-    ], function(Base, Uploader, WUFile) {
+            'base',
+            'uploader',
+            'file',
+            'widgets/widget'
+        ], function (Base, Uploader, WUFile) {
 
             var $ = Base.$,
                 validators = {},
@@ -4163,12 +4162,12 @@ define(function(require, exports, module) {
             api = {
 
                 // 添加验证器
-                addValidator: function(type, cb) {
+                addValidator: function (type, cb) {
                     validators[type] = cb;
                 },
 
                 // 移除验证器
-                removeValidator: function(type) {
+                removeValidator: function (type) {
                     delete validators[type];
                 }
             };
@@ -4177,10 +4176,10 @@ define(function(require, exports, module) {
             Uploader.register({
                 name: 'validator',
 
-                init: function() {
+                init: function () {
                     var me = this;
-                    Base.nextTick(function() {
-                        $.each(validators, function() {
+                    Base.nextTick(function () {
+                        $.each(validators, function () {
                             this.call(me.owner);
                         });
                     });
@@ -4193,7 +4192,7 @@ define(function(require, exports, module) {
              * @for Uploader
              * @description 验证文件总数量, 超出则不允许加入队列。
              */
-            api.addValidator('fileNumLimit', function() {
+            api.addValidator('fileNumLimit', function () {
                 var uploader = this,
                     opts = uploader.options,
                     count = 0,
@@ -4204,12 +4203,12 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                uploader.on('beforeFileQueued', function(file) {
+                uploader.on('beforeFileQueued', function (file) {
 
                     if (count >= max && flag) {
                         flag = false;
                         this.trigger('error', 'Q_EXCEED_NUM_LIMIT', max, file);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             flag = true;
                         }, 1);
                     }
@@ -4217,15 +4216,15 @@ define(function(require, exports, module) {
                     return count >= max ? false : true;
                 });
 
-                uploader.on('fileQueued', function() {
+                uploader.on('fileQueued', function () {
                     count++;
                 });
 
-                uploader.on('fileDequeued', function() {
+                uploader.on('fileDequeued', function () {
                     count--;
                 });
 
-                uploader.on('reset', function() {
+                uploader.on('reset', function () {
                     count = 0;
                 });
             });
@@ -4237,7 +4236,7 @@ define(function(require, exports, module) {
              * @for Uploader
              * @description 验证文件总大小是否超出限制, 超出则不允许加入队列。
              */
-            api.addValidator('fileSizeLimit', function() {
+            api.addValidator('fileSizeLimit', function () {
                 var uploader = this,
                     opts = uploader.options,
                     count = 0,
@@ -4248,13 +4247,13 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                uploader.on('beforeFileQueued', function(file) {
+                uploader.on('beforeFileQueued', function (file) {
                     var invalid = count + file.size > max;
 
                     if (invalid && flag) {
                         flag = false;
                         this.trigger('error', 'Q_EXCEED_SIZE_LIMIT', max, file);
-                        setTimeout(function() {
+                        setTimeout(function () {
                             flag = true;
                         }, 1);
                     }
@@ -4262,15 +4261,15 @@ define(function(require, exports, module) {
                     return invalid ? false : true;
                 });
 
-                uploader.on('fileQueued', function(file) {
+                uploader.on('fileQueued', function (file) {
                     count += file.size;
                 });
 
-                uploader.on('fileDequeued', function(file) {
+                uploader.on('fileDequeued', function (file) {
                     count -= file.size;
                 });
 
-                uploader.on('reset', function() {
+                uploader.on('reset', function () {
                     count = 0;
                 });
             });
@@ -4281,7 +4280,7 @@ define(function(require, exports, module) {
              * @for Uploader
              * @description 验证单个文件大小是否超出限制, 超出则不允许加入队列。
              */
-            api.addValidator('fileSingleSizeLimit', function() {
+            api.addValidator('fileSingleSizeLimit', function () {
                 var uploader = this,
                     opts = uploader.options,
                     max = opts.fileSingleSizeLimit;
@@ -4290,7 +4289,7 @@ define(function(require, exports, module) {
                     return;
                 }
 
-                uploader.on('beforeFileQueued', function(file) {
+                uploader.on('beforeFileQueued', function (file) {
 
                     if (file.size > max) {
                         file.setStatus(WUFile.Status.INVALID, 'exceed_size');
@@ -4308,7 +4307,7 @@ define(function(require, exports, module) {
              * @for Uploader
              * @description 去重， 根据文件名字、文件大小和最后修改时间来生成hash Key.
              */
-            api.addValidator('duplicate', function() {
+            api.addValidator('duplicate', function () {
                 var uploader = this,
                     opts = uploader.options,
                     mapping = {};
@@ -4331,9 +4330,9 @@ define(function(require, exports, module) {
                     return hash;
                 }
 
-                uploader.on('beforeFileQueued', function(file) {
+                uploader.on('beforeFileQueued', function (file) {
                     var hash = file.__hash || (file.__hash = hashString(file.name +
-                        file.size + file.lastModifiedDate));
+                            file.size + file.lastModifiedDate));
 
                     // 已经重复了
                     if (mapping[hash]) {
@@ -4342,19 +4341,19 @@ define(function(require, exports, module) {
                     }
                 });
 
-                uploader.on('fileQueued', function(file) {
+                uploader.on('fileQueued', function (file) {
                     var hash = file.__hash;
 
                     hash && (mapping[hash] = true);
                 });
 
-                uploader.on('fileDequeued', function(file) {
+                uploader.on('fileDequeued', function (file) {
                     var hash = file.__hash;
 
                     hash && (delete mapping[hash]);
                 });
 
-                uploader.on('reset', function() {
+                uploader.on('reset', function () {
                     mapping = {};
                 });
             });
@@ -4366,9 +4365,9 @@ define(function(require, exports, module) {
          * @fileOverview Md5
          */
         _define('lib/md5', [
-        'runtime/client',
-        'mediator'
-    ], function(RuntimeClient, Mediator) {
+            'runtime/client',
+            'mediator'
+        ], function (RuntimeClient, Mediator) {
 
             function Md5() {
                 RuntimeClient.call(this, 'Md5');
@@ -4377,7 +4376,7 @@ define(function(require, exports, module) {
             // 让 Md5 具备事件功能。
             Mediator.installTo(Md5.prototype);
 
-            Md5.prototype.loadFromBlob = function(blob) {
+            Md5.prototype.loadFromBlob = function (blob) {
                 var me = this;
 
                 if (me.getRuid()) {
@@ -4385,13 +4384,13 @@ define(function(require, exports, module) {
                 }
 
                 // 连接到blob归属的同一个runtime.
-                me.connectRuntime(blob.ruid, function() {
+                me.connectRuntime(blob.ruid, function () {
                     me.exec('init');
                     me.exec('loadFromBlob', blob);
                 });
             };
 
-            Md5.prototype.getResult = function() {
+            Md5.prototype.getResult = function () {
                 return this.exec('getResult');
             };
 
@@ -4401,12 +4400,12 @@ define(function(require, exports, module) {
          * @fileOverview 图片操作, 负责预览图片和上传前压缩图片
          */
         _define('widgets/md5', [
-        'base',
-        'uploader',
-        'lib/md5',
-        'lib/blob',
-        'widgets/widget'
-    ], function(Base, Uploader, Md5, Blob) {
+            'base',
+            'uploader',
+            'lib/md5',
+            'lib/blob',
+            'widgets/widget'
+        ], function (Base, Uploader, Md5, Blob) {
 
             return Uploader.register({
                 name: 'md5',
@@ -4438,22 +4437,22 @@ define(function(require, exports, module) {
                  *
                  * });
                  */
-                md5File: function(file, start, end) {
+                md5File: function (file, start, end) {
                     var md5 = new Md5(),
                         deferred = Base.Deferred(),
                         blob = (file instanceof Blob) ? file :
-                        this.request('get-file', file).source;
+                            this.request('get-file', file).source;
 
-                    md5.on('progress load', function(e) {
+                    md5.on('progress load', function (e) {
                         e = e || {};
                         deferred.notify(e.total ? e.loaded / e.total : 1);
                     });
 
-                    md5.on('complete', function() {
+                    md5.on('complete', function () {
                         deferred.resolve(md5.getResult());
                     });
 
-                    md5.on('error', function(reason) {
+                    md5.on('error', function (reason) {
                         deferred.reject(reason);
                     });
 
@@ -4475,22 +4474,22 @@ define(function(require, exports, module) {
         /**
          * @fileOverview Runtime管理器，负责Runtime的选择, 连接
          */
-        _define('runtime/compbase', [], function() {
+        _define('runtime/compbase', [], function () {
 
             function CompBase(owner, runtime) {
 
                 this.owner = owner;
                 this.options = owner.options;
 
-                this.getRuntime = function() {
+                this.getRuntime = function () {
                     return runtime;
                 };
 
-                this.getRuid = function() {
+                this.getRuid = function () {
                     return runtime.uid;
                 };
 
-                this.trigger = function() {
+                this.trigger = function () {
                     return owner.trigger.apply(owner, arguments);
                 };
             }
@@ -4501,10 +4500,10 @@ define(function(require, exports, module) {
          * @fileOverview Html5Runtime
          */
         _define('runtime/html5/runtime', [
-        'base',
-        'runtime/runtime',
-        'runtime/compbase'
-    ], function(Base, Runtime, CompBase) {
+            'base',
+            'runtime/runtime',
+            'runtime/compbase'
+        ], function (Base, Runtime, CompBase) {
 
             var type = 'html5',
                 components = {};
@@ -4519,7 +4518,7 @@ define(function(require, exports, module) {
 
 
                 // 这个方法的调用者，实际上是RuntimeClient
-                me.exec = function(comp, fn /*, args...*/ ) {
+                me.exec = function (comp, fn /*, args...*/) {
                     var client = this,
                         uid = client.uid,
                         args = Base.slice(arguments, 2),
@@ -4535,7 +4534,7 @@ define(function(require, exports, module) {
                     }
                 };
 
-                me.destroy = function() {
+                me.destroy = function () {
                     // @todo 删除池子中的所有实例
                     return destroy && destroy.apply(this, arguments);
                 };
@@ -4545,9 +4544,9 @@ define(function(require, exports, module) {
                 constructor: Html5Runtime,
 
                 // 不需要连接其他程序，直接执行callback
-                init: function() {
+                init: function () {
                     var me = this;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         me.trigger('ready');
                     }, 1);
                 }
@@ -4555,7 +4554,7 @@ define(function(require, exports, module) {
             });
 
             // 注册Components
-            Html5Runtime.register = function(name, component) {
+            Html5Runtime.register = function (name, component) {
                 var klass = components[name] = Base.inherits(CompBase, component);
                 return klass;
             };
@@ -4572,12 +4571,12 @@ define(function(require, exports, module) {
          * @fileOverview Blob Html实现
          */
         _define('runtime/html5/blob', [
-        'runtime/html5/runtime',
-        'lib/blob'
-    ], function(Html5Runtime, Blob) {
+            'runtime/html5/runtime',
+            'lib/blob'
+        ], function (Html5Runtime, Blob) {
 
             return Html5Runtime.register('Blob', {
-                slice: function(start, end) {
+                slice: function (start, end) {
                     var blob = this.owner.source,
                         slice = blob.slice || blob.webkitSlice || blob.mozSlice;
 
@@ -4591,16 +4590,16 @@ define(function(require, exports, module) {
          * @fileOverview FilePaste
          */
         _define('runtime/html5/dnd', [
-        'base',
-        'runtime/html5/runtime',
-        'lib/file'
-    ], function(Base, Html5Runtime, File) {
+            'base',
+            'runtime/html5/runtime',
+            'lib/file'
+        ], function (Base, Html5Runtime, File) {
 
             var $ = Base.$,
                 prefix = 'webuploader-dnd-';
 
             return Html5Runtime.register('DragAndDrop', {
-                init: function() {
+                init: function () {
                     var elem = this.elem = this.options.container;
 
                     this.dragEnterHandler = Base.bindFn(this._dragEnterHandler, this);
@@ -4620,7 +4619,7 @@ define(function(require, exports, module) {
                     }
                 },
 
-                _dragEnterHandler: function(e) {
+                _dragEnterHandler: function (e) {
                     var me = this,
                         denied = me._denied || false,
                         items;
@@ -4647,7 +4646,7 @@ define(function(require, exports, module) {
                     return false;
                 },
 
-                _dragOverHandler: function(e) {
+                _dragOverHandler: function (e) {
                     // 只处理框内的。
                     var parentElem = this.elem.parent().get(0);
                     if (parentElem && !$.contains(parentElem, e.currentTarget)) {
@@ -4660,11 +4659,11 @@ define(function(require, exports, module) {
                     return false;
                 },
 
-                _dragLeaveHandler: function() {
+                _dragLeaveHandler: function () {
                     var me = this,
                         handler;
 
-                    handler = function() {
+                    handler = function () {
                         me.dndOver = false;
                         me.elem.removeClass(prefix + 'over ' + prefix + 'denied');
                     };
@@ -4674,7 +4673,7 @@ define(function(require, exports, module) {
                     return false;
                 },
 
-                _dropHandler: function(e) {
+                _dropHandler: function (e) {
                     var me = this,
                         ruid = me.getRuid(),
                         parentElem = me.elem.parent().get(0),
@@ -4692,14 +4691,15 @@ define(function(require, exports, module) {
                     // 此处 ie11 下会报参数错误，
                     try {
                         data = dataTransfer.getData('text/html');
-                    } catch (err) {}
+                    } catch (err) {
+                    }
 
                     if (data) {
                         return;
                     }
 
-                    me._getTansferFiles(dataTransfer, function(results) {
-                        me.trigger('drop', $.map(results, function(file) {
+                    me._getTansferFiles(dataTransfer, function (results) {
+                        me.trigger('drop', $.map(results, function (file) {
                             return new File(ruid, file);
                         }));
                     });
@@ -4710,7 +4710,7 @@ define(function(require, exports, module) {
                 },
 
                 // 如果传入 callback 则去查看文件夹，否则只管当前文件夹。
-                _getTansferFiles: function(dataTransfer, callback) {
+                _getTansferFiles: function (dataTransfer, callback) {
                     var results = [],
                         promises = [],
                         items, files, file, item, i, len, canAccessFolder;
@@ -4733,7 +4733,7 @@ define(function(require, exports, module) {
                         }
                     }
 
-                    Base.when.apply(Base, promises).done(function() {
+                    Base.when.apply(Base, promises).done(function () {
 
                         if (!results.length) {
                             return;
@@ -4743,17 +4743,17 @@ define(function(require, exports, module) {
                     });
                 },
 
-                _traverseDirectoryTree: function(entry, results) {
+                _traverseDirectoryTree: function (entry, results) {
                     var deferred = Base.Deferred(),
                         me = this;
 
                     if (entry.isFile) {
-                        entry.file(function(file) {
+                        entry.file(function (file) {
                             results.push(file);
                             deferred.resolve();
                         });
                     } else if (entry.isDirectory) {
-                        entry.createReader().readEntries(function(entries) {
+                        entry.createReader().readEntries(function (entries) {
                             var len = entries.length,
                                 promises = [],
                                 arr = [], // 为了保证顺序。
@@ -4764,7 +4764,7 @@ define(function(require, exports, module) {
                                     entries[i], arr));
                             }
 
-                            Base.when.apply(Base, promises).then(function() {
+                            Base.when.apply(Base, promises).then(function () {
                                 results.push.apply(results, arr);
                                 deferred.resolve();
                             }, deferred.reject);
@@ -4774,7 +4774,7 @@ define(function(require, exports, module) {
                     return deferred.promise();
                 },
 
-                destroy: function() {
+                destroy: function () {
                     var elem = this.elem;
 
                     // 还没 init 就调用 destroy
@@ -4799,13 +4799,13 @@ define(function(require, exports, module) {
          * @fileOverview FilePaste
          */
         _define('runtime/html5/filepaste', [
-        'base',
-        'runtime/html5/runtime',
-        'lib/file'
-    ], function(Base, Html5Runtime, File) {
+            'base',
+            'runtime/html5/runtime',
+            'lib/file'
+        ], function (Base, Html5Runtime, File) {
 
             return Html5Runtime.register('FilePaste', {
-                init: function() {
+                init: function () {
                     var opts = this.options,
                         elem = this.elem = opts.container,
                         accept = '.*',
@@ -4830,7 +4830,7 @@ define(function(require, exports, module) {
                     elem.on('paste', this.hander);
                 },
 
-                _pasteHander: function(e) {
+                _pasteHander: function (e) {
                     var allowed = [],
                         ruid = this.getRuid(),
                         items, item, blob, i, len;
@@ -4856,7 +4856,7 @@ define(function(require, exports, module) {
                     }
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.elem.off('paste', this.hander);
                 }
             });
@@ -4866,14 +4866,14 @@ define(function(require, exports, module) {
          * @fileOverview FilePicker
          */
         _define('runtime/html5/filepicker', [
-        'base',
-        'runtime/html5/runtime'
-    ], function(Base, Html5Runtime) {
+            'base',
+            'runtime/html5/runtime'
+        ], function (Base, Html5Runtime) {
 
             var $ = Base.$;
 
             return Html5Runtime.register('FilePicker', {
-                init: function() {
+                init: function () {
                     var container = this.getRuntime().getContainer(),
                         me = this,
                         owner = me.owner,
@@ -4886,7 +4886,7 @@ define(function(require, exports, module) {
                     input.attr('name', opts.name);
                     input.addClass('webuploader-element-invisible');
 
-                    label.on('click', function() {
+                    label.on('click', function () {
                         input.trigger('click');
                     });
 
@@ -4917,11 +4917,11 @@ define(function(require, exports, module) {
                     container.append(input);
                     container.append(label);
 
-                    mouseHandler = function(e) {
+                    mouseHandler = function (e) {
                         owner.trigger(e.type);
                     };
 
-                    input.on('change', function(e) {
+                    input.on('change', function (e) {
                         var fn = arguments.callee,
                             clone;
 
@@ -4944,11 +4944,11 @@ define(function(require, exports, module) {
                 },
 
 
-                getFiles: function() {
+                getFiles: function () {
                     return this.files;
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.input.off();
                     this.label.off();
                 }
@@ -4961,23 +4961,23 @@ define(function(require, exports, module) {
          * @fileOverview Image控件
          */
         _define('runtime/html5/util', [
-        'base'
-    ], function(Base) {
+            'base'
+        ], function (Base) {
 
             var urlAPI = window.createObjectURL && window ||
-                window.URL && URL.revokeObjectURL && URL ||
-                window.webkitURL,
+                    window.URL && URL.revokeObjectURL && URL ||
+                    window.webkitURL,
                 createObjectURL = Base.noop,
                 revokeObjectURL = createObjectURL;
 
             if (urlAPI) {
 
                 // 更安全的方式调用，比如android里面就能把context改成其他的对象。
-                createObjectURL = function() {
+                createObjectURL = function () {
                     return urlAPI.createObjectURL.apply(urlAPI, arguments);
                 };
 
-                revokeObjectURL = function() {
+                revokeObjectURL = function () {
                     return urlAPI.revokeObjectURL.apply(urlAPI, arguments);
                 };
             }
@@ -4986,7 +4986,7 @@ define(function(require, exports, module) {
                 createObjectURL: createObjectURL,
                 revokeObjectURL: revokeObjectURL,
 
-                dataURL2Blob: function(dataURI) {
+                dataURL2Blob: function (dataURI) {
                     var byteStr, intArray, ab, i, mimetype, parts;
 
                     parts = dataURI.split(',');
@@ -5009,7 +5009,7 @@ define(function(require, exports, module) {
                     return this.arrayBufferToBlob(ab, mimetype);
                 },
 
-                dataURL2ArrayBuffer: function(dataURI) {
+                dataURL2ArrayBuffer: function (dataURI) {
                     var byteStr, intArray, i, parts;
 
                     parts = dataURI.split(',');
@@ -5029,7 +5029,7 @@ define(function(require, exports, module) {
                     return intArray.buffer;
                 },
 
-                arrayBufferToBlob: function(buffer, type) {
+                arrayBufferToBlob: function (buffer, type) {
                     var builder = window.BlobBuilder || window.WebKitBlobBuilder,
                         bb;
 
@@ -5041,23 +5041,23 @@ define(function(require, exports, module) {
                     }
 
                     return new Blob([buffer], type ? {
-                        type: type
-                    } : {});
+                            type: type
+                        } : {});
                 },
 
                 // 抽出来主要是为了解决android下面canvas.toDataUrl不支持jpeg.
                 // 你得到的结果是png.
-                canvasToDataUrl: function(canvas, type, quality) {
+                canvasToDataUrl: function (canvas, type, quality) {
                     return canvas.toDataURL(type, quality / 100);
                 },
 
                 // imagemeat会复写这个方法，如果用户选择加载那个文件了的话。
-                parseMeta: function(blob, callback) {
+                parseMeta: function (blob, callback) {
                     callback(false, {});
                 },
 
                 // imagemeat会复写这个方法，如果用户选择加载那个文件了的话。
-                updateImageHead: function(data) {
+                updateImageHead: function (data) {
                     return data;
                 }
             };
@@ -5069,8 +5069,8 @@ define(function(require, exports, module) {
          * @fileOverview Image控件
          */
         _define('runtime/html5/imagemeta', [
-        'runtime/html5/util'
-    ], function(Util) {
+            'runtime/html5/util'
+        ], function (Util) {
 
             var api;
 
@@ -5081,16 +5081,16 @@ define(function(require, exports, module) {
 
                 maxMetaDataSize: 262144,
 
-                parse: function(blob, cb) {
+                parse: function (blob, cb) {
                     var me = this,
                         fr = new FileReader();
 
-                    fr.onload = function() {
+                    fr.onload = function () {
                         cb(false, me._parse(this.result));
                         fr = fr.onload = fr.onerror = null;
                     };
 
-                    fr.onerror = function(e) {
+                    fr.onerror = function (e) {
                         cb(e.message);
                         fr = fr.onload = fr.onerror = null;
                     };
@@ -5099,7 +5099,7 @@ define(function(require, exports, module) {
                     fr.readAsArrayBuffer(blob.getSource());
                 },
 
-                _parse: function(buffer, noParse) {
+                _parse: function (buffer, noParse) {
                     if (buffer.byteLength < 6) {
                         return;
                     }
@@ -5156,7 +5156,7 @@ define(function(require, exports, module) {
                     return ret;
                 },
 
-                updateImageHead: function(buffer, head) {
+                updateImageHead: function (buffer, head) {
                     var data = this._parse(buffer, true),
                         buf1, buf2, bodyoffset;
 
@@ -5183,11 +5183,11 @@ define(function(require, exports, module) {
                 }
             };
 
-            Util.parseMeta = function() {
+            Util.parseMeta = function () {
                 return api.parse.apply(api, arguments);
             };
 
-            Util.updateImageHead = function() {
+            Util.updateImageHead = function () {
                 return api.updateImageHead.apply(api, arguments);
             };
 
@@ -5237,13 +5237,13 @@ define(function(require, exports, module) {
         // FocalLengthIn35mmFilm : 35
         // SceneCaptureType : Standard
         _define('runtime/html5/imagemeta/exif', [
-        'base',
-        'runtime/html5/imagemeta'
-    ], function(Base, ImageMeta) {
+            'base',
+            'runtime/html5/imagemeta'
+        ], function (Base, ImageMeta) {
 
             var EXIF = {};
 
-            EXIF.ExifMap = function() {
+            EXIF.ExifMap = function () {
                 return this;
             };
 
@@ -5251,14 +5251,14 @@ define(function(require, exports, module) {
                 'Orientation': 0x0112
             };
 
-            EXIF.ExifMap.prototype.get = function(id) {
+            EXIF.ExifMap.prototype.get = function (id) {
                 return this[id] || this[this.map[id]];
             };
 
             EXIF.exifTagTypes = {
                 // byte, 8-bit unsigned int:
                 1: {
-                    getValue: function(dataView, dataOffset) {
+                    getValue: function (dataView, dataOffset) {
                         return dataView.getUint8(dataOffset);
                     },
                     size: 1
@@ -5266,7 +5266,7 @@ define(function(require, exports, module) {
 
                 // ascii, 8-bit byte:
                 2: {
-                    getValue: function(dataView, dataOffset) {
+                    getValue: function (dataView, dataOffset) {
                         return String.fromCharCode(dataView.getUint8(dataOffset));
                     },
                     size: 1,
@@ -5275,7 +5275,7 @@ define(function(require, exports, module) {
 
                 // short, 16 bit int:
                 3: {
-                    getValue: function(dataView, dataOffset, littleEndian) {
+                    getValue: function (dataView, dataOffset, littleEndian) {
                         return dataView.getUint16(dataOffset, littleEndian);
                     },
                     size: 2
@@ -5283,7 +5283,7 @@ define(function(require, exports, module) {
 
                 // long, 32 bit int:
                 4: {
-                    getValue: function(dataView, dataOffset, littleEndian) {
+                    getValue: function (dataView, dataOffset, littleEndian) {
                         return dataView.getUint32(dataOffset, littleEndian);
                     },
                     size: 4
@@ -5292,7 +5292,7 @@ define(function(require, exports, module) {
                 // rational = two long values,
                 // first is numerator, second is denominator:
                 5: {
-                    getValue: function(dataView, dataOffset, littleEndian) {
+                    getValue: function (dataView, dataOffset, littleEndian) {
                         return dataView.getUint32(dataOffset, littleEndian) /
                             dataView.getUint32(dataOffset + 4, littleEndian);
                     },
@@ -5301,7 +5301,7 @@ define(function(require, exports, module) {
 
                 // slong, 32 bit signed int:
                 9: {
-                    getValue: function(dataView, dataOffset, littleEndian) {
+                    getValue: function (dataView, dataOffset, littleEndian) {
                         return dataView.getInt32(dataOffset, littleEndian);
                     },
                     size: 4
@@ -5309,7 +5309,7 @@ define(function(require, exports, module) {
 
                 // srational, two slongs, first is numerator, second is denominator:
                 10: {
-                    getValue: function(dataView, dataOffset, littleEndian) {
+                    getValue: function (dataView, dataOffset, littleEndian) {
                         return dataView.getInt32(dataOffset, littleEndian) /
                             dataView.getInt32(dataOffset + 4, littleEndian);
                     },
@@ -5320,8 +5320,8 @@ define(function(require, exports, module) {
             // undefined, 8-bit byte, value depending on field:
             EXIF.exifTagTypes[7] = EXIF.exifTagTypes[1];
 
-            EXIF.getExifValue = function(dataView, tiffOffset, offset, type, length,
-                littleEndian) {
+            EXIF.getExifValue = function (dataView, tiffOffset, offset, type, length,
+                                          littleEndian) {
 
                 var tagType = EXIF.exifTagTypes[type],
                     tagSize, dataOffset, values, i, str, c;
@@ -5336,7 +5336,7 @@ define(function(require, exports, module) {
                 // Determine if the value is contained in the dataOffset bytes,
                 // or if the value at the dataOffset is a pointer to the actual data:
                 dataOffset = tagSize > 4 ? tiffOffset + dataView.getUint32(offset + 8,
-                    littleEndian) : (offset + 8);
+                        littleEndian) : (offset + 8);
 
                 if (dataOffset + tagSize > dataView.byteLength) {
                     Base.log('Invalid Exif data: Invalid data offset.');
@@ -5373,8 +5373,8 @@ define(function(require, exports, module) {
                 return values;
             };
 
-            EXIF.parseExifTag = function(dataView, tiffOffset, offset, littleEndian,
-                data) {
+            EXIF.parseExifTag = function (dataView, tiffOffset, offset, littleEndian,
+                                          data) {
 
                 var tag = dataView.getUint16(offset, littleEndian);
                 data.exif[tag] = EXIF.getExifValue(dataView, tiffOffset, offset,
@@ -5383,8 +5383,8 @@ define(function(require, exports, module) {
                     littleEndian);
             };
 
-            EXIF.parseExifTags = function(dataView, tiffOffset, dirOffset,
-                littleEndian, data) {
+            EXIF.parseExifTags = function (dataView, tiffOffset, dirOffset,
+                                           littleEndian, data) {
 
                 var tagsNumber, dirEndOffset, i;
 
@@ -5427,7 +5427,7 @@ define(function(require, exports, module) {
             //     return 'data:image/jpeg,%' + hexData.join('%');
             // };
 
-            EXIF.parseExifData = function(dataView, offset, length, data) {
+            EXIF.parseExifData = function (dataView, offset, length, data) {
 
                 var tiffOffset = offset + 10,
                     littleEndian, dirOffset;
@@ -5510,44 +5510,44 @@ define(function(require, exports, module) {
          * 所以这里没辙，只能借助这个工具
          * @fileOverview jpeg encoder
          */
-        _define('runtime/html5/jpegencoder', [], function(_require, exports, module) {
+        _define('runtime/html5/jpegencoder', [], function (_require, exports, module) {
 
             /*
-              Copyright (c) 2008, Adobe Systems Incorporated
-              All rights reserved.
+             Copyright (c) 2008, Adobe Systems Incorporated
+             All rights reserved.
 
-              Redistribution and use in source and binary forms, with or without
-              modification, are permitted provided that the following conditions are
-              met:
+             Redistribution and use in source and binary forms, with or without
+             modification, are permitted provided that the following conditions are
+             met:
 
-              * Redistributions of source code must retain the above copyright notice,
-                this list of conditions and the following disclaimer.
+             * Redistributions of source code must retain the above copyright notice,
+             this list of conditions and the following disclaimer.
 
-              * Redistributions in binary form must reproduce the above copyright
-                notice, this list of conditions and the following disclaimer in the
-                documentation and/or other materials provided with the distribution.
+             * Redistributions in binary form must reproduce the above copyright
+             notice, this list of conditions and the following disclaimer in the
+             documentation and/or other materials provided with the distribution.
 
-              * Neither the name of Adobe Systems Incorporated nor the names of its
-                contributors may be used to endorse or promote products derived from
-                this software without specific prior written permission.
+             * Neither the name of Adobe Systems Incorporated nor the names of its
+             contributors may be used to endorse or promote products derived from
+             this software without specific prior written permission.
 
-              THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-              IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-              THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-              PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-              CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-              EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-              PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-              PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-              LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-              NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-              SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-            */
+             THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+             IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+             THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+             PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+             CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+             EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+             PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+             PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+             LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+             NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+             SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+             */
             /*
-            JPEG encoder ported to JavaScript and optimized by Andreas Ritter, www.bytestrom.eu, 11/2009
+             JPEG encoder ported to JavaScript and optimized by Andreas Ritter, www.bytestrom.eu, 11/2009
 
-            Basic GUI blocking jpeg encoder
-            */
+             Basic GUI blocking jpeg encoder
+             */
 
             function JPEGEncoder(quality) {
                 var self = this;
@@ -5578,10 +5578,10 @@ define(function(require, exports, module) {
                 var currentQuality;
 
                 var ZigZag = [
-                     0, 1, 5, 6, 14, 15, 27, 28,
-                     2, 4, 7, 13, 16, 26, 29, 42,
-                     3, 8, 12, 17, 25, 30, 41, 43,
-                     9, 11, 18, 24, 31, 40, 44, 53,
+                    0, 1, 5, 6, 14, 15, 27, 28,
+                    2, 4, 7, 13, 16, 26, 29, 42,
+                    3, 8, 12, 17, 25, 30, 41, 43,
+                    9, 11, 18, 24, 31, 40, 44, 53,
                     10, 19, 23, 32, 39, 45, 52, 54,
                     20, 22, 33, 38, 46, 51, 55, 60,
                     21, 34, 37, 47, 50, 56, 59, 61,
@@ -5816,38 +5816,50 @@ define(function(require, exports, module) {
                         var tmp4 = d3 - d4;
 
                         /* Even part */
-                        var tmp10 = tmp0 + tmp3; /* phase 2 */
+                        var tmp10 = tmp0 + tmp3;
+                        /* phase 2 */
                         var tmp13 = tmp0 - tmp3;
                         var tmp11 = tmp1 + tmp2;
                         var tmp12 = tmp1 - tmp2;
 
-                        data[dataOff] = tmp10 + tmp11; /* phase 3 */
+                        data[dataOff] = tmp10 + tmp11;
+                        /* phase 3 */
                         data[dataOff + 4] = tmp10 - tmp11;
 
-                        var z1 = (tmp12 + tmp13) * 0.707106781; /* c4 */
-                        data[dataOff + 2] = tmp13 + z1; /* phase 5 */
+                        var z1 = (tmp12 + tmp13) * 0.707106781;
+                        /* c4 */
+                        data[dataOff + 2] = tmp13 + z1;
+                        /* phase 5 */
                         data[dataOff + 6] = tmp13 - z1;
 
                         /* Odd part */
-                        tmp10 = tmp4 + tmp5; /* phase 2 */
+                        tmp10 = tmp4 + tmp5;
+                        /* phase 2 */
                         tmp11 = tmp5 + tmp6;
                         tmp12 = tmp6 + tmp7;
 
                         /* The rotator is modified from fig 4-8 to avoid extra negations. */
-                        var z5 = (tmp10 - tmp12) * 0.382683433; /* c6 */
-                        var z2 = 0.541196100 * tmp10 + z5; /* c2-c6 */
-                        var z4 = 1.306562965 * tmp12 + z5; /* c2+c6 */
-                        var z3 = tmp11 * 0.707106781; /* c4 */
+                        var z5 = (tmp10 - tmp12) * 0.382683433;
+                        /* c6 */
+                        var z2 = 0.541196100 * tmp10 + z5;
+                        /* c2-c6 */
+                        var z4 = 1.306562965 * tmp12 + z5;
+                        /* c2+c6 */
+                        var z3 = tmp11 * 0.707106781;
+                        /* c4 */
 
-                        var z11 = tmp7 + z3; /* phase 5 */
+                        var z11 = tmp7 + z3;
+                        /* phase 5 */
                         var z13 = tmp7 - z3;
 
-                        data[dataOff + 5] = z13 + z2; /* phase 6 */
+                        data[dataOff + 5] = z13 + z2;
+                        /* phase 6 */
                         data[dataOff + 3] = z13 - z2;
                         data[dataOff + 1] = z11 + z4;
                         data[dataOff + 7] = z11 - z4;
 
-                        dataOff += 8; /* advance pointer to next row */
+                        dataOff += 8;
+                        /* advance pointer to next row */
                     }
 
                     /* Pass 2: process columns. */
@@ -5872,38 +5884,50 @@ define(function(require, exports, module) {
                         var tmp4p2 = d3 - d4;
 
                         /* Even part */
-                        var tmp10p2 = tmp0p2 + tmp3p2; /* phase 2 */
+                        var tmp10p2 = tmp0p2 + tmp3p2;
+                        /* phase 2 */
                         var tmp13p2 = tmp0p2 - tmp3p2;
                         var tmp11p2 = tmp1p2 + tmp2p2;
                         var tmp12p2 = tmp1p2 - tmp2p2;
 
-                        data[dataOff] = tmp10p2 + tmp11p2; /* phase 3 */
+                        data[dataOff] = tmp10p2 + tmp11p2;
+                        /* phase 3 */
                         data[dataOff + 32] = tmp10p2 - tmp11p2;
 
-                        var z1p2 = (tmp12p2 + tmp13p2) * 0.707106781; /* c4 */
-                        data[dataOff + 16] = tmp13p2 + z1p2; /* phase 5 */
+                        var z1p2 = (tmp12p2 + tmp13p2) * 0.707106781;
+                        /* c4 */
+                        data[dataOff + 16] = tmp13p2 + z1p2;
+                        /* phase 5 */
                         data[dataOff + 48] = tmp13p2 - z1p2;
 
                         /* Odd part */
-                        tmp10p2 = tmp4p2 + tmp5p2; /* phase 2 */
+                        tmp10p2 = tmp4p2 + tmp5p2;
+                        /* phase 2 */
                         tmp11p2 = tmp5p2 + tmp6p2;
                         tmp12p2 = tmp6p2 + tmp7p2;
 
                         /* The rotator is modified from fig 4-8 to avoid extra negations. */
-                        var z5p2 = (tmp10p2 - tmp12p2) * 0.382683433; /* c6 */
-                        var z2p2 = 0.541196100 * tmp10p2 + z5p2; /* c2-c6 */
-                        var z4p2 = 1.306562965 * tmp12p2 + z5p2; /* c2+c6 */
-                        var z3p2 = tmp11p2 * 0.707106781; /* c4 */
+                        var z5p2 = (tmp10p2 - tmp12p2) * 0.382683433;
+                        /* c6 */
+                        var z2p2 = 0.541196100 * tmp10p2 + z5p2;
+                        /* c2-c6 */
+                        var z4p2 = 1.306562965 * tmp12p2 + z5p2;
+                        /* c2+c6 */
+                        var z3p2 = tmp11p2 * 0.707106781;
+                        /* c4 */
 
-                        var z11p2 = tmp7p2 + z3p2; /* phase 5 */
+                        var z11p2 = tmp7p2 + z3p2;
+                        /* phase 5 */
                         var z13p2 = tmp7p2 - z3p2;
 
-                        data[dataOff + 40] = z13p2 + z2p2; /* phase 6 */
+                        data[dataOff + 40] = z13p2 + z2p2;
+                        /* phase 6 */
                         data[dataOff + 24] = z13p2 - z2p2;
                         data[dataOff + 8] = z11p2 + z4p2;
                         data[dataOff + 56] = z11p2 - z4p2;
 
-                        dataOff++; /* advance pointer to next column */
+                        dataOff++;
+                        /* advance pointer to next column */
                     }
 
                     // Quantize/descale the coefficients
@@ -6043,7 +6067,9 @@ define(function(require, exports, module) {
                     //Encode ACs
                     var end0pos = 63; // was const... which is crazy
                     for (;
-                        (end0pos > 0) && (DU[end0pos] == 0); end0pos--) {};
+                        (end0pos > 0) && (DU[end0pos] == 0); end0pos--) {
+                    }
+                    ;
                     //end0pos = first element in reverse order !=0
                     if (end0pos == 0) {
                         writeBits(EOB);
@@ -6054,7 +6080,8 @@ define(function(require, exports, module) {
                     while (i <= end0pos) {
                         var startpos = i;
                         for (;
-                            (DU[i] == 0) && (i <= end0pos); ++i) {}
+                            (DU[i] == 0) && (i <= end0pos); ++i) {
+                        }
                         var nrzeroes = i - startpos;
                         if (nrzeroes >= I16) {
                             lng = nrzeroes >> 4;
@@ -6080,118 +6107,118 @@ define(function(require, exports, module) {
                     }
                 }
 
-                this.encode = function(image, quality) // image data object
-                    {
-                        // var time_start = new Date().getTime();
+                this.encode = function (image, quality) // image data object
+                {
+                    // var time_start = new Date().getTime();
 
-                        if (quality) setQuality(quality);
+                    if (quality) setQuality(quality);
 
-                        // Initialize bit writer
-                        byteout = new Array();
-                        bytenew = 0;
-                        bytepos = 7;
+                    // Initialize bit writer
+                    byteout = new Array();
+                    bytenew = 0;
+                    bytepos = 7;
 
-                        // Add JPEG headers
-                        writeWord(0xFFD8); // SOI
-                        writeAPP0();
-                        writeDQT();
-                        writeSOF0(image.width, image.height);
-                        writeDHT();
-                        writeSOS();
-
-
-                        // Encode 8x8 macroblocks
-                        var DCY = 0;
-                        var DCU = 0;
-                        var DCV = 0;
-
-                        bytenew = 0;
-                        bytepos = 7;
+                    // Add JPEG headers
+                    writeWord(0xFFD8); // SOI
+                    writeAPP0();
+                    writeDQT();
+                    writeSOF0(image.width, image.height);
+                    writeDHT();
+                    writeSOS();
 
 
-                        this.encode.displayName = "_encode_";
+                    // Encode 8x8 macroblocks
+                    var DCY = 0;
+                    var DCU = 0;
+                    var DCV = 0;
 
-                        var imageData = image.data;
-                        var width = image.width;
-                        var height = image.height;
-
-                        var quadWidth = width * 4;
-                        var tripleWidth = width * 3;
-
-                        var x, y = 0;
-                        var r, g, b;
-                        var start, p, col, row, pos;
-                        while (y < height) {
-                            x = 0;
-                            while (x < quadWidth) {
-                                start = quadWidth * y + x;
-                                p = start;
-                                col = -1;
-                                row = 0;
-
-                                for (pos = 0; pos < 64; pos++) {
-                                    row = pos >> 3; // /8
-                                    col = (pos & 7) * 4; // %8
-                                    p = start + (row * quadWidth) + col;
-
-                                    if (y + row >= height) { // padding bottom
-                                        p -= (quadWidth * (y + 1 + row - height));
-                                    }
-
-                                    if (x + col >= quadWidth) { // padding right
-                                        p -= ((x + col) - quadWidth + 4)
-                                    }
-
-                                    r = imageData[p++];
-                                    g = imageData[p++];
-                                    b = imageData[p++];
+                    bytenew = 0;
+                    bytepos = 7;
 
 
-                                    /* // calculate YUV values dynamically
-                                    YDU[pos]=((( 0.29900)*r+( 0.58700)*g+( 0.11400)*b))-128; //-0x80
-                                    UDU[pos]=(((-0.16874)*r+(-0.33126)*g+( 0.50000)*b));
-                                    VDU[pos]=((( 0.50000)*r+(-0.41869)*g+(-0.08131)*b));
-                                    */
+                    this.encode.displayName = "_encode_";
 
-                                    // use lookup table (slightly faster)
-                                    YDU[pos] = ((RGB_YUV_TABLE[r] + RGB_YUV_TABLE[(g + 256) >> 0] + RGB_YUV_TABLE[(b + 512) >> 0]) >> 16) - 128;
-                                    UDU[pos] = ((RGB_YUV_TABLE[(r + 768) >> 0] + RGB_YUV_TABLE[(g + 1024) >> 0] + RGB_YUV_TABLE[(b + 1280) >> 0]) >> 16) - 128;
-                                    VDU[pos] = ((RGB_YUV_TABLE[(r + 1280) >> 0] + RGB_YUV_TABLE[(g + 1536) >> 0] + RGB_YUV_TABLE[(b + 1792) >> 0]) >> 16) - 128;
+                    var imageData = image.data;
+                    var width = image.width;
+                    var height = image.height;
 
+                    var quadWidth = width * 4;
+                    var tripleWidth = width * 3;
+
+                    var x, y = 0;
+                    var r, g, b;
+                    var start, p, col, row, pos;
+                    while (y < height) {
+                        x = 0;
+                        while (x < quadWidth) {
+                            start = quadWidth * y + x;
+                            p = start;
+                            col = -1;
+                            row = 0;
+
+                            for (pos = 0; pos < 64; pos++) {
+                                row = pos >> 3; // /8
+                                col = (pos & 7) * 4; // %8
+                                p = start + (row * quadWidth) + col;
+
+                                if (y + row >= height) { // padding bottom
+                                    p -= (quadWidth * (y + 1 + row - height));
                                 }
 
-                                DCY = processDU(YDU, fdtbl_Y, DCY, YDC_HT, YAC_HT);
-                                DCU = processDU(UDU, fdtbl_UV, DCU, UVDC_HT, UVAC_HT);
-                                DCV = processDU(VDU, fdtbl_UV, DCV, UVDC_HT, UVAC_HT);
-                                x += 32;
+                                if (x + col >= quadWidth) { // padding right
+                                    p -= ((x + col) - quadWidth + 4)
+                                }
+
+                                r = imageData[p++];
+                                g = imageData[p++];
+                                b = imageData[p++];
+
+
+                                /* // calculate YUV values dynamically
+                                 YDU[pos]=((( 0.29900)*r+( 0.58700)*g+( 0.11400)*b))-128; //-0x80
+                                 UDU[pos]=(((-0.16874)*r+(-0.33126)*g+( 0.50000)*b));
+                                 VDU[pos]=((( 0.50000)*r+(-0.41869)*g+(-0.08131)*b));
+                                 */
+
+                                // use lookup table (slightly faster)
+                                YDU[pos] = ((RGB_YUV_TABLE[r] + RGB_YUV_TABLE[(g + 256) >> 0] + RGB_YUV_TABLE[(b + 512) >> 0]) >> 16) - 128;
+                                UDU[pos] = ((RGB_YUV_TABLE[(r + 768) >> 0] + RGB_YUV_TABLE[(g + 1024) >> 0] + RGB_YUV_TABLE[(b + 1280) >> 0]) >> 16) - 128;
+                                VDU[pos] = ((RGB_YUV_TABLE[(r + 1280) >> 0] + RGB_YUV_TABLE[(g + 1536) >> 0] + RGB_YUV_TABLE[(b + 1792) >> 0]) >> 16) - 128;
+
                             }
-                            y += 8;
+
+                            DCY = processDU(YDU, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+                            DCU = processDU(UDU, fdtbl_UV, DCU, UVDC_HT, UVAC_HT);
+                            DCV = processDU(VDU, fdtbl_UV, DCV, UVDC_HT, UVAC_HT);
+                            x += 32;
                         }
-
-
-                        ////////////////////////////////////////////////////////////////
-
-                        // Do the bit alignment of the EOI marker
-                        if (bytepos >= 0) {
-                            var fillbits = [];
-                            fillbits[1] = bytepos + 1;
-                            fillbits[0] = (1 << (bytepos + 1)) - 1;
-                            writeBits(fillbits);
-                        }
-
-                        writeWord(0xFFD9); //EOI
-
-                        var jpegDataUri = 'data:image/jpeg;base64,' + btoa(byteout.join(''));
-
-                        byteout = [];
-
-                        // benchmarking
-                        // var duration = new Date().getTime() - time_start;
-                        // console.log('Encoding time: '+ currentQuality + 'ms');
-                        //
-
-                        return jpegDataUri
+                        y += 8;
                     }
+
+
+                    ////////////////////////////////////////////////////////////////
+
+                    // Do the bit alignment of the EOI marker
+                    if (bytepos >= 0) {
+                        var fillbits = [];
+                        fillbits[1] = bytepos + 1;
+                        fillbits[0] = (1 << (bytepos + 1)) - 1;
+                        writeBits(fillbits);
+                    }
+
+                    writeWord(0xFFD9); //EOI
+
+                    var jpegDataUri = 'data:image/jpeg;base64,' + btoa(byteout.join(''));
+
+                    byteout = [];
+
+                    // benchmarking
+                    // var duration = new Date().getTime() - time_start;
+                    // console.log('Encoding time: '+ currentQuality + 'ms');
+                    //
+
+                    return jpegDataUri
+                }
 
                 function setQuality(quality) {
                     if (quality <= 0) {
@@ -6233,7 +6260,7 @@ define(function(require, exports, module) {
 
             };
 
-            JPEGEncoder.encode = function(data, quality) {
+            JPEGEncoder.encode = function (data, quality) {
                 var encoder = new JPEGEncoder(quality);
 
                 return encoder.encode(data);
@@ -6245,14 +6272,14 @@ define(function(require, exports, module) {
          * @fileOverview Fix android canvas.toDataUrl bug.
          */
         _define('runtime/html5/androidpatch', [
-        'runtime/html5/util',
-        'runtime/html5/jpegencoder',
-        'base'
-    ], function(Util, encoder, Base) {
+            'runtime/html5/util',
+            'runtime/html5/jpegencoder',
+            'base'
+        ], function (Util, encoder, Base) {
             var origin = Util.canvasToDataUrl,
                 supportJpeg;
 
-            Util.canvasToDataUrl = function(canvas, type, quality) {
+            Util.canvasToDataUrl = function (canvas, type, quality) {
                 var ctx, w, h, fragement, parts;
 
                 // 非android手机直接跳过。
@@ -6295,10 +6322,10 @@ define(function(require, exports, module) {
          * @fileOverview Image
          */
         _define('runtime/html5/image', [
-        'base',
-        'runtime/html5/runtime',
-        'runtime/html5/util'
-    ], function(Base, Html5Runtime, Util) {
+            'base',
+            'runtime/html5/runtime',
+            'runtime/html5/util'
+        ], function (Base, Html5Runtime, Util) {
 
             var BLANK = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D';
 
@@ -6307,11 +6334,11 @@ define(function(require, exports, module) {
                 // flag: 标记是否被修改过。
                 modified: false,
 
-                init: function() {
+                init: function () {
                     var me = this,
                         img = new Image();
 
-                    img.onload = function() {
+                    img.onload = function () {
 
                         me._info = {
                             type: me.type,
@@ -6321,7 +6348,7 @@ define(function(require, exports, module) {
 
                         // 读取meta信息。
                         if (!me._metas && 'image/jpeg' === me.type) {
-                            Util.parseMeta(me._blob, function(error, ret) {
+                            Util.parseMeta(me._blob, function (error, ret) {
                                 me._metas = ret;
                                 me.owner.trigger('load');
                             });
@@ -6330,26 +6357,26 @@ define(function(require, exports, module) {
                         }
                     };
 
-                    img.onerror = function() {
+                    img.onerror = function () {
                         me.owner.trigger('error');
                     };
 
                     me._img = img;
                 },
 
-                loadFromBlob: function(blob) {
+                loadFromBlob: function (blob) {
                     var me = this,
                         img = me._img;
 
                     me._blob = blob;
                     me.type = blob.type;
                     img.src = Util.createObjectURL(blob.getSource());
-                    me.owner.once('load', function() {
+                    me.owner.once('load', function () {
                         Util.revokeObjectURL(img.src);
                     });
                 },
 
-                resize: function(width, height) {
+                resize: function (width, height) {
                     var canvas = this._canvas ||
                         (this._canvas = document.createElement('canvas'));
 
@@ -6359,9 +6386,9 @@ define(function(require, exports, module) {
                     this.owner.trigger('complete', 'resize');
                 },
 
-                crop: function(x, y, w, h, s) {
+                crop: function (x, y, w, h, s) {
                     var cvs = this._canvas ||
-                        (this._canvas = document.createElement('canvas')),
+                            (this._canvas = document.createElement('canvas')),
                         opts = this.options,
                         img = this._img,
                         iw = img.naturalWidth,
@@ -6397,7 +6424,7 @@ define(function(require, exports, module) {
                     this.owner.trigger('complete', 'crop');
                 },
 
-                getAsBlob: function(type) {
+                getAsBlob: function (type) {
                     var blob = this._blob,
                         opts = this.options,
                         canvas;
@@ -6431,7 +6458,7 @@ define(function(require, exports, module) {
                     return blob;
                 },
 
-                getAsDataUrl: function(type) {
+                getAsDataUrl: function (type) {
                     var opts = this.options;
 
                     type = type || this.type;
@@ -6443,12 +6470,12 @@ define(function(require, exports, module) {
                     }
                 },
 
-                getOrientation: function() {
+                getOrientation: function () {
                     return this._metas && this._metas.exif &&
                         this._metas.exif.get('Orientation') || 1;
                 },
 
-                info: function(val) {
+                info: function (val) {
 
                     // setter
                     if (val) {
@@ -6460,7 +6487,7 @@ define(function(require, exports, module) {
                     return this._info;
                 },
 
-                meta: function(val) {
+                meta: function (val) {
 
                     // setter
                     if (val) {
@@ -6472,7 +6499,7 @@ define(function(require, exports, module) {
                     return this._meta;
                 },
 
-                destroy: function() {
+                destroy: function () {
                     var canvas = this._canvas;
                     this._img.onload = null;
 
@@ -6488,7 +6515,7 @@ define(function(require, exports, module) {
                     this._img = this._blob = null;
                 },
 
-                _resize: function(img, cvs, width, height) {
+                _resize: function (img, cvs, width, height) {
                     var opts = this.options,
                         naturalWidth = img.width,
                         naturalHeight = img.height,
@@ -6529,7 +6556,7 @@ define(function(require, exports, module) {
                     this._renderImageToCanvas(cvs, img, x, y, w, h);
                 },
 
-                _rotate2Orientaion: function(canvas, orientation) {
+                _rotate2Orientaion: function (canvas, orientation) {
                     var width = canvas.width,
                         height = canvas.height,
                         ctx = canvas.getContext('2d');
@@ -6585,11 +6612,11 @@ define(function(require, exports, module) {
 
                 // https://github.com/stomita/ios-imagefile-megapixel/
                 // blob/master/src/megapix-image.js
-                _renderImageToCanvas: (function() {
+                _renderImageToCanvas: (function () {
 
                     // 如果不是ios, 不需要这么复杂！
                     if (!Base.os.ios) {
-                        return function(canvas) {
+                        return function (canvas) {
                             var args = Base.slice(arguments, 1),
                                 ctx = canvas.getContext('2d');
 
@@ -6638,7 +6665,7 @@ define(function(require, exports, module) {
                     // http://stackoverflow.com/questions/11929099/
                     // html5-canvas-drawimage-ratio-bug-ios
                     if (Base.os.ios >= 7) {
-                        return function(canvas, img, x, y, w, h) {
+                        return function (canvas, img, x, y, w, h) {
                             var iw = img.naturalWidth,
                                 ih = img.naturalHeight,
                                 vertSquashRatio = detectVerticalSquash(img, iw, ih);
@@ -6677,7 +6704,7 @@ define(function(require, exports, module) {
                     }
 
 
-                    return function(canvas, img, x, y, width, height) {
+                    return function (canvas, img, x, y, width, height) {
                         var iw = img.naturalWidth,
                             ih = img.naturalHeight,
                             ctx = canvas.getContext('2d'),
@@ -6731,20 +6758,20 @@ define(function(require, exports, module) {
          * 而不需要重头再传一次。另外断点续传也需要用chunked方式。
          */
         _define('runtime/html5/transport', [
-        'base',
-        'runtime/html5/runtime'
-    ], function(Base, Html5Runtime) {
+            'base',
+            'runtime/html5/runtime'
+        ], function (Base, Html5Runtime) {
 
             var noop = Base.noop,
                 $ = Base.$;
 
             return Html5Runtime.register('Transport', {
-                init: function() {
+                init: function () {
                     this._status = 0;
                     this._response = null;
                 },
 
-                send: function() {
+                send: function () {
                     var owner = this.owner,
                         opts = this.options,
                         xhr = this._initAjax(),
@@ -6759,7 +6786,7 @@ define(function(require, exports, module) {
                         binary = blob.getSource();
                     } else {
                         formData = new FormData();
-                        $.each(owner._formData, function(k, v) {
+                        $.each(owner._formData, function (k, v) {
                             formData.append(k, v);
                         });
 
@@ -6779,7 +6806,7 @@ define(function(require, exports, module) {
                     if (binary) {
                         // 强制设置成 content-type 为文件流。
                         xhr.overrideMimeType &&
-                            xhr.overrideMimeType('application/octet-stream');
+                        xhr.overrideMimeType('application/octet-stream');
 
                         // android直接发送blob会导致服务端接收到的是空文件。
                         // bug详情。
@@ -6788,7 +6815,7 @@ define(function(require, exports, module) {
                         if (Base.os.android) {
                             fr = new FileReader();
 
-                            fr.onload = function() {
+                            fr.onload = function () {
                                 xhr.send(this.result);
                                 fr = fr.onload = null;
                             };
@@ -6802,19 +6829,19 @@ define(function(require, exports, module) {
                     }
                 },
 
-                getResponse: function() {
+                getResponse: function () {
                     return this._response;
                 },
 
-                getResponseAsJson: function() {
+                getResponseAsJson: function () {
                     return this._parseJson(this._response);
                 },
 
-                getStatus: function() {
+                getStatus: function () {
                     return this._status;
                 },
 
-                abort: function() {
+                abort: function () {
                     var xhr = this._xhr;
 
                     if (xhr) {
@@ -6826,11 +6853,11 @@ define(function(require, exports, module) {
                     }
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.abort();
                 },
 
-                _initAjax: function() {
+                _initAjax: function () {
                     var me = this,
                         xhr = new XMLHttpRequest(),
                         opts = this.options;
@@ -6840,7 +6867,7 @@ define(function(require, exports, module) {
                         xhr = new XDomainRequest();
                     }
 
-                    xhr.upload.onprogress = function(e) {
+                    xhr.upload.onprogress = function (e) {
                         var percentage = 0;
 
                         if (e.lengthComputable) {
@@ -6850,7 +6877,7 @@ define(function(require, exports, module) {
                         return me.trigger('progress', percentage);
                     };
 
-                    xhr.onreadystatechange = function() {
+                    xhr.onreadystatechange = function () {
 
                         if (xhr.readyState !== 4) {
                             return;
@@ -6877,13 +6904,13 @@ define(function(require, exports, module) {
                     return xhr;
                 },
 
-                _setRequestHeader: function(xhr, headers) {
-                    $.each(headers, function(key, val) {
+                _setRequestHeader: function (xhr, headers) {
+                    $.each(headers, function (key, val) {
                         xhr.setRequestHeader(key, val);
                     });
                 },
 
-                _parseJson: function(str) {
+                _parseJson: function (str) {
                     var json;
 
                     try {
@@ -6900,8 +6927,8 @@ define(function(require, exports, module) {
          * @fileOverview  Transport flash实现
          */
         _define('runtime/html5/md5', [
-        'runtime/html5/runtime'
-    ], function(FlashRuntime) {
+            'runtime/html5/runtime'
+        ], function (FlashRuntime) {
 
             /*
              * Fastest md5 implementation around (JKM md5)
@@ -6912,36 +6939,36 @@ define(function(require, exports, module) {
              */
 
             /* this function is much faster,
-              so if possible we use it. Some IEs
-              are the only ones I know of that
-              need the idiotic second function,
-              generated by an if clause.  */
-            var add32 = function(a, b) {
+             so if possible we use it. Some IEs
+             are the only ones I know of that
+             need the idiotic second function,
+             generated by an if clause.  */
+            var add32 = function (a, b) {
                     return (a + b) & 0xFFFFFFFF;
                 },
 
-                cmn = function(q, a, b, x, s, t) {
+                cmn = function (q, a, b, x, s, t) {
                     a = add32(add32(a, q), add32(x, t));
                     return add32((a << s) | (a >>> (32 - s)), b);
                 },
 
-                ff = function(a, b, c, d, x, s, t) {
+                ff = function (a, b, c, d, x, s, t) {
                     return cmn((b & c) | ((~b) & d), a, b, x, s, t);
                 },
 
-                gg = function(a, b, c, d, x, s, t) {
+                gg = function (a, b, c, d, x, s, t) {
                     return cmn((b & d) | (c & (~d)), a, b, x, s, t);
                 },
 
-                hh = function(a, b, c, d, x, s, t) {
+                hh = function (a, b, c, d, x, s, t) {
                     return cmn(b ^ c ^ d, a, b, x, s, t);
                 },
 
-                ii = function(a, b, c, d, x, s, t) {
+                ii = function (a, b, c, d, x, s, t) {
                     return cmn(c ^ (b | (~d)), a, b, x, s, t);
                 },
 
-                md5cycle = function(x, k) {
+                md5cycle = function (x, k) {
                     var a = x[0],
                         b = x[1],
                         c = x[2],
@@ -7036,9 +7063,10 @@ define(function(require, exports, module) {
                  * providing access to strings as preformed UTF-8
                  * 8-bit unsigned value arrays.
                  */
-                md5blk = function(s) {
+                md5blk = function (s) {
                     var md5blks = [],
-                        i; /* Andy King said do it this way. */
+                        i;
+                    /* Andy King said do it this way. */
 
                     for (i = 0; i < 64; i += 4) {
                         md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
@@ -7046,9 +7074,10 @@ define(function(require, exports, module) {
                     return md5blks;
                 },
 
-                md5blk_array = function(a) {
+                md5blk_array = function (a) {
                     var md5blks = [],
-                        i; /* Andy King said do it this way. */
+                        i;
+                    /* Andy King said do it this way. */
 
                     for (i = 0; i < 64; i += 4) {
                         md5blks[i >> 2] = a[i] + (a[i + 1] << 8) + (a[i + 2] << 16) + (a[i + 3] << 24);
@@ -7056,7 +7085,7 @@ define(function(require, exports, module) {
                     return md5blks;
                 },
 
-                md51 = function(s) {
+                md51 = function (s) {
                     var n = s.length,
                         state = [1732584193, -271733879, -1732584194, 271733878],
                         i,
@@ -7096,7 +7125,7 @@ define(function(require, exports, module) {
                     return state;
                 },
 
-                md51_array = function(a) {
+                md51_array = function (a) {
                     var n = a.length,
                         state = [1732584193, -271733879, -1732584194, 271733878],
                         i,
@@ -7146,7 +7175,7 @@ define(function(require, exports, module) {
 
                 hex_chr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'],
 
-                rhex = function(n) {
+                rhex = function (n) {
                     var s = '',
                         j;
                     for (j = 0; j < 4; j += 1) {
@@ -7155,7 +7184,7 @@ define(function(require, exports, module) {
                     return s;
                 },
 
-                hex = function(x) {
+                hex = function (x) {
                     var i;
                     for (i = 0; i < x.length; i += 1) {
                         x[i] = rhex(x[i]);
@@ -7163,10 +7192,9 @@ define(function(require, exports, module) {
                     return x.join('');
                 },
 
-                md5 = function(s) {
+                md5 = function (s) {
                     return hex(md51(s));
                 },
-
 
 
                 ////////////////////////////////////////////////////////////////////////////
@@ -7177,7 +7205,7 @@ define(function(require, exports, module) {
                  * Use this class to perform an incremental md5, otherwise use the
                  * static methods instead.
                  */
-                SparkMD5 = function() {
+                SparkMD5 = function () {
                     // call reset to init the instance
                     this.reset();
                 };
@@ -7185,7 +7213,7 @@ define(function(require, exports, module) {
 
             // In some cases the fast add32 function cannot be used..
             if (md5('hello') !== '5d41402abc4b2a76b9719d911017c592') {
-                add32 = function(x, y) {
+                add32 = function (x, y) {
                     var lsw = (x & 0xFFFF) + (y & 0xFFFF),
                         msw = (x >> 16) + (y >> 16) + (lsw >> 16);
                     return (msw << 16) | (lsw & 0xFFFF);
@@ -7201,7 +7229,7 @@ define(function(require, exports, module) {
              *
              * @return {SparkMD5} The instance itself
              */
-            SparkMD5.prototype.append = function(str) {
+            SparkMD5.prototype.append = function (str) {
                 // converts the string to utf8 bytes if necessary
                 if (/[\u0080-\uFFFF]/.test(str)) {
                     str = unescape(encodeURIComponent(str));
@@ -7220,7 +7248,7 @@ define(function(require, exports, module) {
              *
              * @return {SparkMD5} The instance itself
              */
-            SparkMD5.prototype.appendBinary = function(contents) {
+            SparkMD5.prototype.appendBinary = function (contents) {
                 this._buff += contents;
                 this._length += contents.length;
 
@@ -7245,7 +7273,7 @@ define(function(require, exports, module) {
              *
              * @return {String|Array} The result
              */
-            SparkMD5.prototype.end = function(raw) {
+            SparkMD5.prototype.end = function (raw) {
                 var buff = this._buff,
                     length = buff.length,
                     i,
@@ -7270,7 +7298,7 @@ define(function(require, exports, module) {
              * @param {Array}  tail   The tail (will be modified)
              * @param {Number} length The length of the remaining buffer
              */
-            SparkMD5.prototype._finish = function(tail, length) {
+            SparkMD5.prototype._finish = function (tail, length) {
                 var i = length,
                     tmp,
                     lo,
@@ -7301,7 +7329,7 @@ define(function(require, exports, module) {
              *
              * @return {SparkMD5} The instance itself
              */
-            SparkMD5.prototype.reset = function() {
+            SparkMD5.prototype.reset = function () {
                 this._buff = "";
                 this._length = 0;
                 this._state = [1732584193, -271733879, -1732584194, 271733878];
@@ -7313,7 +7341,7 @@ define(function(require, exports, module) {
              * Releases memory used by the incremental buffer and other aditional
              * resources. If you plan to use the instance again, use reset instead.
              */
-            SparkMD5.prototype.destroy = function() {
+            SparkMD5.prototype.destroy = function () {
                 delete this._state;
                 delete this._buff;
                 delete this._length;
@@ -7329,7 +7357,7 @@ define(function(require, exports, module) {
              *
              * @return {String|Array} The result
              */
-            SparkMD5.hash = function(str, raw) {
+            SparkMD5.hash = function (str, raw) {
                 // converts the string to utf8 bytes if necessary
                 if (/[\u0080-\uFFFF]/.test(str)) {
                     str = unescape(encodeURIComponent(str));
@@ -7348,7 +7376,7 @@ define(function(require, exports, module) {
              *
              * @return {String|Array} The result
              */
-            SparkMD5.hashBinary = function(content, raw) {
+            SparkMD5.hashBinary = function (content, raw) {
                 var hash = md51(content);
 
                 return !!raw ? hash : hex(hash);
@@ -7359,7 +7387,7 @@ define(function(require, exports, module) {
              *
              * Use this class to perform an incremental md5 ONLY for array buffers.
              */
-            SparkMD5.ArrayBuffer = function() {
+            SparkMD5.ArrayBuffer = function () {
                 // call reset to init the instance
                 this.reset();
             };
@@ -7373,7 +7401,7 @@ define(function(require, exports, module) {
              *
              * @return {SparkMD5.ArrayBuffer} The instance itself
              */
-            SparkMD5.ArrayBuffer.prototype.append = function(arr) {
+            SparkMD5.ArrayBuffer.prototype.append = function (arr) {
                 // TODO: we could avoid the concatenation here but the algorithm would be more complex
                 //       if you find yourself needing extra performance, please make a PR.
                 var buff = this._concatArrayBuffer(this._buff, arr),
@@ -7401,7 +7429,7 @@ define(function(require, exports, module) {
              *
              * @return {String|Array} The result
              */
-            SparkMD5.ArrayBuffer.prototype.end = function(raw) {
+            SparkMD5.ArrayBuffer.prototype.end = function (raw) {
                 var buff = this._buff,
                     length = buff.length,
                     tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -7427,7 +7455,7 @@ define(function(require, exports, module) {
              *
              * @return {SparkMD5.ArrayBuffer} The instance itself
              */
-            SparkMD5.ArrayBuffer.prototype.reset = function() {
+            SparkMD5.ArrayBuffer.prototype.reset = function () {
                 this._buff = new Uint8Array(0);
                 this._length = 0;
                 this._state = [1732584193, -271733879, -1732584194, 271733878];
@@ -7449,7 +7477,7 @@ define(function(require, exports, module) {
              *
              * @return {ArrayBuffer} The new array buffer
              */
-            SparkMD5.ArrayBuffer.prototype._concatArrayBuffer = function(first, second) {
+            SparkMD5.ArrayBuffer.prototype._concatArrayBuffer = function (first, second) {
                 var firstLength = first.length,
                     result = new Uint8Array(firstLength + second.byteLength);
 
@@ -7467,18 +7495,18 @@ define(function(require, exports, module) {
              *
              * @return {String|Array} The result
              */
-            SparkMD5.ArrayBuffer.hash = function(arr, raw) {
+            SparkMD5.ArrayBuffer.hash = function (arr, raw) {
                 var hash = md51_array(new Uint8Array(arr));
 
                 return !!raw ? hash : hex(hash);
             };
 
             return FlashRuntime.register('Md5', {
-                init: function() {
+                init: function () {
                     // do nothing.
                 },
 
-                loadFromBlob: function(file) {
+                loadFromBlob: function (file) {
                     var blob = file.getSource(),
                         chunkSize = 2 * 1024 * 1024,
                         chunks = Math.ceil(blob.size / chunkSize),
@@ -7491,13 +7519,13 @@ define(function(require, exports, module) {
 
                     fr = new FileReader();
 
-                    loadNext = function() {
+                    loadNext = function () {
                         var start, end;
 
                         start = chunk * chunkSize;
                         end = Math.min(start + chunkSize, blob.size);
 
-                        fr.onload = function(e) {
+                        fr.onload = function (e) {
                             spark.append(e.target.result);
                             owner.trigger('progress', {
                                 total: file.size,
@@ -7505,13 +7533,13 @@ define(function(require, exports, module) {
                             });
                         };
 
-                        fr.onloadend = function() {
+                        fr.onloadend = function () {
                             fr.onloadend = fr.onload = null;
 
                             if (++chunk < chunks) {
                                 setTimeout(loadNext, 1);
                             } else {
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     owner.trigger('load');
                                     me.result = spark.end();
                                     loadNext = file = blob = spark = null;
@@ -7526,7 +7554,7 @@ define(function(require, exports, module) {
                     loadNext();
                 },
 
-                getResult: function() {
+                getResult: function () {
                     return this.result;
                 }
             });
@@ -7535,10 +7563,10 @@ define(function(require, exports, module) {
          * @fileOverview FlashRuntime
          */
         _define('runtime/flash/runtime', [
-        'base',
-        'runtime/runtime',
-        'runtime/compbase'
-    ], function(Base, Runtime, CompBase) {
+            'base',
+            'runtime/runtime',
+            'runtime/compbase'
+        ], function (Base, Runtime, CompBase) {
 
             var $ = Base.$,
                 type = 'flash',
@@ -7575,7 +7603,7 @@ define(function(require, exports, module) {
 
 
                 // 这个方法的调用者，实际上是RuntimeClient
-                me.exec = function(comp, fn /*, args...*/ ) {
+                me.exec = function (comp, fn /*, args...*/) {
                     var client = this,
                         uid = client.uid,
                         args = Base.slice(arguments, 2),
@@ -7618,23 +7646,23 @@ define(function(require, exports, module) {
                 }
 
                 // flash的接受器。
-                window[jsreciver] = function() {
+                window[jsreciver] = function () {
                     var args = arguments;
 
                     // 为了能捕获得到。
-                    setTimeout(function() {
+                    setTimeout(function () {
                         handler.apply(null, args);
                     }, 1);
                 };
 
                 this.jsreciver = jsreciver;
 
-                this.destroy = function() {
+                this.destroy = function () {
                     // @todo 删除池子中的所有实例
                     return destroy && destroy.apply(this, arguments);
                 };
 
-                this.flashExec = function(comp, fn) {
+                this.flashExec = function (comp, fn) {
                     var flash = me.getFlash(),
                         args = Base.slice(arguments, 2);
 
@@ -7647,7 +7675,7 @@ define(function(require, exports, module) {
             Base.inherits(Runtime, {
                 constructor: FlashRuntime,
 
-                init: function() {
+                init: function () {
                     var container = this.getContainer(),
                         opts = this.options,
                         html;
@@ -7682,7 +7710,7 @@ define(function(require, exports, module) {
                     container.html(html);
                 },
 
-                getFlash: function() {
+                getFlash: function () {
                     if (this._flash) {
                         return this._flash;
                     }
@@ -7693,11 +7721,11 @@ define(function(require, exports, module) {
 
             });
 
-            FlashRuntime.register = function(name, component) {
+            FlashRuntime.register = function (name, component) {
                 component = components[name] = Base.inherits(CompBase, $.extend({
 
                     // @todo fix this later
-                    flashExec: function() {
+                    flashExec: function () {
                         var owner = this.owner,
                             runtime = this.getRuntime();
 
@@ -7718,13 +7746,13 @@ define(function(require, exports, module) {
          * @fileOverview FilePicker
          */
         _define('runtime/flash/filepicker', [
-        'base',
-        'runtime/flash/runtime'
-    ], function(Base, FlashRuntime) {
+            'base',
+            'runtime/flash/runtime'
+        ], function (Base, FlashRuntime) {
             var $ = Base.$;
 
             return FlashRuntime.register('FilePicker', {
-                init: function(opts) {
+                init: function (opts) {
                     var copy = $.extend({}, opts),
                         len, i;
 
@@ -7743,7 +7771,7 @@ define(function(require, exports, module) {
                     this.flashExec('FilePicker', 'init', copy);
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.flashExec('FilePicker', 'destroy');
                 }
             });
@@ -7752,8 +7780,8 @@ define(function(require, exports, module) {
          * @fileOverview 图片压缩
          */
         _define('runtime/flash/image', [
-        'runtime/flash/runtime'
-    ], function(FlashRuntime) {
+            'runtime/flash/runtime'
+        ], function (FlashRuntime) {
 
             return FlashRuntime.register('Image', {
                 // init: function( options ) {
@@ -7765,7 +7793,7 @@ define(function(require, exports, module) {
                 //     });
                 // },
 
-                loadFromBlob: function(blob) {
+                loadFromBlob: function (blob) {
                     var owner = this.owner;
 
                     owner.info() && this.flashExec('Image', 'info', owner.info());
@@ -7779,20 +7807,20 @@ define(function(require, exports, module) {
          * @fileOverview  Transport flash实现
          */
         _define('runtime/flash/transport', [
-        'base',
-        'runtime/flash/runtime',
-        'runtime/client'
-    ], function(Base, FlashRuntime, RuntimeClient) {
+            'base',
+            'runtime/flash/runtime',
+            'runtime/client'
+        ], function (Base, FlashRuntime, RuntimeClient) {
             var $ = Base.$;
 
             return FlashRuntime.register('Transport', {
-                init: function() {
+                init: function () {
                     this._status = 0;
                     this._response = null;
                     this._responseJson = null;
                 },
 
-                send: function() {
+                send: function () {
                     var owner = this.owner,
                         opts = this.options,
                         xhr = this._initAjax(),
@@ -7808,7 +7836,7 @@ define(function(require, exports, module) {
 
                         binary = blob.uid;
                     } else {
-                        $.each(owner._formData, function(k, v) {
+                        $.each(owner._formData, function (k, v) {
                             xhr.exec('append', k, v);
                         });
 
@@ -7825,19 +7853,19 @@ define(function(require, exports, module) {
                     }, binary);
                 },
 
-                getStatus: function() {
+                getStatus: function () {
                     return this._status;
                 },
 
-                getResponse: function() {
+                getResponse: function () {
                     return this._response || '';
                 },
 
-                getResponseAsJson: function() {
+                getResponseAsJson: function () {
                     return this._responseJson;
                 },
 
-                abort: function() {
+                abort: function () {
                     var xhr = this._xhr;
 
                     if (xhr) {
@@ -7847,21 +7875,21 @@ define(function(require, exports, module) {
                     }
                 },
 
-                destroy: function() {
+                destroy: function () {
                     this.abort();
                 },
 
-                _initAjax: function() {
+                _initAjax: function () {
                     var me = this,
                         xhr = new RuntimeClient('XMLHttpRequest');
 
-                    xhr.on('uploadprogress progress', function(e) {
+                    xhr.on('uploadprogress progress', function (e) {
                         var percent = e.loaded / e.total;
                         percent = Math.min(1, Math.max(0, percent));
                         return me.trigger('progress', percent);
                     });
 
-                    xhr.on('load', function() {
+                    xhr.on('load', function () {
                         var status = xhr.exec('getStatus'),
                             readBody = false,
                             err = '',
@@ -7888,13 +7916,13 @@ define(function(require, exports, module) {
                             //     me._responseJson = xhr.exec('getResponseAsJson');
                             // } catch ( error ) {
 
-                            p = window.JSON && window.JSON.parse || function(s) {
-                                try {
-                                    return new Function('return ' + s).call();
-                                } catch (err) {
-                                    return {};
-                                }
-                            };
+                            p = window.JSON && window.JSON.parse || function (s) {
+                                    try {
+                                        return new Function('return ' + s).call();
+                                    } catch (err) {
+                                        return {};
+                                    }
+                                };
                             me._responseJson = me._response ? p(me._response) : {};
 
                             // }
@@ -7906,7 +7934,7 @@ define(function(require, exports, module) {
                         return err ? me.trigger('error', err) : me.trigger('load');
                     });
 
-                    xhr.on('error', function() {
+                    xhr.on('error', function () {
                         xhr.off();
                         me._xhr = null;
                         me.trigger('error', 'http');
@@ -7916,8 +7944,8 @@ define(function(require, exports, module) {
                     return xhr;
                 },
 
-                _setRequestHeader: function(xhr, headers) {
-                    $.each(headers, function(key, val) {
+                _setRequestHeader: function (xhr, headers) {
+                    $.each(headers, function (key, val) {
                         xhr.exec('setRequestHeader', key, val);
                     });
                 }
@@ -7927,12 +7955,12 @@ define(function(require, exports, module) {
          * @fileOverview Blob Html实现
          */
         _define('runtime/flash/blob', [
-        'runtime/flash/runtime',
-        'lib/blob'
-    ], function(FlashRuntime, Blob) {
+            'runtime/flash/runtime',
+            'lib/blob'
+        ], function (FlashRuntime, Blob) {
 
             return FlashRuntime.register('Blob', {
-                slice: function(start, end) {
+                slice: function (start, end) {
                     var blob = this.flashExec('Blob', 'slice', start, end);
 
                     return new Blob(blob.uid, blob);
@@ -7943,15 +7971,15 @@ define(function(require, exports, module) {
          * @fileOverview  Md5 flash实现
          */
         _define('runtime/flash/md5', [
-        'runtime/flash/runtime'
-    ], function(FlashRuntime) {
+            'runtime/flash/runtime'
+        ], function (FlashRuntime) {
 
             return FlashRuntime.register('Md5', {
-                init: function() {
+                init: function () {
                     // do nothing.
                 },
 
-                loadFromBlob: function(blob) {
+                loadFromBlob: function (blob) {
                     return this.flashExec('Md5', 'loadFromBlob', blob.uid);
                 }
             });
@@ -7960,38 +7988,38 @@ define(function(require, exports, module) {
          * @fileOverview 完全版本。
          */
         _define('preset/all', [
-        'base',
+            'base',
 
-        // widgets
-        'widgets/filednd',
-        'widgets/filepaste',
-        'widgets/filepicker',
-        'widgets/image',
-        'widgets/queue',
-        'widgets/runtime',
-        'widgets/upload',
-        'widgets/validator',
-        'widgets/md5',
+            // widgets
+            'widgets/filednd',
+            'widgets/filepaste',
+            'widgets/filepicker',
+            'widgets/image',
+            'widgets/queue',
+            'widgets/runtime',
+            'widgets/upload',
+            'widgets/validator',
+            'widgets/md5',
 
-        // runtimes
-        // html5
-        'runtime/html5/blob',
-        'runtime/html5/dnd',
-        'runtime/html5/filepaste',
-        'runtime/html5/filepicker',
-        'runtime/html5/imagemeta/exif',
-        'runtime/html5/androidpatch',
-        'runtime/html5/image',
-        'runtime/html5/transport',
-        'runtime/html5/md5',
+            // runtimes
+            // html5
+            'runtime/html5/blob',
+            'runtime/html5/dnd',
+            'runtime/html5/filepaste',
+            'runtime/html5/filepicker',
+            'runtime/html5/imagemeta/exif',
+            'runtime/html5/androidpatch',
+            'runtime/html5/image',
+            'runtime/html5/transport',
+            'runtime/html5/md5',
 
-        // flash
-        'runtime/flash/filepicker',
-        'runtime/flash/image',
-        'runtime/flash/transport',
-        'runtime/flash/blob',
-        'runtime/flash/md5'
-    ], function(Base) {
+            // flash
+            'runtime/flash/filepicker',
+            'runtime/flash/image',
+            'runtime/flash/transport',
+            'runtime/flash/blob',
+            'runtime/flash/md5'
+        ], function (Base) {
             return Base;
         });
         /**
@@ -8011,10 +8039,10 @@ define(function(require, exports, module) {
          * })
          */
         _define('widgets/log', [
-        'base',
-        'uploader',
-        'widgets/widget'
-    ], function(Base, Uploader) {
+            'base',
+            'uploader',
+            'widgets/widget'
+        ], function (Base, Uploader) {
             var $ = Base.$,
                 logUrl = ' http://static.tieba.baidu.com/tb/pms/img/st.gif??',
                 product = (location.hostname || location.host || 'protected').toLowerCase(),
@@ -8047,30 +8075,29 @@ define(function(require, exports, module) {
             return Uploader.register({
                 name: 'log',
 
-                init: function() {
+                init: function () {
                     var owner = this.owner,
                         count = 0,
                         size = 0;
 
                     owner
-                        .on('error', function(code) {
+                        .on('error', function (code) {
                             send({
                                 type: 2,
                                 c_error_code: code
                             });
                         })
-                        .on('uploadError', function(file, reason) {
+                        .on('uploadError', function (file, reason) {
                             send({
                                 type: 2,
                                 c_error_code: 'UPLOAD_ERROR',
                                 c_reason: '' + reason
                             });
                         })
-                        .on('uploadComplete', function(file) {
+                        .on('uploadComplete', function (file) {
                             count++;
                             size += file.size;
-                        }).
-                    on('uploadFinished', function() {
+                        }).on('uploadFinished', function () {
                         send({
                             c_count: count,
                             c_size: size
@@ -8088,9 +8115,9 @@ define(function(require, exports, module) {
          * @fileOverview Uploader上传类
          */
         _define('webuploader', [
-        'preset/all',
-        'widgets/log'
-    ], function(preset) {
+            'preset/all',
+            'widgets/log'
+        ], function (preset) {
             return preset;
         });
         return _require('webuploader');
