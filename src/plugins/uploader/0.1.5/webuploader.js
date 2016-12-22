@@ -1005,9 +1005,15 @@ define(function (require, exports, module) {
                 type = type || getFirstKey(factories);
 
                 if (!type) {
-                    throw new Error('Runtime Error');
+                    console && console.log && console.log('Runtime Error');
+                    opts.runtimeErrorHandler && opts.runtimeErrorHandler();
+                    return {
+                        once: function () {
+                        },
+                        init: function () {
+                        }
+                    };
                 }
-
                 runtime = new factories[type](opts);
                 return runtime;
             };
@@ -1766,7 +1772,7 @@ define(function (require, exports, module) {
                 },
 
                 refresh: function () {
-                    var shimContainer = this.getRuntime().getContainer(),
+                    var shimContainer = this.getRuntime().getContainer && this.getRuntime().getContainer(),
                         button = this.options.button,
                         width = button.outerWidth ?
                             button.outerWidth() : button.width(),
@@ -1775,7 +1781,9 @@ define(function (require, exports, module) {
                             button.outerHeight() : button.height(),
 
                         pos = button.offset();
-
+                    if (!shimContainer) {
+                        return;
+                    }
                     width && height && shimContainer.css({
                         bottom: 'auto',
                         right: 'auto',
@@ -1910,12 +1918,12 @@ define(function (require, exports, module) {
                         var options, picker, deferred;
 
                         deferred = Base.Deferred();
-
                         options = $.extend({}, pick, {
                             accept: $.isPlainObject(accept) ? [accept] : accept,
                             swf: opts.swf,
                             runtimeOrder: opts.runtimeOrder,
-                            id: this
+                            id: this,
+                            runtimeErrorHandler: opts.runtimeErrorHandler
                         });
 
                         picker = new FilePicker(options);
@@ -3123,7 +3131,7 @@ define(function (require, exports, module) {
 
                 init: function () {
                     if (!this.predictRuntimeType()) {
-                        throw Error('Runtime Error');
+                        //throw Error('Runtime Error');
                     }
                 },
 
@@ -3137,7 +3145,6 @@ define(function (require, exports, module) {
                     var orders = this.options.runtimeOrder || Runtime.orders,
                         type = this.type,
                         i, len;
-
                     if (!type) {
                         orders = orders.split(/\s*,\s*/g);
 

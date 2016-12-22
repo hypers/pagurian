@@ -30,7 +30,11 @@ define(function(require, exports, module) {
             pick: selector,
 
             // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-            resize: false
+            resize: false,
+            // 处理运行出错
+            runtimeErrorHandler:function () {
+                $p.alert(languages.zh_CN.no_support_message,'error');
+            }
         };
 
         this.container = $(selector);
