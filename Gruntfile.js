@@ -14,6 +14,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-banner');
 
     require('time-grunt')(grunt);
 
@@ -23,6 +24,7 @@ module.exports = function (grunt) {
     const script = transport.script.init(grunt);
     const pallet = require('./grunt/pallet');
     const getMinCssFiles = require('./grunt/getMinCssFiles');
+    const getCssFiles = require('./grunt/getCssFiles');
     const themes = grunt.file.readJSON('./grunt/themes.json');
 
     //connect端口
@@ -58,8 +60,20 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            dist: ['dist'], //清除dist目录
-            build: ['.build'] //清除build目录
+            dist: ['dist'], // 清除dist目录
+            build: ['.build'], // 清除build目录
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: resourcesPath,
+                    src: 'css/*.css'
+                }]
+            }
+        },
+        less: {
+            pages: {
+                files: getCssFiles(resourcesPath)
+            }
         },
         cssmin: {
             options: {
@@ -70,7 +84,15 @@ module.exports = function (grunt) {
              * @type {Object}
              */
             build: {
-                files: getMinCssFiles(resourcesPath, vendorPath)
+                files: [
+                    getMinCssFiles(resourcesPath, vendorPath),
+                    {
+                        expand: true,
+                        cwd: resourcesPath,
+                        src: 'css/*.css',
+                        dest: resourcesPath
+                    }
+                ]
             }
         },
         postcss: {
@@ -164,6 +186,24 @@ module.exports = function (grunt) {
                 }
             }
         },
+        usebanner: {
+            css: {
+                options: {
+                    position: 'top',
+                    banner: `/*!
+ * @Name:<%= pkg.name %> - <%= pkg.version %>
+ * Copyright 2016 hypers, Inc.
+ * Licensed under MIT (https://github.com/hypers/pagurian/blob/master/LICENSE.md)
+ */`,
+                    linebreak: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: resourcesPath,
+                    src: 'css/*.css'
+                }]
+            }
+        },
         /**
          * [handlebars template]
          */
@@ -231,7 +271,7 @@ module.exports = function (grunt) {
     grunt.registerTask('cp', ['copy:all']);
     //生成主题
     grunt.registerTask('theme', 'Generate theme', function () {
-        Object.keys(themes).forEach((name)=> {
+        Object.keys(themes).forEach((name) => {
             const color = themes[name];
             const taskName = `theme-${name}`;
             const outputName = `src/resources/css/themes-${name}.css`;
@@ -255,5 +295,5 @@ module.exports = function (grunt) {
             grunt.task.run(`less:${taskName}`);
         });
     });
-    grunt.registerTask('css', ['theme', 'cssmin:build', 'postcss', 'copy:all']);
+    grunt.registerTask('css', ['clean:css', 'theme', 'less:pages', 'postcss', 'cssmin:build', 'usebanner:css','copy:all']);
 };

@@ -5,20 +5,18 @@ const fs = require('fs');
 const path = require('path');
 
 function getCssFiles(cssPath) {
-    const cssObject = {};
-    const pathConfig = {
-        'themes': cssPath + 'less/theme',
+    var cssObject = {};
+    var pathConfig = {
         'pages': [cssPath, 'less/pages'].join(''),
         'output': [cssPath, 'css'].join('')
     };
 
-    fs.readdirSync(pathConfig.themes).forEach(function (fileName) {
-        const baseName = path.basename(fileName, path.extname(fileName));
-        cssObject[path.normalize(cssPath + 'css/themes-' + baseName + '.css')] = [pathConfig.themes, fileName].join('/');
-    });
-
     fs.readdirSync(pathConfig.pages).forEach(function (fileName) {
-        const baseName = path.basename(fileName, path.extname(fileName));
+        var baseName = path.basename(fileName, path.extname(fileName));
+        //login页面打包到theme中了 所以 不需要在这里执行
+        if (baseName === 'login') {
+            return;
+        }
         cssObject[path.normalize(cssPath + 'css/page-' + baseName + '.css')] = [pathConfig.pages, fileName].join('/');
     });
 

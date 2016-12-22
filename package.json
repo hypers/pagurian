@@ -35,6 +35,7 @@
   "devDependencies": {
     "autoprefixer": "^6.1.0",
     "grunt": "~0.4.5",
+    "grunt-banner": "^0.6.0",
     "grunt-cmd-concat": "^0.2.8",
     "grunt-cmd-transport": "^0.4.1",
     "grunt-contrib-clean": "~0.6.0",
