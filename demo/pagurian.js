@@ -38,7 +38,7 @@
         path: {
             api: url + "/test/api/",
             apiPostfix: ".json",
-            app: url + "/pagurian/demo/" + (debug ? "src" : "dist") + "/"
+            app: url + "/demo/" + (debug ? "src" : "dist") + "/"
         },
         call: function() {
             return (this.queue = this.queue || []).push(arguments);
