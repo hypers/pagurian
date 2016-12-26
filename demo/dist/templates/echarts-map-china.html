@@ -267,6 +267,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="markdown">
+                    <h3>Html</h3>
+                    <pre><code class="html">&lt;script type=&quot;text/javascript&quot;&gt;
+    pagurian.call([
+        &quot;modules/echarts-map/app&quot;,
+        &quot;plugins/echarts/loader-map&quot;
+    ], function (app) {
+        app.page.china();
+    });
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="markdown">
                     <h3>Javascript</h3>
 <pre><code class="javascript">require('../../plugins/echarts/module');
 
@@ -285,7 +296,7 @@ chart.load({
         name: '上海'
     }, {
         value: 310,
-        name: '北京'
+        name: 'geo.china.beijing'
     }, {
         value: 234,
         name: '四川'

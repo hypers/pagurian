@@ -14,6 +14,7 @@ define(function (require, exports, module) {
         var chinaProvinceLocale = $p.locale.echarts[lang].china_province;
         var chinaCityLocale = $p.locale.echarts[lang].china_city;
         var chinaProvince_zh_CN = $p.locale.echarts.zh_CN.china_province;
+        var chinaCity_zh_CN = $p.locale.echarts.zh_CN.china_city;
         var countryLocale = $p.locale.echarts[lang].country;
         var country_en_US = $p.locale.echarts.en_US.country;
 
@@ -29,6 +30,13 @@ define(function (require, exports, module) {
                 var list = {};
                 for (var key in country_en_US) {
                     list[country_en_US[key]] = countryLocale[key];
+                }
+                return list;
+            },
+            city:function (locale) {
+                var list = {};
+                for (var key in chinaCity_zh_CN) {
+                    list[chinaCity_zh_CN[key]] = chinaCityLocale[key];
                 }
                 return list;
             }
@@ -122,26 +130,29 @@ define(function (require, exports, module) {
         });
 
         //初始化数据
-        Object.keys(currentNameMap).forEach(function (key) {
-            var currentName = currentNameMap[key];
-            var values = dataList.filter(function (item) {
-                return item.name === currentName;
-            });
+        (function initData() {
+            var _currentNameMap = mapType === 'china'? $.extend({},currentNameMap,nameMap.city()):currentNameMap;
+            Object.keys(_currentNameMap).forEach(function (key) {
+                var currentName = _currentNameMap[key];
+                var values = dataList.filter(function (item) {
+                    return item.name === currentName;
+                });
 
-            if (values.length) {
-                var valueObj = values[0];
-                option.series[0].data.push(valueObj);
-                if (valueObj.value > option.dataRange.max) {
-                    option.dataRange.max = valueObj.value;
+                if (values.length) {
+                    var valueObj = values[0];
+                    option.series[0].data.push(valueObj);
+                    if (valueObj.value > option.dataRange.max) {
+                        option.dataRange.max = valueObj.value;
+                    }
+                    return;
                 }
-                return;
-            }
 
-            option.series[0].data.push({
-                name: currentName,
-                value: null
+                option.series[0].data.push({
+                    name: currentName,
+                    value: null
+                });
             });
-        });
+        })();
 
         option.series[0].name = options.name;
 

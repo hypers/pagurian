@@ -221,38 +221,40 @@
 	<div class="page-content-wrapper">
 		<div class="page-content">
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="page-title">
-                Echarts 地图
-            </h3>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="page-title">
+                    Echarts 地图
+                </h3>
 
-            <div class="tabs-wrap">
-                <ul  class="nav nav-tabs">
+                <div class="tabs-wrap">
+                    <ul class="nav nav-tabs">
 
-                    <li>
-                        <a href="echarts-map-world.html" >世界</a>
-                    </li>
-                    <li >
-                        <a href="echarts-map-china.html" >中国</a>
-                    </li>
-                    <li class="active">
-                        <a href="echarts-map-china-city.html" >中国-城市</a>
-                    </li>
-                </ul>
+                        <li>
+                            <a href="echarts-map-world.html">世界</a>
+                        </li>
+                        <li>
+                            <a href="echarts-map-china.html">中国</a>
+                        </li>
+                        <li class="active">
+                            <a href="echarts-map-china-city.html">中国-城市</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- BEGIN PAGE CONTENT-->
-    <div class="row">
-        <div class="col-md-12">
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
 
-            <div class="portlet box default">
+                <div class="portlet box default">
 
-                <div class="portlet-body">
-                    <div  class="chart-default " >
-                        <div class="chart-body chart-map" id="my_chart"></div>
+                    <div class="portlet-body">
+                        <div class="chart-default ">
+                            <div class="chart-body chart-map" id="my_chart"></div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -261,14 +263,24 @@
 
         </div>
 
-    </div>
 
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="markdown">
-                <h3>Javascript</h3>
-<pre><code class="javascript">require('../../plugins/echarts/module');
+        <div class="row">
+            <div class="col-md-12">
+                <div class="markdown">
+                    <h3>Html</h3>
+                    <pre><code class="html">&lt;script type=&quot;text/javascript&quot;&gt;
+    pagurian.call([
+        &quot;modules/echarts-map/app&quot;,
+        &quot;plugins/echarts/loader-map&quot;,
+        &quot;plugins/echarts/loader-province&quot;,
+    ], function (app) {
+        app.page.city();
+    });
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="markdown">
+                    <h3>Javascript</h3>
+                    <pre><code class="javascript">require('../../plugins/echarts/module');
 
 var chart = $p.echarts("my_chart", {
     type: "map",
@@ -282,10 +294,10 @@ chart.load({
     mapType: "china",
     data: [{
         value: 234,
-        name: 'Sichuan'
+        name: 'geo.china.sichuan'
     }, {
-        value: 400,
-        name: 'Chengdu'
+        value: 234,
+        name: '成都市'
     }, {
         value: 500,
         name: '浙江'
@@ -297,23 +309,33 @@ chart.load({
         name: '宁波市'
     }]
 });
-
-//添加地图的选择事件
-chart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
+var CHINA_PROVINCE_LOCALE = $p.locale.echarts[$p.language].china_province;
+//echarts 3.0 没有提供 台湾省、南海诸岛的详细地图 所以不能点击
+chart.on('mapselectchanged', function (param) {
+    if (param.name === CHINA_PROVINCE_LOCALE['geo.china.taiwan'] ||
+        param.name === CHINA_PROVINCE_LOCALE['geo.china.south_china_sea_islands']) {
+        return;
+    }
     chart.onMapSelectedByChina(param);
 });</code></pre>
 
+                    <h3>基于版本</h3>
+                    <p>[v3.2.3] <a href="https://github.com/ecomfe/echarts/tree/3.2.3" target="_blank">https://github.com/ecomfe/echarts/tree/3.2.3</a>
+                    </p>
+                    
+                    <h3>更多实例</h3>
+                    <a href="http://echarts.baidu.com/examples.html" target="_blank">http://echarts.baidu.com/examples.html</a>
+
+                </div>
                 <h3>基于版本</h3>
                 <p>[v3.2.3] <a href="https://github.com/ecomfe/echarts/tree/3.2.3" target="_blank">https://github.com/ecomfe/echarts/tree/3.2.3</a>
                 </p>
                 
                 <h3>更多实例</h3>
                 <a href="http://echarts.baidu.com/examples.html" target="_blank">http://echarts.baidu.com/examples.html</a>
-
             </div>
         </div>
-    </div>
-    <!-- END PAGE CONTENT-->
+        <!-- END PAGE CONTENT-->
 		</div>
         <div class="footer fixed">
             <span class="copyright">© 2016 Hypers, Inc.</span>
@@ -337,16 +359,17 @@ chart.on(echarts.config.EVENT.MAP_SELECTED, function(param) {
     var CONFIG = window.CONFIG || {};
     CONFIG.appId = "echarts_map";
 </script>
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-        pagurian.call([
-            "modules/echarts-map/app",
-            "plugins/echarts/loader-map"
-        ], function(app) {
-            app.page.city();
-        });
+            pagurian.call([
+                "modules/echarts-map/app",
+                "plugins/echarts/loader-map",
+                "plugins/echarts/loader-province"
+            ], function (app) {
+                app.page.city();
+            });
 
-    </script>
+        </script>
 
 <!--
 <script>
