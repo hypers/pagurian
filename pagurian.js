@@ -26,7 +26,7 @@
         path: {
             cookie: (CONFIG.rootPath !== "") ? CONFIG.rootPath : "/",
             api: URL + "/test/api/",
-            app: URL + "/pagurian/" + (DEBUG ? "src" : "dist") + "/"
+            app: URL + "/" + (DEBUG ? "src" : "dist") + "/"
         },
         call: function () {
             return (this.queue = this.queue || []).push(arguments);
