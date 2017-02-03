@@ -25,33 +25,6 @@ define(function(require, exports, module) {
         });
     };
 
-
-    app.page.horizon = function() {
-
-        chart = $p.echarts("my_chart", {
-            type: "bar"
-        });
-
-        chart.load({
-            name: "PV",
-            //是否为水平显示,默认为false
-            horizon: true,
-            columns: ['百度', '谷歌', '360搜索', '搜狗', '必应', '雅虎', '网易有道'],
-            rows: [{
-                name: "浏览量(PV)",
-                value: [735, 310, 234, 135, 548, 148, 114]
-            }, {
-                name: "独立访客者(UV)",
-                value: [435, 110, 84, 95, 108, 98, 74]
-            }, {
-                name: "访问总次数(VV)",
-                value: [255, 120, 184, 195, 208, 198, 174]
-            }]
-        });
-
-
-    };
-
     app.page.horizon = function() {
 
         chart = $p.echarts("my_chart", {
