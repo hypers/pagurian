@@ -65,6 +65,9 @@ div.radio.disabled:hover {
 
 div.checker,
 div.radio {
+    .pos(r);
+    margin-right:4px;
+
     span {
         background-image: url(img//checkbox_radio.png);
         background-repeat: no-repeat;
@@ -81,12 +84,13 @@ div.radio {
         font-size: 12px;
         top: 1px;
         left: 0;
-        .opacity(0);
+        .opa(0);
         transition: opacity .2s linear;
+        display: block;
     }
 
     span.checked:before {
-        .opacity(1);
+        .opa(100);
     }
 }
 
@@ -146,6 +150,33 @@ div.radio {
 
             &:before {
                 color: #b9b9b9;
+            }
+        }
+    }
+}
+
+.ie8{
+    div.checker,
+    div.radio {
+        span {
+            &:before {
+                .d-n;
+            }
+
+            &.checked:before{
+                .d-b;
+                left: 3px;
+            }
+        }
+    }
+
+    div.radio{
+        span{
+            &:before {
+                content: " ";
+            }
+            &.checked:before{
+                content: "\f111";
             }
         }
     }

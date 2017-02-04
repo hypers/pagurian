@@ -4,6 +4,7 @@ define(function(require, exports, module) {
     var isIE8 = false;
     var isIE9 = false;
     var isIE10 = false;
+    var isIE11 = false;
 
     var sidebarWidth = 225;
     var sidebarCollapsedWidth = 35;
@@ -34,15 +35,21 @@ define(function(require, exports, module) {
             isRTL = true;
         }
 
-        isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
-        isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
-        isIE10 = !!navigator.userAgent.match(/MSIE 10.0/);
+        var UA = navigator.userAgent;
+        isIE8 = !!UA.match(/MSIE 8.0/);
+        isIE9 = !!UA.match(/MSIE 9.0/);
+        isIE10 = !!UA.match(/MSIE 10.0/);
+        isIE11 = !!UA.match(/rv:([\d.]+)\) like gecko/i);
 
         if (isIE10) {
             $('html').addClass('ie10'); // detect IE10 version
         }
 
-        if (isIE10 || isIE9 || isIE8) {
+        if(isIE11){
+            $('html').addClass('ie11'); // detect IE10 version
+        }
+
+        if (isIE10 || isIE9 || isIE8 || isIE11) {
             $('html').addClass('ie'); // detect IE10 version
         }
     }
