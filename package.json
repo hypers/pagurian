@@ -21,6 +21,9 @@
       "summary": "widgets/summary/module"
     }
   },
+  "scripts": {
+    "start": "node ./node_modules/http-server/bin/http-server"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -49,6 +52,7 @@
     "grunt-postcss": "^0.7.1",
     "grunt-template-html": "^0.1.4",
     "handlebars": "^4.0.0",
+    "http-server": "^0.9.0",
     "qunitjs": "^1.22.0",
     "time-grunt": "~1.0.0"
   }
