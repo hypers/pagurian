@@ -1,0 +1,46 @@
+@charset "utf-8";
+//Created by godfery on 2017/2/21.
+@conent-border-color: #9f9f9f;
+@items-pd-vertical: 7px;
+@items-pd-horiontal: 18px;
+@items-height: 40px;
+.auto-complete-wrap {
+    position: relative;
+
+    .auto-complete-content {
+        position: absolute;
+        margin-top: -1px;
+        border: 1px solid @conent-border-color;
+        background-color: white;
+        max-height: (@items-height * 6);
+        overflow-y: auto;
+        display: none;
+        z-index: 1000;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        &.show {
+            display: block;
+        }
+
+        .item {
+            padding: @items-pd-vertical @items-pd-horiontal;
+            height: @items-height;
+
+            .text {
+                @h: @items-height - @items-pd-vertical*2;
+                margin-bottom: 0;
+                .ellipsis;
+                .l-h(@h);
+            }
+
+            &:hover, &.active {
+                background-color: @H050;
+            }
+        }
+    }
+}

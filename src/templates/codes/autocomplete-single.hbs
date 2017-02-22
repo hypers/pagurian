@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="markdown">
+            <h3>HTML代码</h3>
+            <pre><code class="html">&lt;div class=&quot;form-group&quot;&gt;
+    &lt;label for=&quot;exampleInputEmail1&quot;&gt;Product List&lt;/label&gt;
+    &lt;input id=&quot;autoComplete&quot; type=&quot;text&quot; class=&quot;form-control w400&quot; placeholder=&quot;请输入产品名&quot;&gt;
+&lt;/div&gt;</code></pre>
+            <h3>javascript代码</h3>
+            <pre><code class="javascript">require('../../widgets/autocomplete/module');
+var datas = [
+    {
+        name: 'HYPER Advertiser',
+        value: 1
+    }, {
+        name: 'HYPER Web Analytics',
+        value: 2
+    }, {
+        name: 'HYPER Mobile Analytics',
+        value: 3
+    }, {
+        name: 'HYPER Video Analytics',
+        value: 4
+    }, {
+        name: 'HYPER DMP',
+        value: 5
+    }, {
+        name: 'HYPER Ad Serving',
+        value: 6
+    }, {
+        name: 'HYPER Data Discovery',
+        value: 7
+    }
+];
+var input = $('#autoComplete');
+var autoComplete = $p.autoComplete(input, {
+    datas: datas,
+    autoShowPanel: true,
+    chooseCallback: function (data) {
+        input.val(data.data.name);
+    }
+});</code></pre>
+        </div>
+    </div>
+</div>

@@ -265,6 +265,7 @@ module.exports = function (grunt) {
 
 
     grunt.registerTask('default', task_default);
+    grunt.registerTask('dev', ['template', 'css', "copy:all"]);
     grunt.registerTask('seajs', ['uglify:seajs']);
     grunt.registerTask('check', ['jshint', 'connect', 'qunit']);
     grunt.registerTask('tpl', ['template', "copy:all"]);
@@ -295,5 +296,5 @@ module.exports = function (grunt) {
             grunt.task.run(`less:${taskName}`);
         });
     });
-    grunt.registerTask('css', ['clean:css', 'theme', 'less:pages', 'postcss', 'cssmin:build', 'usebanner:css','copy:all']);
+    grunt.registerTask('css', ['clean:css', 'theme', 'less:pages', 'postcss', 'cssmin:build', 'usebanner:css', 'copy:all']);
 };

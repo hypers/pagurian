@@ -1,0 +1,29 @@
+{{#>layouts/base title=data.page.autocomplete appId="autocomplete"}}
+
+    {{#*inline "pageContent"}}
+        {{> fixtures/tab-autocomplete single=true}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-body p0">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Product List</label>
+                        <input id="autoComplete" type="text" class="form-control w400" placeholder="请输入产品名">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{> codes/autocomplete-single}}
+
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/autocomplete/app", function (app) {
+                app.page.single();
+            });
+        </script>
+    {{/inline}}
+
+{{/layouts/base}}

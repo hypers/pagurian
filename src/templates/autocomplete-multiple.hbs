@@ -1,0 +1,34 @@
+{{#>layouts/base title=data.page.autocomplete appId="autocomplete"}}
+
+    {{#*inline "pageContent"}}
+        {{> fixtures/tab-autocomplete multiple=true}}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-body p0">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Product List</label>
+                        <input id="autoComplete" type="text" class="form-control w400" placeholder="请输入产品名">
+                    </div>
+                    <div id="panel" class="sizer-result-wrap auto-complete w400">
+                        <div class="sizer-result-title">已选的产品</div>
+                        <div class="sizer-result-content-wrap">
+                            <div class="sizer-result-content">未选择任何产品</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{{> codes/autocomplete-multiple}}
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/autocomplete/app", function (app) {
+                app.page.multiple();
+            });
+        </script>
+    {{/inline}}
+
+{{/layouts/base}}

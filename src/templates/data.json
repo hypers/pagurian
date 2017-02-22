@@ -7,6 +7,7 @@
     "update": "",
     "page": {
         "alert": "警告框 Alert",
+        "autocomplete": "自动补全 Autocomplete",
         "button": "按钮 Button",
         "breadcrumb": "面包屑导航 Breadcrumb",
         "color": "配色 Color",
@@ -98,6 +99,12 @@
             "title": "组件",
             "icon": "fa fa-briefcase",
             "items": [
+                {
+                    "name": "autocomplete",
+                    "title": "AutoComplete",
+                    "url": "autocomplete-single.html",
+                    "active": 0
+                },
                 {
                     "name": "datalistview",
                     "title": "DataListView",

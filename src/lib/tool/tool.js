@@ -1,47 +1,149 @@
 /**
  * Updated by hypers-godfery on 2015/1/6 添加isString方法
  */
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     var g = window;
 
+    /**
+     * @author {@link https://github.com/jashkenas/underscore underscorejs}.
+     * @version 1.8.3
+     * {@link https://github.com/jashkenas/underscore/blob/1.8.3/underscore.js#L1095 source}
+     * @see {@link http://underscorejs.org/#isEqual underscore.isEqual(object, other)
+     * @param a
+     * @param b
+     * @returns {boolean}
+     */
+    var eq = function (a, b, aStack, bStack) {
+        function has(obj, key) {
+            return obj !== null && Object.prototype.hasOwnProperty.call(obj, key);
+        }
+
+        var toString = Object.prototype.toString;
+        // Identical objects are equal. `0 === -0`, but they aren't identical.
+        // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
+        if (a === b) return a !== 0 || 1 / a === 1 / b;
+        // A strict comparison is necessary because `null == undefined`.
+        if (a === null || b === null) return a === b;
+        // Compare `[[Class]]` names.
+        var className = toString.call(a);
+        if (className !== toString.call(b)) return false;
+        switch (className) {
+            // Strings, numbers, regular expressions, dates, and booleans are compared by value.
+            case '[object RegExp]':
+            // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+            case '[object String]':
+                // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
+                // equivalent to `new String("5")`.
+                return '' + a === '' + b;
+            case '[object Number]':
+                // `NaN`s are equivalent, but non-reflexive.
+                // Object(NaN) is equivalent to NaN
+                if (+a !== +a) return +b !== +b;
+                // An `egal` comparison is performed for other numeric values.
+                return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+            case '[object Date]':
+            case '[object Boolean]':
+                // Coerce dates and booleans to numeric primitive values. Dates are compared by their
+                // millisecond representations. Note that invalid dates with millisecond representations
+                // of `NaN` are not equivalent.
+                return +a === +b;
+        }
+
+        var areArrays = className === '[object Array]';
+        if (!areArrays) {
+            if (typeof a !== 'object' || typeof b !== 'object') return false;
+
+            // Objects with different constructors are not equivalent, but `Object`s or `Array`s
+            // from different frames are.
+            var aCtor = a.constructor, bCtor = b.constructor;
+            if (aCtor !== bCtor && !($.isFunction(aCtor) && aCtor instanceof aCtor &&
+                $.isFunction(bCtor) && bCtor instanceof bCtor) && ('constructor' in a && 'constructor' in b)) {
+                return false;
+            }
+        }
+        // Assume equality for cyclic structures. The algorithm for detecting cyclic
+        // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
+
+        // Initializing stack of traversed objects.
+        // It's done here since we only need them for objects and arrays comparison.
+        aStack = aStack || [];
+        bStack = bStack || [];
+        var length = aStack.length;
+        while (length--) {
+            // Linear search. Performance is inversely proportional to the number of
+            // unique nested structures.
+            if (aStack[length] === a) return bStack[length] === b;
+        }
+
+        // Add the first object to the stack of traversed objects.
+        aStack.push(a);
+        bStack.push(b);
+
+        // Recursively compare objects and arrays.
+        if (areArrays) {
+            // Compare array lengths to determine if a deep comparison is necessary.
+            length = a.length;
+            if (length !== b.length) return false;
+            // Deep compare the contents, ignoring non-numeric properties.
+            while (length--) {
+                if (!eq(a[length], b[length], aStack, bStack)) return false;
+            }
+        } else {
+            // Deep compare objects.
+            var keys = Object.keys(a), key;
+            length = keys.length;
+            // Ensure that both objects contain the same number of properties before comparing deep equality.
+            if (Object.keys(b).length !== length) return false;
+            while (length--) {
+                // Deep compare each member
+                key = keys[length];
+                if (!(has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+            }
+        }
+        // Remove the first object from the stack of traversed objects.
+        aStack.pop();
+        bStack.pop();
+        return true;
+    };
+
     g[PagurianAlias].tool = {
-        newId: function() {
+        newId: function () {
             return '_' + (Math.random() * 1E18).toString(36).slice(0, 5).toUpperCase();
         },
-        isArray: function(o) {
+        isArray: function (o) {
             return Object.prototype.toString.call(o) === "[object Array]";
         },
-        isObject: function(o) {
+        isObject: function (o) {
             return Object.prototype.toString.call(o) === "[object Object]";
         },
-        isNumber: function(value) {
+        isNumber: function (value) {
             return /^[0-9]+.?[0-9]*$/.test(value);
         },
-        isNull: function(o) {
+        isNull: function (o) {
             return Object.prototype.toString.call(o) === '[object Null]';
         },
 
-        isFunction: function(o) {
+        isFunction: function (o) {
             return typeof o === "function";
         },
-        isString: function(o) {
+        isString: function (o) {
             return Object.prototype.toString.call(o) === '[object String]';
         },
         /**
          *加码
          */
-        encode: function(value) {
+        encode: function (value) {
             return encodeURIComponent(value);
         },
 
         /**
          * 解码
          */
-        decode: function(value) {
+        decode: function (value) {
             return decodeURIComponent(value);
         },
-        encodeHtml: function(str) {
+        encodeHtml: function (str) {
             var s = "";
             if (str.length === 0) return "";
             s = str.replace(/&/g, "&amp;");
@@ -53,7 +155,7 @@ define(function(require, exports, module) {
             s = s.replace(/\n/g, "<br>");
             return s;
         },
-        decodeHtml: function(str) {
+        decodeHtml: function (str) {
             var s = "";
             if (!str || str.length === 0) return "";
             str += "";
@@ -67,7 +169,7 @@ define(function(require, exports, module) {
             return s;
         },
 
-        objectToUrlParams: function(params) {
+        objectToUrlParams: function (params) {
 
             var str_params = "",
                 url_split = "";
@@ -92,7 +194,7 @@ define(function(require, exports, module) {
         /**
          * 转Decimal格式
          **/
-        toDecimal: function(arg, num) {
+        toDecimal: function (arg, num) {
             if ($p.tool.isNull(arg) || arg === undefined || arg === "--") {
                 return "--";
             }
@@ -112,10 +214,10 @@ define(function(require, exports, module) {
         /**
          * 转千分位  1000.00 ==> 1,000.00
          **/
-        toThousands:function(num){
-             return (num + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+        toThousands: function (num) {
+            return (num + '').replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
         },
-        formatTime: function(timestamp) {
+        formatTime: function (timestamp) {
             if ($p.tool.isNull(timestamp)) {
                 return "--";
             }
@@ -141,7 +243,7 @@ define(function(require, exports, module) {
          * @param  {[string]} type [单位时间类型:HOUR,DAY,WEEK,MONTH]
          * @return {[string]}           [返回格式化后的时间]
          */
-        formatDateRange: function(daterange, type) {
+        formatDateRange: function (daterange, type) {
             var times = daterange.split("~");
             switch (type) {
                 case 'HOUR':
@@ -159,7 +261,7 @@ define(function(require, exports, module) {
         /**
          *浮点数相乘
          **/
-        floatMul: function(arg1, arg2, sign) {
+        floatMul: function (arg1, arg2, sign) {
 
             if ($p.tool.isNull(arg1)) {
                 return "--";
@@ -175,10 +277,12 @@ define(function(require, exports, module) {
 
             try {
                 m += s1.split(".")[1].length;
-            } catch (e) {}
+            } catch (e) {
+            }
             try {
                 m += s2.split(".")[1].length;
-            } catch (e) {}
+            } catch (e) {
+            }
 
             var n = Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
             return $p.tool.toDecimal(n) + sign;
@@ -193,21 +297,21 @@ define(function(require, exports, module) {
          * @param options
          * @returns {throttled}
          */
-        throttle: function(func, wait, options) {
+        throttle: function (func, wait, options) {
             var context, args, result;
             var timeout = null;
             var previous = 0;
-            var _now = Date.now || function() {
-                return new Date().getTime();
-            };
+            var _now = Date.now || function () {
+                    return new Date().getTime();
+                };
             if (!options) options = {};
-            var later = function() {
+            var later = function () {
                 previous = options.leading === false ? 0 : _now();
                 timeout = null;
                 result = func.apply(context, args);
                 if (!timeout) context = args = null;
             };
-            return function() {
+            return function () {
                 var now = _now();
                 if (!previous && options.leading === false) previous = now;
                 var remaining = wait - (now - previous);
@@ -237,15 +341,15 @@ define(function(require, exports, module) {
          * @param immediate
          * @returns {*}
          */
-        debounce: function(func, wait, immediate) {
+        debounce: function (func, wait, immediate) {
 
             var timeout, args, context, timestamp, result;
 
-            var _now = Date.now || function() {
-                return new Date().getTime();
-            };
+            var _now = Date.now || function () {
+                    return new Date().getTime();
+                };
 
-            var later = function() {
+            var later = function () {
                 var last = _now() - timestamp;
                 if (last < wait && last >= 0) {
                     timeout = setTimeout(later, wait - last);
@@ -258,7 +362,7 @@ define(function(require, exports, module) {
                 }
             };
 
-            return function() {
+            return function () {
                 context = this;
                 args = arguments;
                 timestamp = _now();
@@ -270,6 +374,10 @@ define(function(require, exports, module) {
                 }
                 return result;
             };
+        },
+        // 判断两个值是否相等
+        isEqual: function (a, b) {
+            return eq(a, b);
         }
     };
 
