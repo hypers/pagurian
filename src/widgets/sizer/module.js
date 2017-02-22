@@ -146,28 +146,27 @@ define(function (require, exports, module) {
             _this.container.addClass("sizer-open");
             _this._readData();
 
-            //点击任意元素关闭面板 IE9+有效
-            if ($.isFunction(document.addEventListener)) {
-                document.addEventListener('click', closePanelEvent, true);
-            }
-
-            /**
-             * 关闭面板函数
-             * @param e
-             */
-            function closePanelEvent(e) {
-                var T = $(e.target);
-                if (T.parents('.sizer-wrap').length === 0) {
-                    _this.close();
-                    document.removeEventListener('click', closePanelEvent, true);
-                }
-            }
+            //点击任意元素关闭面板
+            $(document).off('mouseup', closePanelEvent).on('mouseup', closePanelEvent);
         };
+
+        /**
+         * 关闭面板函数
+         * @param e
+         */
+        function closePanelEvent(e) {
+            var container = _this.container.find('.sizer-select-panel');
+            //sizerbtn  自身有处理关闭的事件 所以这里要做一个排除
+            if (!container.is(e.target) && container.has(e.target).length === 0 && !($sizerBtn.is(e.target) || $sizerBtn.has(e.target).length !== 0)) {
+                _this.close();
+            }
+        }
 
         //关闭面板
         this.close = function () {
             _this.container.removeClass("sizer-open");
             closePanel(true);
+            $(document).off('mouseup', closePanelEvent);
         };
 
         /**
