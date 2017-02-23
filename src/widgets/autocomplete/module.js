@@ -229,7 +229,6 @@ define(function (require, exports, module) {
 
         /**
          * show result panel
-         * @param {AutoCompleteOption~Data[]} result datas
          */
         this.showResultPanel = function () {
             var result = getSearchCacheData();

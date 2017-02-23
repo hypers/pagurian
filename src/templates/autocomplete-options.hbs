@@ -1,0 +1,111 @@
+{{#>layouts/base title=data.page.sizer appId="autocomplete"}}
+
+    {{#*inline "pageContent"}}
+{{> fixtures/tab-autocomplete options=true}}
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="markdown">
+                    <pre><code class="javascript">/**
+* @param {String|jQuery|Dom} selector [选择器] 必须唯一
+* @param {[Array]} options [配置参数]
+*/
+$p.autoComplete(selector, options);</code></pre>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Functions</h3>
+                <div class="markdown">
+                    <pre><code class="javascript">/**
+* 设置完整数据数据
+* @param {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.setData();
+/**
+* 获取完整数据数据
+* @return {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.getData();
+/**
+* 设置搜索结果的数据
+* @param {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.setSearchCacheData();
+/**
+* 获取已选择的数据
+* @return {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.getChooseData();
+/**
+* 展示搜索结果的面板（如果搜索结果为空，则不展示）
+**/
+AutoComplete.showResultPanel();
+/**
+* 隐藏搜索结果的面板
+**/
+AutoComplete.showResultPanel();</code></pre>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Options</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th width="300">默认值</th>
+                        <th width="300">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <mark>[multiple]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否为多选</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[clearInput]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否关闭面板时清空input的值</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[autoShowPanel]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否当获取焦点的时候展示所有数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- END PAGE CONTENT-->
+    {{/inline}}
+
+    {{#*inline "appScript"}}
+        <script type="text/javascript">
+            pagurian.call("modules/slider/app", function (app) {
+                app.page.index();
+            });
+        </script>
+    {{/inline}}
+
+{{/layouts/base}}
