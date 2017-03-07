@@ -6,7 +6,7 @@
 <!--<![endif]-->
 
 <head>
-	<title>Echarts 饼图 - Pagurian</title>
+	<title>自动补全 Autocomplete - Pagurian</title>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -226,92 +226,81 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="page-title">
-                    Echarts 饼图
+                    自动补全 Autocomplete
                 </h3>
-
                 <div class="tabs-wrap">
-                    <ul  class="nav nav-tabs">
-
-                        <li  class="active">
-                            <a href="echarts-pie.html" >标准饼图</a>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="autocomplete-single.html">单选</a>
                         </li>
-                        <li>
-                            <a href="echarts-pie-loop.html" >环形图</a>
+                        <li >
+                            <a href="autocomplete-multiple.html">多选</a>
                         </li>
-
+                        <li >
+                            <a href="autocomplete-options.html">参数说明</a>
+                        </li>
                     </ul>
                 </div>
-
             </div>
         </div>
 
-        <!-- BEGIN PAGE CONTENT-->
         <div class="row">
             <div class="col-md-12">
-
-                <div class="portlet box default">
-
-                    <div class="portlet-body">
-                        <div  class="chart-default " >
-                            <div class="chart-body" id="my_chart"></div>
-                        </div>
-
+                <div class="form-body p0">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Product List</label>
+                        <input id="autoComplete" type="text" class="form-control w400" placeholder="请输入产品名">
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
 
         <div class="row">
             <div class="col-md-12">
                 <div class="markdown">
-                    <h3>Javascript</h3>
-<pre><code class="javascript">require('../../plugins/echarts/module');
-
-var chart = $p.echarts("my_chart", {
-    type: "pie"
-});
-
-chart.load({
-    name: '访问来源',
-    data: [{
-        value: 735,
-        name: '百度'
-    }, {
-        value: 310,
-        name: '谷歌'
-    }, {
-        value: 234,
-        name: '360搜索'
-    }, {
-        value: 135,
-        name: '搜狗'
-    }, {
-        value: 548,
-        name: '必应'
-    }, {
-        value: 148,
-        name: '雅虎'
-    }, {
-        value: 114,
-        name: '网易有道'
-    }],
-});</code></pre>
-
-                    <h3>基于版本</h3>
-                    <p>[v3.2.3] <a href="https://github.com/ecomfe/echarts/tree/3.2.3" target="_blank">https://github.com/ecomfe/echarts/tree/3.2.3</a>
-                    </p>
-                    
-                    <h3>更多实例</h3>
-                    <a href="http://echarts.baidu.com/examples.html" target="_blank">http://echarts.baidu.com/examples.html</a>
-
+                    <h3>HTML代码</h3>
+                    <pre><code class="html">&lt;div class=&quot;form-group&quot;&gt;
+            &lt;label for=&quot;exampleInputEmail1&quot;&gt;Product List&lt;/label&gt;
+            &lt;input id=&quot;autoComplete&quot; type=&quot;text&quot; class=&quot;form-control w400&quot; placeholder=&quot;请输入产品名&quot;&gt;
+        &lt;/div&gt;</code></pre>
+                    <h3>javascript代码</h3>
+                    <pre><code class="javascript">require('../../widgets/autocomplete/module');
+        var datas = [
+            {
+                name: 'HYPER Advertiser',
+                value: 1
+            }, {
+                name: 'HYPER Web Analytics',
+                value: 2
+            }, {
+                name: 'HYPER Mobile Analytics',
+                value: 3
+            }, {
+                name: 'HYPER Video Analytics',
+                value: 4
+            }, {
+                name: 'HYPER DMP',
+                value: 5
+            }, {
+                name: 'HYPER Ad Serving',
+                value: 6
+            }, {
+                name: 'HYPER Data Discovery',
+                value: 7
+            }
+        ];
+        var input = $('#autoComplete');
+        var autoComplete = $p.autoComplete(input, {
+            datas: datas,
+            autoShowPanel: true,
+            chooseCallback: function (data) {
+                input.val(data.data.name);
+            }
+        });</code></pre>
                 </div>
             </div>
         </div>
-        <!-- END PAGE CONTENT-->
+
 		</div>
         <div class="footer fixed">
             <span class="copyright">© 2016 Hypers, Inc.</span>
@@ -333,17 +322,12 @@ chart.load({
 
 <script type="text/javascript">
     var CONFIG = window.CONFIG || {};
-    CONFIG.appId = "echarts_pie";
+    CONFIG.appId = "autocomplete";
 </script>
         <script type="text/javascript">
-
-            pagurian.call([
-                "modules/echarts-pie/app",
-                "plugins/echarts/loader"
-            ], function(app) {
-                app.page.pie();
+            pagurian.call("modules/autocomplete/app", function (app) {
+                app.page.single();
             });
-
         </script>
 
 <!--

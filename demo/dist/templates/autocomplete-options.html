@@ -6,7 +6,7 @@
 <!--<![endif]-->
 
 <head>
-	<title>Echarts 饼图 - Pagurian</title>
+	<title>筛选器 Sizer - Pagurian</title>
 	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -226,91 +226,198 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="page-title">
-                    Echarts 饼图
+                    自动补全 Autocomplete
                 </h3>
-
                 <div class="tabs-wrap">
-                    <ul  class="nav nav-tabs">
-
-                        <li  class="active">
-                            <a href="echarts-pie.html" >标准饼图</a>
+                    <ul class="nav nav-tabs">
+                        <li >
+                            <a href="autocomplete-single.html">单选</a>
                         </li>
-                        <li>
-                            <a href="echarts-pie-loop.html" >环形图</a>
+                        <li >
+                            <a href="autocomplete-multiple.html">多选</a>
                         </li>
-
+                        <li class="active">
+                            <a href="autocomplete-options.html">参数说明</a>
+                        </li>
                     </ul>
                 </div>
-
             </div>
         </div>
 
-        <!-- BEGIN PAGE CONTENT-->
         <div class="row">
             <div class="col-md-12">
 
-                <div class="portlet box default">
-
-                    <div class="portlet-body">
-                        <div  class="chart-default " >
-                            <div class="chart-body" id="my_chart"></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
                 <div class="markdown">
-                    <h3>Javascript</h3>
-<pre><code class="javascript">require('../../plugins/echarts/module');
-
-var chart = $p.echarts("my_chart", {
-    type: "pie"
-});
-
-chart.load({
-    name: '访问来源',
-    data: [{
-        value: 735,
-        name: '百度'
-    }, {
-        value: 310,
-        name: '谷歌'
-    }, {
-        value: 234,
-        name: '360搜索'
-    }, {
-        value: 135,
-        name: '搜狗'
-    }, {
-        value: 548,
-        name: '必应'
-    }, {
-        value: 148,
-        name: '雅虎'
-    }, {
-        value: 114,
-        name: '网易有道'
-    }],
-});</code></pre>
-
-                    <h3>基于版本</h3>
-                    <p>[v3.2.3] <a href="https://github.com/ecomfe/echarts/tree/3.2.3" target="_blank">https://github.com/ecomfe/echarts/tree/3.2.3</a>
-                    </p>
-                    
-                    <h3>更多实例</h3>
-                    <a href="http://echarts.baidu.com/examples.html" target="_blank">http://echarts.baidu.com/examples.html</a>
-
+                    <pre><code class="javascript">/**
+* @param {String|jQuery|Dom} selector [选择器] 必须唯一
+* @param {[Array]} options [配置参数]
+*/
+$p.autoComplete(selector, options);</code></pre>
                 </div>
+
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Functions</h3>
+                <div class="markdown">
+                    <pre><code class="javascript">/**
+* 设置完整数据数据
+* @param {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.setData();
+/**
+* 获取完整数据数据
+* @return {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.getData();
+/**
+* 设置搜索结果的数据
+* @param {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.setSearchCacheData();
+/**
+* 获取已选择的数据
+* @return {AutoCompleteOption~Data[]} datas
+**/
+AutoComplete.getChooseData();
+/**
+* 展示搜索结果的面板（如果搜索结果为空，则不展示）
+**/
+AutoComplete.showResultPanel();
+/**
+* 隐藏搜索结果的面板
+**/
+AutoComplete.showResultPanel();</code></pre>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3 id="Options">Options</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th width="300">默认值</th>
+                        <th width="300">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <mark>[multiple]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否为多选</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[clearInput]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否关闭面板时清空input的值</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[autoShowPanel]</mark>
+                        </td>
+                        <td>false</td>
+                        <td>boolean</td>
+                        <td>是否当获取焦点的时候展示所有数据</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[datas]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Array[<a href="#AutoCompleteOption~Data">AutoCompleteOption~Data</a>]</td>
+                        <td>是否当获取焦点的时候展示所有数据</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[choose]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Array[<a href="#AutoCompleteOption~Data.value">AutoCompleteOption~Data.value</a>]</td>
+                        <td>已选中的值</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[style]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>String</td>
+                        <td>自定义class</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[searchCompareFunc]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>自定义的搜索比较方法，参数<mark>word</mark>、<mark>value</mark>、<mark>index</mark>，返回true/false</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[compareValueFunc]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>比较值是否相等的方法，参数<mark>data</mark>、<mark>value</mark>，返回true/false</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[chooseCallback]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>选中后的回调，参数<mark>data</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <h3 id="AutoCompleteOption~Data">AutoCompleteOption~Data</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th width="300">默认值</th>
+                        <th width="300">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <mark>[name]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>String</td>
+                        <td>列表中展示的文字</td>
+                    </tr>
+                    <tr id="AutoCompleteOption~Data.value">
+                        <td>
+                            <mark>[value]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>*</td>
+                        <td>值（可以为任意类型）</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- END PAGE CONTENT-->
 		</div>
         <div class="footer fixed">
@@ -333,17 +440,12 @@ chart.load({
 
 <script type="text/javascript">
     var CONFIG = window.CONFIG || {};
-    CONFIG.appId = "echarts_pie";
+    CONFIG.appId = "autocomplete";
 </script>
         <script type="text/javascript">
-
-            pagurian.call([
-                "modules/echarts-pie/app",
-                "plugins/echarts/loader"
-            ], function(app) {
-                app.page.pie();
+            pagurian.call("modules/slider/app", function (app) {
+                app.page.index();
             });
-
         </script>
 
 <!--
