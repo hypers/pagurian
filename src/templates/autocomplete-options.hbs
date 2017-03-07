@@ -1,7 +1,7 @@
 {{#>layouts/base title=data.page.sizer appId="autocomplete"}}
 
     {{#*inline "pageContent"}}
-{{> fixtures/tab-autocomplete options=true}}
+        {{> fixtures/tab-autocomplete options=true}}
 
         <div class="row">
             <div class="col-md-12">
@@ -56,7 +56,7 @@ AutoComplete.showResultPanel();</code></pre>
 
         <div class="row">
             <div class="col-md-12">
-                <h3>Options</h3>
+                <h3 id="Options">Options</h3>
                 <hr>
                 <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
                     <thead>
@@ -91,6 +91,86 @@ AutoComplete.showResultPanel();</code></pre>
                         <td>false</td>
                         <td>boolean</td>
                         <td>是否当获取焦点的时候展示所有数据</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[datas]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Array[<a href="#AutoCompleteOption~Data">AutoCompleteOption~Data</a>]</td>
+                        <td>是否当获取焦点的时候展示所有数据</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[choose]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Array[<a href="#AutoCompleteOption~Data.value">AutoCompleteOption~Data.value</a>]</td>
+                        <td>已选中的值</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[style]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>String</td>
+                        <td>自定义class</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[searchCompareFunc]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>自定义的搜索比较方法，参数<mark>word</mark>、<mark>value</mark>、<mark>index</mark>，返回true/false</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[compareValueFunc]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>比较值是否相等的方法，参数<mark>data</mark>、<mark>value</mark>，返回true/false</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>[chooseCallback]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>Function</td>
+                        <td>选中后的回调，参数<mark>data</mark></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <h3 id="AutoCompleteOption~Data">AutoCompleteOption~Data</h3>
+                <hr>
+                <table class="table-custom table table-hover table-fixed dataTable table-scrollable">
+                    <thead>
+                    <tr>
+                        <th width="200">参数</th>
+                        <th width="300">默认值</th>
+                        <th width="300">数据类型</th>
+                        <th>描述</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <mark>[name]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>String</td>
+                        <td>列表中展示的文字</td>
+                    </tr>
+                    <tr id="AutoCompleteOption~Data.value">
+                        <td>
+                            <mark>[value]</mark>
+                        </td>
+                        <td>--</td>
+                        <td>*</td>
+                        <td>值（可以为任意类型）</td>
                     </tr>
                     </tbody>
                 </table>
